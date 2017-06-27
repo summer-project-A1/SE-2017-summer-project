@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="model.User" table="user">
+	    <id name="user_id">
+            <generator class="native"/>
+        </id>
+        <property name="username" />
+        <property name="password" />
+        <property name="email" />
+        <property name="credit" />
+        <property name="role" />
+	</class>
+</hibernate-mapping>

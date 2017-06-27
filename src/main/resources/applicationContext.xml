@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:mongo="http://www.springframework.org/schema/data/mongo" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+        http://www.springframework.org/schema/data/mongo
+        http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
+        
+	<!-- Bean -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close" p:driverClass="com.mysql.jdbc.Driver"
+		p:jdbcUrl="jdbc:mysql://localhost:3306/bookshare" p:user="root"
+		p:password="123456" p:maxPoolSize="40" p:minPoolSize="1"
+		p:initialPoolSize="1" p:maxIdleTime="20" />
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
+		p:dataSource-ref="dataSource">
+		<property name="mappingResources">
+			<list>
+				<value>model/User.hbm.xml</value>
+			</list>
+		</property>
+		<!-- Hibernate SessionFactory -->
+		<property name="hibernateProperties">
+			<value>
+				hibernate.dialect=org.hibernate.dialect.MySQLInnoDBDialect
+				hibernate.hbm2ddl.auto=update
+				hibernate.show_sql=true
+				hibernate.format_sql=true
+			</value>
+		</property>
+	</bean>
+	
+    <!-- hibernate模板 -->  
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">  
+        <property name="sessionFactory" ref="sessionFactory" />  
+    </bean>
+
+	<!-- HibernateTransactionManager -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager"
+		p:sessionFactory-ref="sessionFactory" />
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<!-- appService Bean -->
+		<aop:pointcut id="beanPointcut" expression="execution(* service..*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="beanPointcut" />
+	</aop:config>
+
+    <mongo:mongo id="mongo" host="localhost" port="27017"></mongo:mongo>
+    <mongo:db-factory id="mongoDbFactory" dbname="bookstore"
+        mongo-ref="mongo" />
+    
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+         <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+    </bean>
+    
+    <!-- ============================================================= -->
+    
+    <!-- DAO Bean -->
+    <bean id="baseDao" class="dao.BaseDao">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+        <property name="hibernateTemplate" ref="hibernateTemplate" />
+        <property name="mongoTemplate">
+            <ref bean="mongoTemplate" />
+        </property>
+    </bean>
+    <bean id="userDao" class="dao.impl.UserDaoImpl" parent="baseDao">
+    </bean>
+
+    <!-- ============================================================= -->
+
+    <!-- Service -->
+    <bean id="logInOutService" class="service.impl.LogInOutServiceImpl">
+        <!-- DAO -->
+        <property name="userDao" ref="userDao"></property>
+    </bean>
+    
+    <!-- ============================================================= -->
+    
+    <!-- Action -->
+    <bean id="loginAndSignup" class="action.LoginAndSignup">
+        <property name="logInOutService" ref="logInOutService"></property>
+    </bean>
+    
+</beans>
