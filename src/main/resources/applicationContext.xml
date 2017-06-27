@@ -64,7 +64,7 @@
 	</aop:config>
 
     <mongo:mongo id="mongo" host="localhost" port="27017"></mongo:mongo>
-    <mongo:db-factory id="mongoDbFactory" dbname="bookstore"
+    <mongo:db-factory id="mongoDbFactory" dbname="bookshare"
         mongo-ref="mongo" />
     
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
