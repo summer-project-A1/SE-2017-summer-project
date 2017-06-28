@@ -24,8 +24,9 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	}
 
 	public User getUserById(int id) {
-		List<User> users = (List<User>) getHibernateTemplate().find(
-				"from User as u where u.id=?", id);
+		String hql = "from User u where u.id= :id";
+		Query query = getSession().createQuery(hql).setParameter("id", id);
+		List<User> users = query.list();
 		User user = users.size() > 0 ? users.get(0) : null;
 		return user;
 	}
@@ -41,8 +42,10 @@ public class UserDaoImpl extends BaseDao implements UserDao {
     }
 
 	public List<User> getAllUsers() {
-		List<User> users = (List<User>) getHibernateTemplate()
-				.find("from User");
+
+		String hql = "from User";
+		Query query = getSession().createQuery(hql);
+		List<User> users = query.list();
 		return users;
 	}
 
