@@ -6,4 +6,4 @@
 <body>
     <a href="logout">退出登录</a>
 </body>
-</html>a
+</html>
