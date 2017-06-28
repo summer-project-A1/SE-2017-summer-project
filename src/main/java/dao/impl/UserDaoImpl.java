@@ -32,7 +32,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 
     public User getUserByUsername(String username) {
         String hql = "from User where username = :username";
-        Query query = getSession().createQuery(hql).setString("username", username);
+        Query query = getSession().createQuery(hql).setParameter("username", username);
         List result = query.list();
         if(result.size() == 1) {
             return (User)result.get(0);
