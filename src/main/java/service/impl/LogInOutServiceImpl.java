@@ -38,8 +38,6 @@ public class LogInOutServiceImpl implements LogInOutService {
         if(!logined) {
             if(username != null) {
                 User userinfo = getUserDao().getUserByUsername(username);
-                System.out.println(userinfo.getPassword());
-                System.out.println(MD5Util.encoderByMd5(plainPassword));
                 if(userinfo != null) {
                     if(MD5Util.encoderByMd5(plainPassword).toLowerCase().equals(userinfo.getPassword().toLowerCase())) {
                         getHttpSession().put("userinfo", userinfo);
