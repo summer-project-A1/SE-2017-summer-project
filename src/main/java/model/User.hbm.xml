@@ -4,13 +4,13 @@
 
 <hibernate-mapping>
 	<class name="model.User" table="user">
-	    <id name="user_id">
+	    <id name="userID" column="user_id">
             <generator class="native"/>
         </id>
-        <property name="username" />
-        <property name="password" />
-        <property name="email" />
-        <property name="credit" />
-        <property name="role" />
+        <property name="username" column="username" />
+        <property name="password" column="password" />
+        <property name="email" column="email" />
+        <property name="credit" column="credit" />
+        <property name="role" column="role" />
 	</class>
 </hibernate-mapping>

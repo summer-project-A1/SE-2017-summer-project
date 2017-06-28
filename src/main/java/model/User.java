@@ -1,7 +1,7 @@
 package model;
 
 public class User {
-    private int user_id;
+    private int userID;
     private String username;
     private String password;
     private String email;
@@ -10,11 +10,11 @@ public class User {
     
     /* ======================================= */
     
-    public int getUser_id() {
-        return user_id;
+    public int getUserID() {
+        return userID;
     }
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
     public String getUsername() {
         return username;
