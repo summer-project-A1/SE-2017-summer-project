@@ -4,7 +4,7 @@ import java.util.Map;
 
 public interface UserService {
     public boolean isLogined();
-    public boolean login(String email, String plainPassword);
+    public Map login(String email, String plainPassword);
     public boolean register(String email, String plainPassword);
     public boolean logout();
     public Map showUserProfile(int userID);

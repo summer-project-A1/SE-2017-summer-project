@@ -1,5 +1,6 @@
 package service.impl;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
     }
     
     @Override
-    public boolean login(String email, String plainPassword) {
+    public Map login(String email, String plainPassword) {
         Boolean logined = isLogined();
         if(!logined) {
             if(email != null) {
@@ -51,12 +52,20 @@ public class UserServiceImpl implements UserService {
             }
         }
         
+        User userinfo = (User)getHttpSession().get("userinfo");
+        Map params = new HashMap();
         if(logined) {
-            return true;
+            params.put("result", true);
+            params.put("message", "登录成功");
+            params.put("userID", userinfo.getUserID());
+            params.put("email", userinfo.getEmail());
+            params.put("role", (userinfo.getRole()==UserRole.ADMIN)? 0:1);
         }
         else {
-            return false;
+            params.put("result", false);
+            params.put("message", "用户名或密码错误");
         }
+        return params;
     }
 
     @Override
@@ -71,6 +80,7 @@ public class UserServiceImpl implements UserService {
         newUser.setCredit(0);
         newUser.setImageID("");
         newUser.setProfileID("");
+        this.userDao.save(newUser);
         return true;
     }
 
