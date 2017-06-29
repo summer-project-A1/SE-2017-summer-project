@@ -28,6 +28,8 @@
 		<property name="mappingResources">
 			<list>
 				<value>model/User.hbm.xml</value>
+				<value>model/Book.hbm.xml</value>
+				<value>model/BookRelease.hbm.xml</value>
 			</list>
 		</property>
 		<!-- Hibernate SessionFactory -->
@@ -39,11 +41,6 @@
 			</value>
 		</property>
 	</bean>
-	
-    <!-- hibernate模板 -->  
-    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">  
-        <property name="sessionFactory" ref="sessionFactory" />  
-    </bean>
 
 	<!-- HibernateTransactionManager -->
 	<bean id="transactionManager"
@@ -73,24 +70,24 @@
     <!-- ============================================================= -->
     
     <!-- DAO Bean -->
-    <bean id="baseDao" class="dao.BaseDao">
+    <bean id="baseDao" class="dao.impl.BaseDaoImpl">
         <property name="sessionFactory">
             <ref bean="sessionFactory" />
         </property>
-        <property name="hibernateTemplate" ref="hibernateTemplate" />
-        <property name="mongoTemplate">
-            <ref bean="mongoTemplate" />
-        </property>
     </bean>
     <bean id="userDao" class="dao.impl.UserDaoImpl" parent="baseDao">
+    </bean>
+    <bean id="bookDao" class="dao.impl.BookDaoImpl" parent="baseDao">
     </bean>
 
     <!-- ============================================================= -->
 
     <!-- Service -->
     <bean id="userService" class="service.impl.UserServiceImpl">
-        <!-- DAO -->
         <property name="userDao" ref="userDao"></property>
+    </bean>
+    <bean id="bookService" class="service.impl.BookServiceImpl">
+        <property name="bookDao" ref="bookDao"></property>
     </bean>
     
     <!-- ============================================================= -->
@@ -98,6 +95,9 @@
     <!-- Action -->
     <bean id="userAction" class="action.UserAction">
         <property name="userService" ref="userService"></property>
+    </bean>
+    <bean id="bookAction" class="action.BookAction">
+        <property name="bookService" ref="bookService"></property>
     </bean>
     
 </beans>

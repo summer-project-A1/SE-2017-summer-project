@@ -5,7 +5,7 @@ import java.util.Map;
 
 import model.Book;
 
-public interface BookDao {
+public interface BookDao extends BaseDao {
     public List<Book> getAllBooks();
     public List<Book> getBooksByUserID(int userID);
     public List<Book> searchByCondition(Map condition);

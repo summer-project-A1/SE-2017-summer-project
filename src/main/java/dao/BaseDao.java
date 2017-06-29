@@ -1,65 +1,11 @@
 package dao;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.orm.hibernate5.HibernateTemplate;
-
-import com.mongodb.DB;
-
-public class BaseDao {
-    protected SessionFactory sessionFactory;
-    protected HibernateTemplate hibernateTemplate;
+public interface BaseDao {
     
-    protected MongoTemplate mongoTemplate;
-
-    /* ========================================================= */
+    public boolean save(Object obj);
     
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-    public SessionFactory getSessionFactory() {
-        return this.sessionFactory;
-    }
+    public boolean update(Object obj);
     
-    public HibernateTemplate getHibernateTemplate() {
-        return hibernateTemplate;
-    }
-    public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
-        this.hibernateTemplate = hibernateTemplate;
-    }
-    
-    public Session getSession() {
-        return this.sessionFactory.getCurrentSession();
-    }
-    
-    /* ===================== */
-    
-    public MongoTemplate getMongoTemplate() {
-        return mongoTemplate;
-    }
-    public void setMongoTemplate(MongoTemplate mongoTemplate) {
-        this.mongoTemplate = mongoTemplate;
-    }
-    public DB getMongoDb() {
-        return this.mongoTemplate.getDb();
-    }
-    
-    /* ============================================================ */
-    
-    public boolean save(Object obj) {
-        getSession().save(obj);
-        return true;
-    }
-    
-    public boolean update(Object obj) {
-        getSession().update(obj);
-        return true;
-    }
-    
-    public boolean delete(Object obj) {
-        getSession().delete(obj);
-        return true;
-    }
+    public boolean delete(Object obj);
 
 }

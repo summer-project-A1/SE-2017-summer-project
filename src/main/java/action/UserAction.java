@@ -64,6 +64,6 @@ public class UserAction extends ActionSupport {
     
     public String logout() {
         this.userService.logout();
-        return SUCCESS;
+        return "logout";
     }
 }

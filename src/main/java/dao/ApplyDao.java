@@ -4,6 +4,6 @@ import java.util.List;
 
 import model.Apply;
 
-public interface ApplyDao {
+public interface ApplyDao extends BaseDao {
     public List<Apply> getReservationByUserID(int userID);
 }

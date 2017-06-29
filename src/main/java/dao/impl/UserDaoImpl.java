@@ -10,7 +10,7 @@ import model.User;
 import dao.BaseDao;
 import dao.UserDao;
 
-public class UserDaoImpl extends BaseDao implements UserDao {
+public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
     @Override
 	public User getUserById(int id) {

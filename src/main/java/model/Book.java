@@ -1,5 +1,7 @@
 package model;
 
+import common.constants.BookStatus;
+
 public class Book {
     private int bookID;
     private String bookName;
@@ -10,7 +12,7 @@ public class Book {
     private int canExchange;      // 用户发布时决定书是否可被交换
     private int canBorrow;        // 用户发布时决定书是否可被借阅
     private int reserved;         // 书当前是否已被预约 
-    private int status;               // 书当前状态（空闲/正被借阅/正被交换/正被售出）
+    private BookStatus status;               // 书当前状态（空闲/正被借阅/正被交换/正被售出）
     private String profileID;         // 书的详细信息在monggodb中的id
     private String imageID;           // 书的图片在monggodb中的图片
     
@@ -70,10 +72,10 @@ public class Book {
     public void setReserved(int reserved) {
         this.reserved = reserved;
     }
-    public int getStatus() {
+    public BookStatus getStatus() {
         return status;
     }
-    public void setStatus(int status) {
+    public void setStatus(BookStatus status) {
         this.status = status;
     }
     public String getProfileID() {
