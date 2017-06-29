@@ -58,7 +58,7 @@ public class UserAction extends ActionSupport {
     }
     
     public String login() {
-        this.params = this.userService.login(this.email, this.password); 
+        this.params = this.userService.login(this.email, this.password);
         return SUCCESS;
     }
     

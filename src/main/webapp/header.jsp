@@ -37,30 +37,25 @@
 
     <script>
         $(document).ready(function() {
-            $("#loginForm").validate();
             $("#login").click(function () {
                 var params = $("#loginForm").serialize();
                 $.ajax({
                     url: "login",
                     type: "post",
                     data: params,
-                    dataType: "json",
+                    dataType: "text",
                     success: function (data) {
                         var response = eval("("+data+")");
-                        $('#loginBox').empty();
-                        if(response.result == 'false'){
-                            var msg = response.msg;
+                        if(response.result == false){
+                            var msg = response.message;
                             alert(msg);
                         }
-                        if(response.result == "true"){
-                            var logout = "<a href='logout.action'>"+"退出登录"+"</a>";
-                            var replace = "<p>"+"欢迎您"+response.email+"</p>"+logout;
-                            $('#loginBox').append(replace);
-                            alert("success");
+                        if(response.result == true){
+                            var logout = "<label><a href='logout.action'>"+"退出登录"+"</a><label>";
+                            var replace = "<label>"+"欢迎您!"+response.email+"</label><br>"+logout;
+                            $('#loginForm').html(replace);
+                            alert(response.message);
                         }
-                    },
-                    error:function(){
-                        alert("请重新登录!");
                     }
                 });
             });
@@ -78,7 +73,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <h1 class="navbar-brand"><a  href="index.html">BookShare</a></h1>
+                <h1 class="navbar-brand"><a  href="index.jsp">BookShare</a></h1>
             </div>
             <!--navbar-header-->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -155,6 +150,7 @@
             </div>
             <div class="header-right login">
                 <a href="myaccount.html"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                <%if(session.getAttribute("userinfo") == null){ %>
                 <div id="loginBox">
                     <form id="loginForm">
                         <fieldset id="body">
@@ -171,6 +167,17 @@
                         <p>新用户 ? <a class="sign" href="signup.jsp">点击注册</a> <span><a href="#">忘记密码?</a></span></p>
                     </form>
                 </div>
+                   <%
+                }else{ %>
+                <div id="loginBox">
+                    <form id="loginForm2">
+                            <label>欢迎您！${sessionScope.userinfo.email}</label><br>
+                            <label><a href="logout.action">退出登录</a></label>
+                    </form>
+                </div>
+                <%
+                }%>
+
             </div>
             <div class="header-right cart">
                 <a href="cart.html"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
