@@ -1,12 +1,16 @@
 package model;
 
+import common.constants.UserRole;
+
 public class User {
     private int userID;
-    private String username;
+    // 不保存username属性
     private String password;
-    private String email;
-    private int credit;
-    private int role;
+    private String email;       // 邮箱作为登录名，具有唯一性
+    private int credit;         // 用户积分
+    private UserRole role;      // 用户角色（管理员/普通）
+    private String profileID;         // 用户的详细信息在monggodb中的id
+    private String imageID;           // 用户的头像在monggodb中的图片
     
     /* ======================================= */
     
@@ -15,12 +19,6 @@ public class User {
     }
     public void setUserID(int userID) {
         this.userID = userID;
-    }
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
     }
     public String getPassword() {
         return password;
@@ -40,11 +38,23 @@ public class User {
     public void setCredit(int credit) {
         this.credit = credit;
     }
-    public int getRole() {
+    public UserRole getRole() {
         return role;
     }
-    public void setRole(int role) {
+    public void setRole(UserRole role) {
         this.role = role;
+    }
+    public String getProfileID() {
+        return profileID;
+    }
+    public void setProfileID(String profileID) {
+        this.profileID = profileID;
+    }
+    public String getImageID() {
+        return imageID;
+    }
+    public void setImageID(String imageID) {
+        this.imageID = imageID;
     }
     
     

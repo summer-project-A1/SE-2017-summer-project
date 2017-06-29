@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="model.BorrowHistory" table="borrowhistory">
+        <id name="borrowID" column="borrow_id">
+            <generator class="native"/>
+        </id>
+        <property name="userID" column="user_id" />
+        <property name="bookID" column="book_id" />
+        <property name="borrowDate" column="borrowdate" type="timestamp" />
+        <property name="yhDate" column="yhdate" type="timestamp" />
+        <property name="inDate" column="indate" type="timestamp" />
+        <property name="borrowPrice" column="borrow_price" />
+    </class>
+</hibernate-mapping>

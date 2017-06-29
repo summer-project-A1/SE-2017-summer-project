@@ -88,7 +88,7 @@
     <!-- ============================================================= -->
 
     <!-- Service -->
-    <bean id="logInOutService" class="service.impl.LogInOutServiceImpl">
+    <bean id="userService" class="service.impl.UserServiceImpl">
         <!-- DAO -->
         <property name="userDao" ref="userDao"></property>
     </bean>
@@ -96,8 +96,8 @@
     <!-- ============================================================= -->
     
     <!-- Action -->
-    <bean id="loginAndSignup" class="action.LoginAndSignup">
-        <property name="logInOutService" ref="logInOutService"></property>
+    <bean id="userAction" class="action.UserAction">
+        <property name="userService" ref="userService"></property>
     </bean>
     
 </beans>

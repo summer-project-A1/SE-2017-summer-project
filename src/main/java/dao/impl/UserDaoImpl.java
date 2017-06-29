@@ -1,6 +1,7 @@
 package dao.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.query.Query;
 
@@ -11,18 +12,7 @@ import dao.UserDao;
 
 public class UserDaoImpl extends BaseDao implements UserDao {
 
-	public Integer save(User user) {
-		return (Integer) getHibernateTemplate().save(user);
-	}
-
-	public void delete(User user) {
-		getHibernateTemplate().delete(user);
-	}
-
-	public void update(User user) {
-		getHibernateTemplate().merge(user);
-	}
-
+    @Override
 	public User getUserById(int id) {
 		String hql = "from User u where u.id= :id";
 		Query query = getSession().createQuery(hql).setParameter("id", id);
@@ -31,9 +21,10 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		return user;
 	}
 
-    public User getUserByUsername(String username) {
-        String hql = "from User where username = :username";
-        Query query = getSession().createQuery(hql).setParameter("username", username);
+    @Override
+    public User getUserByEmail(String email) {
+        String hql = "from User where email = :email";
+        Query query = getSession().createQuery(hql).setParameter("email", email);
         List result = query.list();
         if(result.size() == 1) {
             return (User)result.get(0);
@@ -42,11 +33,22 @@ public class UserDaoImpl extends BaseDao implements UserDao {
     }
 
 	public List<User> getAllUsers() {
-
 		String hql = "from User";
 		Query query = getSession().createQuery(hql);
 		List<User> users = query.list();
 		return users;
 	}
+
+    @Override
+    public Map getUserProfileMap(int userID) {
+        // TODO 自动生成的方法存根
+        return null;
+    }
+
+    @Override
+    public Boolean saveUserProfile(int userID, Map userProfile) {
+        // TODO 自动生成的方法存根
+        return null;
+    }
 
 }

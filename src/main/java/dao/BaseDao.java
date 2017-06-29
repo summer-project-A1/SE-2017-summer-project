@@ -44,4 +44,22 @@ public class BaseDao {
     public DB getMongoDb() {
         return this.mongoTemplate.getDb();
     }
+    
+    /* ============================================================ */
+    
+    public Boolean save(Object obj) {
+        getSession().save(obj);
+        return true;
+    }
+    
+    public Boolean update(Object obj) {
+        getSession().update(obj);
+        return true;
+    }
+    
+    public Boolean delete(Object obj) {
+        getSession().delete(obj);
+        return true;
+    }
+
 }

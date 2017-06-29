@@ -7,12 +7,12 @@
 	<constant name="struts.i18n.encoding" value="utf-8" />
 	<constant name="struts.devMode" value="true" />
 	
-	<package name="loginandsignup" extends="struts-default">
-		<action name="login" class="action.LoginAndSignup" method="login">
+	<package name="userAction" extends="struts-default">
+		<action name="login" class="action.UserAction" method="login">
 			<result name="success">success.jsp</result>
 			<result name="error">fail.jsp</result>
 		</action>
-		<action name="logout" class="action.LoginAndSignup" method="logout">
+		<action name="logout" class="action.UserAction" method="logout">
             <result name="success">login.jsp</result>
         </action>
         

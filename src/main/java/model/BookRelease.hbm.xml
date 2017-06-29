@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="model.BookRelease" table="bookrelease">
+        <id name="releaseID" column="release_id">
+            <generator class="native"/>
+        </id>
+        <property name="userID" column="user_id" />
+        <property name="bookID" column="book_id" />
+        <property name="releaseTime" column="release_time" type="timestamp" />
+        <property name="borrowPrice" column="borrow_price" />
+        <property name="exchangePrice" column="exchange_price" />
+    </class>
+</hibernate-mapping>

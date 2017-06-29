@@ -4,12 +4,12 @@ import java.util.Map;
 
 import com.opensymphony.xwork2.ActionContext;
 
-import common.MD5Util;
+import common.utils.MD5Util;
 import dao.UserDao;
 import model.User;
-import service.LogInOutService;
+import service.UserService;
 
-public class LogInOutServiceImpl implements LogInOutService {
+public class UserServiceImpl implements UserService {
     private UserDao userDao; 
     
     /* ======================================================== */
@@ -29,15 +29,17 @@ public class LogInOutServiceImpl implements LogInOutService {
     
     /* ======================================================== */
 
+    @Override
     public Boolean isLogined() {
         return getHttpSession().containsKey("userinfo");
     }
-
-    public Boolean login(String username, String plainPassword) {
+    
+    @Override
+    public Boolean login(String email, String plainPassword) {
         Boolean logined = isLogined();
         if(!logined) {
-            if(username != null) {
-                User userinfo = getUserDao().getUserByUsername(username);
+            if(email != null) {
+                User userinfo = getUserDao().getUserByEmail(email);
                 if(userinfo != null) {
                     if(MD5Util.encoderByMd5(plainPassword).toLowerCase().equals(userinfo.getPassword().toLowerCase())) {
                         getHttpSession().put("userinfo", userinfo);
@@ -47,7 +49,6 @@ public class LogInOutServiceImpl implements LogInOutService {
             }
         }
         
-        User userinfo = (User)getHttpSession().get("userinfo");
         if(logined) {
             return true;
         }
@@ -56,6 +57,13 @@ public class LogInOutServiceImpl implements LogInOutService {
         }
     }
 
+    @Override
+    public Boolean register(String email, String plainPassword) {
+        // TODO 自动生成的方法存根
+        return null;
+    }
+
+    @Override
     public Boolean logout() {
         Boolean logined = isLogined();
         if (logined) {
@@ -63,4 +71,23 @@ public class LogInOutServiceImpl implements LogInOutService {
         }
         return true;
     }
+
+    @Override
+    public Map showUserProfile(int userID) {
+        // TODO 自动生成的方法存根
+        return null;
+    }
+
+    @Override
+    public Boolean updateUserProfile(int userID, Map newUserProfile) {
+        // TODO 自动生成的方法存根
+        return null;
+    }
+
+    @Override
+    public Boolean updateUserPassword(String oldPassword, String newPassword) {
+        // TODO 自动生成的方法存根
+        return null;
+    }
+    
 }

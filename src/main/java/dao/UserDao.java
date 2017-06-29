@@ -1,21 +1,20 @@
 package dao;
 
 import java.util.List;
+import java.util.Map;
 
 import model.User;
 
 public interface UserDao {
 
-    public Integer save(User user);
-
-    public void delete(User user);
-
-    public void update(User user);
-
     public User getUserById(int id);
     
-    public User getUserByUsername(String username);
+    public User getUserByEmail(String email);
 
+    public Map getUserProfileMap(int userID);
+    
+    public Boolean saveUserProfile(int userID, Map userProfile);
+    
     public List<User> getAllUsers();
     
 }

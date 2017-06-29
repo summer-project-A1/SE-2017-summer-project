@@ -5,8 +5,8 @@
 </head>
 <body>
     <form action="login">
-        <input type="text" name="username">用户名：</input>
-        <input type="text" name="password">密码：</input>
+        <label>邮箱：</label><input type="text" name="email"></input><br />
+        <label>密码：</label><input type="text" name="password"></input>
         <input type="submit" value="登录"></input>
     </form>
 </body>

@@ -7,10 +7,15 @@
 	    <id name="userID" column="user_id">
             <generator class="native"/>
         </id>
-        <property name="username" column="username" />
         <property name="password" column="password" />
         <property name="email" column="email" />
         <property name="credit" column="credit" />
-        <property name="role" column="role" />
+        <property name="role" column="role">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">common.constants.UserRole</param>
+            </type>
+        </property>
+        <property name="profileID" column="profile_id" />
+        <property name="imageID" column="image_id" />
 	</class>
 </hibernate-mapping>
