@@ -47,17 +47,17 @@ public class BaseDao {
     
     /* ============================================================ */
     
-    public Boolean save(Object obj) {
+    public boolean save(Object obj) {
         getSession().save(obj);
         return true;
     }
     
-    public Boolean update(Object obj) {
+    public boolean update(Object obj) {
         getSession().update(obj);
         return true;
     }
     
-    public Boolean delete(Object obj) {
+    public boolean delete(Object obj) {
         getSession().delete(obj);
         return true;
     }

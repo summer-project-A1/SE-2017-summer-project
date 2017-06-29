@@ -7,14 +7,15 @@
 	<constant name="struts.i18n.encoding" value="utf-8" />
 	<constant name="struts.devMode" value="true" />
 	
-	<package name="userAction" extends="struts-default">
+	<package name="userAction" extends="json-default">
 	    <action name="register" class="action.UserAction" method="register">
             <result name="success">success.jsp</result>
             <result name="error">fail.jsp</result>
         </action>
 		<action name="login" class="action.UserAction" method="login">
-			<result name="success">success.jsp</result>
-			<result name="error">fail.jsp</result>
+		    <result name="success" type="json">
+                <param name="root">params</param>
+            </result>
 		</action>
 		<action name="logout" class="action.UserAction" method="logout">
             <result name="success">login.jsp</result>
