@@ -37,6 +37,40 @@
 
     <script>
         $(document).ready(function() {
+            $("#email").focus();
+            $("#email").keyup(function(){
+                var email = $("#email").val();
+                if(email.indexOf("@") < 0){
+                    $("#status1").html("<span style='color:red'>请输入正确的邮件地址</span>");
+                }else{
+                    $("#status1").html("<span></span>");
+                }
+            });
+            $("#email").blur(function(){
+                var email = $("#email").val();
+                if(email.indexOf("@") < 0){
+                    $("#status1").html("<span style='color:red'>请输入正确的邮件地址</span>");
+                }else{
+                    $("#status1").html("<span></span>");
+                }
+            });
+            $("#password").focus();
+            $("#password").keyup(function(){
+                var password = $("#password").val();
+                if(password.length < 1){
+                    $("#status2").html("<span style='color:red'>请输入密码</span>");
+                }else{
+                    $("#status2").html("<span></span>");
+                }
+            });
+            $("#password").blur(function(){
+                var password = $("#password").val();
+                if(password.length < 1){
+                    $("#status2").html("<span style='color:red'>请输入密码</span>");
+                }else{
+                    $("#status2").html("<span></span>");
+                }
+            });
             $("#login").click(function () {
                 var params = $("#loginForm").serialize();
                 $.ajax({
@@ -156,11 +190,11 @@
                         <fieldset id="body">
                             <fieldset>
                                 <label for="email">注册邮箱</label>
-                                <input type="email" name="email" id="email" class="required email">
+                                <input type="email" name="email" id="email" class="required email"><div id="status1"></div>
                             </fieldset>
                             <fieldset>
                                 <label for="password">密码</label>
-                                <input type="password" name="password" id="password" class="required">
+                                <input type="password" name="password" id="password" class="required"><div id="status2"></div>
                             </fieldset>
                             <input type="button" id="login" value="登录">
                         </fieldset>
