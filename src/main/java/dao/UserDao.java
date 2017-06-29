@@ -13,7 +13,7 @@ public interface UserDao {
 
     public Map getUserProfileMap(int userID);
     
-    public Boolean saveUserProfile(int userID, Map userProfile);
+    public boolean saveUserProfile(int userID, Map userProfile);
     
     public List<User> getAllUsers();
     

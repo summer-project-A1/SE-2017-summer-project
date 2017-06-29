@@ -46,9 +46,9 @@ public class UserDaoImpl extends BaseDao implements UserDao {
     }
 
     @Override
-    public Boolean saveUserProfile(int userID, Map userProfile) {
+    public boolean saveUserProfile(int userID, Map userProfile) {
         // TODO 自动生成的方法存根
-        return null;
+        return false;
     }
 
 }

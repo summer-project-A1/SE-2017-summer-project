@@ -4,7 +4,9 @@ import java.util.Map;
 
 import com.opensymphony.xwork2.ActionContext;
 
+import common.constants.UserRole;
 import common.utils.MD5Util;
+import common.utils.PasswordUtil;
 import dao.UserDao;
 import model.User;
 import service.UserService;
@@ -30,12 +32,12 @@ public class UserServiceImpl implements UserService {
     /* ======================================================== */
 
     @Override
-    public Boolean isLogined() {
+    public boolean isLogined() {
         return getHttpSession().containsKey("userinfo");
     }
     
     @Override
-    public Boolean login(String email, String plainPassword) {
+    public boolean login(String email, String plainPassword) {
         Boolean logined = isLogined();
         if(!logined) {
             if(email != null) {
@@ -58,13 +60,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean register(String email, String plainPassword) {
-        // TODO 自动生成的方法存根
-        return null;
+    public boolean register(String email, String plainPassword) {
+        if(this.userDao.getUserByEmail(email) != null) {
+            return false;
+        }
+        User newUser = new User();
+        newUser.setEmail(email);
+        newUser.setPassword(PasswordUtil.getEncryptedPassword(plainPassword));
+        newUser.setRole(UserRole.COMMON);
+        newUser.setCredit(0);
+        newUser.setImageID("");
+        newUser.setProfileID("");
+        return true;
     }
 
     @Override
-    public Boolean logout() {
+    public boolean logout() {
         Boolean logined = isLogined();
         if (logined) {
             getHttpSession().clear();
@@ -79,15 +90,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean updateUserProfile(int userID, Map newUserProfile) {
+    public boolean updateUserProfile(int userID, Map newUserProfile) {
         // TODO 自动生成的方法存根
-        return null;
+        return false;
     }
 
     @Override
-    public Boolean updateUserPassword(String oldPassword, String newPassword) {
+    public boolean updateUserPassword(String oldPassword, String newPassword) {
         // TODO 自动生成的方法存根
-        return null;
+        return false;
     }
     
 }

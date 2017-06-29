@@ -40,6 +40,10 @@ public class UserAction extends ActionSupport {
 
     /* =========================================================== */
     
+    public String register() {
+        return this.userService.register(this.email, this.password)? SUCCESS : ERROR;
+    }
+    
     public String login() {
         if(this.userService.isLogined() || this.userService.login(this.email, this.password)) {
             return SUCCESS;

@@ -8,6 +8,10 @@
 	<constant name="struts.devMode" value="true" />
 	
 	<package name="userAction" extends="struts-default">
+	    <action name="register" class="action.UserAction" method="register">
+            <result name="success">success.jsp</result>
+            <result name="error">fail.jsp</result>
+        </action>
 		<action name="login" class="action.UserAction" method="login">
 			<result name="success">success.jsp</result>
 			<result name="error">fail.jsp</result>
