@@ -7,7 +7,7 @@
 	<constant name="struts.i18n.encoding" value="utf-8" />
 	<constant name="struts.devMode" value="true" />
 
-	<package name="userAction" extends="struts-default,json-default">
+	<package name="userAction" extends="struts-default,json-default" namespace="/userAction">
         <action name="*" class="action.UserAction" method="{1}">
             <result name="success">/success.jsp</result>
             <result name="error">/fail.jsp</result>
@@ -15,6 +15,7 @@
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
+            <allowed-methods>login,register,logout</allowed-methods>
         </action>
 
 	</package>
