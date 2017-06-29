@@ -5,15 +5,7 @@ import java.util.Map;
 
 import model.User;
 
-public interface UserDao {
-
-    public boolean save(Object obj);
-    
-    public boolean update(Object obj);
-    
-    public boolean delete(Object obj);
-    
-    /* ==================================================== */
+public interface UserDao extends BaseDao {
     
     public User getUserById(int id);
     

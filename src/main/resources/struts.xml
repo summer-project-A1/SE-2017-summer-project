@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Struts2 DTD -->
 <!DOCTYPE struts PUBLIC
-	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
-	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
 <struts>
 	<constant name="struts.i18n.encoding" value="utf-8" />
 	<constant name="struts.devMode" value="true" />
@@ -20,12 +20,14 @@
 		<action name="logout" class="action.UserAction" method="logout">
             <result name="success">login.jsp</result>
         </action>
-        
-
-        <!-- 
-		<action name="*">
-			<result>/{1}.jsp</result>
-		</action>
-		-->
 	</package>
+	
+	<package name="bookAction" extends="struts-default">
+        <action name="showAllBooks" class="action.BookAction" method="showAllBooks">
+            <result name="success">test.jsp</result>
+        </action>
+        <action name="showUserBooks" class="action.BookAction" method="showUserBooks">
+            <result name="success">test.jsp</result>
+        </action>
+    </package>
 </struts>

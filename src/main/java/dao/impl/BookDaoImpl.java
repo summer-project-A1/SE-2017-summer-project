@@ -10,7 +10,7 @@ import dao.BookDao;
 import model.Book;
 import model.User;
 
-public class BookDaoImpl extends BaseDao implements BookDao {
+public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 
     @Override
     public List<Book> getAllBooks() {

@@ -12,6 +12,16 @@ public class BookServiceImpl implements BookService {
     
     /* ===================================================== */
     
+    public BookDao getBookDao() {
+        return bookDao;
+    }
+
+    public void setBookDao(BookDao bookDao) {
+        this.bookDao = bookDao;
+    }   
+    
+    /* ===================================================== */
+    
     @Override
     public Boolean uploadBook(Map bookInfo) {
         // TODO 自动生成的方法存根
@@ -20,14 +30,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> showAllBooks() {
-        // TODO 自动生成的方法存根
-        return null;
+        return this.bookDao.getAllBooks();
     }
 
     @Override
     public List<Book> showUserBooks(int userID) {
-        // TODO 自动生成的方法存根
-        return null;
+        return this.bookDao.getBooksByUserID(userID);
     }
 
     @Override
