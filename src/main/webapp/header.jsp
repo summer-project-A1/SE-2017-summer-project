@@ -6,6 +6,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://"
+            + request.getServerName() + ":" + request.getServerPort()
+            + path + "/";
+%>
 <html>
 <head>
     <title>header</title>
@@ -16,21 +23,47 @@
     <meta name="keywords" content="" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- //Custom Theme files -->
-    <link href="static/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
-    <link href="static/css/style.css" type="text/css" rel="stylesheet" media="all">
+    <link href="css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="all">
     <!-- js -->
-    <script src="static/js/jquery.min.js"></script>
-    <script type="text/javascript" src="static/js/bootstrap-3.1.1.min.js"></script>
-    <script type="text/javascript" src="static/js/jquery.min.js"></script>
-    <script type="text/javascript" src="static/js/jquery.validate.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-3.1.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
     <!-- //js -->
     <!-- cart -->
-    <script src="static/js/simpleCart.min.js"> </script>
+    <script src="js/simpleCart.min.js"> </script>
     <!-- cart -->
 
     <script>
-        $().ready(function() {
+        $(document).ready(function() {
             $("#loginForm").validate();
+            $("#login").click(function () {
+                var params = $("#loginForm").serialize();
+                $.ajax({
+                    url: "login",
+                    type: "post",
+                    data: params,
+                    dataType: "json",
+                    success: function (data) {
+                        var response = eval("("+data+")");
+                        $('#loginBox').empty();
+                        if(response.result == 'false'){
+                            var msg = response.msg;
+                            alert(msg);
+                        }
+                        if(response.result == "true"){
+                            var logout = "<a href='logout.action'>"+"退出登录"+"</a>";
+                            var replace = "<p>"+"欢迎您"+response.email+"</p>"+logout;
+                            $('#loginBox').append(replace);
+                            alert("success");
+                        }
+                    },
+                    error:function(){
+                        alert("请重新登录!");
+                    }
+                });
+            });
         });
     </script>
 </head>
@@ -123,7 +156,7 @@
             <div class="header-right login">
                 <a href="myaccount.html"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
                 <div id="loginBox">
-                    <form id="loginForm" action="login" method="post">
+                    <form id="loginForm">
                         <fieldset id="body">
                             <fieldset>
                                 <label for="email">注册邮箱</label>
@@ -131,11 +164,11 @@
                             </fieldset>
                             <fieldset>
                                 <label for="password">密码</label>
-                                <input type="password" name="password" id="password">
+                                <input type="password" name="password" id="password" class="required">
                             </fieldset>
-                            <input type="submit" id="login" value="登录">
+                            <input type="button" id="login" value="登录">
                         </fieldset>
-                        <p>新用户 ? <a class="sign" href="signup.html">点击注册</a> <span><a href="#">忘记密码?</a></span></p>
+                        <p>新用户 ? <a class="sign" href="signup.jsp">点击注册</a> <span><a href="#">忘记密码?</a></span></p>
                     </form>
                 </div>
             </div>
