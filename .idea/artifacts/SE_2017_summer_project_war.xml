@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
   <artifact type="war" name="SE-2017-summer-project:war">
     <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="SE-2017-summer-project.war">
+    <root id="archive" name="bookshare.war">
       <element id="artifact" artifact-name="SE-2017-summer-project:war exploded" />
     </root>
   </artifact>

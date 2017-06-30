@@ -85,6 +85,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean checkEmailAvailable(String email) {
+        // 检查email是否已被注册，未注册（可用）返回true
+        if(this.userDao.getUserByEmail(email) != null) {
+            // 已被注册
+            return false;
+        }
+        return true;
+    }
+    
+    @Override
     public boolean logout() {
         Boolean logined = isLogined();
         if (logined) {

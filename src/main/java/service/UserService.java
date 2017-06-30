@@ -6,6 +6,7 @@ public interface UserService {
     public boolean isLogined();
     public Map login(String email, String plainPassword);
     public boolean register(String email, String plainPassword);
+    public boolean checkEmailAvailable(String email);
     public boolean logout();
     public Map showUserProfile(int userID);
     public boolean updateUserProfile(int userID, Map newUserProfile);

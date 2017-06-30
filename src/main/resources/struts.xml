@@ -15,17 +15,19 @@
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
-            <allowed-methods>login,register,logout</allowed-methods>
+            <allowed-methods>logout,login,register,checkEmailAvailable</allowed-methods>
         </action>
     </package>
 
     <package name="orderAction" extends="struts-default,json-default" namespace="/orderAction">
         <action name="*" class="action.OrderAction" method="{1}">
-            <result name="cart">/cart.jsp</result>
+            <result name="cart" type="json">
+                <param name="root">cart</param>
+            </result>
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
-            <allowed-methods>showCart,addToCart</allowed-methods>
+            <allowed-methods>showCart,addToCart,removeFromCart</allowed-methods>
         </action>
     </package>
 

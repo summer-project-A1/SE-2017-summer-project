@@ -74,4 +74,15 @@ public class OrderAction extends ActionSupport {
         ActionContext.getContext().put("booksInCart",cart);
         return "cart";
     }
+    public String removeFromCart() {
+        params = new HashMap();
+        boolean result = this.orderService.removeFromCart(this.bookID);
+        if(result) {
+            params.put("success", true);
+        }
+        else {
+            params.put("success", false);
+        }
+        return "ajax";
+    }
 }
