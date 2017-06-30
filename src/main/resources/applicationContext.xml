@@ -89,6 +89,9 @@
     <bean id="bookService" class="service.impl.BookServiceImpl">
         <property name="bookDao" ref="bookDao"></property>
     </bean>
+    <bean id="orderService" class="service.impl.OrderServiceImpl">
+        <property name="bookDao" ref="bookDao"></property>
+    </bean>
     
     <!-- ============================================================= -->
     
@@ -98,6 +101,9 @@
     </bean>
     <bean id="bookAction" class="action.BookAction">
         <property name="bookService" ref="bookService"></property>
+    </bean>
+    <bean id="orderAction" class="action.OrderAction">
+        <property name="orderService" ref="orderService"></property>
     </bean>
     
 </beans>

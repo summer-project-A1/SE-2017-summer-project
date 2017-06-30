@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Struts2 DTD -->
 <!DOCTYPE struts PUBLIC
-	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
-	"http://struts.apache.org/dtds/struts-2.5.dtd">
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
 <struts>
-	<constant name="struts.i18n.encoding" value="utf-8" />
-	<constant name="struts.devMode" value="true" />
+    <constant name="struts.i18n.encoding" value="utf-8" />
+    <constant name="struts.devMode" value="true" />
 
-	<package name="userAction" extends="struts-default,json-default" namespace="/userAction">
+    <package name="userAction" extends="struts-default,json-default" namespace="/userAction">
         <action name="*" class="action.UserAction" method="{1}">
             <result name="success">/success.jsp</result>
             <result name="error">/fail.jsp</result>
@@ -17,10 +17,20 @@
             </result>
             <allowed-methods>logout,login,register</allowed-methods>
         </action>
+    </package>
+    <package name="orderAction" extends="struts-default,json-default" namespace="/orderAction">
+        <action name="*" class="action.OrderAction" method="{1}">
+            <result name="cart" type="json">
+                <param name="root">cart</param>
+            </result>
+            <result name="ajax" type="json">
+                <param name="root">params</param>
+            </result>
+            <allowed-methods>showCart,addToCart</allowed-methods>
+        </action>
+    </package>
 
-	</package>
-
-	<package name="bookAction" extends="struts-default">
+    <package name="bookAction" extends="struts-default">
         <action name="showAllBooks" class="action.BookAction" method="showAllBooks">
             <result name="success">test.jsp</result>
         </action>
