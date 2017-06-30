@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="header.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -10,7 +10,6 @@
     <meta name="keywords" content="" />
 
 
-<<<<<<< Updated upstream
     <!-- js -->
     <script src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap-3.1.1.min.js"></script>
@@ -24,11 +23,9 @@
     <!-- //the jScrollPane script -->
     <script type="text/javascript" src="js/jquery.mousewheel.js"></script>
     <!-- the mousewheel plugin -->
-=======
 
 
 
->>>>>>> Stashed changes
 </head>
 <body>
 

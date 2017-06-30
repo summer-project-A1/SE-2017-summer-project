@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%
     String path = request.getContextPath();
@@ -34,9 +34,9 @@
 <!-- home page -->
 <div class="banner">
     <div class="container">
-        <h2 class="hdng">图书 <span>分享</span> 交流平台</h2>
-        <p>将你闲置的书籍与其他网友互换吧！</p>
-        <a href="bookrelease.jsp">马上发布</a>
+        <h2 class="hdng">鍥句功 <span>鍒嗕韩</span> 浜ゆ祦骞冲彴</h2>
+        <p>灏嗕綘闂茬疆鐨勪功绫嶄笌鍏朵粬缃戝弸浜掓崲鍚э紒</p>
+        <a href="bookrelease.jsp">椹笂鍙戝竷</a>
         <div class="banner-text">
             <img src="images/2.png" alt=""/>
         </div>
@@ -61,11 +61,11 @@
                             <h5 class="item_price">$95.00</h5>
                         </div>
                         <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -86,11 +86,11 @@
                             <h5 class="item_price">$95.00</h5>
                         </div>
                         <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -111,11 +111,11 @@
                             <h5 class="item_price">$95.00</h5>
                         </div>
                         <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -136,11 +136,11 @@
                             <h5 class="item_price">$95.00</h5>
                         </div>
                         <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -161,11 +161,11 @@
                             <h5 class="item_price">$95.00</h5>
                         </div>
                         <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -186,11 +186,11 @@
                             <h5 class="item_price">$95.00</h5>
                         </div>
                         <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -211,11 +211,11 @@
                             <h5 class="item_price">$95.00</h5>
                         </div>
                         <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -236,11 +236,11 @@
                             <h5 class="item_price">$95.00</h5>
                         </div>
                         <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -261,11 +261,11 @@
                             <h5 class="item_price">$95.00</h5>
                         </div>
                         <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -286,11 +286,11 @@
                             <h5 class="item_price">$95.00</h5>
                         </div>
                         <div class="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
+                            <span>鈽�</span>
                         </div>
                         <div class="clearfix"></div>
                     </div>

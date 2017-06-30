@@ -21,9 +21,7 @@
 
     <package name="orderAction" extends="struts-default,json-default" namespace="/orderAction">
         <action name="*" class="action.OrderAction" method="{1}">
-            <result name="cart" type="json">
-                <param name="root">cart</param>
-            </result>
+            <result name="cart">/cart.jsp</result>
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
