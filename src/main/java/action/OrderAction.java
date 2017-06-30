@@ -64,7 +64,7 @@ public class OrderAction extends ActionSupport {
             params.put("success", true);
         }
         else {
-            params.put("success", true);
+            params.put("success", false);
         }
         return "ajax";
     }

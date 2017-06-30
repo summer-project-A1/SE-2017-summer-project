@@ -56,6 +56,7 @@ public class OrderServiceImpl implements OrderService {
         Map<String, Object> newCartListItem = new HashMap();
         newCartListItem.put("bookID", bookID);
         newCartListItem.put("amount", 1);
+        cartList.add(newCartListItem);
         return true;
     }
 
