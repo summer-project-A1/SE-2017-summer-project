@@ -10,6 +10,7 @@
     <meta name="keywords" content="" />
 
 
+<<<<<<< Updated upstream
     <!-- js -->
     <script src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap-3.1.1.min.js"></script>
@@ -23,6 +24,11 @@
     <!-- //the jScrollPane script -->
     <script type="text/javascript" src="js/jquery.mousewheel.js"></script>
     <!-- the mousewheel plugin -->
+=======
+
+
+
+>>>>>>> Stashed changes
 </head>
 <body>
 
@@ -53,7 +59,7 @@
         //showTip('Added to your cart!', 'success');
         console.log('amount: '+parseInt($('.item_quantity').first().val()));
         $.ajax({
-            url: base_url + 'cart/action_addToCart',
+            url: base_url + 'orderAction/addToCart',
             type: 'POST',
             data: {
                 'bookID': bookID,
@@ -63,7 +69,6 @@
                 //console.log(msg.success);
 
                 if (msg.success) {
-                    $('#order').removeClass('disabled');
                     showTip('Added to your cart!', 'success');
                 }
                 else {
