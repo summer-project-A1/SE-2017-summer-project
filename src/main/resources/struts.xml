@@ -15,7 +15,7 @@
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
-            <allowed-methods>logout,login,register</allowed-methods>
+            <allowed-methods>logout,login,register,checkEmailAvailable</allowed-methods>
         </action>
     </package>
     <package name="orderAction" extends="struts-default,json-default" namespace="/orderAction">
