@@ -38,13 +38,15 @@
             if(email.indexOf("@") < 0){
                 $("#available_status").html("<span style='color:red'>请输入正确的邮件地址</span>");
             }else{
+                var param = $("#register_email").serialize();
             $.ajax({
                 url:"<%=path%>/userAction/checkEmailAvailable",
                 type:"get",
-                date:email,
+                data:param,
                 dataType:"text",
                 success: function (data) {
                     var response = eval("("+data+")");
+                    //alert(response.result);
                     if(response.result == false){
                         $("#available_status").html("<span style='color:red'>该用户名已存在</span>");
                     }
