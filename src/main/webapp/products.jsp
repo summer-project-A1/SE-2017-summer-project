@@ -8,13 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="" />
-    <script type="application/x-javascript">
-        addEventListener
-            ("load",
-            function() { setTimeout(hideURLbar, 0); },
-            false);
-        function hideURLbar(){ window.scrollTo(0,1); }
-    </script>
+
 
     <!-- js -->
     <script src="js/jquery.min.js"></script>
@@ -25,50 +19,77 @@
     <!-- cart -->
     <!-- the jScrollPane script -->
     <script type="text/javascript" src="js/jquery.jscrollpane.min.js"></script>
-    <script type="text/javascript" id="sourcecode">
-        $(function()
-        {
-            $('.scroll-pane').jScrollPane();
-        });
 
-        function showTip(tip,type){
-            var $tip = $('#tip');
-            $tip.attr('class', 'alert alert-' + type).text(tip).css('margin-left', - $tip.outerWidth() / 2).fadeIn(500).delay(1000).fadeOut(500);
-        }
-
-        function addToCart(bookID)
-        {
-
-            console.log('amount: ' + $('.item_quantity').first().val());
-            $.ajax({
-                url: base_url + 'cart/action_addToCart',
-                type: 'POST',
-                data: {
-                    'bookID': bookID,
-                    'amount': $('.item_quantity').first().val()
-                },
-                success: function (msg) {
-                    //console.log(msg.success);
-
-                    if (msg.success) {
-                        $('#order').removeClass('disabled');
-                        showTip('Added to your cart!', 'success');
-                    }
-                    else {
-                        showTip('some thing go wrong', 'danger');
-                    }
-                },
-                error:function(xhr,status,error){
-                    alert('status='+status+',error='+error);
-                }
-            });
-        }
-    </script>
     <!-- //the jScrollPane script -->
     <script type="text/javascript" src="js/jquery.mousewheel.js"></script>
     <!-- the mousewheel plugin -->
 </head>
 <body>
+
+
+<script type="application/x-javascript">
+    addEventListener
+    ("load",
+        function() { setTimeout(hideURLbar, 0); },
+        false);
+    function hideURLbar(){ window.scrollTo(0,1); }
+</script>
+
+
+<script type="text/javascript" id="sourcecode">
+    $(function()
+    {
+        $('.scroll-pane').jScrollPane();
+    });
+
+    function showTip(tip,type){
+        var $tip = $('#tip');
+        $tip.attr('class', 'alert alert-' + type).text(tip).css('margin-left', - $tip.outerWidth() / 2).fadeIn(500).delay(1000).fadeOut(500);
+    }
+
+    function addToCart(bookID)
+    {
+
+        //showTip('Added to your cart!', 'success');
+        console.log('amount: '+parseInt($('.item_quantity').first().val()));
+        $.ajax({
+            url: base_url + 'cart/action_addToCart',
+            type: 'POST',
+            data: {
+                'bookID': bookID,
+                'amount': $('.item_quantity').first().val()
+            },
+            success: function (msg) {
+                //console.log(msg.success);
+
+                if (msg.success) {
+                    $('#order').removeClass('disabled');
+                    showTip('Added to your cart!', 'success');
+                }
+                else {
+                    showTip('some thing go wrong', 'danger');
+                }
+            },
+            error:function(xhr,status,error){
+                alert('status='+status+',error='+error);
+            }
+        });
+    }
+</script>
+
+<style type="text/css">
+    #tip {
+        font-weight: bold;
+        position: absolute;
+        top: 50px;
+        left: 50%;
+        display: none;
+        z-index: 9999;
+    }
+</style>
+
+
+
 
 <!--products-->
 <div class="products">
@@ -82,6 +103,11 @@
 
 
             <!--具体图书信息div-->
+
+
+
+
+
             <div class="product-grid">
                 <a href="single.html">
                     <div class="more-product"><span> </span></div>
@@ -102,8 +128,8 @@
                             <p class="pric1"><del>原始积分</del></p>
                             <p class="disc">折扣</p>
                         </div>
-                        <input type="text" class="item_quantity" value="1" />
-                        <input type="button" class="item_add items" value="添加" onclick="addToCart(bookID)">
+                        <input type="text" class="item_quantity" value="1" maxlength="8" />
+                        <input type="button" class="item_add items" value="添加" onclick="addToCart(3)">
                         <div class="clearfix"> </div>
                     </div>
                 </div>
@@ -201,9 +227,8 @@
         </div>
         <div class="clearfix"> </div>
     </div>
-    <div id="tip"></div>
 </div>
 <!--//products-->
-
+<div id="tip"></div>
 </body>
 </html>
