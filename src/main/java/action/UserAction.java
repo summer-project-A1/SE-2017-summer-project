@@ -53,13 +53,24 @@ public class UserAction extends ActionSupport {
 
     /* =========================================================== */
 
+    public String checkEmailAvailable() {
+        params = new HashMap();
+        if(this.userService.checkEmailAvailable(this.email)) {
+            params.put("result", true);
+        }
+        else {
+            params.put("result", false);
+        }
+        return "ajax";
+    }
+    
     public String register() {
         return this.userService.register(this.email, this.password)? SUCCESS : ERROR;
     }
     
     public String login() {
         this.params = this.userService.login(this.email, this.password); 
-        return SUCCESS;
+        return "ajax";
     }
     
     public String logout() {
