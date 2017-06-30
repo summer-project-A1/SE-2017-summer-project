@@ -2,6 +2,7 @@ package service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -82,8 +83,24 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public boolean removeFromCart() {
-        // TODO 自动生成的方法存根
+    public boolean removeFromCart(int bookID) {
+        List<Map<String, Object>> cartList;
+        if(getHttpSession().containsKey("cart")) {
+            cartList = (List<Map<String, Object>>)getHttpSession().get("cart");
+        }
+        else {
+            cartList = new ArrayList<Map<String, Object>>();
+        }
+        
+        Iterator iterator = cartList.iterator();
+        while(iterator.hasNext()) {
+            Map<String, Object> cartListItem = (Map<String, Object>) iterator.next();
+            int existedBookID = (int)cartListItem.get("bookID");
+            if(existedBookID == bookID) {
+                iterator.remove();
+                return true;
+            }
+        }
         return false;
     }
 
