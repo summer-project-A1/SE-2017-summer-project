@@ -16,25 +16,6 @@
 <html>
 <head>
     <title>Sign up</title>
-    <!-- Custom Theme files -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="" />
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-    <!-- //Custom Theme files -->
-    <link href="css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
-    <link href="css/style.css" type="text/css" rel="stylesheet" media="all">
-    <!-- js -->
-    <script src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap-3.1.1.min.js"></script>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
-    <!-- //js -->
-    <!-- cart -->
-    <script src="js/simpleCart.min.js"> </script>
-    <!-- cart -->
-
-
 </head>
 <body>
 <!-- header -->
@@ -58,7 +39,7 @@
                 $("#available_status").html("<span style='color:red'>请输入正确的邮件地址</span>");
             }else{
             $.ajax({
-                url:"",
+                url:"<%=path%>/userAction/checkEmailAvailable",
                 type:"get",
                 date:email,
                 dataType:"text",
@@ -111,10 +92,28 @@
             }
         });
 
+        $("#mobile").focus();
+        $("#mobile").keyup(function(){
+           var mobile = $("#mobile").val();
+           if(mobile.length != 11){
+               $("#available_status4").html("<span style='color: red'>请输入11位手机号</span>");
+           }else{
+               $("#available_status4").html("<span></span>");
+           }
+        });
+        $("#mobile").blur(function(){
+            var mobile = $("#mobile").val();
+            if(mobile.length != 11){
+                $("#available_status4").html("<span style='color: red'>请输入11位手机号</span>");
+            }else{
+                $("#available_status4").html("<span></span>");
+            }
+        });
+
         $("#register").click(function(){
             var params = $("#registerForm").serialize();
             $.ajax({
-                url: "register",
+                url: "<%=path%>/userAction/register",
                 type: "post",
                 data: params,
                 dataType: "text",
@@ -134,11 +133,21 @@
     });
 </script>
 
+<script type="text/javascript" src="js/jquery.cityselect.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $("#city_4").citySelect({
+            nodata: "none",
+            required:false
+        });
+    });
+</script>
+
 <div class="account">
     <div class="container">
         <div class="register" id="registerBox">
             <form id="registerForm">
-                <div class="register-bottom-grid">
+                <div class="register-top-grid">
                     <h3>用户注册</h3>
                     <div class="input">
                         <span>邮箱地址<label>*</label></span>
@@ -152,16 +161,45 @@
                         <span>确认密码<label>*</label></span>
                         <input type="password" name="confirmpassword" id="register_confirmpassword"><div id="available_status3"></div>
                     </div>
+                    <div class="input">
+                        <span>姓名</span>
+                        <input type="text" name="name" id="name">
+                    </div>
+                    <div class="input">
+                        <span>性别</span>
+                        <select id="gender" name="gender" >
+                            <option>请选择</option>
+                            <option>男</option>
+                            <option>女</option>
+                        </select>
+                    </div>
+                    <div class="input">
+                        <span>手机<label>*</label></span>
+                        <input type="text" name="mobile" id="mobile"><div id="available_status4"></div>
+                    </div>
+                    <span>省市地区<label>*</label></span>
+                    <div class="input" id="city_4">
+                        <select class="prov" id="province" name="province" style="width:auto"></select>
+                        <select class="city"  disabled="disabled" id="city" name="city"  style="width:auto"></select>
+                        <select class="dist" disabled="disabled" id="district" name="district" style="width: auto"></select>
+                    </div>
+                    <div class="input">
+                        <span>详细地址<label>*</label></span>
+                        <input type="text" name="address" id="address">
+                    </div>
+                    <div class="clearfix"> </div>
+                <div class="register-but">
+                    <input type="button" value="注册" id="register">
+                    <div class="clearfix"> </div>
+                </div>
                 </div>
             </form>
-            <div class="clearfix"> </div>
-            <div class="register-but">
-                <input type="button" value="submit" id="register">
-                <div class="clearfix"> </div>
-            </div>
         </div>
     </div>
 </div>
+
+
+
 
 <!-- footer -->
 <jsp:include page="footer.jsp"/>

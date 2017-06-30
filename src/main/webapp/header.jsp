@@ -19,7 +19,6 @@
 
     <!-- Custom Theme files -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- //Custom Theme files -->
@@ -74,7 +73,7 @@
             $("#login").click(function () {
                 var params = $("#loginForm").serialize();
                 $.ajax({
-                    url: "login",
+                    url: "<%=path%>/userAction/login",
                     type: "post",
                     data: params,
                     dataType: "text",
@@ -85,7 +84,7 @@
                             alert(msg);
                         }
                         if(response.result == true){
-                            var logout = "<label><a href='logout.action'>"+"退出登录"+"</a><label>";
+                            var logout = "<label><a href='<%=path%>/userAction/logout'>"+"退出登录"+"</a><label>";
                             var replace = "<label>"+"欢迎您!"+response.email+"</label><br>"+logout;
                             $('#loginForm').html(replace);
                             alert(response.message);
