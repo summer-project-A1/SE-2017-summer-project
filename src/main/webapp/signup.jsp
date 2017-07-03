@@ -1,18 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://"
-            + request.getServerName() + ":" + request.getServerPort()
-            + path + "/";
-%>
+<%@include file="header.jsp"%>
+<%@include file="footer.jsp"%>
+
 <html>
 <head>
     <title>Sign up</title>
 </head>
 <body>
 <!-- header -->
-<jsp:include page="header.jsp"/>
 
 <script>
     $(document).ready(function(){
@@ -136,7 +132,7 @@
     });
 </script>
 
-<script type="text/javascript" src="js/jquery.cityselect.js"></script>
+<script type="text/javascript" src="<%=path%>js/jquery.cityselect.js"></script>
 <script type="text/javascript">
     $(function() {
         $("#city_4").citySelect({

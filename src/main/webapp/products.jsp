@@ -232,5 +232,6 @@
 </div>
 <!--//products-->
 <div id="tip"></div>
+<jsp:include page="footer.jsp"/>
 </body>
 </html>

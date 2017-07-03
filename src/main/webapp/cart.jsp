@@ -61,7 +61,7 @@
 
 
             <div id="<s:property value="bookID"/>" class="cart-header">
-                <div class="close-button" onclick="deleteBook(<s:property value="bookID"/>)"> </div>
+                <div class="close-icon" onclick="deleteBook(<s:property value="bookID"/>)"> </div>
                 <div class="cart-sec simpleCart_shelfItem">
                     <div class="cart-item cyc">
                         <img src="<%=path%>/images/m1.png" class="img-responsive" alt="">
@@ -155,7 +155,7 @@
 </div>
 <!--//checkout-->
 
-
+<jsp:include page="footer.jsp"/>
 </body>
 </html>
 

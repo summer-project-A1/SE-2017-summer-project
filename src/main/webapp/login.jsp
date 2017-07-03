@@ -10,5 +10,6 @@
         <label>密码：</label><input type="text" name="password"></input>
         <input type="submit" value="登录"></input>
     </form>
+    <jsp:include page="footer.jsp"/>
 </body>
 </html>

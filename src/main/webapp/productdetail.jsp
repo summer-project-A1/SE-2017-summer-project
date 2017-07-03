@@ -1,19 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://"
-            + request.getServerName() + ":" + request.getServerPort()
-            + path + "/";
-%>
+
 <!- header -->
-<jsp:include page="header.jsp"/>
+<%@include file="header.jsp"%>
+<%@include file="footer.jsp"%>
+
 <html>
 <head>
     <title>Detail</title>
     <script src="<%=path%>/js/imagezoom.js"></script>
     <script defer src="<%=path%>/js/jquery.flexslider.js"></script>
-    <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
     <script>
         $(window).load(function() {
             $('.flexslider').flexslider({
@@ -31,14 +27,14 @@
             <div class="col-md-4 single-grid">
                 <div class="flexslider">
                     <ul class="slides">
-                        <li data-thumb="images/s1.png">
-                            <div class="thumb-image"> <img src="images/s1.png" data-imagezoom="true" class="img-responsive"> </div>
+                        <li data-thumb="<%=path%>/images/s1.png">
+                            <div class="thumb-image"> <img src="<%=path%>/images/s1.png" data-imagezoom="true" class="img-responsive"> </div>
                         </li>
-                        <li data-thumb="images/s2.png">
-                            <div class="thumb-image"> <img src="images/s2.png" data-imagezoom="true" class="img-responsive"> </div>
+                        <li data-thumb="<%=path%>/images/s2.png">
+                            <div class="thumb-image"> <img src="<%=path%>/images/s2.png" data-imagezoom="true" class="img-responsive"> </div>
                         </li>
-                        <li data-thumb="images/s3.png">
-                            <div class="thumb-image"> <img src="images/s3.png" data-imagezoom="true" class="img-responsive"> </div>
+                        <li data-thumb="<%=path%>/images/s3.png">
+                            <div class="thumb-image"> <img src="<%=path%>/images/s3.png" data-imagezoom="true" class="img-responsive"> </div>
                         </li>
                     </ul>
                 </div>
@@ -79,7 +75,7 @@
             <div class="col-md-4 single-grid1">
                 <h2>个人账户</h2>
                 <ul>
-                    <li><a href="products.html">全部图书</a></li>
+                    <li><a href="<%=basePath%>products.jsp">全部图书</a></li>
                     <li><a href="myaccount.html">个人信息</a></li>
                     <li><a href="myrelease.html">我的发布</a></li>
                     <li><a href="myborrow.html">我的借阅</a></li>
