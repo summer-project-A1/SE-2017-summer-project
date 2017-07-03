@@ -17,6 +17,7 @@
 <!--cart-items-->
 <div class="cart-items">
     <div class="container">
+        <div id="tip"> </div>
         <h2>我的购物车</h2>
         <script>
             function showTip(tip,type){
@@ -35,10 +36,10 @@
                     success: function(msg){
                         if (msg.success) {
                             $("div").remove("#"+bookID);
-                            showTip('Removed from your cart!', 'success');
+                            showTip('从购物车删除!', 'success');
                         }
                         else {
-                            showTip('some thing go wrong', 'danger');
+                            showTip('无法删除，请刷新页面！', 'danger');
                         }
                     },
                     error:function(xhr,status,error){
