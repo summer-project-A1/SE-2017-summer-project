@@ -91,6 +91,8 @@
     </bean>
     <bean id="bookDao" class="dao.impl.BookDaoImpl" parent="baseDao">
     </bean>
+    <bean id="bookReleaseDao" class="dao.impl.BookReleaseDaoImpl" parent="baseDao">
+    </bean>
     <bean id="imageDao" class="dao.impl.ImageDaoImpl" parent="baseDao">
     </bean>
 
@@ -102,6 +104,8 @@
     </bean>
     <bean id="bookService" class="service.impl.BookServiceImpl">
         <property name="bookDao" ref="bookDao"></property>
+        <property name="bookReleaseDao" ref="bookReleaseDao"></property>
+        <property name="imageDao" ref="imageDao"></property>
     </bean>
     <bean id="orderService" class="service.impl.OrderServiceImpl">
         <property name="bookDao" ref="bookDao"></property>

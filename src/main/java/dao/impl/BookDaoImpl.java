@@ -57,8 +57,9 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 
     @Override
     public Map getBookProfileMap(int bookID) {
+        Book book = this.getBookByID(bookID);
         DBCollection collection = getMongoDb().getCollection("book_profile");
-        DBObject query=new BasicDBObject("book_id", bookID);
+        DBObject query=new BasicDBObject("_id", new ObjectId(book.getProfileID()));
         DBObject obj = collection.findOne(query);
         Map bookProfile = (obj!=null) ? (Map)obj : null;
         return bookProfile;
@@ -66,8 +67,9 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 
     @Override
     public String saveOrUpdateBookProfile(Map bookProfile) {
+        Book book = this.getBookByID((int)bookProfile.get("bookID"));
         DBCollection collection = getMongoDb().getCollection("book_profile");
-        DBObject query=new BasicDBObject("book_id", (int)bookProfile.get("bookID"));
+        DBObject query=new BasicDBObject("_id", new ObjectId(book.getProfileID()));
         DBObject old = collection.findOne(query);
 
         BasicDBObject document = new BasicDBObject(bookProfile);
