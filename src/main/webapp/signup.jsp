@@ -110,7 +110,11 @@
             var password = $("#register_password").val();
             var confirmpassword = $("#register_confirmpassword").val();
             var mobile = $("#mobile").val();
-            if(email.indexOf("@")>0 && password.length>0 && confirmpassword == password && mobile.length == 11){
+            var province = $("#province").val();
+            var city = $("#city").val();
+            var address = $("#address").val();
+            if(email.indexOf("@")>0 && password.length>0 && confirmpassword == password &&
+                province.length>0 && address.length>0 && mobile.length == 11){
                 var params = $("#registerForm").serialize();
                 $.ajax({
                     url: "<%=path%>/userAction/register",

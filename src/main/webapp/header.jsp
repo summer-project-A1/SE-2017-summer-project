@@ -202,7 +202,7 @@
                             </fieldset>
                             <input type="button" id="login" value="登录">
                         </fieldset>
-                        <p>新用户 ? <a class="sign" href="signup.jsp">点击注册</a> <span><a href="#">忘记密码?</a></span></p>
+                        <p>新用户 ? <a class="sign" href="<%=path%>/signup.jsp">点击注册</a> <span><a href="#">忘记密码?</a></span></p>
                     </form>
                 </div>
                    <%
