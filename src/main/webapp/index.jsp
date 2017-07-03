@@ -34,9 +34,9 @@
 <!-- home page -->
 <div class="banner">
     <div class="container">
-        <h2 class="hdng">鍥句功 <span>鍒嗕韩</span> 浜ゆ祦骞冲彴</h2>
-        <p>灏嗕綘闂茬疆鐨勪功绫嶄笌鍏朵粬缃戝弸浜掓崲鍚э紒</p>
-        <a href="bookrelease.jsp">椹笂鍙戝竷</a>
+        <h2 class="hdng">图书<span>分享</span>交流平台</h2>
+        <p>把你的闲置图书分享给别的书友吧！</p>
+        <a href="bookrelease.jsp">马上发布</a>
         <div class="banner-text">
             <img src="images/2.png" alt=""/>
         </div>
