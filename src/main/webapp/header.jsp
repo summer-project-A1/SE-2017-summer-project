@@ -11,7 +11,6 @@
 
 <html>
 <head>
-    <title>header</title>
 
     <!-- Custom Theme files -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,6 +20,7 @@
     <link href="<%=path%>/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
     <link href="<%=path%>/css/style.css" type="text/css" rel="stylesheet" media="all">
     <link href="<%=path%>/css/form.css" rel="stylesheet" type="text/css" media="all" />
+    <link rel="stylesheet" href="<%=path%>/css/flexslider.css" type="text/css" media="screen" />
     <!-- js -->
     <script type="text/javascript">
         const base_url = '<%= basePath%>';
@@ -210,7 +210,7 @@
                 <div id="loginBox">
                     <form id="loginForm2">
                             <label>欢迎您！${sessionScope.userinfo.email}</label><br>
-                            <label><a href="logout.action">退出登录</a></label>
+                            <label><a href="<%=basePath%>logout.action">退出登录</a></label>
                     </form>
                 </div>
                 <%
@@ -241,6 +241,10 @@
                     <h4><span>购物车为空</span></h4>
                     <%}%>
                     <p><a href="#" class="simpleCart_empty">清空购物车</a></p>
+                    <h4><a href="<%=path%>/orderAction/showCart">
+                        <span class="simpleCart_total"> $0.00 </span> (<span id="simpleCart_quantity" class="simpleCart_quantity"> 0 </span>)
+                    </a></h4>
+                    <p><a href="javascript:;" class="simpleCart_empty">清空购物车</a></p>
                     <div class="clearfix"> </div>
                 </div>
             </div>
