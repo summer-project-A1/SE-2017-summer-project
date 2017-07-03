@@ -39,7 +39,7 @@ public class BookAction extends ActionSupport {
         }
         return SUCCESS;
     }
-    public String showUserBooks() {
+    public String showUserReleasedBooks() {
         List<Book> userBooks = this.bookService.showUserBooks(this.userID);
         for(Book tmp:userBooks) {
             System.out.println(tmp.getBookID());
