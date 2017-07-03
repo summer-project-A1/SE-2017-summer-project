@@ -44,36 +44,36 @@
                 </div>
             </div>
             <div class="col-md-4 single-grid simpleCart_shelfItem">
-                <h3>此处放书名</h3>
+                <h3>书名<s:property value="bookProfile.bookName"/></h3>
                 <p>此处放书的简介</p>
                 <ul class="size">
                     <h3>作者</h3>
-                    <li><span>作者</span></li>
+                    <li><span>作者<s:property value="bookProfile.author"/></span></li>
                 </ul>
                 <ul class="size">
                     <h3>出版社</h3>
-                    <li><span>出版社</span></li>
+                    <li><span>出版社<s:property value="bookProfile.press"/></span></li>
                 </ul>
                 <ul class="size">
                     <h3>积分要求</h3>
                 </ul>
                 <div class="galry">
                     <div class="prices">
-                        <h5 class="item_price">购买积分：800</h5>
+                        <h5 class="item_price">购买积分：<s:property value="bookProfile.borrowCredit"/></h5>
                     </div>
                     <div class="rating">
-                        <h5 class="item_price">借阅积分：50</h5>
+                        <h5 class="item_price">借阅积分：<s:property value="bookProfile.exchangeCredit"/></h5>
                     </div>
                     <div class="clearfix"></div>
                 </div>
+                <%String canborrow = <s:property value=/>%>
                 <div class="btn_form">
                     <a href="#" class="add-cart item_add">借阅</a>
                     <a href="#" class="add-cart item_add">交换</a>
                     <a href="#" class="add-cart item_add">购买</a>
                 </div>
                 <div class="tag">
-                    <p>Category : <a href="#">此处写大分类</a></p>
-                    <p>Tag : <a href="#">此处写小分类</a></p>
+                    <p>Category : <a href="#"><s:property value="bookProfile.category"/></a></p>
                 </div>
             </div>
             <div class="col-md-4 single-grid1">
@@ -105,7 +105,7 @@
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                     <div class="panel-body">
-                        此处放内容简介
+                        此处放内容简介<s:property value="bookProfile.intro"/>
                     </div>
                 </div>
             </div>
@@ -119,7 +119,13 @@
                 </div>
                 <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                     <div class="panel-body">
-                        此处放其他信息，比如想要交换的图书
+                        出版时间：<s:property value="bookProfile."/>
+                        页数：
+                        版次：
+                        装帧：
+                        开本：
+                        成色：
+                        损毁情况：
                     </div>
                 </div>
             </div>
