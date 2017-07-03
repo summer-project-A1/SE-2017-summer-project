@@ -220,14 +220,6 @@
                 <a href="cart.jsp"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                 <div class="cart-box">
                     <%
-                        Map booklist = new HashMap();
-                        booklist.put("bookID",3);
-                        booklist.put("bookName","csapp");
-                        booklist.put("amount",1);
-                        List cartlist = new ArrayList();
-                        cartlist.add(booklist);
-                        session.setAttribute("cart",cartlist);
-
                         List l = (List)session.getAttribute("cart");
                         if(l != null) {
                             Map map = new HashMap();
