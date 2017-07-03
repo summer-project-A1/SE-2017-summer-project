@@ -131,7 +131,7 @@
     });
 </script>
 
-<script type="text/javascript" src="<%=path%>js/jquery.cityselect.js"></script>
+<script type="text/javascript" src="<%=path%>/js/jquery.cityselect.js"></script>
 <script type="text/javascript">
     $(function() {
         $("#city_4").citySelect({
