@@ -74,6 +74,9 @@
         <property name="sessionFactory">
             <ref bean="sessionFactory" />
         </property>
+        <property name="mongoTemplate">
+            <ref bean="mongoTemplate" />
+        </property>
     </bean>
     <bean id="userDao" class="dao.impl.UserDaoImpl" parent="baseDao">
     </bean>

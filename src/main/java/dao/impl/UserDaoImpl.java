@@ -3,7 +3,12 @@ package dao.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.bson.types.ObjectId;
 import org.hibernate.query.Query;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
 
 import model.User;
 
@@ -41,14 +46,27 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
     @Override
     public Map getUserProfileMap(int userID) {
-        // TODO 自动生成的方法存根
-        return null;
+        DBCollection collection = getMongoDb().getCollection("user_profile");
+        DBObject query=new BasicDBObject("user_id", (Integer)userID);
+        DBObject obj = collection.findOne(query);
+        Map userProfile = (obj!=null) ? (Map)obj : null;
+        return userProfile;
     }
 
     @Override
-    public boolean saveUserProfile(int userID, Map userProfile) {
-        // TODO 自动生成的方法存根
-        return false;
+    public String saveOrUpdateUserProfile(Map userProfile) {
+        DBCollection collection = getMongoDb().getCollection("user_profile");
+        DBObject query=new BasicDBObject("user_id", (Integer)userProfile.get("userID"));
+        DBObject old = collection.findOne(query);
+
+        BasicDBObject document = new BasicDBObject(userProfile);
+        if(old!=null) {
+            collection.update(query, document);
+        }
+        else {
+            collection.insert(document);
+        }
+        return ((ObjectId)document.get("_id")).toString();
     }
 
 }

@@ -69,10 +69,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean register(String email, String plainPassword) {
+    public boolean register(Map registerInfo) {
+        String email = (String)registerInfo.get("email");
         if(this.userDao.getUserByEmail(email) != null) {
             return false;
         }
+        String plainPassword = (String)registerInfo.get("password");
+        String name = (String)registerInfo.get("name");
+        String gender = (String)registerInfo.get("gender");
+        String mobile = (String)registerInfo.get("mobile");
+        String province = (String)registerInfo.get("province");
+        String city = (String)registerInfo.get("city");
+        String district = (String)registerInfo.get("district");
+        String address = (String)registerInfo.get("address");
+        
         User newUser = new User();
         newUser.setEmail(email);
         newUser.setPassword(PasswordUtil.getEncryptedPassword(plainPassword));
@@ -81,6 +91,22 @@ public class UserServiceImpl implements UserService {
         newUser.setImageID("");
         newUser.setProfileID("");
         this.userDao.save(newUser);
+        
+        Map userProfile = new HashMap();
+        userProfile.put("user_id", newUser.getUserID());
+        userProfile.put("name", name);
+        userProfile.put("gender", gender);
+        userProfile.put("mobile", mobile);
+        userProfile.put("province", province);
+        userProfile.put("city", city);
+        userProfile.put("district", district);
+        userProfile.put("address", address);
+        
+        String profileID = this.userDao.saveOrUpdateUserProfile(userProfile);
+        newUser.setProfileID(profileID);
+        
+        this.userDao.update(newUser);
+        
         return true;
     }
 

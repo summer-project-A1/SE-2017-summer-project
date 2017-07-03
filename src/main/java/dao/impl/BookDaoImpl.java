@@ -65,7 +65,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
     }
 
     @Override
-    public boolean addOrUpdateBookProfile(Map bookProfile) {
+    public String saveOrUpdateBookProfile(Map bookProfile) {
         DBCollection collection = getMongoDb().getCollection("book_profile");
         DBObject query=new BasicDBObject("book_id", (int)bookProfile.get("bookID"));
         DBObject old = collection.findOne(query);
@@ -77,7 +77,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
         else {
             collection.insert(document);
         }
-        return true;
+        return ((ObjectId)document.get("_id")).toString();
     }
     
 }

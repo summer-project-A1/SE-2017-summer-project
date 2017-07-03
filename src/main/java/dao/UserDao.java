@@ -13,7 +13,7 @@ public interface UserDao extends BaseDao {
 
     public Map getUserProfileMap(int userID);
     
-    public boolean saveUserProfile(int userID, Map userProfile);
+    public String saveOrUpdateUserProfile(Map userProfile);
     
     public List<User> getAllUsers();
     
