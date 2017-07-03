@@ -13,7 +13,7 @@
     <title>Detail</title>
     <script src="<%=path%>/js/imagezoom.js"></script>
     <script defer src="<%=path%>/js/jquery.flexslider.js"></script>
-    <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="<%=path%>css/flexslider.css" type="text/css" media="screen" />
     <script>
         $(window).load(function() {
             $('.flexslider').flexslider({
