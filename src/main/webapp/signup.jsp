@@ -113,24 +113,32 @@
         });
 
         $("#register").click(function(){
-            var params = $("#registerForm").serialize();
-            $.ajax({
-                url: "<%=path%>/userAction/register",
-                type: "post",
-                data: params,
-                dataType: "text",
-                success: function (data) {
-                    var response = eval("("+data+")");
-                    if(response.result == false){
-                        var msg = response.message;
-                        alert(msg);
+            var email = $("#register_email").val();
+            var password = $("#register_password").val();
+            var confirmpassword = $("#register_confirmpassword").val();
+            var mobile = $("#mobile").val();
+            if(email.indexOf("@")<0 && password.length>0 && confirmpassword == password && mobile.length == 11){
+                var params = $("#registerForm").serialize();
+                $.ajax({
+                    url: "<%=path%>/userAction/register",
+                    type: "post",
+                    data: params,
+                    dataType: "text",
+                    success: function (data) {
+                        var response = eval("("+data+")");
+                        if(response.result == false){
+                            var msg = response.message;
+                            alert(msg);
+                        }
+                        if(response.result == true){
+                            alert(response.message);
+                            window.location.href='index.jsp';
+                        }
                     }
-                    if(response.result == true){
-                        alert(response.message);
-                        window.location.href='index.jsp';
-                    }
-                }
-            });
+                });
+            }else{
+                alert("请重新输入注册信息");
+            }
         });
     });
 </script>
