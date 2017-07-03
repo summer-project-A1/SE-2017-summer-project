@@ -91,6 +91,8 @@
     </bean>
     <bean id="bookDao" class="dao.impl.BookDaoImpl" parent="baseDao">
     </bean>
+    <bean id="imageDao" class="dao.impl.ImageDaoImpl" parent="baseDao">
+    </bean>
 
     <!-- ============================================================= -->
 
@@ -104,6 +106,9 @@
     <bean id="orderService" class="service.impl.OrderServiceImpl">
         <property name="bookDao" ref="bookDao"></property>
     </bean>
+    <bean id="imageService" class="service.impl.ImageServiceImpl">
+        <property name="imageDao" ref="imageDao"></property>
+    </bean>
     
     <!-- ============================================================= -->
     
@@ -116,6 +121,9 @@
     </bean>
     <bean id="orderAction" class="action.OrderAction">
         <property name="orderService" ref="orderService"></property>
+    </bean>
+    <bean id="imageAction" class="action.ImageAction">
+        <property name="imageService" ref="imageService"></property>
     </bean>
     
 </beans>

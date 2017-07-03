@@ -1,5 +1,6 @@
 package dao.impl;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +56,13 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
     @Override
     public String saveOrUpdateUserProfile(Map userProfile) {
+        Iterator it = userProfile.entrySet().iterator();
+        while(it.hasNext()) {
+            Map.Entry entry = (Map.Entry)it.next();
+            System.out.println((String)entry.getKey());
+            System.out.println(entry.getValue());
+        }
+        
         DBCollection collection = getMongoDb().getCollection("user_profile");
         DBObject query=new BasicDBObject("user_id", (Integer)userProfile.get("userID"));
         DBObject old = collection.findOne(query);
