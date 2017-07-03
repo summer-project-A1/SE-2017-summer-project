@@ -1,11 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: lvjiawei
-  Date: 2017/6/29
-  Time: 上午11:16
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%
     String path = request.getContextPath();
@@ -13,6 +7,8 @@
             + request.getServerName() + ":" + request.getServerPort()
             + path + "/";
 %>
+<!DOCTYPE html>
+
 <html>
 <head>
     <title>header</title>
@@ -22,17 +18,26 @@
     <meta name="keywords" content="" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- //Custom Theme files -->
-    <link href="css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
-    <link href="css/style.css" type="text/css" rel="stylesheet" media="all">
+    <link href="<%=path%>/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+    <link href="<%=path%>/css/style.css" type="text/css" rel="stylesheet" media="all">
+    <link href="<%=path%>/css/form.css" rel="stylesheet" type="text/css" media="all" />
     <!-- js -->
-    <script src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap-3.1.1.min.js"></script>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        const base_url = '<%= basePath%>';
+    </script>
+    <script src="<%=path%>/js/jquery.min.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/bootstrap-3.1.1.min.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/jquery.validate.min.js"></script>
     <!-- //js -->
     <!-- cart -->
-    <script src="js/simpleCart.min.js"> </script>
+    <script src="<%=path%>/js/simpleCart.min.js"> </script>
     <!-- cart -->
+    <!-- the jScrollPane script -->
+    <script type="text/javascript" src="<%=path%>/js/jquery.jscrollpane.min.js"></script>
+
+    <!-- //the jScrollPane script -->
+    <script type="text/javascript" src="<%=path%>/js/jquery.mousewheel.js"></script>
+    <!-- the mousewheel plugin -->
 
     <script>
         $(document).ready(function() {

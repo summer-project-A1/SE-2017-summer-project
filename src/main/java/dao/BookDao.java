@@ -11,5 +11,5 @@ public interface BookDao extends BaseDao {
     public List<Book> getBooksByUserID(int userID);
     public List<Book> searchByCondition(Map condition);
     public Map getBookProfileMap(int bookID);
-    public boolean addOrUpdateBookProfile(Map bookProfile);
+    public String saveOrUpdateBookProfile(Map bookProfile);
 }

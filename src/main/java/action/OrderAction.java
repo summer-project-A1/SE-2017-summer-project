@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import service.OrderService;
@@ -70,6 +71,18 @@ public class OrderAction extends ActionSupport {
     }
     public String showCart() {
         this.cart = this.orderService.showCart();
+        ActionContext.getContext().put("booksInCart",cart);
         return "cart";
+    }
+    public String removeFromCart() {
+        params = new HashMap();
+        boolean result = this.orderService.removeFromCart(this.bookID);
+        if(result) {
+            params.put("success", true);
+        }
+        else {
+            params.put("success", false);
+        }
+        return "ajax";
     }
 }
