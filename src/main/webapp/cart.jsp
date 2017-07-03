@@ -35,10 +35,10 @@
                     success: function(msg){
                         if (msg.success) {
                             $("div").remove("#"+bookID);
-                            showTip('Removed from your cart!', 'success');
+                            showTip('删除成功!', 'success');
                         }
                         else {
-                            showTip('some thing go wrong', 'danger');
+                            showTip('删除失败', 'danger');
                         }
                     },
                     error:function(xhr,status,error){
@@ -57,9 +57,22 @@
              });
              */
         </script>
+
+
+        <style type="text/css">
+            #tip {
+                font-weight: bold;
+                position: absolute;
+                top: 50px;
+                left: 50%;
+                display: none;
+                z-index: 9999;
+            }
+        </style>
         <s:if test="#booksInCart==null">
             <h3>购物车为空</h3>
         </s:if>
+        <div id="tip"> </div>
         <s:iterator value="#booksInCart" status="st">
 
 

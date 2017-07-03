@@ -10,6 +10,13 @@
 <!-- header -->
 
 <script>
+
+
+    function showTip(tip,type){
+        var $tip = $('#tip');
+        $tip.attr('class', 'alert alert-' + type).text(tip).css('margin-left', - $tip.outerWidth() / 2).fadeIn(500).delay(1000).fadeOut(500);
+    }
+
     $(document).ready(function(){
         $("#register_email").focus();
         $("#register_email").keyup(function(){
@@ -115,21 +122,34 @@
                     success: function (data) {
                         var response = eval("("+data+")");
                         if(response.result == false){
-                            var msg = response.message;
-                            alert(msg);
+                            //var msg = response.message;
+                            //alert(msg);
+                            showTip("注册失败！","danger");
                         }
                         if(response.result == true){
-                            alert(response.message);
+                            //alert(response.message);
                             window.location.href='index.jsp';
                         }
                     }
                 });
             }else{
-                alert("请重新输入注册信息");
+                //alert("请重新输入注册信息");
+                showTip("重新输入注册信息！","danger");
             }
         });
     });
 </script>
+
+<style type="text/css">
+    #tip {
+        font-weight: bold;
+        position: absolute;
+        top: 50px;
+        left: 50%;
+        display: none;
+        z-index: 9999;
+    }
+</style>
 
 <script type="text/javascript" src="<%=path%>/js/jquery.cityselect.js"></script>
 <script type="text/javascript">
@@ -143,6 +163,7 @@
 
 <div class="account">
     <div class="container">
+        <div id="tip"> </div>
         <div class="register" id="registerBox">
             <form id="registerForm">
                 <div class="register-top-grid">

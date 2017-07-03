@@ -210,7 +210,7 @@
                 <div id="loginBox">
                     <form id="loginForm2">
                             <label>欢迎您！${sessionScope.userinfo.email}</label><br>
-                            <label><a href="logout.action">退出登录</a></label>
+                            <label><a href="<%=basePath%>logout.action">退出登录</a></label>
                     </form>
                 </div>
                 <%

@@ -66,10 +66,10 @@
                 //console.log(msg.success);
 
                 if (msg.success) {
-                    showTip('Added to your cart!', 'success');
+                    showTip('添加成功!', 'success');
                 }
                 else {
-                    showTip('some thing go wrong', 'danger');
+                    showTip('添加失败', 'danger');
                 }
             },
             error:function(xhr,status,error){
