@@ -1,4 +1,4 @@
-
+<%@ page import="java.util.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%
@@ -214,16 +214,41 @@
                     </form>
                 </div>
                 <%
-                }%>
-
-            </div>
+                } %>
+            </div>   
             <div class="header-right cart">
-                <a href="cart.html"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                <a href="cart.jsp"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                 <div class="cart-box">
-                    <h4><a href="checkout.html">
-                        <span class="simpleCart_total"> $0.00 </span> (<span id="simpleCart_quantity" class="simpleCart_quantity"> 0 </span>)
-                    </a></h4>
-                    <p><a href="javascript:;" class="simpleCart_empty">清空购物车</a></p>
+                    <%
+                        Map booklist = new HashMap();
+                        booklist.put("bookID",3);
+                        booklist.put("bookName","csapp");
+                        booklist.put("amount",1);
+                        List cartlist = new ArrayList();
+                        cartlist.add(booklist);
+                        session.setAttribute("cart",cartlist);
+
+                        List l = (List)session.getAttribute("cart");
+                        if(l != null) {
+                            Map map = new HashMap();
+                            for (int i = 0; i < l.size(); i++) {
+                                map = (Map) l.get(i);
+                                Set keyset = map.keySet();
+                                Object[] obj = keyset.toArray();
+                                String bookid = map.get(obj[2]).toString();
+                                String bookname = map.get(obj[1]).toString();
+                                String amount = map.get(obj[0]).toString();
+                            %>
+                    <h4>
+                        <span>书名：<%=bookname%></span>    <span id="simpleCart_quantity" >数量：<%=amount%></span>
+                    </h4>
+                            <%
+                            }
+                        }else{
+                        %>
+                    <h4><span>购物车为空</span></h4>
+                    <%}%>
+                    <p><a href="#" class="simpleCart_empty">清空购物车</a></p>
                     <div class="clearfix"> </div>
                 </div>
             </div>
