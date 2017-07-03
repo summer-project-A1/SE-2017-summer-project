@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="model.ExchangeHistory" table="exchangehistory">
+        <id name="ehID" column="eh_id">
+            <generator class="native"/>
+        </id>
+        <property name="user1ID" column="user1_id" />
+        <property name="user2ID" column="user2_id" />
+        <property name="book1ID" column="book1_id" />
+        <property name="book2ID" column="book2_id" />
+        <property name="exchangeDate" column="exchangedate" type="timestamp" />
+        <property name="applyDate" column="applydate" type="timestamp" />
+    </class>
+</hibernate-mapping>

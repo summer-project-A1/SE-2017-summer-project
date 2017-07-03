@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Struts2 DTD -->
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <constant name="struts.i18n.encoding" value="utf-8" />
+    <constant name="struts.devMode" value="true" />
+
+	<package name="userAction" extends="struts-default,json-default" namespace="/userAction">
+        <action name="*" class="action.UserAction" method="{1}">
+            <result name="success">/success.jsp</result>
+            <result name="error">/fail.jsp</result>
+            <result name="logout">/login.jsp</result>
+            <result name="ajax" type="json">
+                <param name="root">params</param>
+            </result>
+            <allowed-methods>logout,login,register,checkEmailAvailable</allowed-methods>
+        </action>
+    </package>
+
+    <package name="orderAction" extends="struts-default,json-default" namespace="/orderAction">
+        <action name="*" class="action.OrderAction" method="{1}">
+            <result name="cart">/cart.jsp</result>
+            <result name="ajax" type="json">
+                <param name="root">params</param>
+            </result>
+            <allowed-methods>showCart,addToCart,removeFromCart</allowed-methods>
+        </action>
+    </package>
+
+    <package name="bookAction" extends="struts-default">
+        <action name="showAllBooks" class="action.BookAction" method="showAllBooks">
+            <result name="success">test.jsp</result>
+        </action>
+        <action name="showUserBooks" class="action.BookAction" method="showUserBooks">
+            <result name="success">test.jsp</result>
+        </action>
+    </package>
+    
+    <package name="image" extends="struts-default">
+        <action name="showImage" class="action.ImageAction" method="showImage">
+            <result name="success" type="stream">
+                <param name="contentDisposition">inline;filename="${imageFileName}"</param>
+                <param name="inputName">imageFile</param>
+                <param name="contentType">${contentType}</param> 
+            </result>
+            <result name="error" type="httpheader">
+                <param name="status">404</param>
+            </result>
+        </action>
+    </package>
+
+
+</struts>
