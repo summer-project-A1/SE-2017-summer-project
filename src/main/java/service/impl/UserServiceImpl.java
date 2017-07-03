@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
         this.userDao.save(newUser);
         
         Map userProfile = new HashMap();
-        userProfile.put("user_id", newUser.getUserID());
+        userProfile.put("userID", newUser.getUserID());
         userProfile.put("name", name);
         userProfile.put("gender", gender);
         userProfile.put("mobile", mobile);
