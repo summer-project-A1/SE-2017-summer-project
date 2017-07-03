@@ -111,12 +111,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <h1 class="navbar-brand"><a  href="index.jsp">BookShare</a></h1>
+                <h1 class="navbar-brand"><a href="<%=path%>/index.jsp">BookShare</a></h1>
             </div>
             <!--navbar-header-->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="index.html" class="active">首页</a></li>
+                    <li><a href="index.jsp" class="active">首页</a></li>
                     <li class="dropdown grid">
                         <a href="#" class="dropdown-toggle list1" data-toggle="dropdown">寻找图书<b class="caret"></b></a>
                         <ul class="dropdown-menu multi-column columns-4">
