@@ -36,7 +36,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public boolean addToCart(int bookID) {
         // 添加到http session中，不验证登录状态
-        if(this.bookDao.getBookByID(bookID) == null) {
+        Book book = this.bookDao.getBookByID(bookID); 
+        if(book == null) {
             return false;
         }
         List<Map<String, Object>> cartList;
@@ -56,6 +57,7 @@ public class OrderServiceImpl implements OrderService {
         }
         Map<String, Object> newCartListItem = new HashMap();
         newCartListItem.put("bookID", bookID);
+        newCartListItem.put("bookName", book.getBookName());
         newCartListItem.put("amount", 1);
         cartList.add(newCartListItem);
         return true;
