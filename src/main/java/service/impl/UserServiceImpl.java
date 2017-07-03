@@ -107,6 +107,7 @@ public class UserServiceImpl implements UserService {
         
         this.userDao.update(newUser);
         
+        getHttpSession().put("userinfo", newUser);
         return true;
     }
 
