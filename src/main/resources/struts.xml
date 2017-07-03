@@ -29,11 +29,19 @@
         </action>
     </package>
 
-    <package name="bookAction" extends="struts-default">
+    <package name="bookAction" extends="json-default">
         <action name="showAllBooks" class="action.BookAction" method="showAllBooks">
             <result name="success">test.jsp</result>
         </action>
         <action name="showUserBooks" class="action.BookAction" method="showUserBooks">
+            <result name="success">test.jsp</result>
+        </action>
+        <action name="showBookProfile" class="action.BookAction" method="showBookProfile">
+            <result name="success" type="json">
+                <param name="root">bookProfile</param>
+            </result>
+        </action>
+        <action name="uploadBook" class="action.BookAction" method="uploadBook">
             <result name="success">test.jsp</result>
         </action>
     </package>

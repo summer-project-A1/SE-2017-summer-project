@@ -48,7 +48,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     @Override
     public Map getUserProfileMap(int userID) {
         DBCollection collection = getMongoDb().getCollection("user_profile");
-        DBObject query=new BasicDBObject("user_id", (Integer)userID);
+        DBObject query=new BasicDBObject("userID", (Integer)userID);
         DBObject obj = collection.findOne(query);
         Map userProfile = (obj!=null) ? (Map)obj : null;
         return userProfile;
@@ -64,7 +64,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         }
         
         DBCollection collection = getMongoDb().getCollection("user_profile");
-        DBObject query=new BasicDBObject("user_id", (Integer)userProfile.get("userID"));
+        DBObject query=new BasicDBObject("userID", (Integer)userProfile.get("userID"));
         DBObject old = collection.findOne(query);
 
         BasicDBObject document = new BasicDBObject(userProfile);
