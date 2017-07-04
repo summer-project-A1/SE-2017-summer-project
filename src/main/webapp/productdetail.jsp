@@ -28,7 +28,7 @@
                 <div class="flexslider">
                     <ul class="slides">
                         <li data-thumb="<%=path%>/images/s1.png">
-                            <div class="thumb-image"> <img src="<%=path%>/showImage?imageID=<s:property value="bookProfile.imageID"/>" data-imagezoom="true" class="img-responsive"> </div>
+                            <div class="thumb-image"> <img src="<%=path%>/showImage?imageID=<s:property value="#bookProfile.imageID"/>" data-imagezoom="true" class="img-responsive"> </div>
                         </li>
                         <li data-thumb="<%=path%>/images/s2.png">
                             <div class="thumb-image"> <img src="<%=path%>/images/s2.png" data-imagezoom="true" class="img-responsive"> </div>
@@ -40,23 +40,23 @@
                 </div>
             </div>
             <div class="col-md-4 single-grid simpleCart_shelfItem">
-                <h3>书名<s:property value="bookProfile.bookName"/></h3>
-                <s:if test="bookProfile.status=='borrowed' && bookProfile.reserved==false">
+                <h3>书名<s:property value="#bookProfile.bookName"/></h3>
+                <s:if test="#bookProfile.status=='borrowed' && #bookProfile.reserved==false">
                     <p>此书正被借阅，可以预约</p>
                 </s:if>
-                <s:elseif test="bookProfile.status=='borrowed' && bookProfile.reserved==true">
+                <s:elseif test="#bookProfile.status=='borrowed' && #bookProfile.reserved==true">
                     <p>此书正被借阅，已被预约</p>
                 </s:elseif>
-                <s:elseif test="bookProfile.status=='exchanged'">
+                <s:elseif test="#bookProfile.status=='exchanged'">
                     <p>此书已被交换</p>
                 </s:elseif>
-                <s:elseif test="bookProfile.canBorrow==true && bookProfile.canExchange==true">
+                <s:elseif test="#bookProfile.canBorrow==true && #bookProfile.canExchange==true">
                     <p>此书可以借阅，可以交换</p>
                 </s:elseif>
-                <s:elseif test="bookProfile.canBorrow==true && bookProfile.canExchange==false">
+                <s:elseif test="#bookProfile.canBorrow==true && #bookProfile.canExchange==false">
                     <p>此书可以借阅</p>
                 </s:elseif>
-                <s:elseif test="bookProfile.canBorrow==false && bookProfile.canExchange==true">
+                <s:elseif test="#bookProfile.canBorrow==false && #bookProfile.canExchange==true">
                     <p>此书可以交换</p>
                 </s:elseif>
                 <ul class="size">
@@ -69,23 +69,23 @@
                 </ul>
                 <ul class="size">
                     <h3>积分要求</h3>
-                    <li><span>购买积分：<s:property value="bookProfile.borrowCredit"/></span></li>
-                    <li><span>借阅积分：<s:property value="bookProfile.exchangeCredit"/></span></li>
+                    <li><span>购买积分：<s:property value="#bookProfile.borrowCredit"/></span></li>
+                    <li><span>借阅积分：<s:property value="#bookProfile.exchangeCredit"/></span></li>
                     <div class="clearfix"></div>
                 </ul>
                 <div class="btn_form">
-                    <s:if test="bookProfile.status=='borrowed'">
-                        <s:if test="bookProfile.reserved==false">
-                            <s:if test="bookProfile.canBorrow==true">
+                    <s:if test="#bookProfile.status=='borrowed'">
+                        <s:if test="#bookProfile.reserved==false">
+                            <s:if test="#bookProfile.canBorrow==true">
                                 <a href="#" class="add-cart item_add">预约</a>
                             </s:if>
                         </s:if>
                     </s:if>
-                    <s:if test="bookProfile.status=='exchanged'">
+                    <s:if test="#bookProfile.status=='exchanged'">
 
                     </s:if>
                     <s:else>
-                        <s:if test="bookProfile.canBorrow==true">
+                        <s:if test="#bookProfile.canBorrow==true">
                             <a href="#" class="add-cart item_add">借阅</a>
                         </s:if>
                         <s:if test="#bookProfile.canexchange==true">
@@ -117,7 +117,7 @@
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                     <div class="panel-body">
-                        此处放内容简介<s:property value="bookProfile.intro"/>
+                        此处放内容简介<s:property value="#bookProfile.intro"/>
                     </div>
                 </div>
             </div>
