@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isLogined() {
-        return getHttpSession().containsKey("userinfo");
+        return getHttpSession().containsKey("userInfo");
     }
     
     @Override
@@ -45,14 +45,14 @@ public class UserServiceImpl implements UserService {
                 User userinfo = getUserDao().getUserByEmail(email);
                 if(userinfo != null) {
                     if(MD5Util.encoderByMd5(plainPassword).toLowerCase().equals(userinfo.getPassword().toLowerCase())) {
-                        getHttpSession().put("userinfo", userinfo);
+                        getHttpSession().put("userInfo", userinfo);
                         logined = true;
                     }
                 }
             }
         }
         
-        User userinfo = (User)getHttpSession().get("userinfo");
+        User userinfo = (User)getHttpSession().get("userInfo");
         Map params = new HashMap();
         if(logined) {
             params.put("result", true);
@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
         
         this.userDao.update(newUser);
         
-        getHttpSession().put("userinfo", newUser);
+        getHttpSession().put("userInfo", newUser);
         return true;
     }
 
