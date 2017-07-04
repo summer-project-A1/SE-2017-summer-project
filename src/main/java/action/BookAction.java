@@ -245,7 +245,7 @@ public class BookAction extends ActionSupport {
         bookInfo.put("coverPicture", this.coverPicture);     // 封面
         bookInfo.put("otherPicture", this.otherPicture);   // 其他图片
         this.bookService.uploadBook(bookInfo);
-        return SUCCESS;
+        return "showBooks";
     }
     public String showBookProfile() {
         this.bookProfile = this.bookService.showBookProfile(this.bookID);

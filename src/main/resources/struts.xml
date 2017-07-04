@@ -32,7 +32,7 @@
     <package name="bookAction" extends="struts-default,json-default" namespace="/bookAction">
         <action name="*" class="action.BookAction" method="{1}">
             <result name="showBooks">/products.jsp</result>
-            <allowed-methods>showAllBooks,showUserReleasedBooks</allowed-methods>
+            <allowed-methods>showAllBooks,showUserReleasedBooks,uploadBook</allowed-methods>
         </action>
     </package>
     
