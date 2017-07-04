@@ -39,7 +39,7 @@
                 <param name="root">params</param>
             </result>
             <allowed-methods>
-                showCart,addToCart,removeFromCart
+                showCart,addToCart,removeFromCart,emptyCart
             </allowed-methods>
         </action>
     </package>

@@ -10,7 +10,7 @@
 isbn<input type="text" name="isbn" value="isbn"></input><br />
 作者<input type="text" name="author" value="作者"></input><br />
 出版社<input type="text" name="press" value="出版社"></input><br />
-分类（select框）<input type="text" name="category" value="分类"></input><br />
+分类（select框）<input type="text" name="category1" value="分类"></input><br />
 出版时间 年<input type="text" name="publishYear" value="2017"></input><br />
 出版时间 月<input type="text" name="publishMonth" value="7"></input><br />
 版次 年<input type="text" name="edtionYear" value="2017"></input><br />

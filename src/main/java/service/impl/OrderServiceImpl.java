@@ -108,8 +108,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean emptyCart() {
-        // TODO 自动生成的方法存根
-        return false;
+        if(getHttpSession().containsKey("cart")) {
+            getHttpSession().remove("cart");
+        }
+        return true;
     }
 
     @Override
