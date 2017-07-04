@@ -264,7 +264,9 @@
                             }
                         }else{
                         %>
-                    <h4><span>购物车为空</span></h4>
+                    <h4><a href="<%=path%>/orderAction/showCart">
+                        <span class="simpleCart_total">购物车为空</span>
+                    </a></h4>
                     <%}%>
                     <p><a href="#" class="simpleCart_empty">清空购物车</a></p>
                     <h4><a href="<%=path%>/orderAction/showCart">
