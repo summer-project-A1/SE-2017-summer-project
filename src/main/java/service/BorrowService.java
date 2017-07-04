@@ -1,7 +1,9 @@
 package service;
 
-public interface BorrowService {
-    public Boolean borrowBook(int userID, int bookID);
-    public Boolean returnBook(int userID, int bookID);
-    public Boolean delayBook(int userID, int bookID);
+import java.util.Date;
+
+public interface BorrowService extends BaseService {
+    public boolean borrowBook(int bookID, Date yhDate);
+    public boolean returnBook(int bookID);
+    public boolean delayBook(int bookID);
 }

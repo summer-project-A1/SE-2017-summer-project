@@ -2,8 +2,7 @@ package service;
 
 import java.util.Map;
 
-public interface UserService {
-    public boolean isLogined();
+public interface UserService extends BaseService {
     public Map login(String email, String plainPassword);
     public boolean register(Map registerInfo);
     public boolean checkEmailAvailable(String email);

@@ -19,7 +19,7 @@ import model.BookRelease;
 import model.User;
 import service.BookService;
 
-public class BookServiceImpl implements BookService {
+public class BookServiceImpl extends BaseServiceImpl implements BookService {
     private BookDao bookDao;
     private BookReleaseDao bookReleaseDao;
     private ImageDao imageDao;
@@ -50,17 +50,7 @@ public class BookServiceImpl implements BookService {
     public void setImageDao(ImageDao imageDao) {
         this.imageDao = imageDao;
     }
-    
-    /* ======================================================== */
 
-    public Map<String, Object> getHttpSession() {
-        return ActionContext.getContext().getSession();
-    }
-    
-    public boolean isLogined() {
-        return getHttpSession().containsKey("userInfo");
-    }
-    
     /* ===================================================== */
 
     @Override
@@ -133,7 +123,7 @@ public class BookServiceImpl implements BookService {
         newBookRelease.setBorrowPrice(borrowCredit);
         newBookRelease.setExchangePrice(exchangeCredit);
         newBookRelease.setReleaseTime(new Date());
-        newBookRelease.setUserID(((User)getHttpSession().get("userInfo")).getUserID());
+        newBookRelease.setUserID(getLoginedUserInfo().getUserID());
         this.bookReleaseDao.save(newBookRelease);
         
         return true;

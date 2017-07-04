@@ -5,7 +5,7 @@ import java.util.Map;
 
 import model.Book;
 
-public interface BookService {
+public interface BookService extends BaseService {
     public Boolean uploadBook(Map bookInfo);
     public List<Book> showAllBooks();
     public List<Book> showUserBooks(int userID);

@@ -208,7 +208,7 @@
             </div>
             <div class="header-right login">
                 <a href="myaccount.html"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-                <%if(session.getAttribute("userinfo") == null){ %>
+                <%if(session.getAttribute("userInfo") == null){ %>
                 <div id="loginBox">
                     <form id="loginForm">
                         <fieldset id="body">
@@ -229,7 +229,7 @@
                 }else{ %>
                 <div id="loginBox">
                     <form id="loginForm2">
-                            <label>欢迎您！${sessionScope.userinfo.email}</label><br>
+                            <label>欢迎您！${sessionScope.userInfo.email}</label><br>
                             <label><a href="myaccount.jsp">个人信息</a></label><br>
                             <label><a href="myrelease.jsp">我的发布</a></label><br>
                             <label><a href="myborrow.jsp">我的借阅</a></label><br>

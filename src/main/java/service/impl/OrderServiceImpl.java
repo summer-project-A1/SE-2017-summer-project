@@ -12,7 +12,7 @@ import dao.BookDao;
 import model.Book;
 import service.OrderService;
 
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
     private BookDao bookDao;
     
     /* ========================================================= */
@@ -23,12 +23,6 @@ public class OrderServiceImpl implements OrderService {
 
     public void setBookDao(BookDao bookDao) {
         this.bookDao = bookDao;
-    }
-
-    /* ========================================================= */
-    
-    public Map<String, Object> getHttpSession() {
-        return ActionContext.getContext().getSession();
     }
 
     /* ========================================================= */

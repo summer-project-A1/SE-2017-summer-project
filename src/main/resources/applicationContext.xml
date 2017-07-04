@@ -113,6 +113,13 @@
         <property name="bookReleaseDao" ref="bookReleaseDao"></property>
         <property name="imageDao" ref="imageDao"></property>
     </bean>
+    <bean id="borrowService" class="service.impl.BorrowServiceImpl">
+        <property name="bookDao" ref="bookDao"></property>
+        <property name="bookReleaseDao" ref="bookReleaseDao"></property>
+        <property name="userDao" ref="userDao"></property>
+        <property name="borrowDao" ref="borrowDao"></property>
+        <property name="borrowHistoryDao" ref="borrowHistoryDao"></property>
+    </bean>
     <bean id="orderService" class="service.impl.OrderServiceImpl">
         <property name="bookDao" ref="bookDao"></property>
     </bean>

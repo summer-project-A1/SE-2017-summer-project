@@ -6,7 +6,7 @@ import java.util.Map;
 import model.Apply;
 import model.BookRelease;
 
-public interface HistoryService {
+public interface HistoryService extends BaseService {
     public Map getUserExchangeHistory();
     public Map getUserBorrowHistory();
     public Map getUserOrder();
