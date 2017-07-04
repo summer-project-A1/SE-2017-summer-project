@@ -161,6 +161,7 @@ public class BookServiceImpl implements BookService {
         Book book = this.bookDao.getBookByID(bookID);
         BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
         Map bookProfile = this.bookDao.getBookProfileMap(bookID);
+        bookProfile.remove("_id");
         bookProfile.put("bookID", book.getBookID());
         bookProfile.put("bookName", book.getBookName());
         bookProfile.put("isbn", book.getIsbn());
