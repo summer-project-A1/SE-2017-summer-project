@@ -85,4 +85,8 @@ public class OrderAction extends ActionSupport {
         }
         return "ajax";
     }
+    public String emptyCart() {
+        this.orderService.emptyCart();
+        return "emptyCart";
+    }
 }
