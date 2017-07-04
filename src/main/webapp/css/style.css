@@ -875,7 +875,7 @@ ul.rating li a:hover, .price_single a:hover, ul.size li a:hover {
 	 font-size:0.85em;
 	 color:#C7C7C7;
 }
-span.item_price{
+span.book-isbn{
 	color: #000;
     font-size: 1em;
     font-weight: 600;
@@ -972,6 +972,13 @@ p.disc {
 	background: #eeeef4;
 	float: left;
 	height: 100%;
+}
+
+h3 {
+    font-size: 2em;
+    color: #F07818;
+    font-family: 'Marvel-Regular';
+    text-align: center;
 }
 h2 {
     font-size: 4em;
@@ -3279,7 +3286,7 @@ ul.qty li p {
         font-size: 0.85em;
         padding: 6px;
     }
-    span.item_price {
+    span.book-isbn {
         font-size: 0.9em;
     }
     .total-item, .cart-items {

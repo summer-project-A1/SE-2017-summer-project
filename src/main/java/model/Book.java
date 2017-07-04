@@ -12,7 +12,7 @@ public class Book {
     private int canExchange;      // 用户发布时决定书是否可被交换
     private int canBorrow;        // 用户发布时决定书是否可被借阅
     private int reserved;         // 书当前是否已被预约 
-    private BookStatus status;               // 书当前状态（空闲/正被借阅/正被交换/正被售出）
+    private BookStatus status;               // 书当前状态（空闲/正被借阅/正被交换/正被售出（尚未考虑））
     private String profileID;         // 书的详细信息在monggodb中的id
     private String imageID;           // 书的图片在monggodb中的图片
     

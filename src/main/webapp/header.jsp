@@ -96,8 +96,15 @@
                             //alert(msg);
                         }
                         if(response.result == true){
-                            var logout = "<label><a href='<%=path%>/userAction/logout'>"+"退出登录"+"</a><label>";
-                            var replace = "<label>"+"欢迎您!"+response.email+"</label><br>"+logout;
+                            //先替换原页面元素，等到用户刷新再真正判断session来载入真正的元素
+                            var replace = "<label>"+"欢迎您!"+response.email+"</label><br>" +
+                                "<label><a href='myaccount.jsp'>个人信息</a></label><br>" +
+                                "<label><a href='myrelease.jsp'>我的发布</a></label><br>" +
+                                "<label><a href='myborrow.jsp'>我的借阅</a></label><br>" +
+                                "<label><a href='myexchange.jsp'>我的交换</a></label><br>" +
+                                "<label><a href='myorder.jsp'>我的订单</a></label><br>" +
+                                "<label><a href='myreservation'>我的预约</a></label><br>"+
+                                "<label><a href='<%=path%>/userAction/logout'>"+"退出登录"+"</a><label><br>";
                             $('#loginForm').html(replace);
                             showTip("登陆成功！","success");
                             //alert(response.message);
@@ -208,68 +215,61 @@
             </div>
             <div class="header-right login">
                 <a href="myaccount.html"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-                <%if(session.getAttribute("userInfo") == null){ %>
-                <div id="loginBox">
-                    <form id="loginForm">
-                        <fieldset id="body">
-                            <fieldset>
-                                <label for="email">注册邮箱</label>
-                                <input type="email" name="email" id="email" class="required email"><div id="status1"></div>
+                <s:if test="#session.userInfo==null">
+                    <div id="loginBox">
+                        <form id="loginForm">
+                            <fieldset id="body">
+                                <fieldset>
+                                    <label for="email">注册邮箱</label>
+                                    <input type="email" name="email" id="email" class="required email"><div id="status1"></div>
+                                </fieldset>
+                                <fieldset>
+                                    <label for="password">密码</label>
+                                    <input type="password" name="password" id="password" class="required"><div id="status2"></div>
+                                </fieldset>
+                                <input type="button" id="login" value="登录">
                             </fieldset>
-                            <fieldset>
-                                <label for="password">密码</label>
-                                <input type="password" name="password" id="password" class="required"><div id="status2"></div>
-                            </fieldset>
-                            <input type="button" id="login" value="登录">
-                        </fieldset>
-                        <p>新用户 ? <a class="sign" href="<%=basePath%>signup.jsp">点击注册</a> <span><a href="#">忘记密码?</a></span></p>
-                    </form>
-                </div>
-                   <%
-                }else{ %>
-                <div id="loginBox">
-                    <form id="loginForm2">
-                            <label>欢迎您！${sessionScope.userInfo.email}</label><br>
+                            <p>新用户 ? <a class="sign" href="<%=basePath%>signup.jsp">点击注册</a> <span><a href="#">忘记密码?</a></span></p>
+                        </form>
+                    </div>
+                </s:if>
+                <s:else>
+                    <div id="loginBox">
+                        <form id="loginForm2">
+                            <label>欢迎您！<s:property value="#session.userInfo.email"/></label><br>
                             <label><a href="myaccount.jsp">个人信息</a></label><br>
                             <label><a href="myrelease.jsp">我的发布</a></label><br>
                             <label><a href="myborrow.jsp">我的借阅</a></label><br>
                             <label><a href="myexchange.jsp">我的交换</a></label><br>
                             <label><a href="myorder.jsp">我的订单</a></label><br>
                             <label><a href="myreservation">我的预约</a></label><br>
-                            <label><a href="logout.action">退出登录</a></label><br>
-                    </form>
-                </div>
-                <%
-                } %>
+                            <label><a href="<%=path%>/userAction/logout">退出登录</a></label><br>
+                        </form>
+                    </div>
+                </s:else>
             </div>   
             <div class="header-right cart">
                 <a href="<%=path%>/orderAction/showCart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                 <div class="cart-box">
-                    <%
-                        List l = (List)session.getAttribute("cart");
-                        if(l != null) {
-                            Map map = new HashMap();
-                            for (int i = 0; i < l.size(); i++) {
-                                map = (Map) l.get(i);
-                                Set keyset = map.keySet();
-                                Object[] obj = keyset.toArray();
-                                String bookid = map.get(obj[2]).toString();
-                                String bookname = map.get(obj[1]).toString();
-                                String amount = map.get(obj[0]).toString();
-                            %>
-                    <h4>
-                        <span>书名：<%=bookname%></span>    <span id="simpleCart_quantity" >数量：<%=amount%></span>
-                    </h4>
-                            <%
-                            }
-                        }else{
-                        %>
-                    <h4><span>购物车为空</span></h4>
-                    <%}%>
-                    <p><a href="#" class="simpleCart_empty">清空购物车</a></p>
-                    <h4><a href="<%=path%>/orderAction/showCart">
-                        <span class="simpleCart_total"> $0.00 </span> (<span id="simpleCart_quantity" class="simpleCart_quantity"> 0 </span>)
-                    </a></h4>
+                   <s:if test="#session.cart==null||#session.cart.size()==0">
+                       <h4><span>购物车为空（刷新页面以更新购物车）</span></h4>
+                       <a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a>
+                   </s:if>
+                    <s:else>
+                        <table class="table table-bordered">
+                            <tr>
+                            <th field="bookName" width="20%">书名</th>
+                            <th field="amount" width="20%">数量</th>
+                            </tr>
+                            <s:iterator value="#session.cart" var="cartItem" status="st">
+                                <tr>
+                                    <td><s:property value="#cartItem.bookName"/></td>
+                                    <td id="simpleCart_quantity"><s:property value="#cartItem.amount"/></td>
+                                </tr>
+                        </s:iterator>
+                        </table>
+                        <p><a href="<%=path%>/orderAction/emptyCart" class="simpleCart_empty">清空购物车</a></p>
+                    </s:else>
                     <div class="clearfix"> </div>
                 </div>
             </div>

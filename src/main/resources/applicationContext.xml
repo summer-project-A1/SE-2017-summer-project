@@ -142,5 +142,8 @@
     <bean id="imageAction" class="action.ImageAction">
         <property name="imageService" ref="imageService"></property>
     </bean>
+    <bean id="indexAction" class="action.IndexAction">
+        <property name="bookService" ref="bookService"></property>
+    </bean>
     
 </beans>

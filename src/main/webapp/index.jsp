@@ -3,7 +3,7 @@
 <%@include file="header.jsp"%>
 <html>
 <head>
-    <title>BookShare</title>
+    <title><s:property value="#title"/></title>
 
     <!-- Custom Theme files -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
