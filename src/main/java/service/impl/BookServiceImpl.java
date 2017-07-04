@@ -133,7 +133,7 @@ public class BookServiceImpl implements BookService {
         newBookRelease.setBorrowPrice(borrowCredit);
         newBookRelease.setExchangePrice(exchangeCredit);
         newBookRelease.setReleaseTime(new Date());
-        newBookRelease.setUserID(((User)getHttpSession().get("userinfo")).getUserID());
+        newBookRelease.setUserID(((User)getHttpSession().get("userInfo")).getUserID());
         this.bookReleaseDao.save(newBookRelease);
         
         return true;
