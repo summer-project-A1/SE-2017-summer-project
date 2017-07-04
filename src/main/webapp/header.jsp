@@ -210,7 +210,13 @@
                 <div id="loginBox">
                     <form id="loginForm2">
                             <label>欢迎您！${sessionScope.userinfo.email}</label><br>
-                            <label><a href="logout.action">退出登录</a></label>
+                            <label><a href="myaccount.jsp">个人信息</a></label><br>
+                            <label><a href="myrelease.jsp">我的发布</a></label><br>
+                            <label><a href="myborrow.jsp">我的借阅</a></label><br>
+                            <label><a href="myexchange.jsp">我的交换</a></label><br>
+                            <label><a href="myorder.jsp">我的订单</a></label><br>
+                            <label><a href="myreservation">我的预约</a></label><br>
+                            <label><a href="logout.action">退出登录</a></label><br>
                     </form>
                 </div>
                 <%

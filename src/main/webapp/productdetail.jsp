@@ -13,7 +13,7 @@
     <title>Detail</title>
     <script src="<%=path%>/js/imagezoom.js"></script>
     <script defer src="<%=path%>/js/jquery.flexslider.js"></script>
-    <link rel="stylesheet" href="<%=path%>css/flexslider.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="<%=path%>/css/flexslider.css" type="text/css" media="screen" />
     <script>
         $(window).load(function() {
             $('.flexslider').flexslider({
@@ -70,21 +70,12 @@
                     <a href="#" class="add-cart item_add">借阅</a>
                     <a href="#" class="add-cart item_add">交换</a>
                     <a href="#" class="add-cart item_add">购买</a>
+                    <a href="#" class="add-cart item_add">预约</a>
                 </div>
                 <div class="tag">
                     <p>分类 : <a href="#"><s:property value="bookProfile.category"/></a></p>
+                    <p>标签 : <a href="#"></p>
                 </div>
-            </div>
-            <div class="col-md-4 single-grid1">
-                <h2>个人账户</h2>
-                <ul>
-                    <li><a href="products.jsp">全部图书</a></li>
-                    <li><a href="myaccount.jsp">个人信息</a></li>
-                    <li><a href="myrelease.jsp">我的发布</a></li>
-                    <li><a href="myborrow.jsp">我的借阅</a></li>
-                    <li><a href="myexchange.jsp">我的交换</a></li>
-                    <li><a href="myorder.jsp">我的订单</a></li>
-                </ul>
             </div>
             <div class="clearfix"> </div>
         </div>
