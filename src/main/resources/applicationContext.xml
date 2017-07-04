@@ -39,6 +39,8 @@
 				<value>model/User.hbm.xml</value>
 				<value>model/Book.hbm.xml</value>
 				<value>model/BookRelease.hbm.xml</value>
+				<value>model/Borrow.hbm.xml</value>
+				<value>model/BorrowHistory.hbm.xml</value>
 			</list>
 		</property>
 		<!-- Hibernate SessionFactory -->
@@ -92,6 +94,10 @@
     <bean id="bookDao" class="dao.impl.BookDaoImpl" parent="baseDao">
     </bean>
     <bean id="bookReleaseDao" class="dao.impl.BookReleaseDaoImpl" parent="baseDao">
+    </bean>
+    <bean id="borrowDao" class="dao.impl.BorrowDaoImpl" parent="baseDao">
+    </bean>
+    <bean id="borrowHistoryDao" class="dao.impl.BorrowHistoryDaoImpl" parent="baseDao">
     </bean>
     <bean id="imageDao" class="dao.impl.ImageDaoImpl" parent="baseDao">
     </bean>

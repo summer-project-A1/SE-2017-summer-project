@@ -142,16 +142,16 @@ public class UserAction extends ActionSupport {
         registerInfo.put("password", this.password);
         registerInfo.put("mobile", this.mobile);
         registerInfo.put("province", this.province);
-        if(this.district != null) {
-            // 普通省市
-            registerInfo.put("city", this.city);
-            registerInfo.put("district", this.district);
-        }
-        else {
+        if(this.city != null && this.district == null ) {
             // 直辖市
             // 注意此时前台并不传递district到后台，且district的内容保存在city参数中！
             registerInfo.put("city", this.province);
             registerInfo.put("district", this.city);
+        }
+        else {
+            // 普通省市（三个属性全有）或国外（只有province属性）
+            registerInfo.put("city", this.city);
+            registerInfo.put("district", this.district);
         }
         registerInfo.put("address", this.address);
         registerInfo.put("name", this.name);

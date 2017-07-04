@@ -3,6 +3,7 @@ package service.impl;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,7 +103,7 @@ public class BookServiceImpl implements BookService {
         if(otherPicture != null) {
             List otherPictureID = new ArrayList();
             for(File tmp : otherPicture) {
-                otherPictureID.add(this.imageDao.saveImage(coverPicture));
+                otherPictureID.add(this.imageDao.saveImage(tmp));
             }
             bookProfile.put("otherPicture", otherPictureID);
         }
@@ -118,7 +119,7 @@ public class BookServiceImpl implements BookService {
         newBook.setReserved(0);
         newBook.setStatus(BookStatus.IDLE);
         
-        newBook.setProfileID(this.bookDao.saveOrUpdateBookProfile(bookProfile));
+        newBook.setProfileID(this.bookDao.saveBookProfile(bookProfile));
         if(coverPicture != null) {
             newBook.setImageID(this.imageDao.saveImage(coverPicture));
         }
@@ -131,7 +132,7 @@ public class BookServiceImpl implements BookService {
         newBookRelease.setBookID(newBook.getBookID());
         newBookRelease.setBorrowPrice(borrowCredit);
         newBookRelease.setExchangePrice(exchangeCredit);
-        newBookRelease.setReleaseTime(Calendar.getInstance());
+        newBookRelease.setReleaseTime(new Date());
         newBookRelease.setUserID(((User)getHttpSession().get("userinfo")).getUserID());
         this.bookReleaseDao.save(newBookRelease);
         
@@ -160,6 +161,7 @@ public class BookServiceImpl implements BookService {
         Book book = this.bookDao.getBookByID(bookID);
         BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
         Map bookProfile = this.bookDao.getBookProfileMap(bookID);
+        bookProfile.remove("_id");
         bookProfile.put("bookID", book.getBookID());
         bookProfile.put("bookName", book.getBookName());
         bookProfile.put("isbn", book.getIsbn());
