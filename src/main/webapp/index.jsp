@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://"
-            + request.getServerName() + ":" + request.getServerPort()
-            + path + "/";
-%>
+<%@include file="header.jsp"%>
 <html>
 <head>
     <title>BookShare</title>
@@ -14,22 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-    <!-- //Custom Theme files -->
-    <link href="css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
-    <link href="css/style.css" type="text/css" rel="stylesheet" media="all">
-    <!-- js -->
-    <script src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap-3.1.1.min.js"></script>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
-    <!-- //js -->
-    <!-- cart -->
-    <script src="js/simpleCart.min.js"> </script>
-    <!-- cart -->
 </head>
 <body>
 <!-- header -->
-<jsp:include page="header.jsp"/>
 
 <!-- home page -->
 <div class="banner">

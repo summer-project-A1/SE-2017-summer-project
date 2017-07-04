@@ -1,20 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://"
-            + request.getServerName() + ":" + request.getServerPort()
-            + path + "/";
-%>
+<%@include file="header.jsp"%>
+
 <html>
 <head>
     <title>Sign up</title>
 </head>
 <body>
 <!-- header -->
-<jsp:include page="header.jsp"/>
 
 <script>
+
+
+    function showTip(tip,type){
+        var $tip = $('#tip');
+        $tip.attr('class', 'alert alert-' + type).text(tip).css('margin-left', - $tip.outerWidth() / 2).fadeIn(500).delay(1000).fadeOut(500);
+    }
+
+
+
     $(document).ready(function(){
         $("#register_email").focus();
         $("#register_email").keyup(function(){
@@ -110,11 +114,7 @@
             var password = $("#register_password").val();
             var confirmpassword = $("#register_confirmpassword").val();
             var mobile = $("#mobile").val();
-            var province = $("#province").val();
-            var city = $("#city").val();
-            var address = $("#address").val();
-            if(email.indexOf("@")>0 && password.length>0 && confirmpassword == password &&
-                province.length>0 && address.length>0 && mobile.length == 11){
+            if(email.indexOf("@")>0 && password.length>0 && confirmpassword == password && mobile.length == 11){
                 var params = $("#registerForm").serialize();
                 $.ajax({
                     url: "<%=path%>/userAction/register",
@@ -124,21 +124,34 @@
                     success: function (data) {
                         var response = eval("("+data+")");
                         if(response.result == false){
-                            var msg = response.message;
-                            alert(msg);
+                            //var msg = response.message;
+                            showTip('注册失败!', 'danger');
                         }
                         if(response.result == true){
-                            alert(response.message);
+                            //alert(response.message);
+                            showTip('注册成功!', 'success');
                             window.location.href='index.jsp';
                         }
                     }
                 });
             }else{
-                alert("请重新输入注册信息");
+                //alert("请重新输入注册信息");
+                showTip('请重新输入注册信息!', 'danger');
             }
         });
     });
 </script>
+
+<style type="text/css">
+    #tip {
+        font-weight: bold;
+        position: absolute;
+        top: 50px;
+        left: 50%;
+        display: none;
+        z-index: 9999;
+    }
+</style>
 
 <script type="text/javascript" src="<%=path%>/js/jquery.cityselect.js"></script>
 <script type="text/javascript">
@@ -152,6 +165,7 @@
 
 <div class="account">
     <div class="container">
+        <div id="tip"> </div>
         <div class="register" id="registerBox">
             <form id="registerForm">
                 <div class="register-top-grid">

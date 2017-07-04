@@ -72,7 +72,7 @@ public class BookServiceImpl implements BookService {
         String isbn = (String)bookInfo.get("isbn");    // mysql
         String author = (String)bookInfo.get("author");         // 作者 mysql
         String press = (String)bookInfo.get("press");          // 出版社 mysql
-        String category = (String)bookInfo.get("category");       // 分类 mysql
+        String category1 = (String)bookInfo.get("category1");       // 分类 mysql
         String publishYear = (String)bookInfo.get("publishYear");    // 出版 mongo
         String publishMonth = (String)bookInfo.get("publishMonth");  // mongo
         String edtionYear = (String)bookInfo.get("edtionYear");     // 版次 mongo 
@@ -113,7 +113,7 @@ public class BookServiceImpl implements BookService {
         newBook.setIsbn(isbn);
         newBook.setAuthor(author);
         newBook.setPress(press);
-        newBook.setCategory(category);
+        newBook.setCategory(category1);
         newBook.setCanBorrow(bookBorrow);
         newBook.setCanExchange(bookExchange);
         newBook.setReserved(0);
@@ -167,7 +167,7 @@ public class BookServiceImpl implements BookService {
         bookProfile.put("isbn", book.getIsbn());
         bookProfile.put("author", book.getAuthor());
         bookProfile.put("press", book.getPress());
-        bookProfile.put("category", book.getCategory());
+        bookProfile.put("category1", book.getCategory());
         bookProfile.put("bookExchange", (book.getCanExchange()!=0));
         bookProfile.put("bookBorrow", (book.getCanBorrow()!=0));
         bookProfile.put("borrowCredit", bookRelease.getBorrowPrice());

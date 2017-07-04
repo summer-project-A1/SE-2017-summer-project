@@ -6,5 +6,6 @@
 </head>
 <body>
     <a href="<%=basePath%>login.jsp">重新登录</a>
+    <jsp:include page="footer.jsp"/>
 </body>
 </html>

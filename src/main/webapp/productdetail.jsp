@@ -1,13 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://"
-            + request.getServerName() + ":" + request.getServerPort()
-            + path + "/";
-%>
+
 <!- header -->
-<jsp:include page="header.jsp"/>
+<%@include file="header.jsp"%>
+
 <html>
 <head>
     <title>Detail</title>
@@ -31,14 +27,14 @@
             <div class="col-md-4 single-grid">
                 <div class="flexslider">
                     <ul class="slides">
-                        <li data-thumb="images/s1.png">
-                            <div class="thumb-image"> <img src="images/s1.png" data-imagezoom="true" class="img-responsive"> </div>
+                        <li data-thumb="<%=path%>/images/s1.png">
+                            <div class="thumb-image"> <img src="<%=path%>/images/s1.png" data-imagezoom="true" class="img-responsive"> </div>
                         </li>
-                        <li data-thumb="images/s2.png">
-                            <div class="thumb-image"> <img src="images/s2.png" data-imagezoom="true" class="img-responsive"> </div>
+                        <li data-thumb="<%=path%>/images/s2.png">
+                            <div class="thumb-image"> <img src="<%=path%>/images/s2.png" data-imagezoom="true" class="img-responsive"> </div>
                         </li>
-                        <li data-thumb="images/s3.png">
-                            <div class="thumb-image"> <img src="images/s3.png" data-imagezoom="true" class="img-responsive"> </div>
+                        <li data-thumb="<%=path%>/images/s3.png">
+                            <div class="thumb-image"> <img src="<%=path%>/images/s3.png" data-imagezoom="true" class="img-responsive"> </div>
                         </li>
                     </ul>
                 </div>
