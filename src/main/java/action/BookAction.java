@@ -22,7 +22,8 @@ public class BookAction extends ActionSupport {
     private String isbn;
     private String author;         // 作者
     private String press;          // 出版社
-    private String category;       // 分类
+    private String category1;      // 大分类
+    private String category2;      // 小分类
     private String publishYear;    // 出版
     private String publishMonth;
     private String edtionYear;     // 版次
@@ -89,11 +90,17 @@ public class BookAction extends ActionSupport {
     public void setPress(String press) {
         this.press = press;
     }
-    public String getCategory() {
-        return category;
+    public String getCategory1() {
+        return category1;
     }
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategory1(String category1) {
+        this.category1 = category1;
+    }
+    public String getCategory2() {
+        return category2;
+    }
+    public void setCategory2(String category2) {
+        this.category2 = category2;
     }
     public String getPublishYear() {
         return publishYear;
@@ -226,7 +233,8 @@ public class BookAction extends ActionSupport {
         bookInfo.put("isbn", this.isbn);
         bookInfo.put("author", this.author);         // 作者
         bookInfo.put("press", this.press);          // 出版社
-        bookInfo.put("category", this.category);       // 分类
+        bookInfo.put("category1", this.category1);       // 大分类
+        bookInfo.put("category2", this.category2);       // 小分类
         bookInfo.put("publishYear", this.publishYear);    // 出版
         bookInfo.put("publishMonth", this.publishMonth);
         bookInfo.put("edtionYear", this.edtionYear);     // 版次
