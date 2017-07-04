@@ -5,6 +5,6 @@ public class PasswordUtil {
         return MD5Util.encoderByMd5(plainPassword).toLowerCase();
     }
     static public boolean checkPassword(String plainPassword, String encryptedPassword) {
-        return MD5Util.encoderByMd5(plainPassword).toLowerCase().equals(encryptedPassword.toLowerCase());
+        return getEncryptedPassword(plainPassword).equals(encryptedPassword);
     }
 }

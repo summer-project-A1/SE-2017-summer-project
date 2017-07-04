@@ -72,7 +72,11 @@
                         <img src="<%=path%>/images/m1.png" class="img-responsive" alt="">
                     </div>
                     <div class="cart-item-info">
-                        <h3><a href="#">书名：<s:property value="bookName"/> </a><span>ISBN: <s:property value="ISBN"/> </span></h3>
+                        <h3>
+                            <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
+                                书名：<s:property value="bookName"/></a><br>
+                            <span>ISBN: <s:property value="isbn"/> </span>
+                        </h3>
                         <ul class="qty">
                             <li><p>作者：<s:property value="author"/> </p></li>
                             <li><p>分类：<s:property value="category"/> </p></li>

@@ -12,7 +12,7 @@ import dao.UserDao;
 import model.User;
 import service.UserService;
 
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseServiceImpl implements UserService {
     private UserDao userDao; 
     
     /* ======================================================== */
@@ -23,20 +23,9 @@ public class UserServiceImpl implements UserService {
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
-
-    /* ======================================================== */
-    
-    public Map<String, Object> getHttpSession() {
-        return ActionContext.getContext().getSession();
-    }
     
     /* ======================================================== */
 
-    @Override
-    public boolean isLogined() {
-        return getHttpSession().containsKey("userInfo");
-    }
-    
     @Override
     public Map login(String email, String plainPassword) {
         Boolean logined = isLogined();
@@ -45,14 +34,14 @@ public class UserServiceImpl implements UserService {
                 User userinfo = getUserDao().getUserByEmail(email);
                 if(userinfo != null) {
                     if(MD5Util.encoderByMd5(plainPassword).toLowerCase().equals(userinfo.getPassword().toLowerCase())) {
-                        getHttpSession().put("userInfo", userinfo);
+                        setLoginedUserInfo(userinfo);
                         logined = true;
                     }
                 }
             }
         }
         
-        User userinfo = (User)getHttpSession().get("userInfo");
+        User userinfo = getLoginedUserInfo();
         Map params = new HashMap();
         if(logined) {
             params.put("result", true);
@@ -107,7 +96,7 @@ public class UserServiceImpl implements UserService {
         
         this.userDao.update(newUser);
         
-        getHttpSession().put("userInfo", newUser);
+        setLoginedUserInfo(newUser);
         return true;
     }
 
@@ -125,7 +114,7 @@ public class UserServiceImpl implements UserService {
     public boolean logout() {
         Boolean logined = isLogined();
         if (logined) {
-            getHttpSession().clear();
+            clearLoginedUserInfo();
         }
         return true;
     }

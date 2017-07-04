@@ -38,6 +38,10 @@
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
+            <result name="emptyCart" type="redirectAction">
+                <param name="actionName">showCart</param>
+
+            </result>
             <allowed-methods>
                 showCart,addToCart,removeFromCart,emptyCart
             </allowed-methods>

@@ -6,7 +6,7 @@ import com.mongodb.gridfs.GridFSDBFile;
 import dao.ImageDao;
 import service.ImageService;
 
-public class ImageServiceImpl implements ImageService {
+public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
     
     private ImageDao imageDao;
 

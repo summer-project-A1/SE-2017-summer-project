@@ -219,13 +219,15 @@ public class BookAction extends ActionSupport {
         for(Book tmp:allBooks) {
             System.out.println(tmp.getBookID());
         }
+        ActionContext.getContext().put("allBooks",allBooks);
         return "showBooks";
     }
     public String showUserReleasedBooks() {
-        List<Book> userBooks = this.bookService.showUserBooks(this.userID);
-        for(Book tmp:userBooks) {
+        List<Book> userReleasedBooks = this.bookService.showUserBooks(this.userID);
+        for(Book tmp:userReleasedBooks) {
             System.out.println(tmp.getBookID());
         }
+        ActionContext.getContext().put("allBooks",userReleasedBooks);
         return "showBooks";
     }
     public String uploadBook() {

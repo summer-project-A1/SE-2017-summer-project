@@ -61,11 +61,11 @@
                 </s:elseif>
                 <ul class="size">
                     <h3>作者</h3>
-                    <li><span>作者<s:property value="bookProfile.author"/></span></li>
+                    <li><span>作者<s:property value="#bookProfile.author"/></span></li>
                 </ul>
                 <ul class="size">
                     <h3>出版社</h3>
-                    <li><span>出版社<s:property value="bookProfile.press"/></span></li>
+                    <li><span>出版社<s:property value="#bookProfile.press"/></span></li>
                 </ul>
                 <ul class="size">
                     <h3>积分要求</h3>
@@ -88,15 +88,15 @@
                         <s:if test="bookProfile.canBorrow==true">
                             <a href="#" class="add-cart item_add">借阅</a>
                         </s:if>
-                        <s:if test="bookProfile.canExchange==true">
+                        <s:if test="#bookProfile.canexchange==true">
                             <a href="#" class="add-cart item_add">交换</a>
                             <a href="#" class="add-cart item_add">购买</a>
                         </s:if>
                     </s:else>
                 </div>
                 <div class="tag">
-                    <p>分类 : <a href="#"><s:property value="bookProfile.category1"/></a></p>
-                    <p>标签 : <a href="#"><s:property value="bookProfile.category2"/></a></p>
+                    <p>分类 : <a href="#"><s:property value="#bookProfile.category1"/></a></p>
+                    <p>标签 : <a href="#"><s:property value="#bookProfile.category2"/></a></p>
                 </div>
             </div>
             <div class="clearfix"> </div>
@@ -131,13 +131,13 @@
                 </div>
                 <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                     <div class="panel-body">
-                        出版时间：
-                        页数：
-                        版次：
-                        装帧：
-                        开本：
-                        成色：
-                        损毁情况：
+                        出版时间：<s:property value="#bookProfile."/>
+                        页数：<s:property value="#bookProfile."/>
+                        版次：<s:property value="#bookProfile."/>
+                        装帧：<s:property value="#bookProfile."/>
+                        开本：<s:property value="#bookProfile."/>
+                        成色：<s:property value="#bookProfile."/>
+                        损毁情况：<s:property value="#bookProfile."/>
                     </div>
                 </div>
             </div>

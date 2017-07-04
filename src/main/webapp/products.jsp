@@ -68,32 +68,38 @@
 
 
             <!--具体图书信息div，使用struts迭代器-->
-            <div class="product-grid">
-                <a href="single.html">
-                    <div class="more-product"><span> </span></div>
-                    <div class="product-img b-link-stripe b-animate-go  thickbox">
-                        <img src="<%=path%>/images/m1.png" class="img-responsive" alt="">
-                        <div class="b-wrapper">
-                            <h4 class="b-animate b-from-left  b-delay03">
-                                <button>View</button>
-                            </h4>
+            <s:iterator value="#allBooks" status="st">
+                <div class="product-grid">
+                    <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
+                        <div class="more-product"><span> </span></div>
+                        <div class="product-img b-link-stripe b-animate-go  thickbox">
+                            <!--图书图片 ，需要imageID-->
+                            <img src="<%=path%>/images/m1.png" class="img-responsive" alt="">
+                            <div class="b-wrapper">
+                                <h4 class="b-animate b-from-left  b-delay03">
+                                    <button>View</button>
+                                </h4>
+                            </div>
                         </div>
-                    </div>
-                </a>
-                <div class="product-info simpleCart_shelfItem">
-                    <div class="product-info-cust prt_name">
-                        <h4>实例 </h4>
-                        <span class="item_price">打折后积分</span>
-                        <div class="ofr">
-                            <p class="pric1"><del>原始积分</del></p>
-                            <p class="disc">折扣</p>
+                    </a>
+                    <div class="product-info simpleCart_shelfItem">
+                        <div class="product-info-cust prt_name">
+                            <h3><s:property value="bookName"/></h3>
+                            <span class="book-isbn">ISBN:<s:property value="isbn"/></span>
+                            <div class="ofr">
+                                <p class="pric1">作者：<s:property value="author"/></p><br>
+                                <p class="pric1">分类：<s:property value="category"/></p><br>
+                                <p class="disc">当前状态：<s:if test="status.toString()==@common.constants.BookStatus@IDLE.toString()">空闲</s:if><s:elseif test="status.toString()==@common.constants.BookStatus@BORROWED.toString()">正被借阅</s:elseif><s:else>正被交换</s:else></p><br>
+                                <p class="disc">预约状态：<s:if test="reserved==0">未被预约</s:if><s:else>已被预约</s:else></p>
+                            </div>
+                            <input type="text" class="item_quantity" value="1" maxlength="8" />
+                            <input type="button" class="item_add items" value="添加" onclick="addToCart(<s:property value="bookID"/>)">
+                            <div class="clearfix"> </div>
                         </div>
-                        <input type="text" class="item_quantity" value="1" maxlength="8" />
-                        <input type="button" class="item_add items" value="添加" onclick="addToCart(3)">
-                        <div class="clearfix"> </div>
                     </div>
                 </div>
-            </div>
+            </s:iterator>
+
         </div>
         <div class="col-md-3 rsidebar span_1_of_left">
             <section  class="sky-form">
