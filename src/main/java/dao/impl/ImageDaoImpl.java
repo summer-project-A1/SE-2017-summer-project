@@ -54,7 +54,7 @@ public class ImageDaoImpl extends BaseDaoImpl implements ImageDao {
             //mongofile.setContentType();  
             //mongofile.setMetaData();  
             mongofile.save();
-            return (String)mongofile.getId();
+            return ((ObjectId)mongofile.getId()).toString();
         } catch (IOException e) {
             // TODO 自动生成的 catch 块
             e.printStackTrace();

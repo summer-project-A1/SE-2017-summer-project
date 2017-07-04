@@ -4,7 +4,7 @@
 
 <hibernate-mapping>
     <class name="model.BorrowHistory" table="borrowhistory">
-        <id name="borrowID" column="borrow_id">
+        <id name="bhID" column="bh_id">
             <generator class="native"/>
         </id>
         <property name="userID" column="user_id" />

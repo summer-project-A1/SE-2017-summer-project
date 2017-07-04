@@ -1,12 +1,12 @@
 package model;
 
-import java.util.Calendar;
+import java.util.Date;
 
 public class BookRelease {             // 用户发布书的信息
     private int releaseID;
     private int userID;
     private int bookID;
-    private Calendar releaseTime;      // 发布时间
+    private Date releaseTime;      // 发布时间
     private int borrowPrice;           // 设定借书需要的积分
     private int exchangePrice;         // 设定交换书需要的积分
     
@@ -30,10 +30,10 @@ public class BookRelease {             // 用户发布书的信息
     public void setBookID(int bookID) {
         this.bookID = bookID;
     }
-    public Calendar getReleaseTime() {
+    public Date getReleaseTime() {
         return releaseTime;
     }
-    public void setReleaseTime(Calendar releaseTime) {
+    public void setReleaseTime(Date releaseTime) {
         this.releaseTime = releaseTime;
     }
     public int getBorrowPrice() {
