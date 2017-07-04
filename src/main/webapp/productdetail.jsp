@@ -28,7 +28,7 @@
                 <div class="flexslider">
                     <ul class="slides">
                         <li data-thumb="<%=path%>/images/s1.png">
-                            <div class="thumb-image"> <img src="" data-imagezoom="true" class="img-responsive"> </div>
+                            <div class="thumb-image"> <img src="<%=path%>/showImage?imageID=<s:property value="bookProfile.imageID"/>" data-imagezoom="true" class="img-responsive"> </div>
                         </li>
                         <li data-thumb="<%=path%>/images/s2.png">
                             <div class="thumb-image"> <img src="<%=path%>/images/s2.png" data-imagezoom="true" class="img-responsive"> </div>
