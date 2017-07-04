@@ -16,7 +16,7 @@ public class IndexAction extends ActionSupport {
         this.bookService = bookService;
     }
     public String index() {
-        ActionContext.getContext().put("title","首页");
+        ActionContext.getContext().put("title","图书分享交流平台");
         return "showIndex";
     }
 }
