@@ -18,7 +18,7 @@
     <div class="container">
         <h2 class="hdng">图书<span>分享</span>交流平台</h2>
         <p>把你的闲置图书分享给别的书友吧！</p>
-        <a href="bookrelease.jsp">马上发布</a>
+        <a href="<%=basePath%>uploadbook.jsp">马上发布</a>
         <div class="banner-text">
             <img src="images/2.png" alt=""/>
         </div>
@@ -29,10 +29,10 @@
     <div class="container">
         <div class="gallery-grids">
             <div class="col-md-8 gallery-grid glry-one">
-                <a href="products.html"><img src="images/g1.jpg" class="img-responsive" alt=""/>
+                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="#recommendBook.bookID"/>"><img src="images/g1.jpg" class="img-responsive" alt=""/>
                     <div class="gallery-info">
                         <p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> view</p>
-                        <a class="shop" href="single.html">SHOP NOW</a>
+                        <a class="shop" href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="#recommendBook.bookID"/>">SHOP NOW</a>
                         <div class="clearfix"> </div>
                     </div>
                 </a>
@@ -54,10 +54,10 @@
                 </div>
             </div>
             <div class="col-md-4 gallery-grid glry-two">
-                <a href="products.html"><img src="images/g2.jpg" class="img-responsive" alt=""/>
+                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="#recommendBook.bookID"/>"><img src="images/g2.jpg" class="img-responsive" alt=""/>
                     <div class="gallery-info galrr-info-two">
                         <p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> view</p>
-                        <a class="shop" href="single.html">SHOP NOW</a>
+                        <a class="shop" href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="#recommendBook.bookID"/>">SHOP NOW</a>
                         <div class="clearfix"> </div>
                     </div>
                 </a>
@@ -78,8 +78,9 @@
                     </div>
                 </div>
             </div>
+            <!--struts 迭代器 迭代8次 -->
             <div class="col-md-3 gallery-grid ">
-                <a href="products.html"><img src="images/g3.png" class="img-responsive" alt=""/>
+                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="#recommendBook.bookID"/>"><img src="images/g3.png" class="img-responsive" alt=""/>
                     <div class="gallery-info">
                         <p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> view</p>
                         <a class="shop" href="single.html">SHOP NOW</a>
@@ -279,6 +280,7 @@
                 </div>
             </div>
         </div>
+        <div id="tip"> </div>
     </div>
 </div>
 

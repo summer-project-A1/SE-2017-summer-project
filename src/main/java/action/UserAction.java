@@ -161,11 +161,11 @@ public class UserAction extends ActionSupport {
         this.params = new HashMap();
         if(result) {
             this.params.put("result", true);
-            this.params.put("message", "注册成功");
+            //this.params.put("message", "注册成功");
         }
         else {
             this.params.put("result", false);
-            this.params.put("message", "注册失败");
+            //this.params.put("message", "注册失败");
         }
         return "ajax";
     }

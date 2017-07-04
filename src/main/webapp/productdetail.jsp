@@ -6,7 +6,7 @@
 
 <html>
 <head>
-    <title>Detail</title>
+    <title>Product Detail</title>
     <script src="<%=path%>/js/imagezoom.js"></script>
     <script defer src="<%=path%>/js/jquery.flexslider.js"></script>
     <link rel="stylesheet" href="<%=path%>/css/flexslider.css" type="text/css" media="screen" />

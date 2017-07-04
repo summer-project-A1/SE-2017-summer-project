@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import model.Book;
@@ -218,14 +219,14 @@ public class BookAction extends ActionSupport {
         for(Book tmp:allBooks) {
             System.out.println(tmp.getBookID());
         }
-        return SUCCESS;
+        return "showBooks";
     }
     public String showUserReleasedBooks() {
         List<Book> userBooks = this.bookService.showUserBooks(this.userID);
         for(Book tmp:userBooks) {
             System.out.println(tmp.getBookID());
         }
-        return SUCCESS;
+        return "showBooks";
     }
     public String uploadBook() {
         Map bookInfo = new HashMap();
@@ -257,6 +258,7 @@ public class BookAction extends ActionSupport {
     }
     public String showBookProfile() {
         this.bookProfile = this.bookService.showBookProfile(this.bookID);
-        return SUCCESS;
+        ActionContext.getContext().put("bookProfile",bookProfile);
+        return "showBookProfile";
     }
 }

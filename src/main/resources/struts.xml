@@ -6,16 +6,29 @@
 <struts>
     <constant name="struts.i18n.encoding" value="utf-8" />
     <constant name="struts.devMode" value="true" />
+    
+    
+    <package name="default" extends="struts-default,json-default">
+        <action name="*" class="action.IndexAction" method="{1}">
+            <result name="showIndex">/index.jsp</result>
+            <allowed-methods>index</allowed-methods>
+        </action>
+    </package>
+    
+    
 
 	<package name="userAction" extends="struts-default,json-default" namespace="/userAction">
         <action name="*" class="action.UserAction" method="{1}">
-            <result name="success">/success.jsp</result>
-            <result name="error">/fail.jsp</result>
-            <result name="logout">/login.jsp</result>
+            <result name="logout" type="redirectAction">
+                <param name="actionName">index</param>
+                <param name="namespace">/</param>
+            </result>
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
-            <allowed-methods>logout,login,register,checkEmailAvailable</allowed-methods>
+            <allowed-methods>
+                logout,login,register,checkEmailAvailable
+            </allowed-methods>
         </action>
     </package>
 
@@ -25,14 +38,19 @@
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
-            <allowed-methods>showCart,addToCart,removeFromCart</allowed-methods>
+            <allowed-methods>
+                showCart,addToCart,removeFromCart
+            </allowed-methods>
         </action>
     </package>
 
     <package name="bookAction" extends="struts-default,json-default" namespace="/bookAction">
         <action name="*" class="action.BookAction" method="{1}">
             <result name="showBooks">/products.jsp</result>
-            <allowed-methods>showAllBooks,showUserReleasedBooks,uploadBook</allowed-methods>
+            <result name="showBookProfile">/productdetail.jsp</result>
+            <allowed-methods>
+                showAllBooks,showUserReleasedBooks,uploadBook,showBookProfile
+            </allowed-methods>
         </action>
     </package>
     

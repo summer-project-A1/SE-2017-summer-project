@@ -12,12 +12,6 @@
 <script>
 
 
-    function showTip(tip,type){
-        var $tip = $('#tip');
-        $tip.attr('class', 'alert alert-' + type).text(tip).css('margin-left', - $tip.outerWidth() / 2).fadeIn(500).delay(1000).fadeOut(500);
-    }
-
-
 
     $(document).ready(function(){
         $("#register_email").focus();
@@ -130,7 +124,7 @@
                         if(response.result == true){
                             //alert(response.message);
                             showTip('注册成功!', 'success');
-                            window.location.href='index.jsp';
+                            window.location.href='<%=path%>/index';
                         }
                     }
                 });
@@ -142,16 +136,7 @@
     });
 </script>
 
-<style type="text/css">
-    #tip {
-        font-weight: bold;
-        position: absolute;
-        top: 50px;
-        left: 50%;
-        display: none;
-        z-index: 9999;
-    }
-</style>
+
 
 <script type="text/javascript" src="<%=path%>/js/jquery.cityselect.js"></script>
 <script type="text/javascript">

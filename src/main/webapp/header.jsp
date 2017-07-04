@@ -40,6 +40,13 @@
     <!-- the mousewheel plugin -->
 
     <script>
+
+        function showTip(tip,type){
+            var $tip = $('#tip');
+            $tip.attr('class', 'alert alert-' + type).text(tip).css('margin-left', - $tip.outerWidth() / 2).fadeIn(500).delay(1000).fadeOut(500);
+        }
+
+
         $(document).ready(function() {
             $("#email").focus();
             $("#email").keyup(function(){
@@ -85,20 +92,33 @@
                     success: function (data) {
                         var response = eval("("+data+")");
                         if(response.result == false){
-                            var msg = response.message;
-                            alert(msg);
+                            showTip("登陆失败！","danger");
+                            //alert(msg);
                         }
                         if(response.result == true){
                             var logout = "<label><a href='<%=path%>/userAction/logout'>"+"退出登录"+"</a><label>";
                             var replace = "<label>"+"欢迎您!"+response.email+"</label><br>"+logout;
                             $('#loginForm').html(replace);
-                            alert(response.message);
+                            showTip("登陆成功！","success");
+                            //alert(response.message);
                         }
                     }
                 });
             });
         });
+
+
     </script>
+    <style type="text/css">
+        #tip {
+            font-weight: bold;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            display: none;
+            z-index: 9999;
+        }
+    </style>
 </head>
 <body>
 <div class="header">
@@ -111,12 +131,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <h1 class="navbar-brand"><a href="<%=path%>/index.jsp">BookShare</a></h1>
+                <h1 class="navbar-brand"><a href="<%=path%>/index">BookShare</a></h1>
             </div>
             <!--navbar-header-->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="index.jsp" class="active">首页</a></li>
+                    <li><a href="<%=path%>/index" class="active">首页</a></li>
                     <li class="dropdown grid">
                         <a href="#" class="dropdown-toggle list1" data-toggle="dropdown">寻找图书<b class="caret"></b></a>
                         <ul class="dropdown-menu multi-column columns-4">
@@ -223,7 +243,7 @@
                 } %>
             </div>   
             <div class="header-right cart">
-                <a href="cart.jsp"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                <a href="<%=path%>/orderAction/showCart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                 <div class="cart-box">
                     <%
                         List l = (List)session.getAttribute("cart");
