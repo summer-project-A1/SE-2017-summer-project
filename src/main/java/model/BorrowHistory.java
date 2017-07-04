@@ -1,14 +1,14 @@
 package model;
 
-import java.util.Calendar;
+import java.util.Date;
 
 public class BorrowHistory {         // 保存已被借出并已还回的借书记录
     private int bhID;
     private int userID;
     private int bookID;
-    private Calendar borrowDate;     // 借书时间
-    private Calendar yhDate;         // 应还时间
-    private Calendar inDate;         // 实际还书时间
+    private Date borrowDate;     // 借书时间
+    private Date yhDate;         // 应还时间
+    private Date inDate;         // 实际还书时间
     private int borrowPrice;         // 借书花费的积分
     
     /* =============================================================== */
@@ -31,22 +31,22 @@ public class BorrowHistory {         // 保存已被借出并已还回的借书�
     public void setBookID(int bookID) {
         this.bookID = bookID;
     }
-    public Calendar getBorrowDate() {
+    public Date getBorrowDate() {
         return borrowDate;
     }
-    public void setBorrowDate(Calendar borrowDate) {
+    public void setBorrowDate(Date borrowDate) {
         this.borrowDate = borrowDate;
     }
-    public Calendar getYhDate() {
+    public Date getYhDate() {
         return yhDate;
     }
-    public void setYhDate(Calendar yhDate) {
+    public void setYhDate(Date yhDate) {
         this.yhDate = yhDate;
     }
-    public Calendar getInDate() {
+    public Date getInDate() {
         return inDate;
     }
-    public void setInDate(Calendar inDate) {
+    public void setInDate(Date inDate) {
         this.inDate = inDate;
     }
     public int getBorrowPrice() {
