@@ -168,11 +168,13 @@ public class BookServiceImpl implements BookService {
         bookProfile.put("author", book.getAuthor());
         bookProfile.put("press", book.getPress());
         bookProfile.put("category1", book.getCategory());
-        bookProfile.put("bookExchange", (book.getCanExchange()!=0));
-        bookProfile.put("bookBorrow", (book.getCanBorrow()!=0));
+        bookProfile.put("canExchange", (book.getCanExchange()!=0));
+        bookProfile.put("canBorrow", (book.getCanBorrow()!=0));
         bookProfile.put("borrowCredit", bookRelease.getBorrowPrice());
         bookProfile.put("exchangeCredit", bookRelease.getExchangePrice());
+        bookProfile.put("reserved", (book.getReserved()!=0));
         bookProfile.put("coverPicture", book.getImageID());
+        bookProfile.put("status", book.getStatus().toString());
         return bookProfile;
     }
     
