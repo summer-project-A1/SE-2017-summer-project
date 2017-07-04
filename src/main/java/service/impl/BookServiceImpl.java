@@ -58,7 +58,7 @@ public class BookServiceImpl implements BookService {
     }
     
     public boolean isLogined() {
-        return getHttpSession().containsKey("userinfo");
+        return getHttpSession().containsKey("userInfo");
     }
     
     /* ===================================================== */
