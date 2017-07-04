@@ -250,7 +250,6 @@
                     <h4><a href="<%=path%>/orderAction/showCart">
                         <span class="simpleCart_total"> $0.00 </span> (<span id="simpleCart_quantity" class="simpleCart_quantity"> 0 </span>)
                     </a></h4>
-                    <p><a href="javascript:;" class="simpleCart_empty">清空购物车</a></p>
                     <div class="clearfix"> </div>
                 </div>
             </div>

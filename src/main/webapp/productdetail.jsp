@@ -28,7 +28,7 @@
                 <div class="flexslider">
                     <ul class="slides">
                         <li data-thumb="<%=path%>/images/s1.png">
-                            <div class="thumb-image"> <img src="<%=path%>/images/s1.png" data-imagezoom="true" class="img-responsive"> </div>
+                            <div class="thumb-image"> <img src="<%=path%>/showImage.action?imageID=<s:property value="bookProfile.imageID"/>" data-imagezoom="true" class="img-responsive"> </div>
                         </li>
                         <li data-thumb="<%=path%>/images/s2.png">
                             <div class="thumb-image"> <img src="<%=path%>/images/s2.png" data-imagezoom="true" class="img-responsive"> </div>
@@ -63,14 +63,30 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="btn_form">
+                    <s:if test="bookProfile.status=='unborrowed'">
+                        <s:if test="bookProfile.canborrow==true">
+                            <a href="#" class="add-cart item_add">借阅</a>
+                        </s:if>
+                        <s:if test="bookProfile.canexchange==true">
+                            <a href="#" class="add-cart item_add">交换</a>
+                            <a href="#" class="add-cart item_add">购买</a>
+                        </s:if>
+                    </s:if>
+                    <s:elseif test="bookProfile.status=='borrowed'">
+                        <s:if test="bookProfile.reserved==false">
+                            <s:if test="bookProfile.canborrow==true">
+                                <a href="#" class="add-cart item_add">预约</a>
+                            </s:if>
+                        </s:if>
+                    </s:elseif>
                     <a href="#" class="add-cart item_add">借阅</a>
                     <a href="#" class="add-cart item_add">交换</a>
                     <a href="#" class="add-cart item_add">购买</a>
                     <a href="#" class="add-cart item_add">预约</a>
                 </div>
                 <div class="tag">
-                    <p>分类 : <a href="#"><s:property value="bookProfile.category"/></a></p>
-                    <p>标签 : <a href="#"></p>
+                    <p>分类 : <a href="#"><s:property value="bookProfile.category1"/></a></p>
+                    <p>标签 : <a href="#"><s:property value="bookProfile.category2"/></a></p>
                 </div>
             </div>
             <div class="clearfix"> </div>
