@@ -20,10 +20,7 @@
         <div id="tip"> </div>
         <h2>我的购物车</h2>
         <script>
-            function showTip(tip,type){
-                var $tip = $('#tip');
-                $tip.attr('class', 'alert alert-' + type).text(tip).css('margin-left', - $tip.outerWidth() / 2).fadeIn(500).delay(1000).fadeOut(500);
-            }
+
 
             function deleteBook(bookID) {
                 console.log("delete current book, bookid: "+bookID);
@@ -60,16 +57,7 @@
         </script>
 
 
-        <style type="text/css">
-            #tip {
-                font-weight: bold;
-                position: absolute;
-                top: 50px;
-                left: 50%;
-                display: none;
-                z-index: 9999;
-            }
-        </style>
+
         <s:if test="#booksInCart==null">
             <h3>购物车为空</h3>
         </s:if>

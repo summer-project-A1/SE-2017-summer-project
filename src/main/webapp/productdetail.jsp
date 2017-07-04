@@ -6,7 +6,7 @@
 
 <html>
 <head>
-    <title>Detail</title>
+    <title>Product Detail</title>
     <script src="<%=path%>/js/imagezoom.js"></script>
     <script defer src="<%=path%>/js/jquery.flexslider.js"></script>
     <script>
@@ -73,8 +73,7 @@
             <div class="col-md-4 single-grid1">
                 <h2>个人账户</h2>
                 <ul>
-                    <li><a href="<%=basePath%>products.jsp">全部图书</a></li>
-                    <li><a href="products.jsp">全部图书</a></li>
+                    <li><a href="<%=path%>/bookAction/showAllBooks">全部图书</a></li>
                     <li><a href="myaccount.jsp">个人信息</a></li>
                     <li><a href="myrelease.jsp">我的发布</a></li>
                     <li><a href="myborrow.jsp">我的借阅</a></li>

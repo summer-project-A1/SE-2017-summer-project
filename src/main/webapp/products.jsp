@@ -8,24 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="" />
-
-
-    <!-- js -->
-    <script src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap-3.1.1.min.js"></script>
-    <!-- //js -->
-    <!-- cart -->
-    <script src="js/simpleCart.min.js"> </script>
-    <!-- cart -->
-    <!-- the jScrollPane script -->
-    <script type="text/javascript" src="js/jquery.jscrollpane.min.js"></script>
-
-    <!-- //the jScrollPane script -->
-    <script type="text/javascript" src="js/jquery.mousewheel.js"></script>
-    <!-- the mousewheel plugin -->
-
-
-
 </head>
 <body>
 
@@ -45,10 +27,7 @@
         $('.scroll-pane').jScrollPane();
     });
 
-    function showTip(tip,type){
-        var $tip = $('#tip');
-        $tip.attr('class', 'alert alert-' + type).text(tip).css('margin-left', - $tip.outerWidth() / 2).fadeIn(500).delay(1000).fadeOut(500);
-    }
+
 
     function addToCart(bookID)
     {
@@ -79,18 +58,6 @@
     }
 </script>
 
-<style type="text/css">
-    #tip {
-        font-weight: bold;
-        position: absolute;
-        top: 50px;
-        left: 50%;
-        display: none;
-        z-index: 9999;
-    }
-</style>
-
-
 
 
 <!--products-->
@@ -100,21 +67,12 @@
         <div class="col-md-9 product-model-sec">
 
 
-
-
-
-
-            <!--具体图书信息div-->
-
-
-
-
-
+            <!--具体图书信息div，使用struts迭代器-->
             <div class="product-grid">
                 <a href="single.html">
                     <div class="more-product"><span> </span></div>
                     <div class="product-img b-link-stripe b-animate-go  thickbox">
-                        <img src="images/m1.png" class="img-responsive" alt="">
+                        <img src="<%=path%>/images/m1.png" class="img-responsive" alt="">
                         <div class="b-wrapper">
                             <h4 class="b-animate b-from-left  b-delay03">
                                 <button>View</button>
@@ -136,13 +94,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
         </div>
         <div class="col-md-3 rsidebar span_1_of_left">
             <section  class="sky-form">
@@ -150,7 +101,7 @@
                     <h4 class="m_2"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>图书类型</h4>
                     <div class="tab1">
                         <ul class="place">
-                            <li class="sort">小说</li>
+                            <li class="sort">类型1</li>
                             <li class="by"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></li>
                         </ul>
                         <div class="clearfix"> </div>
@@ -163,7 +114,7 @@
                     </div>
                     <div class="tab2">
                         <ul class="place">
-                            <li class="sort">杂志</li>
+                            <li class="sort">类型2</li>
                             <li class="by"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></li>
                         </ul>
                         <div class="clearfix"> </div>
@@ -174,7 +125,7 @@
                     </div>
                     <div class="tab3">
                         <ul class="place">
-                            <li class="sort">教育书籍</li>
+                            <li class="sort">类型3</li>
                             <li class="by"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></li>
                         </ul>
                         <div class="clearfix"> </div>
