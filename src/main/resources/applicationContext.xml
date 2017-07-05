@@ -72,7 +72,7 @@
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="beanPointcut" />
 	</aop:config>
 
-    <mongo:mongo id="mongo" host="localhost" port="27017"></mongo:mongo>
+    <mongo:mongo id="mongo" host="localhost" port="27017"/>
     <mongo:db-factory id="mongoDbFactory" dbname="bookshare"
         mongo-ref="mongo" />
     
@@ -84,12 +84,8 @@
     
     <!-- DAO Bean -->
     <bean id="baseDao" class="dao.impl.BaseDaoImpl">
-        <property name="sessionFactory">
-            <ref bean="sessionFactory" />
-        </property>
-        <property name="mongoTemplate">
-            <ref bean="mongoTemplate" />
-        </property>
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="mongoTemplate" ref="mongoTemplate" />
     </bean>
     <bean id="userDao" class="dao.impl.UserDaoImpl" parent="baseDao">
     </bean>
@@ -145,6 +141,9 @@
     </bean>
     <bean id="orderAction" class="action.OrderAction">
         <property name="orderService" ref="orderService"></property>
+    </bean>
+    <bean id="cartAction" class="action.CartAction">
+        <property name="orderService" ref="orderService"/>
     </bean>
     <bean id="imageAction" class="action.ImageAction">
         <property name="imageService" ref="imageService"></property>

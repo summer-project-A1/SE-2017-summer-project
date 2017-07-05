@@ -31,7 +31,7 @@
             }else{
                 var param = $("#register_email").serialize();
             $.ajax({
-                url:"<%=path%>/userAction/checkEmailAvailable",
+                url:"<%=path%>/authAction/checkEmailAvailable",
                 type:"get",
                 data:param,
                 dataType:"text",
@@ -111,7 +111,7 @@
             if(email.indexOf("@")>0 && password.length>0 && confirmpassword == password && mobile.length == 11){
                 var params = $("#registerForm").serialize();
                 $.ajax({
-                    url: "<%=path%>/userAction/register",
+                    url: "<%=path%>/authAction/register",
                     type: "post",
                     data: params,
                     dataType: "text",

@@ -1,13 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@include file="../header.jsp"%>
-    
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@include file="header.jsp"%>
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Release Book</title>
-	<link href="<%=path%>/css/fileinput.css" rel="stylesheet" type="text/css"/>
-	<link href="<%=path%>/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
+
 	<style>
 #wrapper {
     background-color: #5D4B33;
@@ -35,10 +33,6 @@
 .form-horizontal .form-group-auto {
   margin-right: 0px;
   margin-left: 0px;
-}
-#msg
-{
-	color:#FF0000;
 }
 #confirm
 {
@@ -120,10 +114,10 @@
             		<option value="02">武侠</option>
             		<option value="03">其他</option>
         		</select>
+        	</div>
+        	<div class="form-group form-group-auto">	
             	<label>页数</label><font color="#FF0000">*</font>&nbsp;
-            		<input name=page type=number step=1 min=0 class="form-control form-control-noNewline">
-			</div>
-			<div class="form-group form-group-auto">
+            		<input name=page type=number step=1 min=0 class="form-control form-control-noNewline">&nbsp;&nbsp;&nbsp;
             	<label>装帧</label><font color="#FF0000">*</font>&nbsp;
             		<select name=bookBinding class="form-control form-control-noNewline">
 						<option value="0">线装</option>
@@ -147,13 +141,6 @@
             			<option value="5">5成新</option>
             			<option value="3">3成新</option>
             			<option value="1">1成新</option>
-        			</select>&nbsp;&nbsp;&nbsp;
-        		<label>损毁情况</label><font color="#FF0000">*</font>&nbsp;
-            		<select name=bookDamage class="form-control form-control-noNewline">
-						<option value="0">无损毁</option>
-            			<option value="1">稍有污损但不影响阅读</option>
-            			<option value="2">部分污损和损毁</option>
-            			<option value="3">损毁严重影响阅读</option>
         			</select>
         	</div>
         	<div class="form-group form-group-auto">
@@ -169,7 +156,7 @@
         			<input id=cb0 type=radio name=canBorrow value=0><label>否</label>&nbsp;&nbsp;&nbsp;
         		<div id=borrowCredit style='display:none;'>
         			<label>借阅所需积分</label><font color="#FF0000">*</font>&nbsp;
-        			<input type=number step=1 min=0 name=borrowrCedit class="form-control form-control-noNewline">
+        			<input type=number step=1 min=0 name=borrowCredit class="form-control form-control-noNewline">
         		</div>
         	</div>
         	<div class="form-group form-group-auto">
@@ -177,7 +164,7 @@
         	</div>
         </form>
         <div class="form-group form-group-auto">
-        	<label id=msg></label>
+        	<label id=warning></label>
         </div>
         <div id=confirm>
         	<button id=commit class="btn btn-primary">确认发布</button>
@@ -224,7 +211,7 @@
 		$("#exchangeCredit").hide();
 	});
 	$("#commit").click(function(){
-		var obj=document.getElementById("msg");
+		var obj=document.getElementById("warning");
 		if($("input[name='coverPicture']").val()=="")
 			{obj.innerText="图书封面必须上传";return;}
 		if($("input[name='bookName']").val()=="")
@@ -254,10 +241,10 @@
 			{obj.innerText="请确认是否可交换";return;}
 		if($("#introduction").val()=='')
 			{obj.innerText="请输入简介";return;}
-		$("#msg").css({color:black});
 		obj.innerText="提交中...";
 		$("#form").submit();
 	});
 	</script>
+	<jsp:include page="footer.jsp"/>
 </body>
 </html>

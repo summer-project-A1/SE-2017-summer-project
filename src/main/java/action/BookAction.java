@@ -250,6 +250,11 @@ public class BookAction extends ActionSupport {
         ActionContext.getContext().put("allBooks",allBooks);
         return "showBooks";
     }
+
+    public String showBookRelease(){
+        return "showBookRelease";
+    }
+
     public String showUserReleasedBooks() {
         List<Book> userReleasedBooks = this.bookService.showUserBooks(this.userID);
         for(Book tmp:userReleasedBooks) {

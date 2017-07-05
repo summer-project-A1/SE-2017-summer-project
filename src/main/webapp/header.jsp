@@ -20,7 +20,9 @@
     <link href="<%=path%>/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
     <link href="<%=path%>/css/style.css" type="text/css" rel="stylesheet" media="all">
     <link href="<%=path%>/css/form.css" rel="stylesheet" type="text/css" media="all" />
-    <link rel="stylesheet" href="<%=path%>/css/flexslider.css" type="text/css" media="screen" />
+    <link href="<%=path%>/css/flexslider.css" rel="stylesheet"  type="text/css" media="screen" />
+    <link href="<%=path%>/css/fileinput.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=path%>/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
     <!-- js -->
     <script type="text/javascript">
         const base_url = '<%= basePath%>';
@@ -85,7 +87,7 @@
             $("#login").click(function () {
                 var params = $("#loginForm").serialize();
                 $.ajax({
-                    url: "<%=path%>/userAction/login",
+                    url: "<%=path%>/authAction/login",
                     type: "post",
                     data: params,
                     dataType: "text",
@@ -104,7 +106,7 @@
                                 "<label><a href='myexchange.jsp'>我的交换</a></label><br>" +
                                 "<label><a href='myorder.jsp'>我的订单</a></label><br>" +
                                 "<label><a href='myreservation'>我的预约</a></label><br>"+
-                                "<label><a href='<%=path%>/userAction/logout'>"+"退出登录"+"</a><label><br>";
+                                "<label><a href='<%=path%>/authAction/logout'>"+"退出登录"+"</a><label><br>";
                             $('#loginForm').html(replace);
                             showTip("登陆成功！","success");
                             //alert(response.message);
@@ -215,9 +217,9 @@
             </div>
             <div class="header-right login">
                 <a href="myaccount.html"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                <div id="loginBox">
+                    <form id="loginForm">
                 <s:if test="#session.userInfo==null">
-                    <div id="loginBox">
-                        <form id="loginForm">
                             <fieldset id="body">
                                 <fieldset>
                                     <label for="email">注册邮箱</label>
@@ -230,12 +232,8 @@
                                 <input type="button" id="login" value="登录">
                             </fieldset>
                             <p>新用户 ? <a class="sign" href="<%=basePath%>signup.jsp">点击注册</a> <span><a href="#">忘记密码?</a></span></p>
-                        </form>
-                    </div>
                 </s:if>
                 <s:else>
-                    <div id="loginBox">
-                        <form id="loginForm2">
                             <label>欢迎您！<s:property value="#session.userInfo.email"/></label><br>
                             <label><a href="myaccount.jsp">个人信息</a></label><br>
                             <label><a href="myrelease.jsp">我的发布</a></label><br>
@@ -243,17 +241,19 @@
                             <label><a href="myexchange.jsp">我的交换</a></label><br>
                             <label><a href="myorder.jsp">我的订单</a></label><br>
                             <label><a href="myreservation">我的预约</a></label><br>
-                            <label><a href="<%=path%>/userAction/logout">退出登录</a></label><br>
+                            <label><a href="<%=path%>/authAction/logout">退出登录</a></label><br>
                         </form>
                     </div>
                 </s:else>
+                    </form>
+                </div>
             </div>   
             <div class="header-right cart">
-                <a href="<%=path%>/orderAction/showCart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                <a href="<%=path%>/cartAction/showCart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                 <div class="cart-box">
                    <s:if test="#session.cart==null||#session.cart.size()==0">
-                       <h4><span>购物车为空（刷新页面以更新购物车）</span></h4>
-                       <a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a>
+                       <h4><span>购买购物车为空（刷新以更新）</span></h4>
+                       <h4><a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a></h4>
                    </s:if>
                     <s:else>
                         <table class="table table-bordered">
@@ -264,13 +264,39 @@
                             <s:iterator value="#session.cart" var="cartItem" status="st">
                                 <tr>
                                     <td><s:property value="#cartItem.bookName"/></td>
-                                    <td id="simpleCart_quantity"><s:property value="#cartItem.amount"/></td>
+                                    <td ><s:property value="#cartItem.amount"/></td>
                                 </tr>
                         </s:iterator>
                         </table>
                         <p><a href="<%=path%>/orderAction/emptyCart" class="simpleCart_empty">清空购物车</a></p>
                     </s:else>
                     <div class="clearfix"> </div>
+                </div>
+            </div>
+                <div class="header-right borrow">
+                <a href="<%=path%>/cartAction/showCart"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></a>
+                <div class="borrow-box">
+                    <s:if test="#session.cart==null||#session.cart.size()==0">
+                        <h4><span>借阅购物车为空（刷新以更新）</span></h4>
+                        <h4><a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a></h4>
+                    </s:if>
+                    <s:else>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th field="bookName" width="20%">书名</th>
+                                <th field="amount" width="20%">数量</th>
+                            </tr>
+                            <s:iterator value="#session.cart" var="cartItem" status="st">
+                                <tr>
+                                    <td><s:property value="#cartItem.bookName"/></td>
+                                    <td><s:property value="#cartItem.amount"/></td>
+                                </tr>
+                            </s:iterator>
+                        </table>
+                        <p><a href="<%=path%>/orderAction/emptyCart" class="simpleCart_empty">清空购物车</a></p>
+                    </s:else>
+                    <div class="clearfix"> </div>
+                </div>
                 </div>
             </div>
             <div class="clearfix"> </div>
