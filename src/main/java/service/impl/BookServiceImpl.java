@@ -63,11 +63,12 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         String author = (String)bookInfo.get("author");         // 作者 mysql
         String press = (String)bookInfo.get("press");          // 出版社 mysql
         String category1 = (String)bookInfo.get("category1");       // 分类 mysql
+        String category2 = (String)bookInfo.get("category2");       // 分类 mysql
         String publishYear = (String)bookInfo.get("publishYear");    // 出版 mongo
         String publishMonth = (String)bookInfo.get("publishMonth");  // mongo
-        String edtionYear = (String)bookInfo.get("edtionYear");     // 版次 mongo 
-        String edtionMonth = (String)bookInfo.get("edtionMonth");    // mongo
-        String edtionVersion = (String)bookInfo.get("edtionVersion"); //mongo
+        String editionYear = (String)bookInfo.get("editionYear");     // 版次 mongo 
+        String editionMonth = (String)bookInfo.get("editionMonth");    // mongo
+        String editionVersion = (String)bookInfo.get("editionVersion"); //mongo
         int page = (int)bookInfo.get("page");              // 页数 mongo
         String bookBinding = (String)bookInfo.get("bookBinding");    // 装帧 mongo
         String bookFormat = (String)bookInfo.get("bookFormat");     // 开本 mongo
@@ -82,8 +83,14 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         File[] otherPicture = (File[])bookInfo.get("otherPicture");   // 其他图片 mongo
         
         Map bookProfile = new HashMap();
-        bookProfile.put("publish", new HashMap(){{put("year",publishYear);put("month",publishMonth);}});
-        bookProfile.put("edtion", new HashMap(){{put("year",edtionYear);put("month",edtionMonth);put("version",edtionVersion);}});
+        bookProfile.put("category2", category2);
+        // bookProfile.put("publish", new HashMap(){{put("year",publishYear);put("month",publishMonth);}});
+        // bookProfile.put("edtion", new HashMap(){{put("year",edtionYear);put("month",edtionMonth);put("version",edtionVersion);}});
+        bookProfile.put("publishYear", publishYear);
+        bookProfile.put("publishMonth", publishMonth);
+        bookProfile.put("editionYear", editionYear);
+        bookProfile.put("editionMonth", editionMonth);
+        bookProfile.put("editionVersion", editionVersion);
         bookProfile.put("page", page);
         bookProfile.put("bookBinding", bookBinding);
         bookProfile.put("bookFormat", bookFormat);
@@ -150,7 +157,7 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         // 这里的返回值不仅包括mongodb中的bookprofile，也包括mysql中的内容
         Book book = this.bookDao.getBookByID(bookID);
         BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
-        Map bookProfile = this.bookDao.getBookProfileMap(bookID);
+        Map bookProfile = this.bookDao.getBookProfileMap(book);
         bookProfile.remove("_id");
         bookProfile.put("bookID", book.getBookID());
         bookProfile.put("bookName", book.getBookName());
