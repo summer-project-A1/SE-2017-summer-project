@@ -2113,6 +2113,7 @@ span.glyphicon.glyphicon-map-marker {
 }
 .borrow-box {
     right: 5%;
+    width: 25%;
 }
 }
 @media(max-width:1080px){
@@ -2149,6 +2150,7 @@ span.glyphicon.glyphicon-map-marker {
 }
 .borrow-box {
     right: 4%;
+    width: 30%
 }
 .banner {
     min-height: 500px;
