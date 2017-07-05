@@ -32,7 +32,7 @@
         <div class="register" id="registerBox">
             <form id="registerForm" action="<%=path%>/authAction/signin" method="post">
                 <div class="register-top-grid">
-                    <h3>用户登陆</h3>
+                    <h3>请重新登录</h3>
                     <div class="input">
                         <span>邮箱地址<label>*</label></span>
                         <input type="text" name="email" id="login_email"><div id="available_status"></div>
