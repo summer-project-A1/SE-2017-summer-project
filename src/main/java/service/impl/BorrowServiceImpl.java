@@ -80,7 +80,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         newBorrow.setBookID(bookID);
         newBorrow.setUserID(user.getUserID());
         newBorrow.setBorrowDate(new Date());
-        newBorrow.setBorrowPrice(bookRelease.getBorrowPrice());
+        newBorrow.setBorrowPrice(bookRelease.getBorrowCredit());
         newBorrow.setYhDate(yhDate);
         this.borrowDao.save(newBorrow);
         book.setStatus(BookStatus.BORROWED);

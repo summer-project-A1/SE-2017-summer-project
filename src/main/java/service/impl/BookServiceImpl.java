@@ -75,10 +75,10 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         String bookQuality = (String)bookInfo.get("bookQuality");    // 成色 mongo
         String bookDamage = (String)bookInfo.get("bookDamage");     // 损毁情况 mongo
         String intro = (String)bookInfo.get("intro");          // 简介 mongo 
-        int bookBorrow = (int)bookInfo.get("bookBorrow");        // 是否可借阅 mysql
-        int bookExchange = (int)bookInfo.get("bookExchange");      // 是否可交换 mysql
+        int canBorrow = (int)bookInfo.get("canBorrow");        // 是否可借阅 mysql
+        int canExchange = (int)bookInfo.get("canExchange");      // 是否可交换 mysql
         int borrowCredit = (int)bookInfo.get("borrowCredit");      // 借阅所需积分 mysql
-        int exchangeCredit = (int)bookInfo.get("exchangeCredit");    // 交换所需积分 mysql
+        int buyCredit = (int)bookInfo.get("buyCredit");    // 交换所需积分 mysql
         File coverPicture = (File)bookInfo.get("coverPicture");     // 封面 mongo
         File[] otherPicture = (File[])bookInfo.get("otherPicture");   // 其他图片 mongo
         
@@ -111,8 +111,8 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         newBook.setAuthor(author);
         newBook.setPress(press);
         newBook.setCategory(category1);
-        newBook.setCanBorrow(bookBorrow);
-        newBook.setCanExchange(bookExchange);
+        newBook.setCanBorrow(canBorrow);
+        newBook.setCanExchange(canExchange);
         newBook.setReserved(0);
         newBook.setStatus(BookStatus.IDLE);
         
@@ -127,8 +127,8 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         
         BookRelease newBookRelease = new BookRelease();
         newBookRelease.setBookID(newBook.getBookID());
-        newBookRelease.setBorrowPrice(borrowCredit);
-        newBookRelease.setExchangePrice(exchangeCredit);
+        newBookRelease.setBorrowCredit(borrowCredit);
+        newBookRelease.setBuyCredit(buyCredit);
         newBookRelease.setReleaseTime(new Date());
         newBookRelease.setUserID(getLoginedUserInfo().getUserID());
         this.bookReleaseDao.save(newBookRelease);
@@ -167,8 +167,8 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         bookProfile.put("category1", book.getCategory());
         bookProfile.put("canExchange", (book.getCanExchange()!=0));
         bookProfile.put("canBorrow", (book.getCanBorrow()!=0));
-        bookProfile.put("borrowCredit", bookRelease.getBorrowPrice());
-        bookProfile.put("exchangeCredit", bookRelease.getExchangePrice());
+        bookProfile.put("borrowCredit", bookRelease.getBorrowCredit());
+        bookProfile.put("buyCredit", bookRelease.getBuyCredit());
         bookProfile.put("reserved", (book.getReserved()!=0));
         bookProfile.put("coverPicture", book.getImageID());
         bookProfile.put("status", book.getStatus().toString());
