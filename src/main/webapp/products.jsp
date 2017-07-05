@@ -35,7 +35,7 @@
         //showTip('Added to your cart!', 'success');
         console.log('amount: '+parseInt($('.item_quantity').first().val()));
         $.ajax({
-            url: base_url + 'orderAction/addToCart',
+            url: base_url + 'cartAction/addToCart',
             type: 'POST',
             data: {
                 'bookID': bookID,

@@ -58,35 +58,5 @@ public class OrderAction extends ActionSupport {
     
     /* ========================================================= */
     
-    public String addToCart() {
-        params = new HashMap();
-        boolean result = this.orderService.addToCart(this.bookID);
-        if(result) {
-            params.put("success", true);
-        }
-        else {
-            params.put("success", false);
-        }
-        return "ajax";
-    }
-    public String showCart() {
-        this.cart = this.orderService.showCart();
-        ActionContext.getContext().put("booksInCart",cart);
-        return "cart";
-    }
-    public String removeFromCart() {
-        params = new HashMap();
-        boolean result = this.orderService.removeFromCart(this.bookID);
-        if(result) {
-            params.put("success", true);
-        }
-        else {
-            params.put("success", false);
-        }
-        return "ajax";
-    }
-    public String emptyCart() {
-        this.orderService.emptyCart();
-        return "emptyCart";
-    }
+
 }

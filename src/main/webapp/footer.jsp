@@ -15,6 +15,7 @@
 
 
 <!--subscribe-->
+<!--
 <div class="subscribe">
     <div class="container">
         <h3>Newsletter</h3>
@@ -24,6 +25,7 @@
         </form>
     </div>
 </div>
+-->
 <!--//subscribe-->
 <!--footer-->
 <div class="footer">
