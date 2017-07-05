@@ -10,7 +10,7 @@ public interface BookDao extends BaseDao {
     public List<Book> getAllBooks();
     public List<Book> getBooksByUserID(int userID);
     public List<Book> searchByCondition(Map condition);
-    public Map getBookProfileMap(int bookID);
+    public Map getBookProfileMap(Book book);
     public String saveBookProfile(Map bookProfile);
-    public boolean updateBookProfile(int bookID, Map bookProfile);
+    public boolean updateBookProfile(Book book, Map bookProfile);
 }

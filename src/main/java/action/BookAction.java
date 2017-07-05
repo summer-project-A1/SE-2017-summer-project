@@ -27,21 +27,25 @@ public class BookAction extends ActionSupport {
     private String category2;      // 小分类
     private String publishYear;    // 出版
     private String publishMonth;
-    private String edtionYear;     // 版次
-    private String edtionMonth;
-    private String edtionVersion;
+    private String editionYear;     // 版次
+    private String editionMonth;
+    private String editionVersion;
     private int page;              // 页数
     private String bookBinding;    // 装帧
     private String bookFormat;     // 开本
     private String bookQuality;    // 成色
     private String bookDamage;     // 损毁情况
     private String intro;          // 简介
-    private Integer bookBorrow;        // 是否可借阅
-    private Integer bookExchange;      // 是否可交换
+    private Integer canBorrow;        // 是否可借阅
+    private Integer canExchange;      // 是否可交换
     private int borrowCredit;      // 借阅所需积分
-    private int exchangeCredit;    // 交换所需积分
+    private int buyCredit;    // 购买所需积分
     private File coverPicture;     // 封面
+    private String coverPictureFileName;
+    private String coverPictureContentType;
     private File[] otherPicture;   // 其他图片
+    private String[] otherPictureFileName;
+    private String[] otherPictureContentType;
     
     private Map bookProfile;
     
@@ -115,23 +119,23 @@ public class BookAction extends ActionSupport {
     public void setPublishMonth(String publishMonth) {
         this.publishMonth = publishMonth;
     }
-    public String getEdtionYear() {
-        return edtionYear;
+    public String getEditionYear() {
+        return editionYear;
     }
-    public void setEdtionYear(String edtionYear) {
-        this.edtionYear = edtionYear;
+    public void setEditionYear(String editionYear) {
+        this.editionYear = editionYear;
     }
-    public String getEdtionMonth() {
-        return edtionMonth;
+    public String getEditionMonth() {
+        return editionMonth;
     }
-    public void setEdtionMonth(String edtionMonth) {
-        this.edtionMonth = edtionMonth;
+    public void setEditionMonth(String editionMonth) {
+        this.editionMonth = editionMonth;
     }
-    public String getEdtionVersion() {
-        return edtionVersion;
+    public String getEditionVersion() {
+        return editionVersion;
     }
-    public void setEdtionVersion(String edtionVersion) {
-        this.edtionVersion = edtionVersion;
+    public void setEditionVersion(String editionVersion) {
+        this.editionVersion = editionVersion;
     }
     public int getPage() {
         return page;
@@ -169,17 +173,17 @@ public class BookAction extends ActionSupport {
     public void setIntro(String intro) {
         this.intro = intro;
     }
-    public Integer getBookBorrow() {
-        return bookBorrow;
+    public Integer getCanBorrow() {
+        return canBorrow;
     }
-    public void setBookBorrow(Integer bookBorrow) {
-        this.bookBorrow = bookBorrow;
+    public void setCanBorrow(Integer canBorrow) {
+        this.canBorrow = canBorrow;
     }
-    public Integer getBookExchange() {
-        return bookExchange;
+    public Integer getCanExchange() {
+        return canExchange;
     }
-    public void setBookExchange(Integer bookExchange) {
-        this.bookExchange = bookExchange;
+    public void setCanExchange(Integer canExchange) {
+        this.canExchange = canExchange;
     }
     public int getBorrowCredit() {
         return borrowCredit;
@@ -187,17 +191,29 @@ public class BookAction extends ActionSupport {
     public void setBorrowCredit(int borrowCredit) {
         this.borrowCredit = borrowCredit;
     }
-    public int getExchangeCredit() {
-        return exchangeCredit;
+    public int getBuyCredit() {
+        return buyCredit;
     }
-    public void setExchangeCredit(int exchangeCredit) {
-        this.exchangeCredit = exchangeCredit;
+    public void setBuyCredit(int buyCredit) {
+        this.buyCredit = buyCredit;
     }
     public File getCoverPicture() {
         return coverPicture;
     }
     public void setCoverPicture(File coverPicture) {
         this.coverPicture = coverPicture;
+    }
+    public String getCoverPictureFileName() {
+        return coverPictureFileName;
+    }
+    public void setCoverPictureFileName(String coverPictureFileName) {
+        this.coverPictureFileName = coverPictureFileName;
+    }
+    public String getCoverPictureContentType() {
+        return coverPictureContentType;
+    }
+    public void setCoverPictureContentType(String coverPictureContentType) {
+        this.coverPictureContentType = coverPictureContentType;
     }
     public File[] getOtherPicture() {
         return otherPicture;
@@ -210,6 +226,18 @@ public class BookAction extends ActionSupport {
     }
     public void setBookProfile(Map bookProfile) {
         this.bookProfile = bookProfile;
+    }
+    public String[] getOtherPictureFileName() {
+        return otherPictureFileName;
+    }
+    public void setOtherPictureFileName(String[] otherPictureFileName) {
+        this.otherPictureFileName = otherPictureFileName;
+    }
+    public String[] getOtherPictureContentType() {
+        return otherPictureContentType;
+    }
+    public void setOtherPictureContentType(String[] otherPictureContentType) {
+        this.otherPictureContentType = otherPictureContentType;
     }    
     
     /* ============================================================== */
@@ -245,19 +273,19 @@ public class BookAction extends ActionSupport {
         bookInfo.put("category2", this.category2);       // 小分类
         bookInfo.put("publishYear", this.publishYear);    // 出版
         bookInfo.put("publishMonth", this.publishMonth);
-        bookInfo.put("edtionYear", this.edtionYear);     // 版次
-        bookInfo.put("edtionMonth", this.edtionMonth);
-        bookInfo.put("edtionVersion", this.edtionVersion);
+        bookInfo.put("editionYear", this.editionYear);     // 版次
+        bookInfo.put("editionMonth", this.editionMonth);
+        bookInfo.put("editionVersion", this.editionVersion);
         bookInfo.put("page", this.page);              // 页数
         bookInfo.put("bookBinding", this.bookBinding);    // 装帧
         bookInfo.put("bookFormat", this.bookFormat);     // 开本
         bookInfo.put("bookQuality", this.bookQuality);    // 成色
         bookInfo.put("bookDamage", this.bookDamage);     // 损毁情况
         bookInfo.put("intro", this.intro);          // 简介
-        bookInfo.put("bookBorrow", (this.bookBorrow==null)? 0:this.bookBorrow);        // 是否可借阅
-        bookInfo.put("bookExchange", (this.bookExchange==null)? 0:this.bookExchange);      // 是否可交换
+        bookInfo.put("canBorrow", (this.canBorrow==null)? 0:this.canBorrow);        // 是否可借阅
+        bookInfo.put("canExchange", (this.canExchange==null)? 0:this.canExchange);      // 是否可交换
         bookInfo.put("borrowCredit", this.borrowCredit);      // 借阅所需积分
-        bookInfo.put("exchangeCredit", this.exchangeCredit);    // 交换所需积分
+        bookInfo.put("buyCredit", this.buyCredit);    // 购买所需积分
         bookInfo.put("coverPicture", this.coverPicture);     // 封面
         bookInfo.put("otherPicture", this.otherPicture);   // 其他图片
         this.bookService.uploadBook(bookInfo);
