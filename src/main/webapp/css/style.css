@@ -2082,16 +2082,16 @@ span.glyphicon.glyphicon-map-marker {
 }
 @media(max-width:1366px){
 .search {
-    right: 18%;
+    right: 15%;
 }
 #loginBox {
-    right: 13%;
+    right: 9%;
 }
 .cart-box {
-    right: 7%;
+    right: 6%;
 }
 .borrow-box {
-    right: 7%;
+    right: 3%;
 }
 }
 @media(max-width:1280px){

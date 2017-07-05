@@ -252,7 +252,7 @@
                 <a href="<%=path%>/cartAction/showCart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                 <div class="cart-box">
                    <s:if test="#session.cart==null||#session.cart.size()==0">
-                       <h4><span>购物车为空（刷新页面以更新购物车）</span></h4>
+                       <h4><span>购买购物车为空（刷新以更新）</span></h4>
                        <h4><a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a></h4>
                    </s:if>
                     <s:else>
@@ -274,10 +274,10 @@
                 </div>
             </div>
                 <div class="header-right borrow">
-                <a href="<%=path%>/orderAction/showCart"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></a>
+                <a href="<%=path%>/cartAction/showCart"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></a>
                 <div class="borrow-box">
                     <s:if test="#session.cart==null||#session.cart.size()==0">
-                        <h4><span>购物车为空（刷新页面以更新购物车）</span></h4>
+                        <h4><span>借阅购物车为空（刷新以更新）</span></h4>
                         <h4><a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a></h4>
                     </s:if>
                     <s:else>
