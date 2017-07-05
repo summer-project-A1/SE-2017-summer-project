@@ -104,13 +104,13 @@
             </div>
             <div class="form-group form-group-auto">
 			    <label>类别</label><font color="#FF0000">*</font>&nbsp;
-				<select id=cate class="form-control form-control-noNewline">
+				<select id=cate name=category1 class="form-control form-control-noNewline">
 					<option value=0>小说</option>
             		<option value=1>文学</option>
             		<option value=2>管理</option>
             		<option value=4>其他</option>
         		</select>&nbsp;
-        		<select id=category name=category class="form-control form-control-noNewline">
+        		<select id=category name=category2 class="form-control form-control-noNewline">
         			<option value="00">言情</option>
             		<option value="01">玄幻</option>
             		<option value="02">武侠</option>
