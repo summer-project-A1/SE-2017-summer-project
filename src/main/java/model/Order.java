@@ -1,15 +1,17 @@
 package model;
 
-import java.util.Calendar;
+import java.util.Date;
+import java.util.Set;
 
 import common.constants.OrderStatus;
 
 public class Order {               // 使用积分下单购买书
     private int orderID;
     private int userID;
-    private Calendar orderDate;
+    private Date orderDate;
     private int totalPrice;
     private OrderStatus status;
+    private Set<OrderItem> orderItems;
     
     /* ================================================= */
     
@@ -25,10 +27,10 @@ public class Order {               // 使用积分下单购买书
     public void setUserID(int userID) {
         this.userID = userID;
     }
-    public Calendar getOrderDate() {
+    public Date getOrderDate() {
         return orderDate;
     }
-    public void setOrderDate(Calendar orderDate) {
+    public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
     public int getTotalPrice() {
@@ -42,6 +44,12 @@ public class Order {               // 使用积分下单购买书
     }
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+    public Set<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+    public void setOrderItems(Set<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
     
 }

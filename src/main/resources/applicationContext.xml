@@ -41,6 +41,8 @@
 				<value>model/BookRelease.hbm.xml</value>
 				<value>model/Borrow.hbm.xml</value>
 				<value>model/BorrowHistory.hbm.xml</value>
+				<value>model/Order.hbm.xml</value>
+                <value>model/OrderItem.hbm.xml</value>
 			</list>
 		</property>
 		<!-- Hibernate SessionFactory -->
@@ -101,6 +103,8 @@
     </bean>
     <bean id="imageDao" class="dao.impl.ImageDaoImpl" parent="baseDao">
     </bean>
+    <bean id="orderDao" class="dao.impl.OrderDaoImpl" parent="baseDao">
+    </bean>
 
     <!-- ============================================================= -->
 
@@ -122,6 +126,9 @@
     </bean>
     <bean id="orderService" class="service.impl.OrderServiceImpl">
         <property name="bookDao" ref="bookDao"></property>
+        <property name="bookReleaseDao" ref="bookReleaseDao"></property>
+        <property name="userDao" ref="userDao"></property>
+        <property name="orderDao" ref="orderDao"></property>
     </bean>
     <bean id="imageService" class="service.impl.ImageServiceImpl">
         <property name="imageDao" ref="imageDao"></property>
