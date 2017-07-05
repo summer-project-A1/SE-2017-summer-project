@@ -36,6 +36,10 @@
   margin-right: 0px;
   margin-left: 0px;
 }
+#msg
+{
+	color:#FF0000;
+}
 #confirm
 {
 	text-align:right;
@@ -116,10 +120,10 @@
             		<option value="02">武侠</option>
             		<option value="03">其他</option>
         		</select>
-        	</div>
-        	<div class="form-group form-group-auto">	
             	<label>页数</label><font color="#FF0000">*</font>&nbsp;
-            		<input name=page type=number step=1 min=0 class="form-control form-control-noNewline">&nbsp;&nbsp;&nbsp;
+            		<input name=page type=number step=1 min=0 class="form-control form-control-noNewline">
+			</div>
+			<div class="form-group form-group-auto">
             	<label>装帧</label><font color="#FF0000">*</font>&nbsp;
             		<select name=bookBinding class="form-control form-control-noNewline">
 						<option value="0">线装</option>
@@ -143,6 +147,13 @@
             			<option value="5">5成新</option>
             			<option value="3">3成新</option>
             			<option value="1">1成新</option>
+        			</select>&nbsp;&nbsp;&nbsp;
+        		<label>损毁情况</label><font color="#FF0000">*</font>&nbsp;
+            		<select name=bookDamage class="form-control form-control-noNewline">
+						<option value="0">无损毁</option>
+            			<option value="1">稍有污损但不影响阅读</option>
+            			<option value="2">部分污损和损毁</option>
+            			<option value="3">损毁严重影响阅读</option>
         			</select>
         	</div>
         	<div class="form-group form-group-auto">
@@ -158,7 +169,7 @@
         			<input id=cb0 type=radio name=canBorrow value=0><label>否</label>&nbsp;&nbsp;&nbsp;
         		<div id=borrowCredit style='display:none;'>
         			<label>借阅所需积分</label><font color="#FF0000">*</font>&nbsp;
-        			<input type=number step=1 min=0 name=borrowCredit class="form-control form-control-noNewline">
+        			<input type=number step=1 min=0 name=borrowrCedit class="form-control form-control-noNewline">
         		</div>
         	</div>
         	<div class="form-group form-group-auto">
@@ -166,7 +177,7 @@
         	</div>
         </form>
         <div class="form-group form-group-auto">
-        	<label id=warning></label>
+        	<label id=msg></label>
         </div>
         <div id=confirm>
         	<button id=commit class="btn btn-primary">确认发布</button>
@@ -213,7 +224,7 @@
 		$("#exchangeCredit").hide();
 	});
 	$("#commit").click(function(){
-		var obj=document.getElementById("warning");
+		var obj=document.getElementById("msg");
 		if($("input[name='coverPicture']").val()=="")
 			{obj.innerText="图书封面必须上传";return;}
 		if($("input[name='bookName']").val()=="")
@@ -243,6 +254,7 @@
 			{obj.innerText="请确认是否可交换";return;}
 		if($("#introduction").val()=='')
 			{obj.innerText="请输入简介";return;}
+		$("#msg").css({color:black});
 		obj.innerText="提交中...";
 		$("#form").submit();
 	});
