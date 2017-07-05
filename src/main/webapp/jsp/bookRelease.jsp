@@ -43,16 +43,15 @@
 	</style>
 </head>
 <body>
-	
+
 	<div id="wrapper">
-	<!-- Navigation -->
+		<!-- Navigation -->
 		<nav class="navbar navbar-default navbar-static-top" role="navigation"
 			style="margin-bottom: 0">
 
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">图书发布</a>
 		</div>
-		<br>
 		<div class="navbar-default sidebar" role="navigation">
 			<div class="sidebar-nav navbar-collapse">
 				<ul class="nav" id="side-menu">
@@ -74,8 +73,9 @@
 		</div>
 		<!-- /.navbar-static-side --> </nav>
 	</div>
+	
 	<div id=bookinfo>
-		<form id="form" role=form class="form-horizontal">
+		<form id="form" action=uploadBook role=form class="form-horizontal">
 			<div class="form-group form-group-auto">
 				<label>图书封面</label><font color="#FF0000">*</font><input name=coverPicture type=file class=file>
 			</div>
@@ -220,10 +220,10 @@
 			{obj.innerText="图书名称必须填写";return;}
 		if($("input[name='author']").val()=="")
 			{obj.innerText="图书作者必须填写";return;}
-		if($("input[name='press']").val()=="")
-			{obj.innerText="图书出版社必须填写";return;}
 		if($("input[name='isbn']").val()=="")
 			{obj.innerText="图书ISBN必须填写";return;}
+		if($("input[name='press']").val()=="")
+			{obj.innerText="图书出版社必须填写";return;}
 		if($("input[name='publishYear']").val()=="")
 			{obj.innerText="图书出版年份必须填写";return;}
 		if($("input[name='publishMonth']").val()=="")
