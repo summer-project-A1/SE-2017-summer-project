@@ -136,7 +136,7 @@ b.caret {
 /*--//start menu--*/
 .header-right{
     float: left;
-    width: 6%;
+    width: 4%; /*6*/
     text-align: center;
     border-left:1px solid #79654A;
 }
@@ -151,12 +151,12 @@ b.caret {
 /*--search--*/
 .search {
     display: none;
-    position: absolute;
-    top: 100%;
-    right: 22.5%;
+    position: absolute; /*absolute*/
+    top: 100%;  /*100*/
+    right: 22.5%; /*22.5*/
 	background-color:#fff;
 	z-index: 99;
-    padding: 1em 2em;
+    padding: 1em 2em; /*1em 2em*/
 }
 .search form.navbar-form {
 	padding: 0;
@@ -342,7 +342,7 @@ input:focus {
     top: 100%;
 	right: 13%;
     background-color: #fff;
-    width: 14%;
+    width: 80%;  /*14*/
     padding: 2em 1em 1em;
     z-index: 99;
 }
@@ -2436,13 +2436,13 @@ ul.dropdown-menu.multi-column.columns-3 {
     min-width: 392px;
 }
 .search {
-    right: 13%;
+    right: 14.5%;/*13*/
 }
 #loginBox {
-    right: 7.5%;
+    right: 10%;/*7.5*/
 }
 .cart-box {
-    right: 1.5%;
+    right: 6%;/*1.5*/
 }
 .banner {
     min-height: 348px;
