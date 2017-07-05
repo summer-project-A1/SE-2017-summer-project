@@ -1,13 +1,14 @@
 package service;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OrderService extends BaseService {
     public List showCart();
     public boolean addToCart(int bookID);
     public boolean removeFromCart(int bookID);
     public boolean emptyCart();
-    public boolean createOrder();
+    public List<Map> createOrder();
     public boolean submitOrder(int orderID);
     public boolean cancelOrder(int orderID);
 }

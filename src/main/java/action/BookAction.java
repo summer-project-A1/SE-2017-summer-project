@@ -41,7 +41,11 @@ public class BookAction extends ActionSupport {
     private int borrowCredit;      // 借阅所需积分
     private int buyCredit;    // 购买所需积分
     private File coverPicture;     // 封面
+    private String coverPictureFileName;
+    private String coverPictureContentType;
     private File[] otherPicture;   // 其他图片
+    private String[] otherPictureFileName;
+    private String[] otherPictureContentType;
     
     private Map bookProfile;
     
@@ -199,6 +203,18 @@ public class BookAction extends ActionSupport {
     public void setCoverPicture(File coverPicture) {
         this.coverPicture = coverPicture;
     }
+    public String getCoverPictureFileName() {
+        return coverPictureFileName;
+    }
+    public void setCoverPictureFileName(String coverPictureFileName) {
+        this.coverPictureFileName = coverPictureFileName;
+    }
+    public String getCoverPictureContentType() {
+        return coverPictureContentType;
+    }
+    public void setCoverPictureContentType(String coverPictureContentType) {
+        this.coverPictureContentType = coverPictureContentType;
+    }
     public File[] getOtherPicture() {
         return otherPicture;
     }
@@ -210,6 +226,18 @@ public class BookAction extends ActionSupport {
     }
     public void setBookProfile(Map bookProfile) {
         this.bookProfile = bookProfile;
+    }
+    public String[] getOtherPictureFileName() {
+        return otherPictureFileName;
+    }
+    public void setOtherPictureFileName(String[] otherPictureFileName) {
+        this.otherPictureFileName = otherPictureFileName;
+    }
+    public String[] getOtherPictureContentType() {
+        return otherPictureContentType;
+    }
+    public void setOtherPictureContentType(String[] otherPictureContentType) {
+        this.otherPictureContentType = otherPictureContentType;
     }    
     
     /* ============================================================== */
