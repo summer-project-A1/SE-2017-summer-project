@@ -8,7 +8,7 @@
     <constant name="struts.devMode" value="true" />
     
     
-    <package name="default" extends="struts-default,json-default">
+    <package name="default" extends="struts-default,json-default" namespace="/">
         <action name="*" class="action.IndexAction" method="{1}">
             <result name="showIndex">/index.jsp</result>
             <allowed-methods>index</allowed-methods>
@@ -16,8 +16,29 @@
     </package>
     
     
-
+    
+    
+    <package name="authAction" extends="struts-default,json-default" namespace="/authAction">
+        <action name="*" class="action.AuthAction" method="{1}">
+            <result name="signin" type="redirectAction">
+                <param name="namespace">/</param>
+                <param name="actionName">index</param>
+            </result>
+            <result name="logout" type="redirectAction">
+                <param name="actionName">index</param>
+                <param name="namespace">/</param>
+            </result>
+            <result name="ajax" type="json">
+                <param name="root">params</param>
+            </result>
+            <allowed-methods>signin,logout,login,register,checkEmailAvailable
+            </allowed-methods>
+        </action>
+    </package>
+    
+    
 	<package name="userAction" extends="struts-default,json-default" namespace="/userAction">
+        <!-- userAction 全部需要isLogin拦截
         <action name="*" class="action.UserAction" method="{1}">
             <result name="logout" type="redirectAction">
                 <param name="actionName">index</param>
@@ -30,9 +51,28 @@
                 logout,login,register,checkEmailAvailable
             </allowed-methods>
         </action>
+        -->
     </package>
 
+
+    <package name="cartAction" extends="struts-default,json-default" namespace="/cartAction">
+        <action name="*" class="action.CartAction" method="{1}">
+            <result name="cart">/cart.jsp</result>
+            <result name="ajax" type="json">
+                <param name="root">params</param>
+            </result>
+            <result name="emptyCart" type="redirectAction">
+                <param name="actionName">showCart</param>
+            </result>
+            <allowed-methods>
+                showCart,addToCart,removeFromCart,emptyCart
+            </allowed-methods>
+        </action>
+    </package>
+
+
     <package name="orderAction" extends="struts-default,json-default" namespace="/orderAction">
+        <!-- OrderAction 全部需要isLogin拦截
         <action name="*" class="action.OrderAction" method="{1}">
             <result name="cart">/cart.jsp</result>
             <result name="ajax" type="json">
@@ -46,26 +86,43 @@
                 showCart,addToCart,removeFromCart,emptyCart
             </allowed-methods>
         </action>
+        -->
     </package>
 
     <package name="bookAction" extends="struts-default,json-default" namespace="/bookAction">
+        <interceptors>
+            <interceptor name="isLogin" class="action.interceptor.IsLoginInterceptor"/>
+        </interceptors>
+        <global-results>
+            <result name="login" type="redirect">/signin.jsp</result>
+        </global-results>
+        <action name="showBookRelease" class="action.BookAction" method="showBookRelease">
+            <result name="showBookRelease">/bookRelease.jsp</result>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="isLogin"/>
+        </action>
+        <action name="uploadBook" class="action.BookAction" method="uploadBook">
+            <result name="showBooks">/products.jsp</result>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="isLogin"/>
+        </action>
         <action name="*" class="action.BookAction" method="{1}">
             <result name="showBooks">/products.jsp</result>
             <result name="showBookProfile">/productdetail.jsp</result>
             <allowed-methods>
-                showAllBooks,showUserReleasedBooks,uploadBook,showBookProfile
+                showAllBooks,showUserReleasedBooks,showBookProfile
             </allowed-methods>
         </action>
     </package>
     
-    <package name="image" extends="struts-default">
-        <action name="showImage" class="action.ImageAction" method="showImage">
-            <result name="success" type="stream">
+    <package name="imageAction" extends="struts-default,json-default" namespace="/imageAction">
+        <action name="*" class="action.ImageAction" method="{1}">
+            <result name="showImage" type="stream">
                 <param name="contentDisposition">inline;filename="${imageFileName}"</param>
                 <param name="inputName">imageFile</param>
                 <param name="contentType">${contentType}</param> 
             </result>
-            <result name="error" type="httpheader">
+            <result name="showImageError" type="httpheader">
                 <param name="status">404</param>
             </result>
         </action>

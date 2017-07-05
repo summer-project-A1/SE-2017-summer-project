@@ -978,7 +978,6 @@ h3 {
     font-size: 2em;
     color: #F07818;
     font-family: 'Marvel-Regular';
-    text-align: center;
 }
 h2 {
     font-size: 4em;
@@ -1555,7 +1554,7 @@ p span.overline{
     background-color: #F07818;
 }
 
-.register-but form input[type="submit"] {
+.register-but input[type="submit"] {
     border: 2px solid #F07818;
     color: #FFF;
     font-size: 1.1em;
@@ -2798,7 +2797,7 @@ ul.size li a {
 .register-bottom-grid {
     margin-top: 2em;
 }
-.register-but form input[type="submit"] {
+.register-but  input[type="submit"] {
     font-size: 1em;
     padding: 0.4em 2em;
     width: 25%;
@@ -3053,7 +3052,7 @@ ul.qty li p {
         font-size: 0.9em;
         padding: 0.3em;
     }
-    .register-but form input[type="submit"] {
+    .register-but  input[type="submit"] {
         font-size: 0.9em;
         width: 22%;
     }
@@ -3326,7 +3325,7 @@ ul.qty li p {
     .register-top-grid input[type="text"], .register-bottom-grid input[type="password"] {
         width: 100%;
     }
-    .register-but form input[type="submit"] {
+    .register-but  input[type="submit"] {
         width: 100%;
     }
     .register-but {

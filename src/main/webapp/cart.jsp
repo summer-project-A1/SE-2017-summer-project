@@ -25,7 +25,7 @@
             function deleteBook(bookID) {
                 console.log("delete current book, bookid: "+bookID);
                 $.ajax({
-                    url: base_url+ 'orderAction/removeFromCart',
+                    url: base_url+ 'cartAction/removeFromCart',
                     type:'POST',
                     data: {
                         'bookID' : bookID
@@ -58,8 +58,9 @@
 
 
 
-        <s:if test="#booksInCart==null">
+        <s:if test="#session.cart==null||#booksInCart==null">
             <h3>购物车为空</h3>
+            <h3><a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a></h3>
         </s:if>
         <div id="tip"> </div>
         <s:iterator value="#booksInCart" status="st">
