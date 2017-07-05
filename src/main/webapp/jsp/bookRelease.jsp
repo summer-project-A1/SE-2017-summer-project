@@ -158,7 +158,7 @@
         			<input id=cb0 type=radio name=canBorrow value=0><label>否</label>&nbsp;&nbsp;&nbsp;
         		<div id=borrowCredit style='display:none;'>
         			<label>借阅所需积分</label><font color="#FF0000">*</font>&nbsp;
-        			<input type=number step=1 min=0 name=borrowrCedit class="form-control form-control-noNewline">
+        			<input type=number step=1 min=0 name=borrowCredit class="form-control form-control-noNewline">
         		</div>
         	</div>
         	<div class="form-group form-group-auto">

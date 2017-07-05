@@ -36,10 +36,10 @@ public class BookAction extends ActionSupport {
     private String bookQuality;    // 成色
     private String bookDamage;     // 损毁情况
     private String intro;          // 简介
-    private Integer bookBorrow;        // 是否可借阅
-    private Integer bookExchange;      // 是否可交换
+    private Integer canBorrow;        // 是否可借阅
+    private Integer canExchange;      // 是否可交换
     private int borrowCredit;      // 借阅所需积分
-    private int exchangeCredit;    // 交换所需积分
+    private int buyCredit;    // 购买所需积分
     private File coverPicture;     // 封面
     private File[] otherPicture;   // 其他图片
     
@@ -169,17 +169,17 @@ public class BookAction extends ActionSupport {
     public void setIntro(String intro) {
         this.intro = intro;
     }
-    public Integer getBookBorrow() {
-        return bookBorrow;
+    public Integer getCanBorrow() {
+        return canBorrow;
     }
-    public void setBookBorrow(Integer bookBorrow) {
-        this.bookBorrow = bookBorrow;
+    public void setCanBorrow(Integer canBorrow) {
+        this.canBorrow = canBorrow;
     }
-    public Integer getBookExchange() {
-        return bookExchange;
+    public Integer getCanExchange() {
+        return canExchange;
     }
-    public void setBookExchange(Integer bookExchange) {
-        this.bookExchange = bookExchange;
+    public void setCanExchange(Integer canExchange) {
+        this.canExchange = canExchange;
     }
     public int getBorrowCredit() {
         return borrowCredit;
@@ -187,11 +187,11 @@ public class BookAction extends ActionSupport {
     public void setBorrowCredit(int borrowCredit) {
         this.borrowCredit = borrowCredit;
     }
-    public int getExchangeCredit() {
-        return exchangeCredit;
+    public int getBuyCredit() {
+        return buyCredit;
     }
-    public void setExchangeCredit(int exchangeCredit) {
-        this.exchangeCredit = exchangeCredit;
+    public void setBuyCredit(int buyCredit) {
+        this.buyCredit = buyCredit;
     }
     public File getCoverPicture() {
         return coverPicture;
@@ -249,10 +249,10 @@ public class BookAction extends ActionSupport {
         bookInfo.put("bookQuality", this.bookQuality);    // 成色
         bookInfo.put("bookDamage", this.bookDamage);     // 损毁情况
         bookInfo.put("intro", this.intro);          // 简介
-        bookInfo.put("bookBorrow", (this.bookBorrow==null)? 0:this.bookBorrow);        // 是否可借阅
-        bookInfo.put("bookExchange", (this.bookExchange==null)? 0:this.bookExchange);      // 是否可交换
+        bookInfo.put("canBorrow", (this.canBorrow==null)? 0:this.canBorrow);        // 是否可借阅
+        bookInfo.put("canExchange", (this.canExchange==null)? 0:this.canExchange);      // 是否可交换
         bookInfo.put("borrowCredit", this.borrowCredit);      // 借阅所需积分
-        bookInfo.put("exchangeCredit", this.exchangeCredit);    // 交换所需积分
+        bookInfo.put("buyCredit", this.buyCredit);    // 购买所需积分
         bookInfo.put("coverPicture", this.coverPicture);     // 封面
         bookInfo.put("otherPicture", this.otherPicture);   // 其他图片
         this.bookService.uploadBook(bookInfo);

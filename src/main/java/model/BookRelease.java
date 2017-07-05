@@ -7,8 +7,8 @@ public class BookRelease {             // 用户发布书的信息
     private int userID;
     private int bookID;
     private Date releaseTime;      // 发布时间
-    private int borrowPrice;           // 设定借书需要的积分
-    private int exchangePrice;         // 设定交换书需要的积分
+    private int borrowCredit;           // 设定借书需要的积分
+    private int buyCredit;         // 设定购买书需要的积分
     
     /* ========================================================== */
     
@@ -36,17 +36,17 @@ public class BookRelease {             // 用户发布书的信息
     public void setReleaseTime(Date releaseTime) {
         this.releaseTime = releaseTime;
     }
-    public int getBorrowPrice() {
-        return borrowPrice;
+    public int getBorrowCredit() {
+        return borrowCredit;
     }
-    public void setBorrowPrice(int borrowPrice) {
-        this.borrowPrice = borrowPrice;
+    public void setBorrowCredit(int borrowCredit) {
+        this.borrowCredit = borrowCredit;
     }
-    public int getExchangePrice() {
-        return exchangePrice;
+    public int getBuyCredit() {
+        return buyCredit;
     }
-    public void setExchangePrice(int exchangePrice) {
-        this.exchangePrice = exchangePrice;
+    public void setBuyCredit(int buyCredit) {
+        this.buyCredit = buyCredit;
     }
     
 }
