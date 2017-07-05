@@ -75,7 +75,7 @@
 	</div>
 	
 	<div id=bookinfo>
-		<form id="form" action=uploadBook role=form class="form-horizontal">
+		<form id="form" action="<%=path%>/bookAction/uploadBook" method=post enctype="multipart/form-data" role=form class="form-horizontal">
 			<div class="form-group form-group-auto">
 				<label>图书封面</label><font color="#FF0000">*</font><input name=coverPicture type=file class=file>
 			</div>
