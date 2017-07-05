@@ -269,9 +269,9 @@
                     <div class="clearfix"> </div>
                 </div>
             </div>
-                <div class="header-right cart">
+                <div class="header-right borrow">
                 <a href="<%=path%>/orderAction/showCart"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></a>
-                <div class="cart-box">
+                <div class="borrow-box">
                     <s:if test="#session.cart==null||#session.cart.size()==0">
                         <h4><span>购物车为空（刷新页面以更新购物车）</span></h4>
                         <a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a>
