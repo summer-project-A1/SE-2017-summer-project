@@ -18,6 +18,29 @@
             });
         });
     </script>
+    <script>
+        function addToBorrowCart(bookID){
+            $.ajax({
+                url:'<%=path%>/cartAction/addToBorrowCart',
+                type:'POST',
+                data:{
+                    'bookID': bookID,
+                    'amount': "1"
+                },
+                success: function (msg) {
+                    if (msg.success) {
+                        showTip('添加成功!', 'success');
+                    }
+                    else {
+                        showTip('添加失败', 'danger');
+                    }
+                },
+                error:function(xhr,status,error){
+                    alert('status='+status+',error='+error);
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 
@@ -86,7 +109,7 @@
                     </s:if>
                     <s:else>
                         <s:if test="#bookProfile.canBorrow==true">
-                            <a href="#" class="add-cart item_add">借阅</a>
+                            <a href="#" class="add-cart item_add" onclick="addToBorrowCart(<s:property value="#bookProfile.bookID"/>)">借阅</a>
                         </s:if>
                         <s:if test="#bookProfile.canexchange==true">
                             <a href="#" class="add-cart item_add">交换</a>

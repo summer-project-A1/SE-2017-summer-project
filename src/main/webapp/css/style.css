@@ -2144,6 +2144,7 @@ span.glyphicon.glyphicon-map-marker {
 }
 .cart-box {
     right: 8%;
+    width: 30%;
 }
 .borrow-box {
     right: 4%;
