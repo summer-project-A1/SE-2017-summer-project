@@ -217,9 +217,9 @@
             </div>
             <div class="header-right login">
                 <a href="myaccount.html"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                <div id="loginBox">
+                    <form id="loginForm">
                 <s:if test="#session.userInfo==null">
-                    <div id="loginBox">
-                        <form id="loginForm">
                             <fieldset id="body">
                                 <fieldset>
                                     <label for="email">注册邮箱</label>
@@ -232,12 +232,8 @@
                                 <input type="button" id="login" value="登录">
                             </fieldset>
                             <p>新用户 ? <a class="sign" href="<%=basePath%>signup.jsp">点击注册</a> <span><a href="#">忘记密码?</a></span></p>
-                        </form>
-                    </div>
                 </s:if>
                 <s:else>
-                    <div id="loginBox">
-                        <form id="loginForm2">
                             <label>欢迎您！<s:property value="#session.userInfo.email"/></label><br>
                             <label><a href="myaccount.jsp">个人信息</a></label><br>
                             <label><a href="myrelease.jsp">我的发布</a></label><br>
@@ -249,6 +245,8 @@
                         </form>
                     </div>
                 </s:else>
+                    </form>
+                </div>
             </div>   
             <div class="header-right cart">
                 <a href="<%=path%>/cartAction/showCart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
@@ -273,6 +271,32 @@
                         <p><a href="<%=path%>/orderAction/emptyCart" class="simpleCart_empty">清空购物车</a></p>
                     </s:else>
                     <div class="clearfix"> </div>
+                </div>
+            </div>
+                <div class="header-right borrow">
+                <a href="<%=path%>/orderAction/showCart"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></a>
+                <div class="borrow-box">
+                    <s:if test="#session.cart==null||#session.cart.size()==0">
+                        <h4><span>购物车为空（刷新页面以更新购物车）</span></h4>
+                        <a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a>
+                    </s:if>
+                    <s:else>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th field="bookName" width="20%">书名</th>
+                                <th field="amount" width="20%">数量</th>
+                            </tr>
+                            <s:iterator value="#session.cart" var="cartItem" status="st">
+                                <tr>
+                                    <td><s:property value="#cartItem.bookName"/></td>
+                                    <td id="simpleCart_quantity"><s:property value="#cartItem.amount"/></td>
+                                </tr>
+                            </s:iterator>
+                        </table>
+                        <p><a href="<%=path%>/orderAction/emptyCart" class="simpleCart_empty">清空购物车</a></p>
+                    </s:else>
+                    <div class="clearfix"> </div>
+                </div>
                 </div>
             </div>
             <div class="clearfix"> </div>
