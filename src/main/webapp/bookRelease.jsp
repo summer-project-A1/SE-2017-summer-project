@@ -43,16 +43,15 @@
 	</style>
 </head>
 <body>
-	
+
 	<div id="wrapper">
-	<!-- Navigation -->
+		<!-- Navigation -->
 		<nav class="navbar navbar-default navbar-static-top" role="navigation"
 			style="margin-bottom: 0">
 
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">图书发布</a>
 		</div>
-		<br>
 		<div class="navbar-default sidebar" role="navigation">
 			<div class="sidebar-nav navbar-collapse">
 				<ul class="nav" id="side-menu">
@@ -74,8 +73,9 @@
 		</div>
 		<!-- /.navbar-static-side --> </nav>
 	</div>
+	
 	<div id=bookinfo>
-		<form id="form" role=form class="form-horizontal">
+		<form id="form" action="<%=path%>/bookAction/uploadBook" method=post enctype="multipart/form-data" role=form class="form-horizontal">
 			<div class="form-group form-group-auto">
 				<label>图书封面</label><font color="#FF0000">*</font><input name=coverPicture type=file class=file>
 			</div>
@@ -104,13 +104,13 @@
             </div>
             <div class="form-group form-group-auto">
 			    <label>类别</label><font color="#FF0000">*</font>&nbsp;
-				<select id=cate class="form-control form-control-noNewline">
+				<select id=cate name=category1 class="form-control form-control-noNewline">
 					<option value=0>小说</option>
             		<option value=1>文学</option>
             		<option value=2>管理</option>
             		<option value=4>其他</option>
         		</select>&nbsp;
-        		<select id=category name=category class="form-control form-control-noNewline">
+        		<select id=category name=category2 class="form-control form-control-noNewline">
         			<option value="00">言情</option>
             		<option value="01">玄幻</option>
             		<option value="02">武侠</option>
@@ -158,7 +158,7 @@
         			<input id=cb0 type=radio name=canBorrow value=0><label>否</label>&nbsp;&nbsp;&nbsp;
         		<div id=borrowCredit style='display:none;'>
         			<label>借阅所需积分</label><font color="#FF0000">*</font>&nbsp;
-        			<input type=number step=1 min=0 name=borrowrCedit class="form-control form-control-noNewline">
+        			<input type=number step=1 min=0 name=borrowCredit class="form-control form-control-noNewline">
         		</div>
         	</div>
         	<div class="form-group form-group-auto">
@@ -220,10 +220,10 @@
 			{obj.innerText="图书名称必须填写";return;}
 		if($("input[name='author']").val()=="")
 			{obj.innerText="图书作者必须填写";return;}
-		if($("input[name='press']").val()=="")
-			{obj.innerText="图书出版社必须填写";return;}
 		if($("input[name='isbn']").val()=="")
 			{obj.innerText="图书ISBN必须填写";return;}
+		if($("input[name='press']").val()=="")
+			{obj.innerText="图书出版社必须填写";return;}
 		if($("input[name='publishYear']").val()=="")
 			{obj.innerText="图书出版年份必须填写";return;}
 		if($("input[name='publishMonth']").val()=="")
