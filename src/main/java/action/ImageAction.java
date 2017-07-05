@@ -64,11 +64,11 @@ public class ImageAction extends ActionSupport {
     public String showImage() {
         GridFSDBFile gridFSDBFile = getImageService().showImage(this.imageID);
         if(gridFSDBFile == null) {
-            return ERROR;
+            return "showImageError";
         }
         this.imageFile = gridFSDBFile.getInputStream();
         this.imageFileName = gridFSDBFile.getFilename();
         this.contentType = "image/"+this.imageFileName.substring(this.imageFileName.lastIndexOf(".")+1,this.imageFileName.length());
-        return SUCCESS;
+        return "showImage";
     }
 }

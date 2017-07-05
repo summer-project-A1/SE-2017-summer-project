@@ -18,7 +18,7 @@
     <div class="container">
         <h2 class="hdng">图书<span>分享</span>交流平台</h2>
         <p>把你的闲置图书分享给别的书友吧！</p>
-        <a href="<%=basePath%>bookRelease.jsp">马上发布</a>
+        <a href="<%=path%>/bookAction/showBookRelease">马上发布</a>
         <div class="banner-text">
             <img src="images/2.png" alt=""/>
         </div>

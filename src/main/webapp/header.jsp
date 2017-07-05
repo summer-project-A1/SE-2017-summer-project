@@ -85,7 +85,7 @@
             $("#login").click(function () {
                 var params = $("#loginForm").serialize();
                 $.ajax({
-                    url: "<%=path%>/userAction/login",
+                    url: "<%=path%>/authAction/login",
                     type: "post",
                     data: params,
                     dataType: "text",
@@ -104,7 +104,7 @@
                                 "<label><a href='myexchange.jsp'>我的交换</a></label><br>" +
                                 "<label><a href='myorder.jsp'>我的订单</a></label><br>" +
                                 "<label><a href='myreservation'>我的预约</a></label><br>"+
-                                "<label><a href='<%=path%>/userAction/logout'>"+"退出登录"+"</a><label><br>";
+                                "<label><a href='<%=path%>/authAction/logout'>"+"退出登录"+"</a><label><br>";
                             $('#loginForm').html(replace);
                             showTip("登陆成功！","success");
                             //alert(response.message);
@@ -239,17 +239,19 @@
                             <label><a href="myexchange.jsp">我的交换</a></label><br>
                             <label><a href="myorder.jsp">我的订单</a></label><br>
                             <label><a href="myreservation">我的预约</a></label><br>
-                            <label><a href="<%=path%>/userAction/logout">退出登录</a></label><br>
+                            <label><a href="<%=path%>/authAction/logout">退出登录</a></label><br>
+                        </form>
+                    </div>
                 </s:else>
                     </form>
                 </div>
             </div>   
             <div class="header-right cart">
-                <a href="<%=path%>/orderAction/showCart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                <a href="<%=path%>/cartAction/showCart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                 <div class="cart-box">
                    <s:if test="#session.cart==null||#session.cart.size()==0">
                        <h4><span>购物车为空（刷新页面以更新购物车）</span></h4>
-                       <a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a>
+                       <h4><a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a></h4>
                    </s:if>
                     <s:else>
                         <table class="table table-bordered">

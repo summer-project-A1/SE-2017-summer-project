@@ -125,58 +125,5 @@ public class UserAction extends ActionSupport {
 
     /* =========================================================== */
 
-    public String checkEmailAvailable() {
-        params = new HashMap();
-        if(this.userService.checkEmailAvailable(this.email)) {
-            params.put("result", true);
-        }
-        else {
-            params.put("result", false);
-        }
-        return "ajax";
-    }
-    
-    public String register() {
-        Map registerInfo = new HashMap();
-        registerInfo.put("email", this.email);
-        registerInfo.put("password", this.password);
-        registerInfo.put("mobile", this.mobile);
-        registerInfo.put("province", this.province);
-        if(this.city != null && this.district == null ) {
-            // 直辖市
-            // 注意此时前台并不传递district到后台，且district的内容保存在city参数中！
-            registerInfo.put("city", this.province);
-            registerInfo.put("district", this.city);
-        }
-        else {
-            // 普通省市（三个属性全有）或国外（只有province属性）
-            registerInfo.put("city", this.city);
-            registerInfo.put("district", this.district);
-        }
-        registerInfo.put("address", this.address);
-        registerInfo.put("name", this.name);
-        registerInfo.put("gender", this.gender);
-        
-        boolean result = this.userService.register(registerInfo);
-        this.params = new HashMap();
-        if(result) {
-            this.params.put("result", true);
-            //this.params.put("message", "注册成功");
-        }
-        else {
-            this.params.put("result", false);
-            //this.params.put("message", "注册失败");
-        }
-        return "ajax";
-    }
-    
-    public String login() {
-        this.params = this.userService.login(this.email, this.password); 
-        return "ajax";
-    }
-    
-    public String logout() {
-        this.userService.logout();
-        return "logout";
-    }
+
 }
