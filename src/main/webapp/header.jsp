@@ -264,7 +264,7 @@
                             <s:iterator value="#session.cart" var="cartItem" status="st">
                                 <tr>
                                     <td><s:property value="#cartItem.bookName"/></td>
-                                    <td id="simpleCart_quantity"><s:property value="#cartItem.amount"/></td>
+                                    <td ><s:property value="#cartItem.amount"/></td>
                                 </tr>
                         </s:iterator>
                         </table>
@@ -278,7 +278,7 @@
                 <div class="borrow-box">
                     <s:if test="#session.cart==null||#session.cart.size()==0">
                         <h4><span>购物车为空（刷新页面以更新购物车）</span></h4>
-                        <a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a>
+                        <h4><a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a></h4>
                     </s:if>
                     <s:else>
                         <table class="table table-bordered">
@@ -289,7 +289,7 @@
                             <s:iterator value="#session.cart" var="cartItem" status="st">
                                 <tr>
                                     <td><s:property value="#cartItem.bookName"/></td>
-                                    <td id="simpleCart_quantity"><s:property value="#cartItem.amount"/></td>
+                                    <td><s:property value="#cartItem.amount"/></td>
                                 </tr>
                             </s:iterator>
                         </table>
