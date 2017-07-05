@@ -27,9 +27,9 @@ public class BookAction extends ActionSupport {
     private String category2;      // 小分类
     private String publishYear;    // 出版
     private String publishMonth;
-    private String edtionYear;     // 版次
-    private String edtionMonth;
-    private String edtionVersion;
+    private String editionYear;     // 版次
+    private String editionMonth;
+    private String editionVersion;
     private int page;              // 页数
     private String bookBinding;    // 装帧
     private String bookFormat;     // 开本
@@ -115,23 +115,23 @@ public class BookAction extends ActionSupport {
     public void setPublishMonth(String publishMonth) {
         this.publishMonth = publishMonth;
     }
-    public String getEdtionYear() {
-        return edtionYear;
+    public String getEditionYear() {
+        return editionYear;
     }
-    public void setEdtionYear(String edtionYear) {
-        this.edtionYear = edtionYear;
+    public void setEditionYear(String editionYear) {
+        this.editionYear = editionYear;
     }
-    public String getEdtionMonth() {
-        return edtionMonth;
+    public String getEditionMonth() {
+        return editionMonth;
     }
-    public void setEdtionMonth(String edtionMonth) {
-        this.edtionMonth = edtionMonth;
+    public void setEditionMonth(String editionMonth) {
+        this.editionMonth = editionMonth;
     }
-    public String getEdtionVersion() {
-        return edtionVersion;
+    public String getEditionVersion() {
+        return editionVersion;
     }
-    public void setEdtionVersion(String edtionVersion) {
-        this.edtionVersion = edtionVersion;
+    public void setEditionVersion(String editionVersion) {
+        this.editionVersion = editionVersion;
     }
     public int getPage() {
         return page;
@@ -240,9 +240,9 @@ public class BookAction extends ActionSupport {
         bookInfo.put("category2", this.category2);       // 小分类
         bookInfo.put("publishYear", this.publishYear);    // 出版
         bookInfo.put("publishMonth", this.publishMonth);
-        bookInfo.put("edtionYear", this.edtionYear);     // 版次
-        bookInfo.put("edtionMonth", this.edtionMonth);
-        bookInfo.put("edtionVersion", this.edtionVersion);
+        bookInfo.put("editionYear", this.editionYear);     // 版次
+        bookInfo.put("editionMonth", this.editionMonth);
+        bookInfo.put("editionVersion", this.editionVersion);
         bookInfo.put("page", this.page);              // 页数
         bookInfo.put("bookBinding", this.bookBinding);    // 装帧
         bookInfo.put("bookFormat", this.bookFormat);     // 开本
