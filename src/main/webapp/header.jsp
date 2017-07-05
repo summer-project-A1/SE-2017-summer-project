@@ -20,7 +20,9 @@
     <link href="<%=path%>/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
     <link href="<%=path%>/css/style.css" type="text/css" rel="stylesheet" media="all">
     <link href="<%=path%>/css/form.css" rel="stylesheet" type="text/css" media="all" />
-    <link rel="stylesheet" href="<%=path%>/css/flexslider.css" type="text/css" media="screen" />
+    <link href="<%=path%>/css/flexslider.css" rel="stylesheet"  type="text/css" media="screen" />
+    <link href="<%=path%>/css/fileinput.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=path%>/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
     <!-- js -->
     <script type="text/javascript">
         const base_url = '<%= basePath%>';
