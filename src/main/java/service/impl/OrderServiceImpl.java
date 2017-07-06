@@ -65,86 +65,35 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
     /* ========================================================= */
     
     @Override
-    public boolean addToCart(int bookID) {
-        // 添加到http session中，不验证登录状态
-        Book book = this.bookDao.getBookByID(bookID); 
-        if(book == null) {
-            return false;
+    public Map getOrderDetailByID(int orderID) {
+        // 返回值Map，其中包含key为orderitem的List<Map>，每个Map是订单项中的book的详情（部分属性）
+        Map result = new HashMap();
+        List<Map> orderItems = new ArrayList<Map>();
+        Order order = this.orderDao.getOrderByID(orderID);
+        if(order == null) {
+            return null;
         }
-        List<Map<String, Object>> cartList;
-        if(getHttpSession().containsKey("buyCart")) {
-            cartList = (List<Map<String, Object>>)getHttpSession().get("buyCart");
-        }
-        else {
-            cartList = new ArrayList<Map<String, Object>>();
-            getHttpSession().put("buyCart", cartList);
-        }
-        
-        // 如果bookID已存在session中，不做任何操作
-        for(Map<String, Object> cartListItem : cartList) {
-            if((int)cartListItem.get("bookID") == bookID) {
-                return false;
-            }
-        }
-        Map<String, Object> newCartListItem = new HashMap();
-        newCartListItem.put("bookID", bookID);
-        newCartListItem.put("bookName", book.getBookName());
-        newCartListItem.put("amount", 1);
-        cartList.add(newCartListItem);
-        return true;
-    }
-
-    @Override
-    public List showCart() {
-        List<Map<String, Object>> cartList;
-        List resultList = new ArrayList();
-        if(getHttpSession().containsKey("buyCart")) {
-            cartList = (List<Map<String, Object>>)getHttpSession().get("buyCart");
-        }
-        else {
-            cartList = new ArrayList<Map<String, Object>>();
-        }
-        
-        for(Map<String, Object> cartListItem : cartList) {
-            int bookID = (int)cartListItem.get("bookID");
+        for(OrderItem orderItem : order.getOrderItems()) {
+            int bookID = orderItem.getBookID();
             Book book = this.bookDao.getBookByID(bookID);
-            if(book != null) {
-                resultList.add(book);
-            }
+            Map bookProfile =  this.bookDao.getBookProfileMap(book);
+            Map orderItemDetail = new HashMap();
+            orderItemDetail.put("bookID", bookProfile.get("bookID"));
+            orderItemDetail.put("bookName", bookProfile.get("bookName"));
+            orderItemDetail.put("isbn", bookProfile.get("isbn"));
+            orderItemDetail.put("author", bookProfile.get("author"));
+            orderItemDetail.put("category1", bookProfile.get("category1"));
+            orderItemDetail.put("category2", bookProfile.get("category2"));
+            orderItemDetail.put("buyCredit", bookProfile.get("buyCredit"));
+            orderItemDetail.put("coverPicture", bookProfile.get("coverPicture"));
+            orderItems.add(orderItemDetail);
         }
-        return resultList;
+        result.put("orderID", orderID);
+        result.put("totalCredit", order.getTotalPrice());
+        result.put("orderItems", orderItems);
+        return result;
     }
-
-    @Override
-    public boolean removeFromCart(int bookID) {
-        List<Map<String, Object>> cartList;
-        if(getHttpSession().containsKey("buyCart")) {
-            cartList = (List<Map<String, Object>>)getHttpSession().get("buyCart");
-        }
-        else {
-            cartList = new ArrayList<Map<String, Object>>();
-        }
-        
-        Iterator iterator = cartList.iterator();
-        while(iterator.hasNext()) {
-            Map<String, Object> cartListItem = (Map<String, Object>) iterator.next();
-            int existedBookID = (int)cartListItem.get("bookID");
-            if(existedBookID == bookID) {
-                iterator.remove();
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean emptyCart() {
-        if(getHttpSession().containsKey("buyCart")) {
-            getHttpSession().remove("buyCart");
-        }
-        return true;
-    }
-
+    
     @Override
     public Order createOrder() {
         /* 不验证积分是否足够

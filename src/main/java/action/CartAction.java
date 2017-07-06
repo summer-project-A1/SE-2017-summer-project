@@ -3,6 +3,7 @@ package action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import model.Book;
+import service.CartService;
 import service.OrderService;
 
 import java.util.HashMap;
@@ -13,7 +14,9 @@ import java.util.Map;
  * Created by zzy on 2017/7/5.
  */
 public class CartAction extends ActionSupport{
-    private OrderService orderService;
+    private static final long serialVersionUID = -7295028045750112708L;
+
+    private CartService cartService;
 
     private int bookID;
     private int amount;
@@ -24,11 +27,11 @@ public class CartAction extends ActionSupport{
     /* ========================================================= */
 
 
-    public OrderService getOrderService() {
-        return orderService;
+    public CartService getCartService() {
+        return cartService;
     }
-    public void setOrderService(OrderService orderService) {
-        this.orderService = orderService;
+    public void setCartService(CartService cartService) {
+        this.cartService = cartService;
     }
     public int getBookID() {
         return bookID;
@@ -59,7 +62,7 @@ public class CartAction extends ActionSupport{
 
     public String addToCart() {
         params = new HashMap();
-        boolean result = this.orderService.addToCart(this.bookID);
+        boolean result = this.cartService.addToBuyCart(this.bookID);
         if(result) {
             params.put("success", true);
         }
@@ -69,13 +72,13 @@ public class CartAction extends ActionSupport{
         return "ajax";
     }
     public String showCart() {
-        this.cart = this.orderService.showCart();
+        this.cart = this.cartService.showBuyCart();
         ActionContext.getContext().put("booksInCart",cart);
         return "cart";
     }
     public String removeFromCart() {
         params = new HashMap();
-        boolean result = this.orderService.removeFromCart(this.bookID);
+        boolean result = this.cartService.removeFromBuyCart(this.bookID);
         if(result) {
             params.put("success", true);
         }
@@ -85,7 +88,7 @@ public class CartAction extends ActionSupport{
         return "ajax";
     }
     public String emptyCart() {
-        this.orderService.emptyCart();
+        this.cartService.emptyBuyCart();
         return "emptyCart";
     }
 }

@@ -120,6 +120,9 @@
         <property name="borrowDao" ref="borrowDao"></property>
         <property name="borrowHistoryDao" ref="borrowHistoryDao"></property>
     </bean>
+    <bean id="cartService" class="service.impl.CartServiceImpl">
+        <property name="bookDao" ref="bookDao"></property>
+    </bean>
     <bean id="orderService" class="service.impl.OrderServiceImpl">
         <property name="bookDao" ref="bookDao"></property>
         <property name="bookReleaseDao" ref="bookReleaseDao"></property>
@@ -143,7 +146,7 @@
         <property name="orderService" ref="orderService"></property>
     </bean>
     <bean id="cartAction" class="action.CartAction">
-        <property name="orderService" ref="orderService"/>
+        <property name="cartService" ref="cartService"/>
     </bean>
     <bean id="imageAction" class="action.ImageAction">
         <property name="imageService" ref="imageService"></property>
