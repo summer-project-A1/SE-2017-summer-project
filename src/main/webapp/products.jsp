@@ -74,7 +74,7 @@
                         <div class="more-product"><span> </span></div>
                         <div class="product-img b-link-stripe b-animate-go  thickbox">
                             <!--图书图片 ，需要imageID-->
-                            <img src="<%=path%>/images/m1.png" class="img-responsive" alt="">
+                            <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
                             <div class="b-wrapper">
                                 <h4 class="b-animate b-from-left  b-delay03">
                                     <button>View</button>
