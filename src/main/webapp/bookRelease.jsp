@@ -73,7 +73,7 @@
 	</div>
 	
 	<div id=bookinfo>
-		<form id="form" action="<%=path%>/bookAction/uploadBook" method=post enctype="multipart/form-data" role=form class="form-horizontal">
+		<form id="form" action="<%=path%>/bookAction/uploadBook" method=post enctype="multipart/form-data" role=form class="form-horizontal" accept-charset="UTF-8">
 			<div class="form-group form-group-auto">
 				<label>图书封面</label><font color="#FF0000">*</font><input name=coverPicture type=file class=file>
 			</div>
@@ -174,10 +174,6 @@
 	<script src="<%=path%>/js/fileinput.js"></script>
 	<script src="<%=path%>/js/fileinput.min.js"></script>
 	<script>
-	function showTip(tip,type){
-        var $tip = $('#tip');
-        $tip.attr('class', 'alert alert-' + type).text(tip).css('margin-left', - $tip.outerWidth() / 2).fadeIn(500).delay(1000).fadeOut(500);
-    }
 	$("#cate").change(function(){
 		$("#category").empty();
 		switch ($("#cate").val())

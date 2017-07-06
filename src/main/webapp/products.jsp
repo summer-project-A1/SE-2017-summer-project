@@ -84,7 +84,7 @@
                     </a>
                     <div class="product-info simpleCart_shelfItem">
                         <div class="product-info-cust prt_name">
-                            <h3><s:property value="bookName"/></h3>
+                            <h4><s:property value="bookName"/></h4>
                             <span class="book-isbn">ISBN:<s:property value="isbn"/></span>
                             <div class="ofr">
                                 <p class="pric1">作者：<s:property value="author"/></p><br>
