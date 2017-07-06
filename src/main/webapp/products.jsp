@@ -74,7 +74,7 @@
                         <div class="more-product"><span> </span></div>
                         <div class="product-img b-link-stripe b-animate-go  thickbox">
                             <!--图书图片 ，需要imageID-->
-                            <img src="<%=path%>/images/m1.png" class="img-responsive" alt="">
+                            <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
                             <div class="b-wrapper">
                                 <h4 class="b-animate b-from-left  b-delay03">
                                     <button>View</button>
@@ -84,7 +84,7 @@
                     </a>
                     <div class="product-info simpleCart_shelfItem">
                         <div class="product-info-cust prt_name">
-                            <h3><s:property value="bookName"/></h3>
+                            <h4><s:property value="bookName"/></h4>
                             <span class="book-isbn">ISBN:<s:property value="isbn"/></span>
                             <div class="ofr">
                                 <p class="pric1">作者：<s:property value="author"/></p><br>
