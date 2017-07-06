@@ -39,8 +39,9 @@
                     </ul>
                     <div class="delivery">
                         <p>应还日期：2017年10月20日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                        <p>归还日期：2017年10月15日</p>
+                        <p>尚未归还</p>
                         <button>归还</button>
+                        <button>续借</button>
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -60,12 +61,36 @@
                     </h4>
                     <ul class="qty">
                         <li><p>作者：臧斌宇</p></li>
-                        <li><p>分类：言情小说aaaaaa</p></li>
+                        <li><p>分类：言情小说</p></li>
                     </ul>
                     <div class="delivery">
-                        <p>应还日期：2017年10月20日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                        <p>归还日期：2017年10月15日</p>
+                        <p>应还日期：2017年10月30日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p>尚未归还</p>
                         <button>归还</button>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div id="bookID3" class="cart-header">
+            <div class="cart-sec simpleCart_shelfItem">
+                <div class="cart-item cyc">
+                    <img src="<%=path%>/images/m1.png" class="img-responsive" alt="">
+                </div>
+                <div class="cart-item-info">
+                    <h4>
+                        <a href="<%=path%>/bookAction/showBookProfile?bookID=7">
+                            书名：计算机系统基础</a><br>
+                        <span>ISBN: 8888</span>
+                    </h4>
+                    <ul class="qty">
+                        <li><p>作者：臧斌宇</p></li>
+                        <li><p>分类：言情小说</p></li>
+                    </ul>
+                    <div class="delivery">
+                        <p>应还日期：2017年10月30日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p>归还日期：2017年10月15日</p>
                         <div class="clearfix"></div>
                     </div>
                 </div>
