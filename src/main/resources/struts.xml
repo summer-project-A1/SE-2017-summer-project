@@ -102,7 +102,9 @@
             <interceptor-ref name="isLogin"/>
         </action>
         <action name="uploadBook" class="action.BookAction" method="uploadBook">
-            <result name="showBooks">/products.jsp</result>
+            <result name="showBooks" type="redirectAction">
+                <param name="actionName">showAllBooks</param>
+            </result>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="isLogin"/>
         </action>
