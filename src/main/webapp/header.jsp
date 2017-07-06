@@ -194,9 +194,11 @@
                             </div>
                         </ul>
                     </li>
-                    <li class="dropdown grid"><a href="bookrelease.html" class="" >发布图书</a>
+                    <li class="dropdown grid"><a href=" <%=path%>/bookAction/showAllBooks" class="" >展示图书</a>
                     </li>
-                    <li><a href="how.html" class="" >如何分享</a>
+                    <li class="dropdown grid"><a href="<%=path%>/bookAction/showBookRelease" class="" >发布图书</a>
+                    </li>
+                    <li><a href="<%=basePath%>howToShare.jsp" class="" >如何分享</a>
                     </li>
                 </ul>
                 <!--/.navbar-collapse-->
