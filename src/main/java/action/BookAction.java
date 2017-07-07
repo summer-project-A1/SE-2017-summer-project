@@ -248,6 +248,7 @@ public class BookAction extends ActionSupport {
             System.out.println(tmp.getBookID());
         }
         ActionContext.getContext().put("allBooks",allBooks);
+        ActionContext.getContext().put("totalBookAmount",8);
         return "showBooks";
     }
 

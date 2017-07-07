@@ -22,6 +22,114 @@
 
 
 <script type="text/javascript" id="sourcecode">
+
+    var amountPerPage;
+    var totalBookAmount;
+    var pageCount;
+    var currPage;
+
+    $.urlParam = function(name){
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null)
+            return unescape(r[2]);
+        return 0; //返回参数值
+    }
+    // showAllBooks?part=2
+    var currBlock= parseInt($.urlParam('part')); //2
+    if(currBlock==0){
+        currBlock=1;
+    }
+    var firstPage = parseInt($.urlParam('firstPage'));
+    if(firstPage==0){
+        firstPage=1;
+    }
+    var prevBlock = currBlock-1;
+    var succBlock = currBlock+1;
+
+   function switchPage(pageNo){
+        $('.product-grid').hide();
+        $('.active').replaceWith("<li id='"+currPage+"'><a href='javascript:switchPage("+currPage+");'>"+currPage+"</a><li>");
+        $('#'+pageNo).replaceWith("<li id='"+pageNo+"' class='active'>"+pageNo+"<li>");
+        var end=(parseInt(pageNo)-1)*parseInt(amountPerPage)+parseInt(amountPerPage);
+       console.log("end: "+end);
+       for(var j=(pageNo-1)*amountPerPage;j<end;j++){
+            console.log("show product"+j);
+            $('#product'+j).show();
+        }
+        currPage=pageNo;
+
+    }
+
+
+
+
+    $(document).ready(function() {
+        currPage=firstPage;
+        amountPerPage = $("#selectAmountPerPage").val();
+        totalBookAmount = $("#totalBookAmount").text();
+        pageCount = totalBookAmount / amountPerPage;
+        var prevPage= firstPage-pageCount;
+        var succPage= firstPage+pageCount;
+        if(prevPage>0){
+            $('#pagination-digg').append("<li class='previous'><a href='?part="+prevBlock+"&firstPage="+prevPage+"'>&laquo;"+prevPage+" </a></li>");
+
+        }
+        if(pageCount>=1){
+            for(var i=firstPage;i<succPage;i++){
+                if(i==currPage){
+                    $('#pagination-digg').append("<li id='"+i+"' class='active'>"+i+"<li>");
+
+                }else{
+                    $('#pagination-digg').append("<li id='"+i+"'><a href='javascript:switchPage("+i+");'>"+i+"</a><li>");
+                }
+
+            }
+            $('.product-grid').hide();
+            for(var j=0;j<amountPerPage;j++){
+                $('#product'+j).show();
+            }
+        }
+        $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+succPage+"'>"+succPage+" &raquo;</a></li>");
+
+        $("#selectAmountPerPage").change(function () {
+            console.log("switch amount per page");
+            amountPerPage = $("#selectAmountPerPage").val();
+            totalBookAmount = $("#totalBookAmount").text();
+            pageCount = totalBookAmount / amountPerPage;
+            var prevPage = firstPage - pageCount;
+            var succPage = firstPage + pageCount;
+            $('#pagination-digg').empty();
+
+            if(prevPage>0){
+                $('#pagination-digg').append("<li class='previous'><a href='?part="+prevBlock+"&firstPage="+prevPage+"'>&laquo;"+prevPage+"</a></li>");
+
+            }
+            if(pageCount>=1){
+                for(var i=firstPage;i<succPage;i++){
+                    if(i==currPage){
+                        $('#pagination-digg').append("<li id='"+i+"' class='active'>"+i+"<li>");
+
+                    }else{
+                        $('#pagination-digg').append("<li id='"+i+"'><a href='javascript:switchPage("+i+");'>"+i+"</a><li>");
+                    }
+
+                }
+                $('.product-grid').hide();
+                var start=parseInt((currPage-1))*parseInt(amountPerPage);
+                var end= parseInt(start)+parseInt(amountPerPage);
+                for(var j=start;j<end;j++){
+                    $('#product'+j).show();
+                }
+            }
+            $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+succPage+"'>"+succPage+" &raquo;</a></li>");
+
+        });
+    });
+
+
+
+
     $(function()
     {
         $('.scroll-pane').jScrollPane();
@@ -56,20 +164,64 @@
             }
         });
     }
+    //左侧分类栏js脚本
+    $(document).ready(function(){
+        $(".tab1 .single-bottom").hide();
+        $(".tab2 .single-bottom").hide();
+        $(".tab3 .single-bottom").hide();
+
+
+        $(".tab1 ul").click(function(){
+            $(".tab1 .single-bottom").slideToggle(300);
+            $(".tab2 .single-bottom").hide();
+            $(".tab3 .single-bottom").hide();
+
+        })
+        $(".tab2 ul").click(function(){
+            $(".tab2 .single-bottom").slideToggle(300);
+            $(".tab1 .single-bottom").hide();
+            $(".tab3 .single-bottom").hide();
+
+        })
+        $(".tab3 ul").click(function(){
+            $(".tab3 .single-bottom").slideToggle(300);
+            $(".tab1 .single-bottom").hide();
+            $(".tab2 .single-bottom").hide();
+
+        })
+    });
+
+    //每页显示数量选框js脚本
+
 </script>
 
 
 
 <!--products-->
 <div class="products">
+
     <div class="container">
+
         <h2>图书浏览</h2>
+
         <div class="col-md-9 product-model-sec">
+            <div class="clearfix"> </div>
+            <div class="form-group form-group-auto" style="float: right;">
+                <label>每页显示数量</label>
+                <select id="selectAmountPerPage" class="form-control form-control-noNewline"
+                        style="width: 50%; display:inline;">
+                    <option value="2" selected>2</option>
+                    <option value="4">4</option>
+                    <option value="8">8</option>
+                </select>
+            </div>
+            <div class="clearfix"> </div>
+            <div id="totalBookAmount" style="display: none;">8</div>
 
 
             <!--具体图书信息div，使用struts迭代器-->
-            <s:iterator value="#allBooks" begin="" status="st">
-                <div class="product-grid">
+            <s:iterator value="#allBooks"  status="st">
+                <div id="product<s:property value="#st.index"/>" class="product-grid" style="display: none;">
                     <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
                         <div class="more-product"><span> </span></div>
                         <div class="product-img b-link-stripe b-animate-go  thickbox">
@@ -99,7 +251,9 @@
                     </div>
                 </div>
             </s:iterator>
-
+            <div class="clearfix"> </div>
+            <ul id="pagination-digg" style="float: right;">
+            </ul>
         </div>
         <div class="col-md-3 rsidebar span_1_of_left">
             <section  class="sky-form">
@@ -143,31 +297,7 @@
 
                     <!--script-->
                     <script>
-                        $(document).ready(function(){
-                            $(".tab1 .single-bottom").hide();
-                            $(".tab2 .single-bottom").hide();
-                            $(".tab3 .single-bottom").hide();
 
-
-                            $(".tab1 ul").click(function(){
-                                $(".tab1 .single-bottom").slideToggle(300);
-                                $(".tab2 .single-bottom").hide();
-                                $(".tab3 .single-bottom").hide();
-
-                            })
-                            $(".tab2 ul").click(function(){
-                                $(".tab2 .single-bottom").slideToggle(300);
-                                $(".tab1 .single-bottom").hide();
-                                $(".tab3 .single-bottom").hide();
-
-                            })
-                            $(".tab3 ul").click(function(){
-                                $(".tab3 .single-bottom").slideToggle(300);
-                                $(".tab1 .single-bottom").hide();
-                                $(".tab2 .single-bottom").hide();
-
-                            })
-                        });
                     </script>
                     <!--//script -->
                 </div>
@@ -185,6 +315,36 @@
 
         </div>
         <div class="clearfix"> </div>
+
+
+
+        <style type="text/css" media="screen">
+            #pagination-digg li {
+                border:0; margin:0; padding:0; font-size:11px;
+                list-style:none; /* savers */ float:left;
+            }
+            #pagination-digg a {
+                border:solid 1px #9aafe5; margin-right:2px;
+            }
+            #pagination-digg .previous-off,#pagination-digg .next-off  {
+                border:solid 1px #DEDEDE; color:#888888; display:block; float:left;
+                font-weight:bold; margin-right:2px; padding:3px 4px;
+            }
+            #pagination-digg .next a,#pagination-digg .previous a {
+                font-weight:bold;
+            }
+            #pagination-digg .active {
+                background:#2e6ab1; color:#FFFFFF; font-weight:bold; display:block;
+                float:left; padding:4px 6px; /* savers */ margin-right:2px;
+            }
+            #pagination-digg a:link,#pagination-digg a:visited { color:#0e509e; display:block;
+                float:left; padding:3px 6px; text-decoration:none;
+            }
+            #pagination-digg a:hover {
+                border:solid 1px #0e509e;
+            }
+        </style>
+
     </div>
 </div>
 <!--//products-->
