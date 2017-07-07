@@ -74,9 +74,7 @@
 	
 	<div id=bookinfo>
 		<form id="form" action="<%=path%>/bookAction/uploadBook" method=post enctype="multipart/form-data" role=form class="form-horizontal" accept-charset="UTF-8">
-			<div class="form-group form-group-auto">
-				<label>图书封面</label><font color="#FF0000">*</font><input name=coverPicture type=file class=file>
-			</div>
+
 			<div class="form-group form-group-auto">
 				<label>书名</label><font color="#FF0000">*</font><input name=bookName type=text class=form-control>
 			</div>
@@ -162,12 +160,15 @@
         	<div class="form-group form-group-auto">
         		<label>简介</label><font color="#FF0000">*</font><textarea id=introduction name=intro class="form-control" rows="3"></textarea>
         	</div>
+			<div class="form-group form-group-auto">
+				<label>图书封面</label><font color="#FF0000">*</font><input name=coverPicture type=file class=file>
+			</div>
         </form>
         <div class="form-group form-group-auto">
         	<label id=warning></label>
         </div>
-        <div id=confirm>
-        	<button id=commit class="btn btn-primary">确认发布</button>
+        <div id=confirm class="register-but">
+        	<input type="button" id=commit value="确认发布">
         </div>
     </div>
 	

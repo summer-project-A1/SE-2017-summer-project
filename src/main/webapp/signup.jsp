@@ -147,51 +147,64 @@
         });
     });
 </script>
+<style>
+    @media ( min-width :768px) {
 
+        .form-control-noNewline {
+            width: 100px;
+            display: inline;
+        }
+
+        .form-horizontal .form-group-auto {
+            margin-right: 0px;
+            margin-left: 0px;
+        }
+    }
+</style>
 <div class="account">
     <div class="container">
         <div id="tip"> </div>
         <div class="register" id="registerBox">
-            <form id="registerForm">
+            <form id="registerForm" class="form-horizontal">
                 <div class="register-top-grid">
                     <h3>用户注册</h3>
-                    <div class="input">
-                        <span>邮箱地址<label>*</label></span>
-                        <input type="text" name="email" id="register_email"><div id="available_status"></div>
+                    <div class="form-group form-group-auto">
+                        <label>邮箱地址</label><font color="#FF0000">*</font>&nbsp;
+                        <input type="text" name="email" class="form-control" id="register_email"><div id="available_status"></div>
                     </div>
-                    <div class="input">
-                        <span>密码<label>*</label></span>
-                        <input type="password" name="password" id="register_password"><div id="available_status2"></div>
+                    <div class="form-group form-group-auto">
+                        <label>密码</label><font color="#FF0000">*</font>&nbsp;
+                        <input type="password" name="password" class="form-control" id="register_password"><div id="available_status2"></div>
                     </div>
-                    <div class="input">
-                        <span>确认密码<label>*</label></span>
-                        <input type="password" name="confirmpassword" id="register_confirmpassword"><div id="available_status3"></div>
+                    <div class="form-group form-group-auto">
+                        <label>确认密码</label><font color="#FF0000">*</font>&nbsp;
+                        <input type="password" name="confirmpassword" class="form-control" id="register_confirmpassword"><div id="available_status3"></div>
                     </div>
-                    <div class="input">
-                        <span>姓名</span>
-                        <input type="text" name="name" id="name">
+                    <div class="form-group form-group-auto">
+                        <label>姓名</label>&nbsp;
+                        <input type="text" name="name" class="form-control" id="name">
                     </div>
-                    <div class="input">
-                        <span>性别</span>
-                        <select id="gender" name="gender" >
+                    <div class="form-group form-group-auto">
+                        <label>性别</label>&nbsp;
+                        <select id="gender" name="gender" class="form-control form-control-noNewline" >
                             <option>请选择</option>
                             <option>男</option>
                             <option>女</option>
                         </select>
                     </div>
-                    <div class="input">
-                        <span>手机<label>*</label></span>
-                        <input type="text" name="mobile" id="mobile"><div id="available_status4"></div>
+                    <div class="form-group form-group-auto">
+                        <label>手机</label><font color="#FF0000">*</font>&nbsp;
+                        <input type="text" name="mobile" class="form-control" id="mobile"><div id="available_status4"></div>
                     </div>
-                    <span>省市地区<label>*</label></span>
-                    <div class="input" id="city_4">
-                        <select class="prov" id="province" name="province" style="width:auto"></select>
-                        <select class="city"  disabled="disabled" id="city" name="city"  style="width:auto"></select>
-                        <select class="dist" disabled="disabled" id="district" name="district" style="width: auto"></select>
+                    <label>省市地区</label><font color="#FF0000">*</font>&nbsp;
+                    <div class="form-group form-group-auto" id="city_4">
+                        <select class="prov form-control form-control-noNewline" id="province" name="province" style="width:auto"></select>
+                        <select class="city form-control form-control-noNewline"  disabled="disabled" id="city" name="city"  style="width:auto"></select>
+                        <select class="dist form-control form-control-noNewline" disabled="disabled" id="district" name="district" style="width: auto"></select>
                     </div>
                     <div class="input">
-                        <span>详细地址<label>*</label></span>
-                        <input type="text" name="address" id="address">
+                        <label>详细地址</label><font color="#FF0000">*</font>&nbsp;
+                        <input type="text" class="form-control" name="address" id="address">
                     </div>
                     <div class="clearfix"> </div>
                 <div class="register-but">

@@ -26,20 +26,21 @@
     });
 </script>
 
+
 <div class="account">
     <div class="container">
         <div id="tip"> </div>
         <div class="register" id="registerBox">
-            <form id="registerForm" action="<%=path%>/authAction/signin" method="post">
+            <form id="registerForm" action="<%=path%>/authAction/signin" class="form-horizontal" method="post">
                 <div class="register-top-grid">
                     <h3>请重新登录</h3>
-                    <div class="input">
-                        <span>邮箱地址<label>*</label></span>
-                        <input type="text" name="email" id="login_email"><div id="available_status"></div>
+                    <div class="form-group form-group-auto">
+                        <label>邮箱地址</label><font color="#FF0000">*</font>&nbsp;
+                        <input type="text" name="email" class="form-control" id="login_email"><div id="available_status"></div>
                     </div>
-                    <div class="input">
-                        <span>密码<label>*</label></span>
-                        <input type="password" name="password" id="login_password"><div id="available_status2"></div>
+                    <div class="form-group form-group-auto">
+                        <label>密码</label><font color="#FF0000">*</font>&nbsp;
+                        <input type="password" name="password" class="form-control" id="login_password"><div id="available_status2"></div>
                     </div>
 
 

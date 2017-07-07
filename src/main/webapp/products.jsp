@@ -68,7 +68,7 @@
 
 
             <!--具体图书信息div，使用struts迭代器-->
-            <s:iterator value="#allBooks" status="st">
+            <s:iterator value="#allBooks" begin="" status="st">
                 <div class="product-grid">
                     <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
                         <div class="more-product"><span> </span></div>
