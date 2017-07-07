@@ -265,6 +265,7 @@ public class BookAction extends ActionSupport {
         this.pageSize = 100;
         List<Book> allBooks = this.bookService.showAllBooksByPage(this.part,this.pageSize);
         ActionContext.getContext().put("allBooks",allBooks);
+        ActionContext.getContext().put("totalBookAmount",allBooks.size());
         return "showBooks";
     }
 
