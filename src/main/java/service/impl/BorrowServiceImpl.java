@@ -1,6 +1,10 @@
 package service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import common.constants.BookStatus;
 import dao.ApplyDao;
@@ -76,6 +80,39 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
     }
 
     /* ============================================================= */
+    
+    @Override
+    public Map showMyBorrow() {
+        if(!isLogined()) {
+            return null;
+        }
+        User user = getLoginedUserInfo();
+        int userID = user.getUserID();
+        List<Borrow> borrows = this.borrowDao.getBorrowByUserID(userID);
+        List<BorrowHistory> borrowHistories = this.borrowHistoryDao.getBorrowHistoryByUserID(userID);
+        List borrowBook = new ArrayList();
+        List borrowHistoryBook = new ArrayList();
+        for(Borrow borrow : borrows) {
+            Map tmp = new HashMap();
+            int bookID = borrow.getBookID();
+            Book book = this.bookDao.getBookByID(bookID);
+            tmp.put("borrowID", borrow.getBorrowID());
+            tmp.put("bookID", bookID);
+            tmp.put("bookName", book.getBookName());
+            tmp.put("isbn", book.getIsbn());
+            tmp.put("author", book.getAuthor());
+            tmp.put("category", book.getCategory());
+            tmp.put("imageID", book.getImageID());
+            tmp.put("yhDate", borrow.getYhDate()); 
+            tmp.put("status", book.getStatus());
+            returned
+            inDate
+        }
+        for(BorrowHistory borrowHistory : borrowHistories) {
+            Map tmp = new HashMap();
+        }
+        return null;
+    }
     
     @Override
     public boolean borrowBook(int borrowID, Date yhDate) {
