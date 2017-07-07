@@ -163,6 +163,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
     @Override
     public boolean submitOrder(int orderID) {
+        // 确认订单
         // 需要检查用户的积分是否足够支付
         if(!isLogined()) {
             return false;
@@ -186,8 +187,28 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
     @Override
     public boolean cancelOrder(int orderID) {
-        // TODO 自动生成的方法存根
-        return false;
+        if(!isLogined()) {
+            return false;
+        }
+        User loginedUser = getLoginedUserInfo();
+        Order order = this.orderDao.getOrderByID(orderID);
+        if(order == null) {
+            return false;
+        }
+        if(order.getUserID() != loginedUser.getUserID()) {
+            return false;
+        }
+        if(order.getStatus() != OrderStatus.UNPAID) {
+            return false;
+        }
+        order.setStatus(OrderStatus.CANCELLED);
+        for(OrderItem orderItem : order.getOrderItems()) {
+            Book book = this.bookDao.getBookByID(orderItem.getBookID());
+            book.setStatus(BookStatus.IDLE);
+            this.bookDao.update(book);
+        }
+        this.orderDao.update(order);
+        return true;
     }
     
 }

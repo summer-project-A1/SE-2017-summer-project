@@ -27,27 +27,86 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
     
     @Override
     public List showBorrowCart() {
-        // TODO 自动生成的方法存根
-        return null;
+        List<Map<String, Object>> cartList;
+        List resultList = new ArrayList();
+        if(getHttpSession().containsKey("borrowCart")) {
+            cartList = (List<Map<String, Object>>)getHttpSession().get("borrowCart");
+        }
+        else {
+            cartList = new ArrayList<Map<String, Object>>();
+        }
+        
+        for(Map<String, Object> cartListItem : cartList) {
+            int bookID = (int)cartListItem.get("bookID");
+            Book book = this.bookDao.getBookByID(bookID);
+            if(book != null) {
+                resultList.add(book);
+            }
+        }
+        return resultList;
     }
 
     @Override
     public boolean addToBorrowCart(int bookID) {
-        // TODO 自动生成的方法存根
-        return false;
+        // 添加到http session中，不验证登录状态
+        Book book = this.bookDao.getBookByID(bookID); 
+        if(book == null) {
+            return false;
+        }
+        List<Map<String, Object>> cartList;
+        if(getHttpSession().containsKey("borrowCart")) {
+            cartList = (List<Map<String, Object>>)getHttpSession().get("borrowCart");
+        }
+        else {
+            cartList = new ArrayList<Map<String, Object>>();
+            getHttpSession().put("borrowCart", cartList);
+        }
+        
+        // 如果bookID已存在session中，不做任何操作
+        for(Map<String, Object> cartListItem : cartList) {
+            if((int)cartListItem.get("bookID") == bookID) {
+                return false;
+            }
+        }
+        Map<String, Object> newCartListItem = new HashMap();
+        newCartListItem.put("bookID", bookID);
+        newCartListItem.put("bookName", book.getBookName());
+        newCartListItem.put("amount", 1);
+        cartList.add(newCartListItem);
+        return true;
     }
 
     @Override
     public boolean removeFromBorrowCart(int bookID) {
-        // TODO 自动生成的方法存根
+        List<Map<String, Object>> cartList;
+        if(getHttpSession().containsKey("borrowCart")) {
+            cartList = (List<Map<String, Object>>)getHttpSession().get("borrowCart");
+        }
+        else {
+            cartList = new ArrayList<Map<String, Object>>();
+        }
+        
+        Iterator iterator = cartList.iterator();
+        while(iterator.hasNext()) {
+            Map<String, Object> cartListItem = (Map<String, Object>) iterator.next();
+            int existedBookID = (int)cartListItem.get("bookID");
+            if(existedBookID == bookID) {
+                iterator.remove();
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
     public boolean emptyBorrowCart() {
-        // TODO 自动生成的方法存根
-        return false;
+        if(getHttpSession().containsKey("borrowCart")) {
+            getHttpSession().remove("borrowCart");
+        }
+        return true;
     }
+    
+    /* ======================== */
     
     @Override
     public boolean addToBuyCart(int bookID) {

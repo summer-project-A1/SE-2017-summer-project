@@ -21,7 +21,7 @@ public class CartAction extends ActionSupport{
     private int bookID;
     private int amount;
 
-    private List<Book> cart;
+    private List cart;
     private Map params;
 
     /* ========================================================= */
@@ -60,7 +60,7 @@ public class CartAction extends ActionSupport{
 
     /* ========================================================= */
 
-    public String addToCart() {
+    public String addToBuyCart() {
         params = new HashMap();
         boolean result = this.cartService.addToBuyCart(this.bookID);
         if(result) {
@@ -71,12 +71,12 @@ public class CartAction extends ActionSupport{
         }
         return "ajax";
     }
-    public String showCart() {
+    public String showBuyCart() {
         this.cart = this.cartService.showBuyCart();
         ActionContext.getContext().put("booksInCart",cart);
         return "cart";
     }
-    public String removeFromCart() {
+    public String removeFromBuyCart() {
         params = new HashMap();
         boolean result = this.cartService.removeFromBuyCart(this.bookID);
         if(result) {
@@ -87,8 +87,43 @@ public class CartAction extends ActionSupport{
         }
         return "ajax";
     }
-    public String emptyCart() {
+    public String emptyBuyCart() {
         this.cartService.emptyBuyCart();
         return "emptyCart";
     }
+    
+    /* =========================== */
+    
+    public String addToBorrowCart() {
+        params = new HashMap();
+        boolean result = this.cartService.addToBorrowCart(this.bookID);
+        if(result) {
+            params.put("success", true);
+        }
+        else {
+            params.put("success", false);
+        }
+        return "ajax";
+    }
+    public String showBorrowCart() {
+        this.cart = this.cartService.showBorrowCart();
+        ActionContext.getContext().put("booksInCart",cart);
+        return "cart";
+    }
+    public String removeFromBorrowCart() {
+        params = new HashMap();
+        boolean result = this.cartService.removeFromBorrowCart(this.bookID);
+        if(result) {
+            params.put("success", true);
+        }
+        else {
+            params.put("success", false);
+        }
+        return "ajax";
+    }
+    public String emptyBorrowCart() {
+        this.cartService.emptyBorrowCart();
+        return "emptyCart";
+    }
+    
 }

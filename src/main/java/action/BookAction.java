@@ -18,6 +18,9 @@ public class BookAction extends ActionSupport {
     
     private int userID;
     
+    private Integer part;
+    private Integer pageSize;
+    
     private int bookID;
     private String bookName;
     private String isbn;
@@ -25,11 +28,11 @@ public class BookAction extends ActionSupport {
     private String press;          // 出版社
     private String category1;      // 大分类
     private String category2;      // 小分类
-    private String publishYear;    // 出版
-    private String publishMonth;
-    private String editionYear;     // 版次
-    private String editionMonth;
-    private String editionVersion;
+    private int publishYear;    // 出版
+    private int publishMonth;
+    private int editionYear;     // 版次
+    private int editionMonth;
+    private int editionVersion;
     private int page;              // 页数
     private String bookBinding;    // 装帧
     private String bookFormat;     // 开本
@@ -65,6 +68,19 @@ public class BookAction extends ActionSupport {
         this.userID = userID;
     }
 
+    public Integer getPart() {
+        return part;
+    }
+    public void setPart(Integer part) {
+        this.part = part;
+    }
+    public Integer getPageSize() {
+        return pageSize;
+    }
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+    
     public int getBookID() {
         return bookID;
     }
@@ -107,34 +123,34 @@ public class BookAction extends ActionSupport {
     public void setCategory2(String category2) {
         this.category2 = category2;
     }
-    public String getPublishYear() {
+    public int getPublishYear() {
         return publishYear;
     }
-    public void setPublishYear(String publishYear) {
+    public void setPublishYear(int publishYear) {
         this.publishYear = publishYear;
     }
-    public String getPublishMonth() {
+    public int getPublishMonth() {
         return publishMonth;
     }
-    public void setPublishMonth(String publishMonth) {
+    public void setPublishMonth(int publishMonth) {
         this.publishMonth = publishMonth;
     }
-    public String getEditionYear() {
+    public int getEditionYear() {
         return editionYear;
     }
-    public void setEditionYear(String editionYear) {
+    public void setEditionYear(int editionYear) {
         this.editionYear = editionYear;
     }
-    public String getEditionMonth() {
+    public int getEditionMonth() {
         return editionMonth;
     }
-    public void setEditionMonth(String editionMonth) {
+    public void setEditionMonth(int editionMonth) {
         this.editionMonth = editionMonth;
     }
-    public String getEditionVersion() {
+    public int getEditionVersion() {
         return editionVersion;
     }
-    public void setEditionVersion(String editionVersion) {
+    public void setEditionVersion(int editionVersion) {
         this.editionVersion = editionVersion;
     }
     public int getPage() {
@@ -243,10 +259,11 @@ public class BookAction extends ActionSupport {
     /* ============================================================== */
     
     public String showAllBooks() {
-        List<Book> allBooks = this.bookService.showAllBooks();
-        for(Book tmp:allBooks) {
-            System.out.println(tmp.getBookID());
+        if(this.part == null) {
+            this.part = 1;
         }
+        this.pageSize = 100;
+        List<Book> allBooks = this.bookService.showAllBooksByPage(this.part,this.pageSize);
         ActionContext.getContext().put("allBooks",allBooks);
         return "showBooks";
     }
