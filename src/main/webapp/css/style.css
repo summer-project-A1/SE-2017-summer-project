@@ -2130,17 +2130,17 @@ span.glyphicon.glyphicon-map-marker {
     min-width: 430px;
 }
 .search {
-    right: 17%;
+    right: 18%;
 }
 #loginBox {
-    right: 13.1%;
+    right: 14.5%;
 }
 .cart-box {
-    right: 6.5%;
+    right: 8%;
     width: 25%;
 }
 .borrow-box {
-    right: 3%;
+    right: 5%;
     width: 25%;
 }
 }
@@ -2173,11 +2173,11 @@ span.glyphicon.glyphicon-map-marker {
     right: 12%;
 }
 .cart-box {
-    right: 8%;
+    right: 5%;
     width: 30%;
 }
 .borrow-box {
-    right: 4%;
+    right: 1%;
     width: 30%
 }
 .banner {

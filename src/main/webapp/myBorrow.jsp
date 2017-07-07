@@ -11,6 +11,7 @@
     function returnBook(bookID){
         var returnBtnID = "returnBtn"+bookID;
         var delayBtnID = "delayBtn"+bookID;
+        var returnDateID = "returnDate"+bookID;
         $.ajax({
             url:'<%=path%>/',
             type:'POST',
@@ -19,8 +20,10 @@
             },
             success:function(msg){
                 if (msg.success) {
+                    var returnDate = msg.returnDate;
                     $("#"+returnBtnID).remove();
                     $("#"+delayBtnID).remove();
+                    $("#"+returnDateID).html("归还日期："+returnDate);
                     showTip('已归还图书！', 'success');
 
                 }
@@ -63,11 +66,6 @@
         });
     }
 
-    function test(bookID){
-        var testvar = "returnBtn"+bookID;
-        console.log(testvar);
-        $("#"+testvar).remove();
-    }
 </script>
 <br>
 <br>
@@ -86,8 +84,9 @@
 <br>
 <div class="cart-item">
     <div class="container">
+        <!-- 以下迭代显示尚未归还的图书 -->
         <s:iterator value="#borrowBook" status="st">
-        <div id="<s:property value="bookID"/>" class="cart-header">
+        <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
             <div class="cart-sec simpleCart_shelfItem">
                 <div class="cart-item cyc">
                     <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
@@ -101,27 +100,53 @@
                     <ul class="qty">
                         <li><p>作者：<s:property value="author"/></p></li>
                         <li><p>分类：<s:property value="category"/></p></li>
+                        <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
                     </ul>
                     <div class="delivery">
                         <p id="yhdate<s:property value="bookID"/>">应还日期：2017年10月20日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                         <s:if test="return==false && delayed==false">
-                            <p>尚未归还</p>
+                            <p id="returnDate<s:property value="bookID"/>">尚未归还</p>
                             <button id="returnBtn<s:property value="bookID"/>" onclick="returnBook(<s:property value="bookID"/>)">归还</button>
                             <button id="delayBtn<s:property value="bookID"/>" onclick="delayBook(<s:property value="bookID"/>)">续借</button>
                         </s:if>
                         <s:elseif test="return==false && delayed==true">
-                            <p>尚未归还</p>
+                            <p id="returnDate<s:property value="bookID"/>">尚未归还</p>
                             <button id="returnBtn<s:property value="bookID"/>" onclick="returnBook(<s:property value="bookID"/>)">归还</button>
                         </s:elseif>
-                        <p>尚未归还</p>
-                        <button id="returnBtn<s:property value="bookID"/>" onclick="returnBook(<s:property value="bookID"/>)">归还</button>
-                        <button id="delayBtn<s:property value="bookID"/>" onclick="delayBook(<s:property value="bookID"/>)">续借</button>
                         <div class="clearfix"></div>
                     </div>
                 </div>
                 <div class="clearfix"></div>
             </div>
         </div>
+        </s:iterator>
+
+        <!-- 以下迭代显示已归还的图书 -->
+        <s:iterator value="#borrowHistory" status="st">
+            <div id="borrowHistory<s:property value="bookID"/>" class="cart-header">
+                <div class="cart-sec simpleCart_shelfItem">
+                    <div class="cart-item cyc">
+                        <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
+                    </div>
+                    <div class="cart-item-info">
+                        <h4>
+                            <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
+                                书名：<s:property value="bookName"/></a><br>
+                            <span>ISBN:<s:property value="isbn"/></span>
+                        </h4>
+                        <ul class="qty">
+                            <li><p>作者：<s:property value="author"/></p></li>
+                            <li><p>分类：<s:property value="category"/></p></li>
+                            <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
+                        </ul>
+                        <div class="delivery">
+                            <p>应还日期：2017年10月30日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p>归还日期：2017年10月15日</p>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </s:iterator>
 
         <!-- 以下为页面展示 -->
@@ -132,19 +157,20 @@
                 </div>
                 <div class="cart-item-info">
                     <h4>
-                        <a href="<%=path%>/bookAction/showBookProfile?bookID=7">
+                        <a href="<%=path%>/bookAction/showBookProfile?bookID=1">
                             书名：计算机系统基础</a><br>
-                        <span>ISBN: 8888</span>
+                        <span>ISBN: 8888888888</span>
                     </h4>
                     <ul class="qty">
                         <li><p>作者：臧斌宇</p></li>
                         <li><p>分类：言情小说</p></li>
+                        <li><p>借阅积分：20</p></li>
                     </ul>
                     <div class="delivery">
                         <p>应还日期：2017年10月30日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                         <p>尚未归还</p>
-                        <button>续借</button>
                         <button>归还</button>
+                        <button>续借</button>
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -165,6 +191,7 @@
                     <ul class="qty">
                         <li><p>作者：臧斌宇</p></li>
                         <li><p>分类：言情小说</p></li>
+                        <li><p>借阅积分：20</p></li>
                     </ul>
                     <div class="delivery">
                         <p>应还日期：2017年10月30日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -190,6 +217,7 @@
                     <ul class="qty">
                         <li><p>作者：臧斌宇</p></li>
                         <li><p>分类：言情小说</p></li>
+                        <li><p>借阅积分：20</p></li>
                     </ul>
                     <div class="delivery">
                         <p>应还日期：2017年10月30日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
