@@ -19,6 +19,34 @@
         });
     </script>
     <script>
+        function addToCart(bookID)
+        {
+
+            //showTip('Added to your cart!', 'success');
+            console.log('amount: '+parseInt($('.item_quantity').first().val()));
+            $.ajax({
+                url: base_url + 'cartAction/addToCart',
+                type: 'POST',
+                data: {
+                    'bookID': bookID,
+                    'amount': $('.item_quantity').first().val()
+                },
+                success: function (msg) {
+                    //console.log(msg.success);
+
+                    if (msg.success) {
+                        showTip('添加成功!', 'success');
+                    }
+                    else {
+                        showTip('添加失败', 'danger');
+                    }
+                },
+                error:function(xhr,status,error){
+                    alert('status='+status+',error='+error);
+                }
+            });
+        }
+
         function addToBorrowCart(bookID){
             $.ajax({
                 url:'<%=path%>/cartAction/addToBorrowCart',
@@ -124,7 +152,7 @@
                         </s:if>
                         <s:if test="#bookProfile.canExchange==true">
                             <a href="#" class="add-cart item_add">交换</a>
-                            <a href="#" class="add-cart item_add">购买</a>
+                            <a href="#" class="add-cart item_add" onclick="addToCart(<s:property value="#bookProfile.bookID"/>)">购买</a>
                         </s:if>
                     </s:else>
                 </div>
