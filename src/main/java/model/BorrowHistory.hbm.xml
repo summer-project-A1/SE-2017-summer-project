@@ -13,5 +13,10 @@
         <property name="yhDate" column="yhdate" type="timestamp" />
         <property name="inDate" column="indate" type="timestamp" />
         <property name="borrowPrice" column="borrow_price" />
+        <property name="delayCount" column="delay_count" />
+        <property name="province" column="province" />
+        <property name="city" column="city" />
+        <property name="district" column="district" />
+        <property name="address" column="address" />
     </class>
 </hibernate-mapping>

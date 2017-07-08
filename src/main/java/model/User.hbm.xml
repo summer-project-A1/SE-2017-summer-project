@@ -7,6 +7,7 @@
 	    <id name="userID" column="user_id">
             <generator class="native"/>
         </id>
+        <property name="nickName" column="nickname" />
         <property name="password" column="password" />
         <property name="email" column="email" />
         <property name="credit" column="credit" />
@@ -15,6 +16,11 @@
                 <param name="enumClass">common.constants.UserRole</param>
             </type>
         </property>
+        <property name="delayCount" column="delay_count" />
+        <property name="province" column="province" />
+        <property name="city" column="city" />
+        <property name="district" column="district" />
+        <property name="address" column="address" />
         <property name="profileID" column="profile_id" />
         <property name="imageID" column="image_id" />
 	</class>

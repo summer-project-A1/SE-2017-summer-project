@@ -2,19 +2,19 @@ package model;
 
 import java.util.Date;
 
-public class Apply {           // 延期借阅申请
-    private int applyID;
+public class Reserve {           // 图书预约
+    private int reserveID;
     private int userID;
     private int bookID;
-    private Date due;      // 延期后的时间
+    private Date due;      // 预约的时间
     
     /* ====================================================== */
     
-    public int getApplyID() {
-        return applyID;
+    public int getReserveID() {
+        return reserveID;
     }
-    public void setApplyID(int applyID) {
-        this.applyID = applyID;
+    public void setReserveID(int reserveID) {
+        this.reserveID = reserveID;
     }
     public int getUserID() {
         return userID;

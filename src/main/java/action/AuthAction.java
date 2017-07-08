@@ -1,6 +1,8 @@
 package action;
 
 import com.opensymphony.xwork2.ActionSupport;
+
+import model.UserProfile;
 import service.UserService;
 
 import java.util.HashMap;
@@ -17,7 +19,7 @@ public class AuthAction extends ActionSupport{
     private String email;
     private String password;
     private String confirmpassword;
-    private String name;
+    private String nickName;
     private String gender;
     private String mobile;
     private String province;
@@ -51,12 +53,12 @@ public class AuthAction extends ActionSupport{
         this.confirmpassword = confirmpassword;
     }
 
-    public String getName() {
-        return name;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getGender() {
@@ -137,35 +139,35 @@ public class AuthAction extends ActionSupport{
     }
 
     public String register() {
-        Map registerInfo = new HashMap();
-        registerInfo.put("email", this.email);
-        registerInfo.put("password", this.password);
-        registerInfo.put("mobile", this.mobile);
-        registerInfo.put("province", this.province);
+        UserProfile registerInfo = new UserProfile();
+        registerInfo.setEmail(this.email);
+        registerInfo.setPlainPassword(this.password);
+        registerInfo.setMobile(this.mobile);
+        registerInfo.setProvince(this.province);
         if(this.city != null && this.district == null ) {
-            // Ö±Ï½ÊĞ
-            // ×¢Òâ´ËÊ±Ç°Ì¨²¢²»´«µİdistrictµ½ºóÌ¨£¬ÇÒdistrictµÄÄÚÈİ±£´æÔÚcity²ÎÊıÖĞ£¡
-            registerInfo.put("city", this.province);
-            registerInfo.put("district", this.city);
+            // ç›´è¾–å¸‚
+            // æ³¨æ„æ­¤æ—¶å‰å°å¹¶ä¸ä¼ é€’districtåˆ°åå°ï¼Œä¸”districtçš„å†…å®¹ä¿å­˜åœ¨cityå‚æ•°ä¸­ï¼
+            registerInfo.setCity(this.province+"å¸‚");
+            registerInfo.setDistrict(this.city);
         }
         else {
-            // ÆÕÍ¨Ê¡ÊĞ£¨Èı¸öÊôĞÔÈ«ÓĞ£©»ò¹úÍâ£¨Ö»ÓĞprovinceÊôĞÔ£©
-            registerInfo.put("city", this.city);
-            registerInfo.put("district", this.district);
+            // æ™®é€šçœå¸‚ï¼ˆä¸‰ä¸ªå±æ€§å…¨æœ‰ï¼‰æˆ–å›½å¤–ï¼ˆåªæœ‰provinceå±æ€§ï¼‰
+            registerInfo.setCity(this.city);
+            registerInfo.setDistrict(this.district);
         }
-        registerInfo.put("address", this.address);
-        registerInfo.put("name", this.name);
-        registerInfo.put("gender", this.gender);
+        registerInfo.setAddress(this.address);
+        registerInfo.setNickName(this.nickName);
+        registerInfo.setGender(this.gender);
 
         boolean result = this.userService.register(registerInfo);
         this.params = new HashMap();
         if(result) {
             this.params.put("result", true);
-            //this.params.put("message", "×¢²á³É¹¦");
+            //this.params.put("message", "æ³¨å†ŒæˆåŠŸ");
         }
         else {
             this.params.put("result", false);
-            //this.params.put("message", "×¢²áÊ§°Ü");
+            //this.params.put("message", "æ³¨å†Œå¤±è´¥");
         }
         return "ajax";
     }
