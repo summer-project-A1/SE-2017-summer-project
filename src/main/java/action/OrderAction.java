@@ -21,6 +21,8 @@ public class OrderAction extends ActionSupport {
     
     private String buyOrBorrow;
         
+    private Map params; 
+    
     /* ========================================================= */
 
     public OrderService getOrderService() {
@@ -41,6 +43,12 @@ public class OrderAction extends ActionSupport {
     public void setBuyOrBorrow(String buyOrBorrow) {
         this.buyOrBorrow = buyOrBorrow;
     }
+    public Map getParams() {
+        return params;
+    }
+    public void setParams(Map params) {
+        this.params = params;
+    }
     
     /* ========================================================= */
     
@@ -50,8 +58,8 @@ public class OrderAction extends ActionSupport {
             return "buy";
         }
         else if(this.buyOrBorrow.equals("borrow")) {
-            this.borrowService.borrowAllBookInBorrowCart();
-            return "borrow";
+            this.params = this.borrowService.borrowAllBookInBorrowCart();
+            return "ajax";
         }
         else {
             return ERROR;
