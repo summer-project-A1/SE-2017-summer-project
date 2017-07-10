@@ -251,7 +251,7 @@
                 </div>
             </div>   
             <div class="header-right cart">
-                <a href="<%=path%>/cartAction/showCart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                <a href="<%=path%>/cartAction/showBuyCart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                 <div class="cart-box">
                    <s:if test="#session.buyCart==null||#session.buyCart.size()==0">
                        <h4><span>购买购物车为空（刷新以更新）</span></h4>
@@ -270,13 +270,13 @@
                                 </tr>
                         </s:iterator>
                         </table>
-                        <p><a href="<%=path%>/orderAction/emptyCart" class="simpleCart_empty">清空购物车</a></p>
+                        <p><a href="<%=path%>/orderAction/emptyBuyCart" class="simpleCart_empty">清空购物车</a></p>
                     </s:else>
                     <div class="clearfix"> </div>
                 </div>
             </div>
                 <div class="header-right borrow">
-                <a href="<%=path%>/cartAction/showCart"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></a>
+                <a href="<%=path%>/cartAction/showBorrowCart"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></a>
                 <div class="borrow-box">
                     <s:if test="#session.borrowCart==null||#session.borrowCart.size()==0">
                         <h4><span>借阅购物车为空（刷新以更新）</span></h4>
@@ -295,7 +295,7 @@
                                 </tr>
                             </s:iterator>
                         </table>
-                        <p><a href="<%=path%>/orderAction/emptyCart" class="simpleCart_empty">清空购物车</a></p>
+                        <p><a href="<%=path%>/orderAction/emptyBorrowCart" class="simpleCart_empty">清空购物车</a></p>
                     </s:else>
                     <div class="clearfix"> </div>
                 </div>

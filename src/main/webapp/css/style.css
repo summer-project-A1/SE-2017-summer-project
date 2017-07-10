@@ -1590,7 +1590,20 @@ p span.overline{
 .register-but{
 	margin-top:1em;
 }
-
+.checkout-but{
+    border: 2px solid #F07818;
+    color: #FFF;
+    font-size: 1.1em;
+    padding: 0.5em 2em;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    display: inline-block;
+    outline: none;
+    background-color: #F07818;
+    float: right;
+}
 .register-but input[type="button"] {
     border: 2px solid #F07818;
     color: #FFF;
@@ -1838,7 +1851,7 @@ ul.total_price li.last_price span{
   line-height: 1.8em;
 }
 .cart-items h2 {
-    margin-bottom: 1.5em;
+    margin-bottom: 1.0em; /*1.5*/
     text-align: left;
     font-size: 3.5em;
 }

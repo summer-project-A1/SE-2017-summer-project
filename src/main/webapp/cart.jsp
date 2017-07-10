@@ -20,12 +20,19 @@
         <div id="tip"> </div>
         <h2>我的购物车</h2>
         <script>
-
-
             function deleteBook(bookID) {
                 console.log("delete current book, bookid: "+bookID);
+                var method = '<s:property value="buyOrBorrow"/>';
+                var cmp = method;
+                var url = "";
+                if(cmp=="borrow"){
+                    url = 'cartAction/removeFromBorrowCart';
+                }
+                if(cmp=="buy"){
+                    url = 'cartAction/removeFromBuyCart';
+                }
                 $.ajax({
-                    url: base_url+ 'cartAction/removeFromCart',
+                    url: base_url+ url,
                     type:'POST',
                     data: {
                         'bookID' : bookID
@@ -46,6 +53,38 @@
                 });
 
             }
+
+            function createOrder(){
+                var method = '<s:property value="buyOrBorrow"/>';
+                $.ajax({
+                   url: base_url+ 'orderAction/createOrder',
+                   type: 'POST',
+                   data:{
+                       'buyOrBorrow':method
+                   },
+                   success: function(msg){
+                        if(msg.result == true){
+                            showTip('结算成功','success');
+                        }else{
+                            if(msg.book == true && msg.credit == true){
+                                var info = '积分余额不足，图书已被借阅或交换';
+                                showTip(info,'danger');
+                            }
+                            if(msg.credit == true){
+                                var creditNotEnough = '积分余额不足';
+                                showTip(creditNotEnough,'danger');
+                            }
+                            if(msg.book == true){
+                                var bookWasSold = '图书已被借阅或交换';
+                                showTip(bookWasSold,'danger');
+                            }
+                        }
+                   },
+                   error:function(xhr,status,error){
+                       alert('status='+status+',error='+error);
+                   }
+                });
+            }
             /*
              $('.close-button').on('click', function(c){
              console.log("delete current book.");
@@ -58,15 +97,21 @@
 
 
 
-        <s:if test="#session.buyCart==null||#session.borrowCart==null||#booksInBorrowCart==null||#booksInBuyCart==null">
+        <s:if test="(#session.buyCart==null&&#session.borrowCart==null)||#booksInCart==null">
             <h3>购物车为空</h3>
             <h3><a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a></h3>
         </s:if>
         <div id="tip"></div>
         <s:else>
-        <s:iterator value="#booksInBorrowCart" status="st">
+            <s:if test="#buyOrBorrow=='borrow'">
+                <h3>借阅清单</h3><br>
+            </s:if>
+            <s:elseif test="#buyOrBorrow=='buy'">
+                <h3>购买清单</h3><br>
+            </s:elseif>
+        <s:iterator value="#booksInCart" status="st">
             <div id="<s:property value="bookID"/>" class="cart-header">
-                <div class="close-icon" onclick="deleteBook(<s:property value="bookID"/>)"> </div>
+                <div class="close-icon" onclick="deleteBook(<s:property value="bookID"/>)"></div>
                 <div class="cart-sec simpleCart_shelfItem">
                     <div class="cart-item cyc">
                         <img src="<%=path%>/images/m1.png" class="img-responsive" alt="">
@@ -91,7 +136,7 @@
                 </div>
             </div>
         </s:iterator>
-            <button class="btn-default">结算</button>
+            <button class="checkout-but" onclick="createOrder()">结算</button>
         </s:else>
     </div>
 </div>
