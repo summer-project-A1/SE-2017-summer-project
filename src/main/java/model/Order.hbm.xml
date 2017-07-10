@@ -15,5 +15,9 @@
                 <param name="enumClass">common.constants.OrderStatus</param>
             </type>
         </property>
+        <set name="orderItems" cascade="all" table="orderitem">  
+            <key column="order_id" foreign-key="order_id"></key>  
+            <one-to-many class="model.OrderItem" />  
+        </set>
     </class>
 </hibernate-mapping>

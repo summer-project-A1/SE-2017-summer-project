@@ -3,6 +3,7 @@ package action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import model.Book;
+import service.CartService;
 import service.OrderService;
 
 import java.util.HashMap;
@@ -13,22 +14,24 @@ import java.util.Map;
  * Created by zzy on 2017/7/5.
  */
 public class CartAction extends ActionSupport{
-    private OrderService orderService;
+    private static final long serialVersionUID = -7295028045750112708L;
+
+    private CartService cartService;
 
     private int bookID;
     private int amount;
 
-    private List<Book> cart;
+    private List cart;
     private Map params;
 
     /* ========================================================= */
 
 
-    public OrderService getOrderService() {
-        return orderService;
+    public CartService getCartService() {
+        return cartService;
     }
-    public void setOrderService(OrderService orderService) {
-        this.orderService = orderService;
+    public void setCartService(CartService cartService) {
+        this.cartService = cartService;
     }
     public int getBookID() {
         return bookID;
@@ -57,9 +60,9 @@ public class CartAction extends ActionSupport{
 
     /* ========================================================= */
 
-    public String addToCart() {
+    public String addToBuyCart() {
         params = new HashMap();
-        boolean result = this.orderService.addToCart(this.bookID);
+        boolean result = this.cartService.addToBuyCart(this.bookID);
         if(result) {
             params.put("success", true);
         }
@@ -68,14 +71,14 @@ public class CartAction extends ActionSupport{
         }
         return "ajax";
     }
-    public String showCart() {
-        this.cart = this.orderService.showCart();
+    public String showBuyCart() {
+        this.cart = this.cartService.showBuyCart();
         ActionContext.getContext().put("booksInCart",cart);
         return "cart";
     }
-    public String removeFromCart() {
+    public String removeFromBuyCart() {
         params = new HashMap();
-        boolean result = this.orderService.removeFromCart(this.bookID);
+        boolean result = this.cartService.removeFromBuyCart(this.bookID);
         if(result) {
             params.put("success", true);
         }
@@ -84,8 +87,43 @@ public class CartAction extends ActionSupport{
         }
         return "ajax";
     }
-    public String emptyCart() {
-        this.orderService.emptyCart();
+    public String emptyBuyCart() {
+        this.cartService.emptyBuyCart();
         return "emptyCart";
     }
+    
+    /* =========================== */
+    
+    public String addToBorrowCart() {
+        params = new HashMap();
+        boolean result = this.cartService.addToBorrowCart(this.bookID);
+        if(result) {
+            params.put("success", true);
+        }
+        else {
+            params.put("success", false);
+        }
+        return "ajax";
+    }
+    public String showBorrowCart() {
+        this.cart = this.cartService.showBorrowCart();
+        ActionContext.getContext().put("booksInCart",cart);
+        return "cart";
+    }
+    public String removeFromBorrowCart() {
+        params = new HashMap();
+        boolean result = this.cartService.removeFromBorrowCart(this.bookID);
+        if(result) {
+            params.put("success", true);
+        }
+        else {
+            params.put("success", false);
+        }
+        return "ajax";
+    }
+    public String emptyBorrowCart() {
+        this.cartService.emptyBorrowCart();
+        return "emptyCart";
+    }
+    
 }

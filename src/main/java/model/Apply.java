@@ -1,12 +1,12 @@
 package model;
 
-import java.util.Calendar;
+import java.util.Date;
 
 public class Apply {           // 延期借阅申请
     private int applyID;
     private int userID;
     private int bookID;
-    private Calendar due;      // 延期后的时间
+    private Date due;      // 延期后的时间
     
     /* ====================================================== */
     
@@ -28,10 +28,10 @@ public class Apply {           // 延期借阅申请
     public void setBookID(int bookID) {
         this.bookID = bookID;
     }
-    public Calendar getDue() {
+    public Date getDue() {
         return due;
     }
-    public void setDue(Calendar due) {
+    public void setDue(Date due) {
         this.due = due;
     }
     

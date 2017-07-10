@@ -41,6 +41,9 @@
 				<value>model/BookRelease.hbm.xml</value>
 				<value>model/Borrow.hbm.xml</value>
 				<value>model/BorrowHistory.hbm.xml</value>
+				<value>model/Order.hbm.xml</value>
+                <value>model/OrderItem.hbm.xml</value>
+                <value>model/Apply.hbm.xml</value>
 			</list>
 		</property>
 		<!-- Hibernate SessionFactory -->
@@ -95,6 +98,10 @@
     </bean>
     <bean id="borrowHistoryDao" class="dao.impl.BorrowHistoryDaoImpl" parent="baseDao">
     </bean>
+    <bean id="applyDao" class="dao.impl.ApplyDaoImpl" parent="baseDao">
+    </bean>
+    <bean id="orderDao" class="dao.impl.OrderDaoImpl" parent="baseDao">
+    </bean>
     <bean id="imageDao" class="dao.impl.ImageDaoImpl" parent="baseDao">
     </bean>
 
@@ -102,50 +109,58 @@
 
     <!-- Service -->
     <bean id="userService" class="service.impl.UserServiceImpl">
-        <property name="userDao" ref="userDao"/>
+        <property name="userDao" ref="userDao"></property>
     </bean>
     <bean id="bookService" class="service.impl.BookServiceImpl">
-        <property name="bookDao" ref="bookDao"/>
-        <property name="bookReleaseDao" ref="bookReleaseDao"/>
-        <property name="imageDao" ref="imageDao"/>
+        <property name="bookDao" ref="bookDao"></property>
+        <property name="bookReleaseDao" ref="bookReleaseDao"></property>
+        <property name="imageDao" ref="imageDao"></property>
     </bean>
     <bean id="borrowService" class="service.impl.BorrowServiceImpl">
-        <property name="bookDao" ref="bookDao"/>
-        <property name="bookReleaseDao" ref="bookReleaseDao"/>
-        <property name="userDao" ref="userDao"/>
-        <property name="borrowDao" ref="borrowDao"/>
-        <property name="borrowHistoryDao" ref="borrowHistoryDao"/>
+        <property name="bookDao" ref="bookDao"></property>
+        <property name="bookReleaseDao" ref="bookReleaseDao"></property>
+        <property name="userDao" ref="userDao"></property>
+        <property name="borrowDao" ref="borrowDao"></property>
+        <property name="borrowHistoryDao" ref="borrowHistoryDao"></property>
+        <property name="applyDao" ref="applyDao"></property>
+    </bean>
+    <bean id="cartService" class="service.impl.CartServiceImpl">
+        <property name="bookDao" ref="bookDao"></property>
     </bean>
     <bean id="orderService" class="service.impl.OrderServiceImpl">
-        <property name="bookDao" ref="bookDao"/>
+        <property name="bookDao" ref="bookDao"></property>
+        <property name="bookReleaseDao" ref="bookReleaseDao"></property>
+        <property name="userDao" ref="userDao"></property>
+        <property name="orderDao" ref="orderDao"></property>
+    </bean>
+    <bean id="historyService" class="service.impl.HistoryServiceImpl">
+        <property name="borrowDao" ref="borrowDao"></property>
+        <property name="borrowHistoryDao" ref="borrowHistoryDao"></property>
     </bean>
     <bean id="imageService" class="service.impl.ImageServiceImpl">
-        <property name="imageDao" ref="imageDao"/>
+        <property name="imageDao" ref="imageDao"></property>
     </bean>
     
     <!-- ============================================================= -->
     
     <!-- Action -->
     <bean id="userAction" class="action.UserAction">
-        <property name="userService" ref="userService"/>
-    </bean>
-    <bean id="authAction" class="action.AuthAction">
-        <property name="userService" ref="userService"/>
+        <property name="userService" ref="userService"></property>
     </bean>
     <bean id="bookAction" class="action.BookAction">
-        <property name="bookService" ref="bookService"/>
+        <property name="bookService" ref="bookService"></property>
     </bean>
     <bean id="orderAction" class="action.OrderAction">
-        <property name="orderService" ref="orderService"/>
+        <property name="orderService" ref="orderService"></property>
     </bean>
     <bean id="cartAction" class="action.CartAction">
-        <property name="orderService" ref="orderService"/>
+        <property name="cartService" ref="cartService"/>
     </bean>
     <bean id="imageAction" class="action.ImageAction">
-        <property name="imageService" ref="imageService"/>
+        <property name="imageService" ref="imageService"></property>
     </bean>
     <bean id="indexAction" class="action.IndexAction">
-        <property name="bookService" ref="bookService"/>
+        <property name="bookService" ref="bookService"></property>
     </bean>
     
 </beans>

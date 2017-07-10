@@ -64,11 +64,11 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         String press = (String)bookInfo.get("press");          // 出版社 mysql
         String category1 = (String)bookInfo.get("category1");       // 分类 mysql
         String category2 = (String)bookInfo.get("category2");       // 分类 mysql
-        String publishYear = (String)bookInfo.get("publishYear");    // 出版 mongo
-        String publishMonth = (String)bookInfo.get("publishMonth");  // mongo
-        String editionYear = (String)bookInfo.get("editionYear");     // 版次 mongo 
-        String editionMonth = (String)bookInfo.get("editionMonth");    // mongo
-        String editionVersion = (String)bookInfo.get("editionVersion"); //mongo
+        int publishYear = (int)bookInfo.get("publishYear");    // 出版 mongo
+        int publishMonth = (int)bookInfo.get("publishMonth");  // mongo
+        int editionYear = (int)bookInfo.get("editionYear");     // 版次 mongo 
+        int editionMonth = (int)bookInfo.get("editionMonth");    // mongo
+        int editionVersion = (int)bookInfo.get("editionVersion"); //mongo
         int page = (int)bookInfo.get("page");              // 页数 mongo
         String bookBinding = (String)bookInfo.get("bookBinding");    // 装帧 mongo
         String bookFormat = (String)bookInfo.get("bookFormat");     // 开本 mongo
@@ -137,8 +137,8 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> showAllBooks() {
-        return this.bookDao.getAllBooks();
+    public List<Book> showAllBooksByPage(int part,int pageSize) {
+        return this.bookDao.getAllBooksByPage(part,pageSize);
     }
 
     @Override
@@ -146,6 +146,11 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         return this.bookDao.getBooksByUserID(userID);
     }
 
+    @Override
+    public List<Book> searchByTextByPage(String searchText,int part,int pageSize) {
+        return this.bookDao.searchByTextByPage(searchText,part,pageSize);
+    }
+    
     @Override
     public List<Book> searchBook(Map condition) {
         // TODO 自动生成的方法存根
