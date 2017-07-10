@@ -137,5 +137,16 @@
         </action>
     </package>
 
+    <package name="borrowAction" extends="struts-default,json-default" namespace="/borrowAction">
+        <action name="*" class="action.BorrowAction" method="{1}">
+            <result name="showMyBorrow">/myBorrow.jsp</result>
+            <result name="ajax" type="json">
+                <param name="root">params</param>
+            </result>
+            <allowed-methods>
+                showMyBorrow,delayBook,returnBook
+            </allowed-methods>
+        </action>
+    </package>
 
 </struts>
