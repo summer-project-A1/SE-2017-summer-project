@@ -112,7 +112,7 @@
                 <div class="close-icon" onclick="deleteBook(<s:property value="bookID"/>)"></div>
                 <div class="cart-sec simpleCart_shelfItem">
                     <div class="cart-item cyc">
-                        <img src="<%=path%>/images/m1.png" class="img-responsive" alt="">
+                        <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
                     </div>
                     <div class="cart-item-info">
                         <h3>

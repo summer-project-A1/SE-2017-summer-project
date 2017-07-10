@@ -40,6 +40,28 @@
                 }
             });
         }
+
+        function addToBuyCart(bookID){
+            $.ajax({
+                url:'<%=path%>/cartAction/addToBuyCart',
+                type:'POST',
+                data:{
+                    'bookID': bookID,
+                    'amount': "1"
+                },
+                success: function (msg) {
+                    if (msg.success) {
+                        showTip('添加成功!', 'success');
+                    }
+                    else {
+                        showTip('添加失败', 'danger');
+                    }
+                },
+                error:function(xhr,status,error){
+                    alert('status='+status+',error='+error);
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -121,7 +143,7 @@
                         </s:if>
                         <s:if test="#bookProfile.canExchange==true">
                             <a href="#" class="add-cart item_add">交换</a>
-                            <a href="#" class="add-cart item_add">购买</a>
+                            <a href="#" class="add-cart item_add" onclick="addToBuyCart(<s:property value="#bookProfile.bookID"/>)">购买</a>
                         </s:if>
                     </s:else>
                 </div>

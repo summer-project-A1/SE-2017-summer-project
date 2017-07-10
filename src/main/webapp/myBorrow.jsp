@@ -118,7 +118,7 @@
                         个人信息</a></li>
                     <li><a href="#" style="color: #FFFFFF" ><i
                             class="fa fa-reorder fa-fw"></i>我的发布</a></li>
-                    <li><a href="#" style="color: #FFFFFF" class="active"><i
+                    <li><a href="<%=path%>/borrowAction/showMyBorrow" style="color: #FFFFFF" class="active"><i
                             class="fa fa-table fa-fw"></i> 我的借阅</a></li>
                     <li><a href="#" style="color: #FFFFFF"><i class="fa fa-user fa-fw"></i>
                         我的交换</a></li>
