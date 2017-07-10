@@ -135,6 +135,10 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         return null;
     }
 
+    public BookInfo showBookInfo(int bookID) {
+        return this.bookDao.getBookInfoByID(bookID);
+    }
+    
     @Override
     public BookProfile showBookProfile(int bookID) {
         // 这里的返回值不仅包括mongodb中的内容，也包括mysql中的内容

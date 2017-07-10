@@ -1,6 +1,7 @@
 package service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,9 @@ import model.User;
 import service.BorrowService;
 
 public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService {
+    private int borrowDay;     // 单次借阅时间，由spring注入
+    private int delayDay;      // 单次续借时间，由spring注入
+    
     private BookDao bookDao;
     private BookReleaseDao bookReleaseDao;
     private UserDao userDao;
@@ -31,6 +35,22 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
     private ReserveDao reserveDao;
     
     /* ========================================================== */
+
+    public int getBorrowDay() {
+        return borrowDay;
+    }
+
+    public void setBorrowDay(int borrowDay) {
+        this.borrowDay = borrowDay;
+    }
+
+    public int getDelayDay() {
+        return delayDay;
+    }
+
+    public void setDelayDay(int delayDay) {
+        this.delayDay = delayDay;
+    }
 
     public BookDao getBookDao() {
         return bookDao;
@@ -135,7 +155,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
     }
     
     @Override
-    public boolean borrowBook(int bookID, Date yhDate) {
+    public boolean borrowBook(int bookID) {
         if(!isLogined()) {
             return false;
         }
@@ -155,6 +175,9 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         newBorrow.setUserID(user.getUserID());
         newBorrow.setBorrowDate(new Date());
         newBorrow.setBorrowPrice(bookRelease.getBorrowCredit());
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.DATE, this.borrowDay);
+        Date yhDate = now.getTime();
         newBorrow.setYhDate(yhDate);
         this.borrowDao.save(newBorrow);
         book.setStatus(BookStatus.BORROWED);
@@ -245,47 +268,64 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
     }
 
     @Override
-    public boolean returnBook(int borrowID) {
+    public Map returnBook(int borrowID) {
+        Map returnMap = new HashMap();
         if(!isLogined()) {
-            return false;
+            returnMap.put("success", false);
+            return returnMap;
         }
         User user = getLoginedUserInfo();
         Borrow borrow = this.borrowDao.getBorrowByID(borrowID);
         if(borrow.getUserID() != user.getUserID()) {
-            return false;
+            returnMap.put("success", false);
+            return returnMap;
         }
         int bookID = borrow.getBookID();
         Book book = this.bookDao.getBookByID(bookID);
         if(book.getStatus() != BookStatus.BORROWED) {
-            return false;
+            returnMap.put("success", false);
+            return returnMap;
         }
         book.setStatus(BookStatus.IDLE);
+        Date returnDate = new Date();
         BorrowHistory newBorrowHistory = new BorrowHistory();
         newBorrowHistory.setBookID(bookID);
         newBorrowHistory.setBorrowDate(borrow.getBorrowDate());
         newBorrowHistory.setBorrowPrice(borrow.getBorrowPrice());
-        newBorrowHistory.setInDate(new Date());
+        newBorrowHistory.setInDate(returnDate);
         newBorrowHistory.setUserID(user.getUserID());
         newBorrowHistory.setYhDate(borrow.getYhDate());
         this.bookDao.update(book);
         this.borrowHistoryDao.save(newBorrowHistory);
         this.borrowDao.delete(borrow);
-        return true;
+        returnMap.put("success", true);
+        returnMap.put("returnDate", returnDate);
+        return returnMap;
     }
 
     @Override
-    public boolean delayBook(int borrowID, Date newYhDate) {
+    public Map delayBook(int borrowID) {
+        Map returnMap = new HashMap();
         if(!isLogined()) {
-            return false;
+            returnMap.put("success", false);
+            return returnMap;
         }
         User user = getLoginedUserInfo();
         Borrow borrow = this.borrowDao.getBorrowByID(borrowID);
         if(borrow.getUserID() != user.getUserID()) {
-            return false;
+            returnMap.put("success", false);
+            return returnMap;
         }
+        Date oldYhDate = borrow.getYhDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(oldYhDate);
+        calendar.add(Calendar.DATE, this.delayDay);
+        Date newYhDate = calendar.getTime();
         borrow.setYhDate(newYhDate);
         this.borrowDao.update(borrow);
-        return true;
+        returnMap.put("success", true);
+        returnMap.put("yhdate", newYhDate);
+        return returnMap;
     }
     
 }
