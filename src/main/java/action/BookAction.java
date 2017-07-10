@@ -272,7 +272,7 @@ public class BookAction extends ActionSupport {
         if(this.firstPage == null) {
             this.firstPage = 1;
         }
-        List<BookInfo> allBooks = this.bookService.showAllBookInfoByPage(this.part,100);
+        List<BookInfo> allBooks = this.bookService.showAllBookInfoByPage(this.part,9);
         ActionContext.getContext().put("allBooks",allBooks);
         ActionContext.getContext().put("totalBookAmount",allBooks.size());//应从数据库获取allBooks的大小
         ActionContext.getContext().put("firstPage", this.firstPage);
