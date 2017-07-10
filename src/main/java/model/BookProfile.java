@@ -18,6 +18,7 @@ public class BookProfile {
     private int canBorrow;        // 用户发布时决定书是否可被借阅
     private int reserved;         // 书当前是否已被预约 
     private BookStatus status;               // 书当前状态（空闲/正被借阅/正被交换/正被售出（尚未考虑））
+    private String bookStatus;     // 书当前状态（字符串形式，用于前端）
     private String profileID;         // 书的详细信息在monggodb中的id
     private String imageID;           // 书的图片在monggodb中的图片
     /* ============ */
@@ -108,6 +109,12 @@ public class BookProfile {
     }
     public void setStatus(BookStatus status) {
         this.status = status;
+    }
+    public String getBookStatus() {
+        return bookStatus;
+    }
+    public void setBookStatus(String bookStatus) {
+        this.bookStatus = bookStatus;
     }
     public String getProfileID() {
         return profileID;

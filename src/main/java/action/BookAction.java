@@ -1,10 +1,7 @@
 package action;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -22,7 +19,7 @@ public class BookAction extends ActionSupport {
         分页使用的两个变量
      */
     private Integer part;
-    private int firstPage;
+    private Integer firstPage;
 
     private int userID;
     private int bookID;
@@ -76,11 +73,11 @@ public class BookAction extends ActionSupport {
         this.part=part;
     }
 
-    public int getFirstPage(){
+    public Integer getFirstPage(){
         return this.part;
     }
 
-    public void setFirstPage(int firstPage){
+    public void setFirstPage(Integer firstPage){
         this.firstPage=firstPage;
     }
 
@@ -272,9 +269,13 @@ public class BookAction extends ActionSupport {
         if(this.part == null) {
             this.part = 1;
         }
+        if(this.firstPage == null) {
+            this.firstPage = 1;
+        }
         List<BookInfo> allBooks = this.bookService.showAllBookInfoByPage(this.part,100);
         ActionContext.getContext().put("allBooks",allBooks);
         ActionContext.getContext().put("totalBookAmount",allBooks.size());//应从数据库获取allBooks的大小
+        ActionContext.getContext().put("firstPage", this.firstPage);
         return "showBooks";
     }
 
