@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<!- header -->
+<!-- header -->
 <%@include file="header.jsp"%>
 
 <html>
@@ -50,8 +50,8 @@
             <div class="col-md-4 single-grid">
                 <div class="flexslider">
                     <ul class="slides">
-                        <li data-thumb="<%=path%>/imageAction/showImage?imageID=<s:property value="#bookProfile.coverPicture"/>">
-                            <div class="thumb-image"> <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="#bookProfile.coverPicture"/>" data-imagezoom="true" class="img-responsive"> </div>
+                        <li data-thumb="<%=path%>/imageAction/showImage?imageID=<s:property value="#bookProfile.imageID"/>">
+                            <div class="thumb-image"> <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="#bookProfile.imageID"/>" data-imagezoom="true" class="img-responsive"> </div>
                         </li>
                         <li data-thumb="<%=path%>/images/s2.png">
                             <div class="thumb-image"> <img src="<%=path%>/images/s2.png" data-imagezoom="true" class="img-responsive"> </div>
@@ -194,5 +194,5 @@
 <div id="tip"></div>
 </body>
 </html>
-<!- footer -->
+<!-- footer -->
 <jsp:include page="footer.jsp"/>

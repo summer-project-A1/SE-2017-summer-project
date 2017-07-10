@@ -43,14 +43,14 @@
 				<value>model/BorrowHistory.hbm.xml</value>
 				<value>model/Order.hbm.xml</value>
                 <value>model/OrderItem.hbm.xml</value>
-                <value>model/Apply.hbm.xml</value>
+                <value>model/Reserve.hbm.xml</value>
 			</list>
 		</property>
 		<!-- Hibernate SessionFactory -->
 		<property name="hibernateProperties">
 			<value>
 				hibernate.dialect=org.hibernate.dialect.MySQLInnoDBDialect
-				hibernate.show_sql=false
+				hibernate.show_sql=true
 				hibernate.format_sql=true
 			</value>
 		</property>
@@ -98,7 +98,7 @@
     </bean>
     <bean id="borrowHistoryDao" class="dao.impl.BorrowHistoryDaoImpl" parent="baseDao">
     </bean>
-    <bean id="applyDao" class="dao.impl.ApplyDaoImpl" parent="baseDao">
+    <bean id="reserveDao" class="dao.impl.ReserveDaoImpl" parent="baseDao">
     </bean>
     <bean id="orderDao" class="dao.impl.OrderDaoImpl" parent="baseDao">
     </bean>
@@ -122,7 +122,7 @@
         <property name="userDao" ref="userDao"></property>
         <property name="borrowDao" ref="borrowDao"></property>
         <property name="borrowHistoryDao" ref="borrowHistoryDao"></property>
-        <property name="applyDao" ref="applyDao"></property>
+        <property name="reserveDao" ref="reserveDao"></property>
     </bean>
     <bean id="cartService" class="service.impl.CartServiceImpl">
         <property name="bookDao" ref="bookDao"></property>
@@ -152,9 +152,12 @@
     </bean>
     <bean id="orderAction" class="action.OrderAction">
         <property name="orderService" ref="orderService"></property>
+        <property name="borrowService" ref="borrowService"></property>
     </bean>
     <bean id="cartAction" class="action.CartAction">
         <property name="cartService" ref="cartService"/>
+        <property name="orderService" ref="orderService"/>
+        <property name="borrowService" ref="borrowService"/>
     </bean>
     <bean id="imageAction" class="action.ImageAction">
         <property name="imageService" ref="imageService"></property>

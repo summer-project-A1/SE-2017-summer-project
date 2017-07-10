@@ -1,23 +1,33 @@
 package model;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import common.constants.BookStatus;
 
-public class Book {
+public class BookInfo {
     private int bookID;
     private String bookName;
     private String isbn;
     private String author;            // 作者
     private String press;             // 出版社
-    private Integer category1;
-    private Integer category2;
+    private String category1;
+    private String category2;
     private int canExchange;      // 用户发布时决定书是否可被交换
     private int canBorrow;        // 用户发布时决定书是否可被借阅
     private int reserved;         // 书当前是否已被预约 
-    private BookStatus status;               // 书当前状态（空闲/正被借阅/正被交换/正被售出（尚未考虑））
-    private String profileID;         // 书的详细信息在monggodb中的id
-    private String imageID;           // 书的图片在monggodb中的图片
+    private BookStatus status;     // 书当前状态（空闲/正被借阅/正被交换/正被售出（尚未考虑））
+    private String bookStatus;     // 书当前状态（字符串形式，用于前端） 
+    private String profileID;         // 书的详细信息在mongodb中的id
+    private String imageID;           // 书的图片在mongodb中的图片
+    /* ============ */
+    private int borrowCredit;           // 设定借书需要的积分
+    private int buyCredit;         // 设定购买书需要的积分
+    private Date releaseTime;      // 发布时间
     
-    /* ============================================================== */
+    /* ======================================================== */
     
     public int getBookID() {
         return bookID;
@@ -49,16 +59,16 @@ public class Book {
     public void setPress(String press) {
         this.press = press;
     }
-    public Integer getCategory1() {
+    public String getCategory1() {
         return category1;
     }
-    public void setCategory1(Integer category1) {
+    public void setCategory1(String category1) {
         this.category1 = category1;
     }
-    public Integer getCategory2() {
+    public String getCategory2() {
         return category2;
     }
-    public void setCategory2(Integer category2) {
+    public void setCategory2(String category2) {
         this.category2 = category2;
     }
     public int getCanExchange() {
@@ -85,6 +95,12 @@ public class Book {
     public void setStatus(BookStatus status) {
         this.status = status;
     }
+    public String getBookStatus() {
+        return bookStatus;
+    }
+    public void setBookStatus(String bookStatus) {
+        this.bookStatus = bookStatus;
+    }
     public String getProfileID() {
         return profileID;
     }
@@ -97,5 +113,24 @@ public class Book {
     public void setImageID(String imageID) {
         this.imageID = imageID;
     }
+    public int getBorrowCredit() {
+        return borrowCredit;
+    }
+    public void setBorrowCredit(int borrowCredit) {
+        this.borrowCredit = borrowCredit;
+    }
+    public int getBuyCredit() {
+        return buyCredit;
+    }
+    public void setBuyCredit(int buyCredit) {
+        this.buyCredit = buyCredit;
+    }
+    public Date getReleaseTime() {
+        return releaseTime;
+    }
+    public void setReleaseTime(Date releaseTime) {
+        this.releaseTime = releaseTime;
+    }
+
     
 }

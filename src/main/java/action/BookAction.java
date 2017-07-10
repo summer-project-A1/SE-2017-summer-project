@@ -1,14 +1,13 @@
 package action;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import model.Book;
+import model.BookInfo;
+import model.BookProfile;
 import service.BookService;
 
 public class BookAction extends ActionSupport {
@@ -20,7 +19,7 @@ public class BookAction extends ActionSupport {
         分页使用的两个变量
      */
     private Integer part;
-    private int firstPage;
+    private Integer firstPage;
 
     private int userID;
     private int bookID;
@@ -52,7 +51,7 @@ public class BookAction extends ActionSupport {
     private String[] otherPictureFileName;
     private String[] otherPictureContentType;
     
-    private Map bookProfile;
+    private BookProfile bookProfile;
 
     public BookAction() {
     }
@@ -74,11 +73,11 @@ public class BookAction extends ActionSupport {
         this.part=part;
     }
 
-    public int getFirstPage(){
+    public Integer getFirstPage(){
         return this.part;
     }
 
-    public void setFirstPage(int firstPage){
+    public void setFirstPage(Integer firstPage){
         this.firstPage=firstPage;
     }
 
@@ -245,10 +244,10 @@ public class BookAction extends ActionSupport {
     public void setOtherPicture(File[] otherPicture) {
         this.otherPicture = otherPicture;
     }
-    public Map getBookProfile() {
+    public BookProfile getBookProfile() {
         return bookProfile;
     }
-    public void setBookProfile(Map bookProfile) {
+    public void setBookProfile(BookProfile bookProfile) {
         this.bookProfile = bookProfile;
     }
     public String[] getOtherPictureFileName() {
@@ -270,9 +269,13 @@ public class BookAction extends ActionSupport {
         if(this.part == null) {
             this.part = 1;
         }
-        List<Book> allBooks = this.bookService.showAllBooksByPage(this.part,100);
+        if(this.firstPage == null) {
+            this.firstPage = 1;
+        }
+        List<BookInfo> allBooks = this.bookService.showAllBookInfoByPage(this.part,100);
         ActionContext.getContext().put("allBooks",allBooks);
         ActionContext.getContext().put("totalBookAmount",allBooks.size());//应从数据库获取allBooks的大小
+        ActionContext.getContext().put("firstPage", this.firstPage);
         return "showBooks";
     }
 
@@ -282,38 +285,35 @@ public class BookAction extends ActionSupport {
 
     public String showUserReleasedBooks() {
         List<Book> userReleasedBooks = this.bookService.showUserBooks(this.userID);
-        for(Book tmp:userReleasedBooks) {
-            System.out.println(tmp.getBookID());
-        }
         ActionContext.getContext().put("allBooks",userReleasedBooks);
         return "showBooks";
     }
     public String uploadBook() {
-        Map bookInfo = new HashMap();
-        bookInfo.put("bookName", this.bookName);
-        bookInfo.put("isbn", this.isbn);
-        bookInfo.put("author", this.author);         // 作者
-        bookInfo.put("press", this.press);          // 出版社
-        bookInfo.put("category1", this.category1);       // 大分类
-        bookInfo.put("category2", this.category2);       // 小分类
-        bookInfo.put("publishYear", this.publishYear);    // 出版
-        bookInfo.put("publishMonth", this.publishMonth);
-        bookInfo.put("editionYear", this.editionYear);     // 版次
-        bookInfo.put("editionMonth", this.editionMonth);
-        bookInfo.put("editionVersion", this.editionVersion);
-        bookInfo.put("page", this.page);              // 页数
-        bookInfo.put("bookBinding", this.bookBinding);    // 装帧
-        bookInfo.put("bookFormat", this.bookFormat);     // 开本
-        bookInfo.put("bookQuality", this.bookQuality);    // 成色
-        bookInfo.put("bookDamage", this.bookDamage);     // 损毁情况
-        bookInfo.put("intro", this.intro);          // 简介
-        bookInfo.put("canBorrow", (this.canBorrow==null)? 0:this.canBorrow);        // 是否可借阅
-        bookInfo.put("canExchange", (this.canExchange==null)? 0:this.canExchange);      // 是否可交换
-        bookInfo.put("borrowCredit", this.borrowCredit);      // 借阅所需积分
-        bookInfo.put("buyCredit", this.buyCredit);    // 购买所需积分
-        bookInfo.put("coverPicture", this.coverPicture);     // 封面
-        bookInfo.put("otherPicture", this.otherPicture);   // 其他图片
-        this.bookService.uploadBook(bookInfo);
+        BookProfile newBookProfile = new BookProfile();
+        newBookProfile.setBookName(this.bookName);
+        newBookProfile.setIsbn(this.isbn);
+        newBookProfile.setAuthor(this.author);         // 作者
+        newBookProfile.setPress(this.press);          // 出版社
+        newBookProfile.setCategory1(this.category1);       // 大分类
+        newBookProfile.setCategory2(this.category2);       // 小分类
+        newBookProfile.setPublishYear(this.publishYear);    // 出版
+        newBookProfile.setPublishMonth(this.publishMonth);
+        newBookProfile.setEditionYear(this.editionYear);     // 版次
+        newBookProfile.setEditionMonth(this.editionMonth);
+        newBookProfile.setEditionVersion(this.editionVersion);
+        newBookProfile.setPage(this.page);              // 页数
+        newBookProfile.setBookBinding(this.bookBinding);    // 装帧
+        newBookProfile.setBookFormat(this.bookFormat);     // 开本
+        newBookProfile.setBookQuality(this.bookQuality);    // 成色
+        newBookProfile.setBookDamage(this.bookDamage);     // 损毁情况
+        newBookProfile.setIntro(this.intro);          // 简介
+        newBookProfile.setCanBorrow((this.canBorrow==null)? 0:this.canBorrow);        // 是否可借阅
+        newBookProfile.setCanExchange((this.canExchange==null)? 0:this.canExchange);      // 是否可交换
+        newBookProfile.setBorrowCredit(this.borrowCredit);      // 借阅所需积分
+        newBookProfile.setBuyCredit(this.buyCredit);    // 购买所需积分
+        newBookProfile.setCoverPicture(this.coverPicture);     // 封面
+        newBookProfile.setOtherPicture(this.otherPicture);   // 其他图片
+        this.bookService.uploadBook(newBookProfile);
         return "showBooks";
     }
     public String showBookProfile() {

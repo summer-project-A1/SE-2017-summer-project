@@ -239,7 +239,7 @@
                             <label>欢迎您！<s:property value="#session.userInfo.email"/></label><br>
                             <label><a href="myaccount.jsp">个人信息</a></label><br>
                             <label><a href="myrelease.jsp">我的发布</a></label><br>
-                            <label><a href="myborrow.jsp">我的借阅</a></label><br>
+                            <label><a href="myBorrow.jsp">我的借阅</a></label><br>
                             <label><a href="myexchange.jsp">我的交换</a></label><br>
                             <label><a href="myorder.jsp">我的订单</a></label><br>
                             <label><a href="myreservation">我的预约</a></label><br>
@@ -251,9 +251,9 @@
                 </div>
             </div>   
             <div class="header-right cart">
-                <a href="<%=path%>/cartAction/showCart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                <a href="<%=path%>/cartAction/showBuyCart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                 <div class="cart-box">
-                   <s:if test="#session.cart==null||#session.cart.size()==0">
+                   <s:if test="#session.buyCart==null||#session.buyCart.size()==0">
                        <h4><span>购买购物车为空（刷新以更新）</span></h4>
                        <h4><a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a></h4>
                    </s:if>
@@ -263,22 +263,22 @@
                             <th field="bookName" width="20%">书名</th>
                             <th field="amount" width="20%">数量</th>
                             </tr>
-                            <s:iterator value="#session.cart" var="cartItem" status="st">
+                            <s:iterator value="#session.buyCart" var="cartItem" status="st">
                                 <tr>
                                     <td><s:property value="#cartItem.bookName"/></td>
                                     <td ><s:property value="#cartItem.amount"/></td>
                                 </tr>
                         </s:iterator>
                         </table>
-                        <p><a href="<%=path%>/orderAction/emptyCart" class="simpleCart_empty">清空购物车</a></p>
+                        <p><a href="<%=path%>/orderAction/emptyBuyCart" class="simpleCart_empty">清空购物车</a></p>
                     </s:else>
                     <div class="clearfix"> </div>
                 </div>
             </div>
                 <div class="header-right borrow">
-                <a href="<%=path%>/cartAction/showCart"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></a>
+                <a href="<%=path%>/cartAction/showBorrowCart"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></a>
                 <div class="borrow-box">
-                    <s:if test="#session.cart==null||#session.cart.size()==0">
+                    <s:if test="#session.borrowCart==null||#session.borrowCart.size()==0">
                         <h4><span>借阅购物车为空（刷新以更新）</span></h4>
                         <h4><a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a></h4>
                     </s:if>
@@ -288,14 +288,14 @@
                                 <th field="bookName" width="20%">书名</th>
                                 <th field="amount" width="20%">数量</th>
                             </tr>
-                            <s:iterator value="#session.cart" var="cartItem" status="st">
+                            <s:iterator value="#session.borrowCart" var="cartItem" status="st">
                                 <tr>
                                     <td><s:property value="#cartItem.bookName"/></td>
                                     <td><s:property value="#cartItem.amount"/></td>
                                 </tr>
                             </s:iterator>
                         </table>
-                        <p><a href="<%=path%>/orderAction/emptyCart" class="simpleCart_empty">清空购物车</a></p>
+                        <p><a href="<%=path%>/orderAction/emptyBorrowCart" class="simpleCart_empty">清空购物车</a></p>
                     </s:else>
                     <div class="clearfix"> </div>
                 </div>

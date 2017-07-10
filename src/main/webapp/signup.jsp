@@ -181,8 +181,8 @@
                         <input type="password" name="confirmpassword" class="form-control" id="register_confirmpassword"><div id="available_status3"></div>
                     </div>
                     <div class="form-group form-group-auto">
-                        <label>姓名</label>&nbsp;
-                        <input type="text" name="name" class="form-control" id="name">
+                        <label>昵称</label>&nbsp;
+                        <input type="text" name="nickName" class="form-control" id="nickName">
                     </div>
                     <div class="form-group form-group-auto">
                         <label>性别</label>&nbsp;

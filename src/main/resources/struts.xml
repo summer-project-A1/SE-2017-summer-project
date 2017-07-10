@@ -15,9 +15,6 @@
         </action>
     </package>
     
-    
-    
-    
     <package name="authAction" extends="struts-default,json-default" namespace="/authAction">
         <action name="*" class="action.AuthAction" method="{1}">
             <result name="signin" type="redirectAction">
@@ -54,7 +51,6 @@
         -->
     </package>
 
-
     <package name="cartAction" extends="struts-default,json-default" namespace="/cartAction">
         <action name="*" class="action.CartAction" method="{1}">
             <result name="cart">/cart.jsp</result>
@@ -65,7 +61,7 @@
                 <param name="actionName">showCart</param>
             </result>
             <allowed-methods>
-                showCart,addToCart,removeFromCart,emptyCart
+                showBuyCart,addToBuyCart,removeFromBuyCart,emptyBuyCart,showBorrowCart,addToBorrowCart,removeFromBorrowCart,emptyBorrowCart
             </allowed-methods>
         </action>
     </package>
@@ -87,6 +83,14 @@
             </allowed-methods>
         </action>
         -->
+        <action name="*" class="action.OrderAction" method="{1}">
+            <result name="ajax" type="json">
+                <param name="root">params</param>
+            </result>
+            <allowed-methods>
+                createOrder
+            </allowed-methods>
+        </action>
     </package>
 
     <package name="bookAction" extends="struts-default,json-default" namespace="/bookAction">
