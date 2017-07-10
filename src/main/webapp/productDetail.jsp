@@ -86,13 +86,13 @@
                     <li><span>借阅积分：<s:property value="#bookProfile.borrowCredit"/></span></li>
                     <div class="clearfix"></div><br>
                 </ul>
-                <s:if test="#bookProfile.status=='borrowed' && #bookProfile.reserved==false">
+                <s:if test="#bookProfile.bookStatus=='BORROWED' && #bookProfile.reserved==false">
                     <p>此书正被借阅，可以预约</p>
                 </s:if>
-                <s:elseif test="#bookProfile.status=='borrowed' && #bookProfile.reserved==true">
+                <s:elseif test="#bookProfile.bookStatus=='BORROWED' && #bookProfile.reserved==true">
                     <p>此书正被借阅，已被预约</p>
                 </s:elseif>
-                <s:elseif test="#bookProfile.status=='exchanged'">
+                <s:elseif test="#bookProfile.bookStatus=='EXCHANGED'">
                     <p>此书已被交换</p>
                 </s:elseif>
                 <s:elseif test="#bookProfile.canBorrow==true && #bookProfile.canExchange==true">
@@ -105,16 +105,16 @@
                     <p>此书可以交换</p>
                 </s:elseif>
                 <div class="btn_form">
-                    <s:if test="#bookProfile.status=='borrowed'">
+                    <s:if test="#bookProfile.bookStatus=='BORROWED'">
                         <s:if test="#bookProfile.reserved==false">
                             <s:if test="#bookProfile.canBorrow==true">
                                 <a href="#" class="add-cart item_add">预约</a>
                             </s:if>
                         </s:if>
                     </s:if>
-                    <s:if test="#bookProfile.status=='exchanged'">
+                    <s:elseif test="#bookProfile.bookStatus=='EXCHANGED'">
 
-                    </s:if>
+                    </s:elseif>
                     <s:else>
                         <s:if test="#bookProfile.canBorrow==true">
                             <a href="#" class="add-cart item_add" onclick="addToBorrowCart(<s:property value="#bookProfile.bookID"/>)">借阅</a>

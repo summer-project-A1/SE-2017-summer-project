@@ -22,7 +22,7 @@
         <script>
             function deleteBook(bookID) {
                 console.log("delete current book, bookid: "+bookID);
-                var method = '<s:property value="buyOrBorrow"/>';
+                var method = '<s:property value="#buyOrBorrow"/>';
                 var cmp = method;
                 var url = "";
                 if(cmp=="borrow"){
@@ -53,26 +53,16 @@
                 });
 
             }
-
+            /*
             function createOrder(){
-                var method = '<s:property value="buyOrBorrow"/>';
                 $.ajax({
-                   url: base_url+ 'orderAction/createOrder',
+                   url: base_url+ 'orderAction/createBuyOrder',
                    type: 'POST',
-                   data:{
-                       'buyOrBorrow':method
-                   },
+                   data:{},
                    success: function(msg){
-                       //alert(msg);
                         if(msg.result == true){
-                            //alert(msg.result);
                             showTip('结算成功','success');
-                            if(method == 'borrow'){
-                                window.setTimeout("window.location='<%=path%>/index'",2000);
-                            }
-                            if(method == 'buy'){
-                                window.setTimeout("window.location='<%=path%>/index'",2000);
-                            }
+                            window.setTimeout("window.location='<%=path%>/orderAction/check'",2000);
                         }else{
                             if(msg.book == true && msg.credit == true){
                                 var info = '积分余额不足，图书已被借阅或交换';
@@ -144,7 +134,12 @@
                 </div>
             </div>
         </s:iterator>
-            <button class="checkout-but" onclick="createOrder()">结算</button>
+            <s:if test="#buyOrBorrow=='borrow'">
+                <button class="checkout-but" onclick="window.location.href='<%=path%>/orderAction/createBorrowOrder'">结算</button>
+            </s:if>
+            <s:elseif test="#buyOrBorrow=='buy'">
+                <button class="checkout-but" onclick="window.location.href='<%=path%>/orderAction/createBuyOrder'">结算</button>
+            </s:elseif>
         </s:else>
     </div>
 </div>
