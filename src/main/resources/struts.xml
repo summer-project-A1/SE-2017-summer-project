@@ -87,8 +87,9 @@
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
+            <result name="buyCheckout">/checkout.jsp</result>
             <allowed-methods>
-                createOrder
+                createOrder,buyCheckout,createBuyOrder,confirmOrder,cancelOrder
             </allowed-methods>
         </action>
     </package>
@@ -143,8 +144,9 @@
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
+            <result name="borrowCheckout">/checkout.jsp</result>
             <allowed-methods>
-                showMyBorrow,delayBook,returnBook
+                borrowCheckout,createBorrowOrder，showMyBorrow,delayBook,returnBook
             </allowed-methods>
         </action>
     </package>

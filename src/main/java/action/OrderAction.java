@@ -24,6 +24,7 @@ public class OrderAction extends ActionSupport {
     private OrderService orderService;
     private BorrowService borrowService;
     private BookService bookService;
+    private CartService cartService;
     
     private String buyOrBorrow;
         
@@ -49,6 +50,12 @@ public class OrderAction extends ActionSupport {
     public void setBookService(BookService bookService) {
         this.bookService = bookService;
     }
+    public CartService getCartService() {
+        return cartService;
+    }
+    public void setCartService(CartService cartService) {
+        this.cartService = cartService;
+    }
     public String getBuyOrBorrow() {
         return buyOrBorrow;
     }
@@ -65,7 +72,10 @@ public class OrderAction extends ActionSupport {
     /* ========================================================= */
     
     public String buyCheckout() {        // 从购物车跳转到地址确认页面，不修改数据库
-        return SUCCESS;
+        List cart = this.cartService.showBuyCart();
+        ActionContext.getContext().put("action","buyCheckout");
+        ActionContext.getContext().put("booksInCart",cart.isEmpty()?null:cart);
+        return "buyCheckout";
     }
     public String createBuyOrder() {     // 用户创建订单，添加到数据库，跳转到付款页面
         Order newOrder = this.orderService.createOrder();

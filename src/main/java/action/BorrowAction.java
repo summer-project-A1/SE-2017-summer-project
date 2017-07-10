@@ -15,6 +15,7 @@ import java.util.Map;
 public class BorrowAction extends ActionSupport {
 
     private BorrowService borrowService;
+    private CartService cartService;
 
     private int bookID;
     private Map params;
@@ -27,7 +28,13 @@ public class BorrowAction extends ActionSupport {
     public void setBorrowService(BorrowService borrowService) {
         this.borrowService = borrowService;
     }
-
+    public CartService getCartService() {
+        return cartService;
+    }
+    public void setCartService(CartService cartService) {
+        this.cartService = cartService;
+    }
+    
     public int getBookID() {
         return bookID;
     }
@@ -44,7 +51,10 @@ public class BorrowAction extends ActionSupport {
     /* ============================================================== */
     
     public String borrowCheckout() {        // 从购物车跳转到地址确认页面，不修改数据库
-        return SUCCESS;
+        List cart = this.cartService.showBorrowCart();
+        ActionContext.getContext().put("action","borrowCheckout");
+        ActionContext.getContext().put("booksInCart",cart.isEmpty()?null:cart);
+        return "borrowCheckout";
     }
     
     public String createBorrowOrder() {     // 用户创建订单，添加到数据库，跳转到付款页面
