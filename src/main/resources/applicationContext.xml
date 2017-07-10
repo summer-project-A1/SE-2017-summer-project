@@ -165,5 +165,7 @@
     <bean id="indexAction" class="action.IndexAction">
         <property name="bookService" ref="bookService"></property>
     </bean>
-    
+    <bean id="borrowAction" class="action.BorrowAction">
+        <property name="borrowService" ref="borrowService"/>
+    </bean>
 </beans>

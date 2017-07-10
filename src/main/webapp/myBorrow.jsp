@@ -34,7 +34,7 @@
         var delayBtnID = "delayBtn"+bookID;
         var returnDateID = "returnDate"+bookID;
         $.ajax({
-            url:'<%=path%>/',
+            url:'<%=path%>/borrowAction/returnBook',
             type:'POST',
             data:{
                 'bookID':bookID
@@ -63,7 +63,7 @@
         var delayBtnID = "delayBtn"+bookID;
         var yhdateID = "yhdate"+bookID;
         $.ajax({
-            url:'<%=path%>/',
+            url:'<%=path%>/borrowAction/delayBook',
             type:'POST',
             data:{
                 'bookID':bookID
@@ -136,7 +136,7 @@
 <div id="cartinfo" class="cart-item">
     <div class="container">
         <!-- 以下迭代显示尚未归还的图书 -->
-        <s:iterator value="#borrowBookList" status="map_state">
+        <s:iterator value="#borrowBook" status="map_state">
         <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
             <div class="cart-sec simpleCart_shelfItem">
                 <div class="cart-item cyc">
@@ -173,7 +173,7 @@
         </s:iterator>
 
         <!-- 以下迭代显示已归还的图书 -->
-        <s:iterator value="#borrowHistory" status="map_state">
+        <s:iterator value="#borrowHistoryBook" status="map_state">
             <div id="borrowHistory<s:property value="bookID"/>" class="cart-header">
                 <div class="cart-sec simpleCart_shelfItem">
                     <div class="cart-item cyc">
@@ -200,7 +200,9 @@
             </div>
         </s:iterator>
 
+
         <!-- 以下为页面展示 -->
+        <!--
         <div id="bookID1" class="cart-header">
             <div class="cart-sec simpleCart_shelfItem">
                 <div class="cart-item cyc">
@@ -279,6 +281,7 @@
                 <div class="clearfix"></div>
             </div>
         </div>
+        -->
 </div>
 </div>
 </body>
