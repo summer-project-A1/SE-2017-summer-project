@@ -63,15 +63,15 @@
                        'buyOrBorrow':method
                    },
                    success: function(msg){
-                       alert(msg);
+                       //alert(msg);
                         if(msg.result == true){
-                            alert(msg.result);
+                            //alert(msg.result);
                             showTip('结算成功','success');
                             if(method == 'borrow'){
-                                window.setTimeout("window.location='<%=path%>/index'",1000);
+                                window.setTimeout("window.location='<%=path%>/index'",2000);
                             }
                             if(method == 'buy'){
-                                window.setTimeout("window.location='<%=path%>/index'",1000);
+                                window.setTimeout("window.location='<%=path%>/index'",2000);
                             }
                         }else{
                             if(msg.book == true && msg.credit == true){
