@@ -69,10 +69,9 @@
                             showTip('结算成功','success');
                             if(method == 'borrow'){
                                 window.setTimeout("window.location='<%=path%>/index'",1000);
-                                //window.location.href='<%=path%>/index';
                             }
                             if(method == 'buy'){
-                                window.location.href='<%=path%>/index';
+                                window.setTimeout("window.location='<%=path%>/index'",1000);
                             }
                         }else{
                             if(msg.book == true && msg.credit == true){
