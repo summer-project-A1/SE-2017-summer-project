@@ -13,11 +13,17 @@ import service.BookService;
 
 public class BookAction extends ActionSupport {
     private static final long serialVersionUID = -9028260230073194219L;
-    
+
     private BookService bookService;
-    
+
+    /*
+        分页使用的两个变量
+     */
+    private int part;
+    private int firstPage;
+
     private int userID;
-    
+
     private int bookID;
     private String bookName;
     private String isbn;
@@ -46,16 +52,32 @@ public class BookAction extends ActionSupport {
     private File[] otherPicture;   // 其他图片
     private String[] otherPictureFileName;
     private String[] otherPictureContentType;
-    
+
     private Map bookProfile;
-    
+
     /* ============================================================== */
-    
+
     public BookService getBookService() {
         return bookService;
     }
     public void setBookService(BookService bookService) {
         this.bookService = bookService;
+    }
+
+    public int getPart(){
+        return this.part;
+    }
+
+    public void setPart(int part){
+        this.part=part;
+    }
+
+    public int getFirstPage(){
+        return this.part;
+    }
+
+    public void setFirstPart(int firstPage){
+        this.firstPage=firstPage;
     }
 
     public int getUserID() {
@@ -238,17 +260,17 @@ public class BookAction extends ActionSupport {
     }
     public void setOtherPictureContentType(String[] otherPictureContentType) {
         this.otherPictureContentType = otherPictureContentType;
-    }    
-    
+    }
+
     /* ============================================================== */
-    
+
     public String showAllBooks() {
         List<Book> allBooks = this.bookService.showAllBooks();
         for(Book tmp:allBooks) {
             System.out.println(tmp.getBookID());
         }
         ActionContext.getContext().put("allBooks",allBooks);
-        ActionContext.getContext().put("totalBookAmount",8);
+        ActionContext.getContext().put("totalBookAmount",allBooks.size());//应从数据库获取allBooks的大小
         return "showBooks";
     }
 

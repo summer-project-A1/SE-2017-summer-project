@@ -63,7 +63,7 @@
 
 
 
-
+    //当页面第一次加载时
     $(document).ready(function() {
         currPage=firstPage;
         amountPerPage = $("#selectAmountPerPage").val();
@@ -92,8 +92,12 @@
         }
         $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+succPage+"'>"+succPage+" &raquo;</a></li>");
 
+
+
+        //当修改每页显示的数量后
         $("#selectAmountPerPage").change(function () {
             console.log("switch amount per page");
+            currPage=firstPage;
             amountPerPage = $("#selectAmountPerPage").val();
             totalBookAmount = $("#totalBookAmount").text();
             pageCount = totalBookAmount / amountPerPage;
@@ -216,7 +220,10 @@
                 </select>
             </div>
             <div class="clearfix"> </div>
-            <div id="totalBookAmount" style="display: none;">8</div>
+
+
+            <!--一个用于将action传递的参数在js中读取的方法-->
+            <div id="totalBookAmount" style="display: none;"><s:property value="#totalBookAmount"/></div>
 
 
             <!--具体图书信息div，使用struts迭代器-->
