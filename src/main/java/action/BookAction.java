@@ -17,12 +17,14 @@ public class BookAction extends ActionSupport {
     private static final long serialVersionUID = -9028260230073194219L;
     
     private BookService bookService;
-    
-    private int userID;
-    
+
+    /*
+        分页使用的两个变量
+     */
     private Integer part;
-    private Integer pageSize;
-    
+    private int firstPage;
+
+    private int userID;
     private int bookID;
     private String bookName;
     private String isbn;
@@ -53,6 +55,9 @@ public class BookAction extends ActionSupport {
     private String[] otherPictureContentType;
     
     private BookProfile bookProfile;
+
+    public BookAction() {
+    }
     
     /* ============================================================== */
     
@@ -63,6 +68,22 @@ public class BookAction extends ActionSupport {
         this.bookService = bookService;
     }
 
+    public int getPart(){
+        return this.part;
+    }
+
+    public void setPart(Integer part){
+        this.part=part;
+    }
+
+    public int getFirstPage(){
+        return this.part;
+    }
+
+    public void setFirstPage(int firstPage){
+        this.firstPage=firstPage;
+    }
+
     public int getUserID() {
         return userID;
     }
@@ -70,19 +91,6 @@ public class BookAction extends ActionSupport {
         this.userID = userID;
     }
 
-    public Integer getPart() {
-        return part;
-    }
-    public void setPart(Integer part) {
-        this.part = part;
-    }
-    public Integer getPageSize() {
-        return pageSize;
-    }
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-    
     public int getBookID() {
         return bookID;
     }
@@ -256,18 +264,17 @@ public class BookAction extends ActionSupport {
     }
     public void setOtherPictureContentType(String[] otherPictureContentType) {
         this.otherPictureContentType = otherPictureContentType;
-    }    
-    
+    }
+
     /* ============================================================== */
-    
+
     public String showAllBooks() {
         if(this.part == null) {
             this.part = 1;
         }
-        this.pageSize = 100;
-        List<BookInfo> allBooks = this.bookService.showAllBookInfoByPage(this.part,this.pageSize);
+        List<BookInfo> allBooks = this.bookService.showAllBookInfoByPage(this.part,100);
         ActionContext.getContext().put("allBooks",allBooks);
-        ActionContext.getContext().put("totalBookAmount",allBooks.size());
+        ActionContext.getContext().put("totalBookAmount",allBooks.size());//应从数据库获取allBooks的大小
         return "showBooks";
     }
 
@@ -277,9 +284,6 @@ public class BookAction extends ActionSupport {
 
     public String showUserReleasedBooks() {
         List<Book> userReleasedBooks = this.bookService.showUserBooks(this.userID);
-        for(Book tmp:userReleasedBooks) {
-            System.out.println(tmp.getBookID());
-        }
         ActionContext.getContext().put("allBooks",userReleasedBooks);
         return "showBooks";
     }

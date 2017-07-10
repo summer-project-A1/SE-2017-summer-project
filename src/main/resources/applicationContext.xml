@@ -152,9 +152,12 @@
     </bean>
     <bean id="orderAction" class="action.OrderAction">
         <property name="orderService" ref="orderService"></property>
+        <property name="borrowService" ref="borrowService"></property>
     </bean>
     <bean id="cartAction" class="action.CartAction">
         <property name="cartService" ref="cartService"/>
+        <property name="orderService" ref="orderService"/>
+        <property name="borrowService" ref="borrowService"/>
     </bean>
     <bean id="imageAction" class="action.ImageAction">
         <property name="imageService" ref="imageService"></property>

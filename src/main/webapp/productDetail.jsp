@@ -19,34 +19,6 @@
         });
     </script>
     <script>
-        function addToCart(bookID)
-        {
-
-            //showTip('Added to your cart!', 'success');
-            console.log('amount: '+parseInt($('.item_quantity').first().val()));
-            $.ajax({
-                url: base_url + 'cartAction/addToBuyCart',
-                type: 'POST',
-                data: {
-                    'bookID': bookID,
-                    'amount': $('.item_quantity').first().val()
-                },
-                success: function (msg) {
-                    //console.log(msg.success);
-
-                    if (msg.success) {
-                        showTip('添加成功!', 'success');
-                    }
-                    else {
-                        showTip('添加失败', 'danger');
-                    }
-                },
-                error:function(xhr,status,error){
-                    alert('status='+status+',error='+error);
-                }
-            });
-        }
-
         function addToBorrowCart(bookID){
             $.ajax({
                 url:'<%=path%>/cartAction/addToBorrowCart',
@@ -78,8 +50,8 @@
             <div class="col-md-4 single-grid">
                 <div class="flexslider">
                     <ul class="slides">
-                        <li data-thumb="<%=path%>/imageAction/showImage?imageID=<s:property value="#bookProfile.imageID"/>">
-                            <div class="thumb-image"> <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="#bookProfile.imageID"/>" data-imagezoom="true" class="img-responsive"> </div>
+                        <li data-thumb="<%=path%>/imageAction/showImage?imageID=<s:property value="#bookProfile.coverPicture"/>">
+                            <div class="thumb-image"> <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="#bookProfile.coverPicture"/>" data-imagezoom="true" class="img-responsive"> </div>
                         </li>
                         <li data-thumb="<%=path%>/images/s2.png">
                             <div class="thumb-image"> <img src="<%=path%>/images/s2.png" data-imagezoom="true" class="img-responsive"> </div>
@@ -132,9 +104,6 @@
                 <s:elseif test="#bookProfile.canBorrow==false && #bookProfile.canExchange==true">
                     <p>此书可以交换</p>
                 </s:elseif>
-                <s:elseif test="#bookProfile.canBorrow==false && #bookProfile.canExchange==false">
-                    <p>此书是放来秀的</p>
-                </s:elseif>
                 <div class="btn_form">
                     <s:if test="#bookProfile.status=='borrowed'">
                         <s:if test="#bookProfile.reserved==false">
@@ -152,7 +121,7 @@
                         </s:if>
                         <s:if test="#bookProfile.canExchange==true">
                             <a href="#" class="add-cart item_add">交换</a>
-                            <a href="#" class="add-cart item_add" onclick="addToCart(<s:property value="#bookProfile.bookID"/>)">购买</a>
+                            <a href="#" class="add-cart item_add">购买</a>
                         </s:if>
                     </s:else>
                 </div>
