@@ -65,7 +65,7 @@
                 <param name="actionName">showCart</param>
             </result>
             <allowed-methods>
-                showCart,addToCart,removeFromCart,emptyCart
+                showBuyCart,addToBuyCart,removeFromBuyCart,emptyBuyCart,showBorrowCart,addToBorrowCart,removeFromBorrowCart,emptyBorrowCart
             </allowed-methods>
         </action>
     </package>

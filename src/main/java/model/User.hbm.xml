@@ -16,7 +16,6 @@
                 <param name="enumClass">common.constants.UserRole</param>
             </type>
         </property>
-        <property name="delayCount" column="delay_count" />
         <property name="province" column="province" />
         <property name="city" column="city" />
         <property name="district" column="district" />

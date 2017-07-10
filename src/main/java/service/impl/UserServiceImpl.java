@@ -73,7 +73,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         userProfile.put("mobile", registerInfo.getMobile());
         userProfile.put("deliveryAddressID", new ArrayList());
         
-        String profileID = this.userDao.saveOrUpdateUserProfile(userProfile);
+        String profileID = this.userDao.saveUserProfile(userProfile);
         newUser.setProfileID(profileID);
         newUser.setEmail(email);
         newUser.setNickName(registerInfo.getNickName());
@@ -85,7 +85,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         newUser.setDistrict(registerInfo.getDistrict());
         newUser.setAddress(registerInfo.getAddress());
         newUser.setImageID("");
-        newUser.setProfileID("");
         
         this.userDao.save(newUser);
         

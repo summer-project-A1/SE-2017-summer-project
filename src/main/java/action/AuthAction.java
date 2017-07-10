@@ -156,7 +156,7 @@ public class AuthAction extends ActionSupport{
             registerInfo.setDistrict(this.district);
         }
         registerInfo.setAddress(this.address);
-        registerInfo.setNickName(this.nickName);
+        registerInfo.setNickName(this.nickName==null?"":this.nickName);
         registerInfo.setGender(this.gender);
 
         boolean result = this.userService.register(registerInfo);

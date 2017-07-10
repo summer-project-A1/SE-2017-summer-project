@@ -31,7 +31,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
     
     @Override
     public BookInfo getBookInfoByID(int bookID) {
-        String hql = "from Book as b,BookRelease ad br where b.bookID=br.bookID and b.bookID=:bookID";
+        String hql = "from Book as b,BookRelease as br where b.bookID=br.bookID and b.bookID=:bookID";
         Query query = getSession().createQuery(hql).setParameter("bookID", bookID);
         List<Object> resultList = query.list();
         if(resultList.size() != 1) {
@@ -75,7 +75,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
     
     @Override
     public int getAllBooksCount() {
-        String hql = "select count(*) rom Book";
+        String hql = "select count(*) from Book";
         Query query = getSession().createQuery(hql);
         int result = (int)query.uniqueResult();
         return result;
@@ -93,7 +93,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
     
     @Override
     public List<BookInfo> getAllBookInfoByPage(int part,int pageSize) {
-        String hql = "from Book as b,BookRelease ad br where b.bookID=br.bookID";
+        String hql = "from Book as b,BookRelease as br where b.bookID=br.bookID";
         Query query = getSession().createQuery(hql);
         query.setFirstResult((part-1)*pageSize); 
         query.setMaxResults(pageSize); 

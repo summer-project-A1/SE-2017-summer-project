@@ -55,7 +55,25 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public String saveOrUpdateUserProfile(Map userProfile) {
+    public String saveUserProfile(Map userProfile) {
+        // 这里的userProfile只包括在mongodb中的属性！
+        /*
+        Iterator it = userProfile.entrySet().iterator();
+        while(it.hasNext()) {
+            Map.Entry entry = (Map.Entry)it.next();
+            System.out.println((String)entry.getKey());
+            System.out.println(entry.getValue());
+        }
+        */
+        DBCollection collection = getMongoDb().getCollection("user_profile");
+        BasicDBObject document = new BasicDBObject(userProfile);
+        collection.insert(document);
+        return ((ObjectId)document.get("_id")).toString();
+    }
+
+    @Override
+    public boolean updateUserProfile(User user, Map userProfile) {
+        // 这里的userProfile只包括在mongodb中的属性！
         Iterator it = userProfile.entrySet().iterator();
         while(it.hasNext()) {
             Map.Entry entry = (Map.Entry)it.next();
@@ -64,7 +82,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         }
         
         DBCollection collection = getMongoDb().getCollection("user_profile");
-        DBObject query=new BasicDBObject("userID", (Integer)userProfile.get("userID"));
+        DBObject query=new BasicDBObject("_id", new ObjectId(user.getProfileID()));
         DBObject old = collection.findOne(query);
 
         BasicDBObject document = new BasicDBObject(userProfile);
@@ -73,8 +91,10 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         }
         else {
             collection.insert(document);
+            user.setProfileID(((ObjectId)document.get("_id")).toString());
+            this.update(user);
         }
-        return ((ObjectId)document.get("_id")).toString();
+        return true;
     }
 
 }
