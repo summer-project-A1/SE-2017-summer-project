@@ -154,6 +154,7 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         bookProfile.setCanBorrow(book.getCanBorrow());
         bookProfile.setReserved(book.getReserved());
         bookProfile.setStatus(book.getStatus());
+        bookProfile.setBookStatus(book.getStatus().toString());
         bookProfile.setImageID(book.getImageID());
         
         bookProfile.setBorrowCredit(bookRelease.getBorrowCredit());

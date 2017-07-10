@@ -68,7 +68,7 @@
         currPage=firstPage;
         amountPerPage = $("#selectAmountPerPage").val();
         totalBookAmount = $("#totalBookAmount").text();
-        pageCount = totalBookAmount / amountPerPage;
+        pageCount = Math.ceil(totalBookAmount / amountPerPage);
         var prevPage= firstPage-pageCount;
         var succPage= firstPage+pageCount;
         if(prevPage>0){
@@ -86,7 +86,7 @@
 
             }
             $('.product-grid').hide();
-            for(var j=0;j<amountPerPage;j++){
+            for(var j=0;j<amountPerPage&&j<(parseInt(totalBookAmount)-1);j++){
                 $('#product'+j).show();
             }
         }
@@ -100,7 +100,7 @@
             currPage=firstPage;
             amountPerPage = $("#selectAmountPerPage").val();
             totalBookAmount = $("#totalBookAmount").text();
-            pageCount = totalBookAmount / amountPerPage;
+            pageCount = Math.ceil(totalBookAmount / amountPerPage);
             var prevPage = firstPage - pageCount;
             var succPage = firstPage + pageCount;
             $('#pagination-digg').empty();
@@ -122,7 +122,7 @@
                 $('.product-grid').hide();
                 var start=parseInt((currPage-1))*parseInt(amountPerPage);
                 var end= parseInt(start)+parseInt(amountPerPage);
-                for(var j=start;j<end;j++){
+                for(var j=start;j<end&&j<(parseInt(totalBookAmount)-1);j++){
                     $('#product'+j).show();
                 }
             }
@@ -214,9 +214,9 @@
                 <label>每页显示数量</label>
                 <select id="selectAmountPerPage" class="form-control form-control-noNewline"
                         style="width: 50%; display:inline;">
-                    <option value="2" selected>2</option>
-                    <option value="4">4</option>
-                    <option value="8">8</option>
+                    <option value="3" selected>3</option>
+                    <option value="6">6</option>
+                    <option value="9">9</option>
                 </select>
             </div>
             <div class="clearfix"> </div>
