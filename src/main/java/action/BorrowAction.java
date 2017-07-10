@@ -53,7 +53,7 @@ public class BorrowAction extends ActionSupport {
     public String borrowCheckout() {        // 从购物车跳转到地址确认页面，不修改数据库
         List cart = this.cartService.showBorrowCart();
         ActionContext.getContext().put("action","borrowCheckout");
-        ActionContext.getContext().put("booksInCart",cart.isEmpty()?null:cart);
+        ActionContext.getContext().put("booksInOrder",cart.isEmpty()?null:cart);
         return "borrowCheckout";
     }
     

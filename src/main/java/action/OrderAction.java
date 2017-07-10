@@ -74,7 +74,7 @@ public class OrderAction extends ActionSupport {
     public String buyCheckout() {        // 从购物车跳转到地址确认页面，不修改数据库
         List cart = this.cartService.showBuyCart();
         ActionContext.getContext().put("action","buyCheckout");
-        ActionContext.getContext().put("booksInCart",cart.isEmpty()?null:cart);
+        ActionContext.getContext().put("booksInOrder",cart.isEmpty()?null:cart);
         return "buyCheckout";
     }
     public String createBuyOrder() {     // 用户创建订单，添加到数据库，跳转到付款页面
