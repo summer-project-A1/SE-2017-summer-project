@@ -58,14 +58,13 @@
 
 
 
-        <s:if test="#session.cart==null||#booksInCart==null">
+        <s:if test="#session.buyCart==null||#session.borrowCart==null||#booksInBorrowCart==null||#booksInBuyCart==null">
             <h3>购物车为空</h3>
             <h3><a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a></h3>
         </s:if>
-        <div id="tip"> </div>
-        <s:iterator value="#booksInCart" status="st">
-
-
+        <div id="tip"></div>
+        <s:else>
+        <s:iterator value="#booksInBorrowCart" status="st">
             <div id="<s:property value="bookID"/>" class="cart-header">
                 <div class="close-icon" onclick="deleteBook(<s:property value="bookID"/>)"> </div>
                 <div class="cart-sec simpleCart_shelfItem">
@@ -91,8 +90,9 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
-
         </s:iterator>
+            <button class="btn-default">结算</button>
+        </s:else>
     </div>
 </div>
 <!--//checkout-->
