@@ -53,6 +53,9 @@ public class BookAction extends ActionSupport {
     private String[] otherPictureContentType;
     
     private Map bookProfile;
+
+    public BookAction() {
+    }
     
     /* ============================================================== */
     
@@ -75,7 +78,7 @@ public class BookAction extends ActionSupport {
         return this.part;
     }
 
-    public void setFirstPart(int firstPage){
+    public void setFirstPage(int firstPage){
         this.firstPage=firstPage;
     }
 
@@ -267,7 +270,7 @@ public class BookAction extends ActionSupport {
         if(this.part == null) {
             this.part = 1;
         }
-        List<Book> allBooks = this.bookService.showAllBooksByPage(this.part,this.pageSize);
+        List<Book> allBooks = this.bookService.showAllBooksByPage(this.part,100);
         ActionContext.getContext().put("allBooks",allBooks);
         ActionContext.getContext().put("totalBookAmount",allBooks.size());//应从数据库获取allBooks的大小
         return "showBooks";

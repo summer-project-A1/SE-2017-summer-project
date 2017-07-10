@@ -110,7 +110,7 @@
         </action>
         <action name="*" class="action.BookAction" method="{1}">
             <result name="showBooks">/products.jsp</result>
-            <result name="showBookProfile">/productdetail.jsp</result>
+            <result name="showBookProfile">/productDetail.jsp</result>
             <allowed-methods>
                 showAllBooks,showUserReleasedBooks,showBookProfile
             </allowed-methods>
