@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<!- header -->
+<!-- header -->
 <%@include file="header.jsp"%>
 
 <html>
@@ -194,5 +194,5 @@
 <div id="tip"></div>
 </body>
 </html>
-<!- footer -->
+<!-- footer -->
 <jsp:include page="footer.jsp"/>
