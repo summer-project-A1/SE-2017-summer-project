@@ -44,7 +44,7 @@ public class OrderAction extends ActionSupport {
     
     /* ========================================================= */
     
-    public String createOrder() {     // buy
+    public String createOrder() {     // 买书和借书的购物车
         if(this.buyOrBorrow.equals("buy")) {
             this.orderService.createOrder();
             return "buy";

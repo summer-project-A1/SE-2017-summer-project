@@ -85,7 +85,7 @@ public class CartAction extends ActionSupport{
     public String showBuyCart() {
         this.cart = this.cartService.showBuyCart();
         ActionContext.getContext().put("buyOrBorrow","buy");
-        ActionContext.getContext().put("booksInCart",cart);
+        ActionContext.getContext().put("booksInCart",cart.isEmpty()?null:cart);
         return "cart";
     }
     public String removeFromBuyCart() {
@@ -120,7 +120,7 @@ public class CartAction extends ActionSupport{
     public String showBorrowCart() {
         this.cart = this.cartService.showBorrowCart();
         ActionContext.getContext().put("buyOrBorrow","borrow");
-        ActionContext.getContext().put("booksInCart",cart);
+        ActionContext.getContext().put("booksInCart",cart.isEmpty()?null:cart);
         return "cart";
     }
     public String removeFromBorrowCart() {
