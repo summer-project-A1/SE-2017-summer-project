@@ -135,18 +135,21 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
     }
     
     @Override
-    public boolean borrowBook(int borrowID, Date yhDate) {
+    public boolean borrowBook(int bookID, Date yhDate) {
         if(!isLogined()) {
             return false;
         }
-        Borrow borrow = this.borrowDao.getBorrowByID(borrowID);
-        int bookID = borrow.getBookID();
         Book book = this.bookDao.getBookByID(bookID);
-        if(book.getStatus() != BookStatus.IDLE) {
+        if(book==null || book.getStatus() != BookStatus.IDLE) {
             return false;
         }
         BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
         User user = getLoginedUserInfo();
+        if(user.getCredit() < bookRelease.getBorrowCredit()) {
+            return false;
+        }
+        user.setCredit(user.getCredit() - bookRelease.getBorrowCredit());
+        this.userDao.update(user);
         Borrow newBorrow = new Borrow();
         newBorrow.setBookID(bookID);
         newBorrow.setUserID(user.getUserID());
@@ -155,6 +158,55 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         newBorrow.setYhDate(yhDate);
         this.borrowDao.save(newBorrow);
         book.setStatus(BookStatus.BORROWED);
+        this.bookDao.update(book);
+        return true;
+    }
+    
+    @Override
+    public boolean borrowAllBookInBorrowCart() {
+        if(!isLogined()) {
+            return false;
+        }
+        User user = this.getLoginedUserInfo();
+        List<Map<String, Object>> cartList;
+        List resultList = new ArrayList();
+        if(getHttpSession().containsKey("borrowCart")) {
+            cartList = (List<Map<String, Object>>)getHttpSession().get("borrowCart");
+        }
+        else {
+            cartList = new ArrayList<Map<String, Object>>();
+        }
+        
+        int totalNeededCredit = 0;
+        Map<Integer,Integer> borrowCredit = new HashMap();    // 临时保存书的借阅积分，避免再次查找数据库
+        for(Map<String, Object> cartListItem : cartList) {
+            int bookID = (int)cartListItem.get("bookID");
+            BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
+            totalNeededCredit += bookRelease.getBorrowCredit();
+            borrowCredit.put(bookID, bookRelease.getBorrowCredit());
+        }
+        // 只有用户积分能够完成购物车的整体支付才能继续
+        if(user.getCredit() < totalNeededCredit) {
+            return false;
+        }
+        
+        Date yhDate = new Date();
+        user.setCredit(user.getCredit() - totalNeededCredit);
+        this.userDao.update(user);
+        for(Map<String, Object> cartListItem : cartList) {
+            int bookID = (int)cartListItem.get("bookID");
+            Book book = this.bookDao.getBookByID(bookID);
+            Borrow newBorrow = new Borrow();
+            newBorrow.setBookID(bookID);
+            newBorrow.setUserID(user.getUserID());
+            newBorrow.setBorrowDate(new Date());
+            newBorrow.setBorrowPrice(borrowCredit.get(bookID));
+            newBorrow.setYhDate(yhDate);
+            this.borrowDao.save(newBorrow);
+            book.setStatus(BookStatus.BORROWED);
+            this.bookDao.update(book);
+        }
+        getHttpSession().remove("borrowCart");
         return true;
     }
 

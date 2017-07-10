@@ -187,5 +187,5 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
             getHttpSession().remove("buyCart");
         }
         return true;
-    }   
+    }
 }

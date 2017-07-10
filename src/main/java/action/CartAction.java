@@ -3,6 +3,7 @@ package action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import model.Book;
+import service.BorrowService;
 import service.CartService;
 import service.OrderService;
 
@@ -10,13 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by zzy on 2017/7/5.
- */
 public class CartAction extends ActionSupport{
     private static final long serialVersionUID = -7295028045750112708L;
 
     private CartService cartService;
+    private OrderService orderService;
+    private BorrowService borrowService;
 
     private int bookID;
     private int amount;
@@ -31,6 +31,18 @@ public class CartAction extends ActionSupport{
     }
     public void setCartService(CartService cartService) {
         this.cartService = cartService;
+    }
+    public OrderService getOrderService() {
+        return orderService;
+    }
+    public void setOrderService(OrderService orderService) {
+        this.orderService = orderService;
+    }
+    public BorrowService getBorrowService() {
+        return borrowService;
+    }
+    public void setBorrowService(BorrowService borrowService) {
+        this.borrowService = borrowService;
     }
     public int getBookID() {
         return bookID;
@@ -47,7 +59,7 @@ public class CartAction extends ActionSupport{
     public List<Book> getCart() {
         return cart;
     }
-    public void setCart(List<Book> cart) {
+    public void setCart(List cart) {
         this.cart = cart;
     }
     public Map getParams() {
@@ -72,6 +84,7 @@ public class CartAction extends ActionSupport{
     }
     public String showBuyCart() {
         this.cart = this.cartService.showBuyCart();
+        ActionContext.getContext().put("buyOrBorrow","buy");
         ActionContext.getContext().put("booksInCart",cart);
         return "cart";
     }
@@ -106,6 +119,7 @@ public class CartAction extends ActionSupport{
     }
     public String showBorrowCart() {
         this.cart = this.cartService.showBorrowCart();
+        ActionContext.getContext().put("buyOrBorrow","borrow");
         ActionContext.getContext().put("booksInCart",cart);
         return "cart";
     }
@@ -125,4 +139,6 @@ public class CartAction extends ActionSupport{
         return "emptyCart";
     }
     
+    /* ======================= */
+       
 }

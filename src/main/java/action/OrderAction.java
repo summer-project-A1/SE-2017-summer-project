@@ -7,6 +7,8 @@ import java.util.Map;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import service.BorrowService;
+import service.CartService;
 import service.OrderService;
 
 import model.Book;
@@ -15,15 +17,11 @@ public class OrderAction extends ActionSupport {
     private static final long serialVersionUID = 2210578889662002765L;
     
     private OrderService orderService;
+    private BorrowService borrowService;
     
-    private int bookID;
-    private int amount;
-    
-    private List<Book> cart;
-    private Map params;
-    
+    private String buyOrBorrow;
+        
     /* ========================================================= */
-    
 
     public OrderService getOrderService() {
         return orderService;
@@ -31,32 +29,33 @@ public class OrderAction extends ActionSupport {
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
     }
-    public int getBookID() {
-        return bookID;
+    public BorrowService getBorrowService() {
+        return borrowService;
     }
-    public void setBookID(int bookID) {
-        this.bookID = bookID;
+    public void setBorrowService(BorrowService borrowService) {
+        this.borrowService = borrowService;
     }
-    public int getAmount() {
-        return amount;
+    public String getBuyOrBorrow() {
+        return buyOrBorrow;
     }
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-    public List<Book> getCart() {
-        return cart;
-    }
-    public void setCart(List<Book> cart) {
-        this.cart = cart;
-    }
-    public Map getParams() {
-        return params;
-    }
-    public void setParams(Map params) {
-        this.params = params;
+    public void setBuyOrBorrow(String buyOrBorrow) {
+        this.buyOrBorrow = buyOrBorrow;
     }
     
     /* ========================================================= */
     
-
+    public String createOrder() {     // buy
+        if(this.buyOrBorrow.equals("buy")) {
+            this.orderService.createOrder();
+            return "buy";
+        }
+        else if(this.buyOrBorrow.equals("borrow")) {
+            this.borrowService.borrowAllBookInBorrowCart();
+            return "borrow";
+        }
+        else {
+            return ERROR;
+        }
+    }
+ 
 }
