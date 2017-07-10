@@ -178,7 +178,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             cartList = new ArrayList<Map<String, Object>>();
         }
         
-        int totalNeededCredit = 0;
+        int totalNeededCredit = 0;        // 购物车中所有书总计需要的积分
         List<Book> allIdleBookInCart = new ArrayList();    // 临时保存空闲的书
         List<BookRelease> allIdleBookReleaseInCart = new ArrayList();    // 临时保存空闲的书
         List<Book> allNotIdleBookInCart = new ArrayList();    // 临时保存非空闲的书
@@ -231,11 +231,8 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                 this.bookDao.update(book);
             }
             getHttpSession().remove("borrowCart");
-            returnMap.put("result", true);
         }
-        else {
-            returnMap.put("result", false);
-        }
+
         returnMap.put("result", result);
         returnMap.put("credit", creditNotEnough);
         returnMap.put("book", bookNotIdle);
