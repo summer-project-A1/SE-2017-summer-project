@@ -34,10 +34,7 @@
   margin-right: 0px;
   margin-left: 0px;
 }
-#confirm
-{
-	text-align:right;
-}
+
 	</style>
 </head>
 <body>
@@ -47,23 +44,23 @@
 		<nav class="navbar navbar-default navbar-static-top" role="navigation"
 			style="margin-bottom: 0">
 
-		<div class="navbar-header">
+		<div class="nav navbar-header">
 			<a class="navbar-brand" href="#">图书发布</a>
 		</div>
 		<div class="navbar-default sidebar" role="navigation">
 			<div class="sidebar-nav navbar-collapse">
 				<ul class="nav" id="side-menu">
-					<li><a href="#"><i class="fa fa-user fa-fw"></i>
+					<li><a href="#" style="color: #FFFFFF"><i class="fa fa-user fa-fw"></i>
 							全部图书</a></li>
-					<li><a href="#"><i class="fa fa-book fa-fw"></i>
+					<li><a href="#" style="color: #FFFFFF"><i class="fa fa-book fa-fw"></i>
 							个人信息</a></li>
-					<li><a href="#" class="active"><i
+					<li><a href="#" style="color: #FFFFFF" class="active"><i
 							class="fa fa-reorder fa-fw"></i>我的发布</a></li>
-					<li><a href="#"><i
+					<li><a href="#" style="color: #FFFFFF"><i
 							class="fa fa-table fa-fw"></i> 我的借阅</a></li>
-					<li><a href="#"><i class="fa fa-user fa-fw"></i>
+					<li><a href="#" style="color: #FFFFFF"><i class="fa fa-user fa-fw"></i>
 							我的交换</a></li>
-					<li><a href="#"><i class="fa fa-user fa-fw"></i>
+					<li><a href="#" style="color: #FFFFFF"><i class="fa fa-user fa-fw"></i>
 							我的订单</a></li>
 				</ul>
 			</div>
@@ -74,9 +71,7 @@
 	
 	<div id=bookinfo>
 		<form id="form" action="<%=path%>/bookAction/uploadBook" method=post enctype="multipart/form-data" role=form class="form-horizontal" accept-charset="UTF-8">
-			<div class="form-group form-group-auto">
-				<label>图书封面</label><font color="#FF0000">*</font><input name=coverPicture type=file class=file>
-			</div>
+            <h3 style="text-align: center;">发布图书</h3>
 			<div class="form-group form-group-auto">
 				<label>书名</label><font color="#FF0000">*</font><input name=bookName type=text class=form-control>
 			</div>
@@ -162,13 +157,19 @@
         	<div class="form-group form-group-auto">
         		<label>简介</label><font color="#FF0000">*</font><textarea id=introduction name=intro class="form-control" rows="3"></textarea>
         	</div>
+			<div class="form-group form-group-auto">
+				<label>图书封面</label><font color="#FF0000">*</font><input name=coverPicture type=file class=file>
+			</div>
+            <div class="form-group form-group-auto">
+                <label id=warning></label>
+            </div>
+            <div class="clearfix"> </div>
+            <div id=confirm class="register-but">
+                <input type="button" id=commit value="确认发布">
+            </div>
+            <div class="clearfix"> </div>
         </form>
-        <div class="form-group form-group-auto">
-        	<label id=warning></label>
-        </div>
-        <div id=confirm>
-        	<button id=commit class="btn btn-primary">确认发布</button>
-        </div>
+
     </div>
 	
 	<script src="<%=path%>/js/fileinput.js"></script>
