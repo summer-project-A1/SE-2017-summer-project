@@ -20,7 +20,7 @@ public class OrderAction extends ActionSupport {
     private BorrowService borrowService;
     
     private String buyOrBorrow;
-        
+
     /* ========================================================= */
 
     public OrderService getOrderService() {

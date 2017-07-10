@@ -65,6 +65,13 @@
                    success: function(msg){
                         if(msg.result == true){
                             showTip('结算成功','success');
+                            if(method == 'borrow'){
+                                window.setTimeout("window.location='<%=path%>/index'",2000);
+                                //window.location.href='<%=path%>/index';
+                            }
+                            if(method == 'buy'){
+                                window.location.href='<%=path%>/index';
+                            }
                         }else{
                             if(msg.book == true && msg.credit == true){
                                 var info = '积分余额不足，图书已被借阅或交换';
