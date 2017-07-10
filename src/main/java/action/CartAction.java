@@ -26,7 +26,6 @@ public class CartAction extends ActionSupport{
 
     /* ========================================================= */
 
-
     public CartService getCartService() {
         return cartService;
     }

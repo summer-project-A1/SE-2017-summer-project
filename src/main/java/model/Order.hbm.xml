@@ -15,6 +15,10 @@
                 <param name="enumClass">common.constants.OrderStatus</param>
             </type>
         </property>
+        <property name="province" column="province" />
+        <property name="city" column="city" />
+        <property name="district" column="district" />
+        <property name="address" column="address" />
         <set name="orderItems" cascade="all" table="orderitem">  
             <key column="order_id" foreign-key="order_id"></key>  
             <one-to-many class="model.OrderItem" />  

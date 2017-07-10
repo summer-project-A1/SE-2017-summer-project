@@ -9,6 +9,8 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import model.Book;
+import model.BookInfo;
+import model.BookProfile;
 import service.BookService;
 
 public class BookAction extends ActionSupport {
@@ -50,7 +52,7 @@ public class BookAction extends ActionSupport {
     private String[] otherPictureFileName;
     private String[] otherPictureContentType;
     
-    private Map bookProfile;
+    private BookProfile bookProfile;
     
     /* ============================================================== */
     
@@ -237,10 +239,10 @@ public class BookAction extends ActionSupport {
     public void setOtherPicture(File[] otherPicture) {
         this.otherPicture = otherPicture;
     }
-    public Map getBookProfile() {
+    public BookProfile getBookProfile() {
         return bookProfile;
     }
-    public void setBookProfile(Map bookProfile) {
+    public void setBookProfile(BookProfile bookProfile) {
         this.bookProfile = bookProfile;
     }
     public String[] getOtherPictureFileName() {
@@ -263,7 +265,7 @@ public class BookAction extends ActionSupport {
             this.part = 1;
         }
         this.pageSize = 100;
-        List<Book> allBooks = this.bookService.showAllBooksByPage(this.part,this.pageSize);
+        List<BookInfo> allBooks = this.bookService.showAllBookInfoByPage(this.part,this.pageSize);
         ActionContext.getContext().put("allBooks",allBooks);
         ActionContext.getContext().put("totalBookAmount",allBooks.size());
         return "showBooks";
@@ -282,31 +284,31 @@ public class BookAction extends ActionSupport {
         return "showBooks";
     }
     public String uploadBook() {
-        Map bookInfo = new HashMap();
-        bookInfo.put("bookName", this.bookName);
-        bookInfo.put("isbn", this.isbn);
-        bookInfo.put("author", this.author);         // 作者
-        bookInfo.put("press", this.press);          // 出版社
-        bookInfo.put("category1", this.category1);       // 大分类
-        bookInfo.put("category2", this.category2);       // 小分类
-        bookInfo.put("publishYear", this.publishYear);    // 出版
-        bookInfo.put("publishMonth", this.publishMonth);
-        bookInfo.put("editionYear", this.editionYear);     // 版次
-        bookInfo.put("editionMonth", this.editionMonth);
-        bookInfo.put("editionVersion", this.editionVersion);
-        bookInfo.put("page", this.page);              // 页数
-        bookInfo.put("bookBinding", this.bookBinding);    // 装帧
-        bookInfo.put("bookFormat", this.bookFormat);     // 开本
-        bookInfo.put("bookQuality", this.bookQuality);    // 成色
-        bookInfo.put("bookDamage", this.bookDamage);     // 损毁情况
-        bookInfo.put("intro", this.intro);          // 简介
-        bookInfo.put("canBorrow", (this.canBorrow==null)? 0:this.canBorrow);        // 是否可借阅
-        bookInfo.put("canExchange", (this.canExchange==null)? 0:this.canExchange);      // 是否可交换
-        bookInfo.put("borrowCredit", this.borrowCredit);      // 借阅所需积分
-        bookInfo.put("buyCredit", this.buyCredit);    // 购买所需积分
-        bookInfo.put("coverPicture", this.coverPicture);     // 封面
-        bookInfo.put("otherPicture", this.otherPicture);   // 其他图片
-        this.bookService.uploadBook(bookInfo);
+        BookProfile newBookProfile = new BookProfile();
+        newBookProfile.setBookName(this.bookName);
+        newBookProfile.setIsbn(this.isbn);
+        newBookProfile.setAuthor(this.author);         // 作者
+        newBookProfile.setPress(this.press);          // 出版社
+        newBookProfile.setCategory1(this.category1);       // 大分类
+        newBookProfile.setCategory2(this.category2);       // 小分类
+        newBookProfile.setPublishYear(this.publishYear);    // 出版
+        newBookProfile.setPublishMonth(this.publishMonth);
+        newBookProfile.setEditionYear(this.editionYear);     // 版次
+        newBookProfile.setEditionMonth(this.editionMonth);
+        newBookProfile.setEditionVersion(this.editionVersion);
+        newBookProfile.setPage(this.page);              // 页数
+        newBookProfile.setBookBinding(this.bookBinding);    // 装帧
+        newBookProfile.setBookFormat(this.bookFormat);     // 开本
+        newBookProfile.setBookQuality(this.bookQuality);    // 成色
+        newBookProfile.setBookDamage(this.bookDamage);     // 损毁情况
+        newBookProfile.setIntro(this.intro);          // 简介
+        newBookProfile.setCanBorrow((this.canBorrow==null)? 0:this.canBorrow);        // 是否可借阅
+        newBookProfile.setCanExchange((this.canExchange==null)? 0:this.canExchange);      // 是否可交换
+        newBookProfile.setBorrowCredit(this.borrowCredit);      // 借阅所需积分
+        newBookProfile.setBuyCredit(this.buyCredit);    // 购买所需积分
+        newBookProfile.setCoverPicture(this.coverPicture);     // 封面
+        newBookProfile.setOtherPicture(this.otherPicture);   // 其他图片
+        this.bookService.uploadBook(newBookProfile);
         return "showBooks";
     }
     public String showBookProfile() {

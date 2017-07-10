@@ -2,21 +2,19 @@ package service.impl;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.opensymphony.xwork2.ActionContext;
 
 import common.constants.BookStatus;
 import dao.BookDao;
 import dao.BookReleaseDao;
 import dao.ImageDao;
 import model.Book;
+import model.BookInfo;
+import model.BookProfile;
 import model.BookRelease;
-import model.User;
 import service.BookService;
 
 public class BookServiceImpl extends BaseServiceImpl implements BookService {
@@ -54,71 +52,51 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     /* ===================================================== */
 
     @Override
-    public Boolean uploadBook(Map bookInfo) {
+    public Boolean uploadBook(BookProfile bookProfile) {
         if(!isLogined()) {
             return false;
         }
-        String bookName = (String)bookInfo.get("bookName");   // mysql
-        String isbn = (String)bookInfo.get("isbn");    // mysql
-        String author = (String)bookInfo.get("author");         // 作者 mysql
-        String press = (String)bookInfo.get("press");          // 出版社 mysql
-        String category1 = (String)bookInfo.get("category1");       // 分类 mysql
-        String category2 = (String)bookInfo.get("category2");       // 分类 mysql
-        int publishYear = (int)bookInfo.get("publishYear");    // 出版 mongo
-        int publishMonth = (int)bookInfo.get("publishMonth");  // mongo
-        int editionYear = (int)bookInfo.get("editionYear");     // 版次 mongo 
-        int editionMonth = (int)bookInfo.get("editionMonth");    // mongo
-        int editionVersion = (int)bookInfo.get("editionVersion"); //mongo
-        int page = (int)bookInfo.get("page");              // 页数 mongo
-        String bookBinding = (String)bookInfo.get("bookBinding");    // 装帧 mongo
-        String bookFormat = (String)bookInfo.get("bookFormat");     // 开本 mongo
-        String bookQuality = (String)bookInfo.get("bookQuality");    // 成色 mongo
-        String bookDamage = (String)bookInfo.get("bookDamage");     // 损毁情况 mongo
-        String intro = (String)bookInfo.get("intro");          // 简介 mongo 
-        int canBorrow = (int)bookInfo.get("canBorrow");        // 是否可借阅 mysql
-        int canExchange = (int)bookInfo.get("canExchange");      // 是否可交换 mysql
-        int borrowCredit = (int)bookInfo.get("borrowCredit");      // 借阅所需积分 mysql
-        int buyCredit = (int)bookInfo.get("buyCredit");    // 交换所需积分 mysql
-        File coverPicture = (File)bookInfo.get("coverPicture");     // 封面 mongo
-        File[] otherPicture = (File[])bookInfo.get("otherPicture");   // 其他图片 mongo
-        
-        Map bookProfile = new HashMap();
-        bookProfile.put("category2", category2);
-        // bookProfile.put("publish", new HashMap(){{put("year",publishYear);put("month",publishMonth);}});
-        // bookProfile.put("edtion", new HashMap(){{put("year",edtionYear);put("month",edtionMonth);put("version",edtionVersion);}});
-        bookProfile.put("publishYear", publishYear);
-        bookProfile.put("publishMonth", publishMonth);
-        bookProfile.put("editionYear", editionYear);
-        bookProfile.put("editionMonth", editionMonth);
-        bookProfile.put("editionVersion", editionVersion);
-        bookProfile.put("page", page);
-        bookProfile.put("bookBinding", bookBinding);
-        bookProfile.put("bookFormat", bookFormat);
-        bookProfile.put("bookQuality", bookQuality);
-        bookProfile.put("bookDamage", bookDamage);
-        bookProfile.put("intro", intro);
-        if(otherPicture != null) {
+        Map bookProfileInMongo = new HashMap();
+        bookProfileInMongo.put("category2", bookProfile.getCategory2());
+        // bookProfileInMongo.put("publish", new HashMap(){{put("year",publishYear);put("month",publishMonth);}});
+        // bookProfileInMongo.put("edtion", new HashMap(){{put("year",edtionYear);put("month",edtionMonth);put("version",edtionVersion);}});
+        bookProfileInMongo.put("publishYear", bookProfile.getPublishYear());
+        bookProfileInMongo.put("publishMonth", bookProfile.getPublishMonth());
+        bookProfileInMongo.put("editionYear", bookProfile.getEditionYear());
+        bookProfileInMongo.put("editionMonth", bookProfile.getEditionMonth());
+        bookProfileInMongo.put("editionVersion", bookProfile.getEditionVersion());
+        bookProfileInMongo.put("page", bookProfile.getPage());
+        bookProfileInMongo.put("bookBinding", bookProfile.getBookBinding());
+        bookProfileInMongo.put("bookFormat", bookProfile.getBookFormat());
+        bookProfileInMongo.put("bookQuality", bookProfile.getBookQuality());
+        bookProfileInMongo.put("bookDamage", bookProfile.getBookDamage());
+        bookProfileInMongo.put("intro", bookProfile.getIntro());
+        if(bookProfile.getOtherPicture() != null) {
             List otherPictureID = new ArrayList();
-            for(File tmp : otherPicture) {
+            for(File tmp : bookProfile.getOtherPicture()) {
+                // save otherPicture
                 otherPictureID.add(this.imageDao.saveImage(tmp));
             }
-            bookProfile.put("otherPicture", otherPictureID);
+            bookProfileInMongo.put("otherPictureID", otherPictureID);
         }
         
         Book newBook = new Book();
-        newBook.setBookName(bookName);
-        newBook.setIsbn(isbn);
-        newBook.setAuthor(author);
-        newBook.setPress(press);
-        newBook.setCategory(category1);
-        newBook.setCanBorrow(canBorrow);
-        newBook.setCanExchange(canExchange);
+        newBook.setBookName(bookProfile.getBookName());
+        newBook.setIsbn(bookProfile.getIsbn());
+        newBook.setAuthor(bookProfile.getAuthor());
+        newBook.setPress(bookProfile.getPress());
+        newBook.setCategory1(Integer.parseInt(bookProfile.getCategory1()));
+        newBook.setCategory2(Integer.parseInt(bookProfile.getCategory2()));
+        newBook.setCanBorrow(bookProfile.getCanBorrow());
+        newBook.setCanExchange(bookProfile.getCanExchange());
         newBook.setReserved(0);
         newBook.setStatus(BookStatus.IDLE);
         
-        newBook.setProfileID(this.bookDao.saveBookProfile(bookProfile));
-        if(coverPicture != null) {
-            newBook.setImageID(this.imageDao.saveImage(coverPicture));
+        // saveBookProfile
+        newBook.setProfileID(this.bookDao.saveBookProfile(bookProfileInMongo));
+        if(bookProfile.getCoverPicture() != null) {
+            // save coverPicture
+            newBook.setImageID(this.imageDao.saveImage(bookProfile.getCoverPicture()));
         }
         else {
             newBook.setImageID("");
@@ -127,8 +105,8 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         
         BookRelease newBookRelease = new BookRelease();
         newBookRelease.setBookID(newBook.getBookID());
-        newBookRelease.setBorrowCredit(borrowCredit);
-        newBookRelease.setBuyCredit(buyCredit);
+        newBookRelease.setBorrowCredit(bookProfile.getBorrowCredit());
+        newBookRelease.setBuyCredit(bookProfile.getBuyCredit());
         newBookRelease.setReleaseTime(new Date());
         newBookRelease.setUserID(getLoginedUserInfo().getUserID());
         this.bookReleaseDao.save(newBookRelease);
@@ -137,8 +115,8 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> showAllBooksByPage(int part,int pageSize) {
-        return this.bookDao.getAllBooksByPage(part,pageSize);
+    public List<BookInfo> showAllBookInfoByPage(int part,int pageSize) {
+        return this.bookDao.getAllBookInfoByPage(part,pageSize);
     }
 
     @Override
@@ -158,25 +136,43 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     }
 
     @Override
-    public Map showBookProfile(int bookID) {
-        // 这里的返回值不仅包括mongodb中的bookprofile，也包括mysql中的内容
+    public BookProfile showBookProfile(int bookID) {
+        // 这里的返回值不仅包括mongodb中的内容，也包括mysql中的内容
         Book book = this.bookDao.getBookByID(bookID);
         BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
-        Map bookProfile = this.bookDao.getBookProfileMap(book);
-        bookProfile.remove("_id");
-        bookProfile.put("bookID", book.getBookID());
-        bookProfile.put("bookName", book.getBookName());
-        bookProfile.put("isbn", book.getIsbn());
-        bookProfile.put("author", book.getAuthor());
-        bookProfile.put("press", book.getPress());
-        bookProfile.put("category1", book.getCategory());
-        bookProfile.put("canExchange", (book.getCanExchange()!=0));
-        bookProfile.put("canBorrow", (book.getCanBorrow()!=0));
-        bookProfile.put("borrowCredit", bookRelease.getBorrowCredit());
-        bookProfile.put("buyCredit", bookRelease.getBuyCredit());
-        bookProfile.put("reserved", (book.getReserved()!=0));
-        bookProfile.put("coverPicture", book.getImageID());
-        bookProfile.put("status", book.getStatus().toString());
+        Map bookProfileInMongo = this.bookDao.getBookProfileMap(book);
+        BookProfile bookProfile = new BookProfile();
+        
+        bookProfile.setBookID(book.getBookID());
+        bookProfile.setBookName(book.getBookName());
+        bookProfile.setIsbn(book.getIsbn());
+        bookProfile.setAuthor(book.getAuthor());
+        bookProfile.setPress(book.getPress());
+        bookProfile.setCategory1(book.getCategory1().toString());
+        bookProfile.setCategory2(book.getCategory2().toString());
+        bookProfile.setCanExchange(book.getCanExchange());
+        bookProfile.setCanBorrow(book.getCanBorrow());
+        bookProfile.setReserved(book.getReserved());
+        bookProfile.setStatus(book.getStatus());
+        bookProfile.setImageID(book.getImageID());
+        
+        bookProfile.setBorrowCredit(bookRelease.getBorrowCredit());
+        bookProfile.setBuyCredit(bookRelease.getBuyCredit());
+        bookProfile.setReleaseTime(bookRelease.getReleaseTime());
+        
+        bookProfile.setPublishYear((int)bookProfileInMongo.get("publishYear"));
+        bookProfile.setPublishMonth((int)bookProfileInMongo.get("publishMonth"));
+        bookProfile.setEditionYear((int)bookProfileInMongo.get("editionYear"));
+        bookProfile.setEditionMonth((int)bookProfileInMongo.get("editionMonth"));
+        bookProfile.setEditionVersion((int)bookProfileInMongo.get("editionVersion"));
+        bookProfile.setPage((int)bookProfileInMongo.get("page"));
+        bookProfile.setBookBinding((String)bookProfileInMongo.get("bookBinding"));
+        bookProfile.setBookFormat((String)bookProfileInMongo.get("bookFormat"));
+        bookProfile.setBookQuality((String)bookProfileInMongo.get("bookQuality"));
+        bookProfile.setBookDamage((String)bookProfileInMongo.get("bookDamage"));
+        bookProfile.setIntro((String)bookProfileInMongo.get("intro"));
+        bookProfile.setOtherPictureID((List<String>)bookProfileInMongo.get("otherPictureID"));
+        
         return bookProfile;
     }
     
