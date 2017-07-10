@@ -7,18 +7,19 @@ import java.util.List;
 import java.util.Map;
 
 import common.constants.BookStatus;
-import dao.ApplyDao;
 import dao.BookDao;
 import dao.BookReleaseDao;
 import dao.BorrowDao;
 import dao.BorrowHistoryDao;
+import dao.ReserveDao;
 import dao.UserDao;
 import model.Book;
+import model.BookInfo;
 import model.BookRelease;
 import model.Borrow;
 import model.BorrowHistory;
+import model.BorrowProfile;
 import model.User;
-import model.Apply;
 import service.BorrowService;
 
 public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService {
@@ -27,7 +28,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
     private UserDao userDao;
     private BorrowDao borrowDao;
     private BorrowHistoryDao borrowHistoryDao;
-    private ApplyDao applyDao;
+    private ReserveDao reserveDao;
     
     /* ========================================================== */
 
@@ -71,18 +72,19 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         this.borrowHistoryDao = borrowHistoryDao;
     }
     
-    public ApplyDao getApplyDao() {
-        return applyDao;
+    public ReserveDao getReserveDao() {
+        return reserveDao;
     }
 
-    public void setApplyDao(ApplyDao applyDao) {
-        this.applyDao = applyDao;
+    public void setReserveDao(ReserveDao reserveDao) {
+        this.reserveDao = reserveDao;
     }
 
     /* ============================================================= */
     
     @Override
     public Map showMyBorrow() {
+        // Map中包含两个List<BorrowProfile>，分别对应Borrow和BorrowHistory
         if(!isLogined()) {
             return null;
         }
@@ -90,28 +92,46 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         int userID = user.getUserID();
         List<Borrow> borrows = this.borrowDao.getBorrowByUserID(userID);
         List<BorrowHistory> borrowHistories = this.borrowHistoryDao.getBorrowHistoryByUserID(userID);
-        List borrowBook = new ArrayList();
-        List borrowHistoryBook = new ArrayList();
+        List<BorrowProfile> borrowBook = new ArrayList();
+        List<BorrowProfile> borrowHistoryBook = new ArrayList();
         for(Borrow borrow : borrows) {
-            Map tmp = new HashMap();
+            BorrowProfile borrowProfile = new BorrowProfile();
             int bookID = borrow.getBookID();
-            Book book = this.bookDao.getBookByID(bookID);
-            tmp.put("borrowID", borrow.getBorrowID());
-            tmp.put("bookID", bookID);
-            tmp.put("bookName", book.getBookName());
-            tmp.put("isbn", book.getIsbn());
-            tmp.put("author", book.getAuthor());
-            tmp.put("category", book.getCategory());
-            tmp.put("imageID", book.getImageID());
-            tmp.put("yhDate", borrow.getYhDate()); 
-            tmp.put("status", book.getStatus());
-            returned
-            inDate
+            BookInfo bookInfo = this.bookDao.getBookInfoByID(bookID);
+            borrowProfile.setBookID(bookID);
+            borrowProfile.setBookName(bookInfo.getBookName());
+            borrowProfile.setAuthor(bookInfo.getAuthor());
+            borrowProfile.setCategory1(bookInfo.getCategory1().toString());
+            borrowProfile.setImageID(bookInfo.getImageID());
+            borrowProfile.setIsbn(bookInfo.getIsbn());
+            borrowProfile.setBorrowPrice(bookInfo.getBorrowCredit());
+            borrowProfile.setReturned(false);
+            borrowProfile.setDelayed((borrow.getDelayCount()!=0));
+            borrowProfile.setYhDate(borrow.getYhDate());
+            borrowProfile.setReturnDate(null);
+            borrowBook.add(borrowProfile);
         }
         for(BorrowHistory borrowHistory : borrowHistories) {
-            Map tmp = new HashMap();
+            BorrowProfile borrowProfileHistory = new BorrowProfile();
+            int bookID = borrowHistory.getBookID();
+            BookInfo bookInfo = this.bookDao.getBookInfoByID(bookID);
+            borrowProfileHistory.setBookID(bookID);
+            borrowProfileHistory.setBookName(bookInfo.getBookName());
+            borrowProfileHistory.setAuthor(bookInfo.getAuthor());
+            borrowProfileHistory.setCategory1(bookInfo.getCategory1().toString());
+            borrowProfileHistory.setImageID(bookInfo.getImageID());
+            borrowProfileHistory.setIsbn(bookInfo.getIsbn());
+            borrowProfileHistory.setBorrowPrice(bookInfo.getBorrowCredit());
+            borrowProfileHistory.setReturned(true);
+            borrowProfileHistory.setDelayed((borrowHistory.getDelayCount()!=0));
+            borrowProfileHistory.setYhDate(borrowHistory.getYhDate());
+            borrowProfileHistory.setReturnDate(borrowHistory.getInDate());
+            borrowHistoryBook.add(borrowProfileHistory);
         }
-        return null;
+        Map result = new HashMap();
+        result.put("borrowBook", borrowBook);
+        result.put("borrowHistoryBook", borrowHistoryBook);
+        return result;
     }
     
     @Override
@@ -178,12 +198,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             return false;
         }
         borrow.setYhDate(newYhDate);
-        Apply newApply = new Apply();
-        newApply.setBookID(borrow.getBookID());
-        newApply.setUserID(user.getUserID());
-        newApply.setDue(newYhDate);
         this.borrowDao.update(borrow);
-        this.applyDao.save(newApply);
         return true;
     }
     

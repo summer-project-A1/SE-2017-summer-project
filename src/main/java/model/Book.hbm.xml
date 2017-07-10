@@ -11,7 +11,8 @@
         <property name="isbn" column="isbn" />
         <property name="author" column="author" />
         <property name="press" column="press" />
-        <property name="category" column="category" />
+        <property name="category1" column="category1" />
+        <property name="category2" column="category2" />
         <property name="canExchange" column="canexchange" />
         <property name="canBorrow" column="canborrow" />
         <property name="reserved" column="reserved" />

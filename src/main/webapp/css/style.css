@@ -1662,7 +1662,7 @@ p span.overline{
 	width:70%; /*100*/
 }
 .cart-item-info{
-	width:75%;
+	width:55%; /*75*/
 	float:left;
 	 
 }
@@ -1706,6 +1706,16 @@ p span.overline{
   font-size: 1em;
   font-weight: 400;
   float: left;
+}
+.delivery button {
+    background: #F07818;
+    float: right;
+    color: #fff;
+    font-size: 0.9em;
+    padding-left: 0.4em; 
+    padding-bottom: 0em;
+    padding-right: 0.4em;
+    padding-top: 0em;
 }
 .delivery span {
   color: #A6A6A6;
@@ -2120,17 +2130,17 @@ span.glyphicon.glyphicon-map-marker {
     min-width: 430px;
 }
 .search {
-    right: 17%;
+    right: 18%;
 }
 #loginBox {
-    right: 13.1%;
+    right: 14.5%;
 }
 .cart-box {
-    right: 6.5%;
+    right: 8%;
     width: 25%;
 }
 .borrow-box {
-    right: 3%;
+    right: 5%;
     width: 25%;
 }
 }
@@ -2163,11 +2173,11 @@ span.glyphicon.glyphicon-map-marker {
     right: 12%;
 }
 .cart-box {
-    right: 8%;
+    right: 5%;
     width: 30%;
 }
 .borrow-box {
-    right: 4%;
+    right: 1%;
     width: 30%
 }
 .banner {

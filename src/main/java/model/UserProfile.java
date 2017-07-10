@@ -1,22 +1,26 @@
 package model;
 
-import common.constants.UserRole;
+import java.util.List;
 
-public class User {
+public class UserProfile {
     private int userID;
     private String nickName;
-    private String password;
-    private String email;       // 邮箱作为登录名，具有唯一性
-    private int credit;         // 用户积分
-    private UserRole role;      // 用户角色（管理员/普通）
-    private String province;        // 用户地址（区别于收货地址）
+    private String plainPassword;   // 明文密码
+    private String password;        // 加密后的密码
+    private String email;
+    private int credit;
+    private String imageID;
+    private String province;        // 用户地址，区别于收货地址
     private String city;
     private String district;
     private String address;
-    private String profileID;         // 用户的详细信息在monggodb中的id
-    private String imageID;           // 用户的头像在monggodb中的图片
     
-    /* ======================================= */
+    private String name;
+    private String gender;
+    private String mobile;
+    private List<FullAddress> deliveryAddress;     // 收货地址
+    
+    /* ======================================================== */
     
     public int getUserID() {
         return userID;
@@ -29,6 +33,12 @@ public class User {
     }
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+    public String getPlainPassword() {
+        return plainPassword;
+    }
+    public void setPlainPassword(String plainPassword) {
+        this.plainPassword = plainPassword;
     }
     public String getPassword() {
         return password;
@@ -48,11 +58,11 @@ public class User {
     public void setCredit(int credit) {
         this.credit = credit;
     }
-    public UserRole getRole() {
-        return role;
+    public String getImageID() {
+        return imageID;
     }
-    public void setRole(UserRole role) {
-        this.role = role;
+    public void setImageID(String imageID) {
+        this.imageID = imageID;
     }
     public String getProvince() {
         return province;
@@ -78,17 +88,30 @@ public class User {
     public void setAddress(String address) {
         this.address = address;
     }
-    public String getProfileID() {
-        return profileID;
+    public String getName() {
+        return name;
     }
-    public void setProfileID(String profileID) {
-        this.profileID = profileID;
+    public void setName(String name) {
+        this.name = name;
     }
-    public String getImageID() {
-        return imageID;
+    public String getGender() {
+        return gender;
     }
-    public void setImageID(String imageID) {
-        this.imageID = imageID;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
+    public String getMobile() {
+        return mobile;
+    }
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+    public List<FullAddress> getDeliveryAddress() {
+        return deliveryAddress;
+    }
+    public void setDeliveryAddress(List<FullAddress> deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+    
     
 }

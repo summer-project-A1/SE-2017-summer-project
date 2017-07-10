@@ -6,10 +6,10 @@ import java.util.Map;
 
 import dao.BorrowDao;
 import dao.BorrowHistoryDao;
-import model.Apply;
 import model.BookRelease;
 import model.Borrow;
 import model.BorrowHistory;
+import model.Reserve;
 import service.HistoryService;
 
 public class HistoryServiceImpl extends BaseServiceImpl implements HistoryService {
@@ -59,7 +59,7 @@ public class HistoryServiceImpl extends BaseServiceImpl implements HistoryServic
     }
 
     @Override
-    public List<Apply> getUserReservation(int userID) {
+    public List<Reserve> getUserReservation(int userID) {
         // TODO 自动生成的方法存根
         return null;
     }

@@ -1,5 +1,6 @@
 package service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import common.utils.MD5Util;
 import common.utils.PasswordUtil;
 import dao.UserDao;
 import model.User;
+import model.UserProfile;
 import service.UserService;
 
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
@@ -58,43 +60,33 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     }
 
     @Override
-    public boolean register(Map registerInfo) {
-        String email = (String)registerInfo.get("email");
+    public boolean register(UserProfile registerInfo) {
+        String email = registerInfo.getEmail();
         if(this.userDao.getUserByEmail(email) != null) {
             return false;
         }
-        String plainPassword = (String)registerInfo.get("password");
-        String name = (String)registerInfo.get("name");
-        String gender = (String)registerInfo.get("gender");
-        String mobile = (String)registerInfo.get("mobile");
-        String province = (String)registerInfo.get("province");
-        String city = (String)registerInfo.get("city");
-        String district = (String)registerInfo.get("district");
-        String address = (String)registerInfo.get("address");
-        
         User newUser = new User();
+        Map userProfile = new HashMap();
+        
+        userProfile.put("name", registerInfo.getName());
+        userProfile.put("gender", registerInfo.getGender());
+        userProfile.put("mobile", registerInfo.getMobile());
+        userProfile.put("deliveryAddressID", new ArrayList());
+        
+        String profileID = this.userDao.saveUserProfile(userProfile);
+        newUser.setProfileID(profileID);
         newUser.setEmail(email);
-        newUser.setPassword(PasswordUtil.getEncryptedPassword(plainPassword));
+        newUser.setNickName(registerInfo.getNickName());
+        newUser.setPassword(PasswordUtil.getEncryptedPassword(registerInfo.getPlainPassword()));
         newUser.setRole(UserRole.COMMON);
         newUser.setCredit(0);
+        newUser.setProvince(registerInfo.getProvince());
+        newUser.setCity(registerInfo.getCity());
+        newUser.setDistrict(registerInfo.getDistrict());
+        newUser.setAddress(registerInfo.getAddress());
         newUser.setImageID("");
-        newUser.setProfileID("");
+        
         this.userDao.save(newUser);
-        
-        Map userProfile = new HashMap();
-        userProfile.put("userID", newUser.getUserID());
-        userProfile.put("name", name);
-        userProfile.put("gender", gender);
-        userProfile.put("mobile", mobile);
-        userProfile.put("province", province);
-        userProfile.put("city", city);
-        userProfile.put("district", district);
-        userProfile.put("address", address);
-        
-        String profileID = this.userDao.saveOrUpdateUserProfile(userProfile);
-        newUser.setProfileID(profileID);
-        
-        this.userDao.update(newUser);
         
         setLoginedUserInfo(newUser);
         return true;
