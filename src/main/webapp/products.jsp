@@ -53,7 +53,8 @@
         $('#'+pageNo).replaceWith("<li id='"+pageNo+"' class='active'>"+pageNo+"<li>");
         var end=(parseInt(pageNo)-1)*parseInt(amountPerPage)+parseInt(amountPerPage);
        console.log("end: "+end);
-       for(var j=(pageNo-1)*amountPerPage;j<end;j++){
+       console.log("last product id: "+parseInt(totalBookAmount));
+       for(var j=(pageNo-1)*amountPerPage;j<end&&j<parseInt(totalBookAmount);j++){
             console.log("show product"+j);
             $('#product'+j).show();
         }
@@ -67,7 +68,7 @@
     $(document).ready(function() {
         currPage=firstPage;
         amountPerPage = $("#selectAmountPerPage").val();
-        totalBookAmount = $("#totalBookAmount").text();
+        totalBookAmount = '<s:property value="#totalBookAmount"/>';
         pageCount = Math.ceil(totalBookAmount / amountPerPage);
         var prevPage= firstPage-pageCount;
         var succPage= firstPage+pageCount;
@@ -86,7 +87,7 @@
 
             }
             $('.product-grid').hide();
-            for(var j=0;j<amountPerPage&&j<(parseInt(totalBookAmount)-1);j++){
+            for(var j=0;j<amountPerPage&&j<parseInt(totalBookAmount);j++){
                 $('#product'+j).show();
             }
         }
@@ -99,7 +100,7 @@
             console.log("switch amount per page");
             currPage=firstPage;
             amountPerPage = $("#selectAmountPerPage").val();
-            totalBookAmount = $("#totalBookAmount").text();
+            totalBookAmount = '<s:property value="#totalBookAmount"/>';
             pageCount = Math.ceil(totalBookAmount / amountPerPage);
             var prevPage = firstPage - pageCount;
             var succPage = firstPage + pageCount;
@@ -122,7 +123,10 @@
                 $('.product-grid').hide();
                 var start=parseInt((currPage-1))*parseInt(amountPerPage);
                 var end= parseInt(start)+parseInt(amountPerPage);
-                for(var j=start;j<end&&j<(parseInt(totalBookAmount)-1);j++){
+                console.log("end: "+end);
+                console.log("last product id: "+parseInt(totalBookAmount));
+                for(var j=start;j<end&&j<parseInt(totalBookAmount);j++){
+                    console.log("show product"+j);
                     $('#product'+j).show();
                 }
             }
@@ -222,8 +226,7 @@
             <div class="clearfix"> </div>
 
 
-            <!--一个用于将action传递的参数在js中读取的方法-->
-            <div id="totalBookAmount" style="display: none;"><s:property value="#totalBookAmount"/></div>
+
 
 
             <!--具体图书信息div，使用struts迭代器-->
