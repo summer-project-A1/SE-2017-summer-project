@@ -49,48 +49,10 @@
                         alert('status='+status+',error='+error);
                     }
 
-                });
+        });
 
-            }
-            /*
-            function createOrder(){
-                $.ajax({
-                   url: base_url+ 'orderAction/createBuyOrder',
-                   type: 'POST',
-                   data:{},
-                   success: function(msg){
-                        if(msg.result == true){
-                            showTip('结算成功','success');
-                            window.setTimeout("window.location='<%=path%>/orderAction/check'",2000);
-                        }else{
-                            if(msg.book == true && msg.credit == true){
-                                var info = '积分余额不足，图书已被借阅或交换';
-                                showTip(info,'danger');
-                            }
-                            if(msg.credit == true){
-                                var creditNotEnough = '积分余额不足';
-                                showTip(creditNotEnough,'danger');
-                            }
-                            if(msg.book == true){
-                                var bookWasSold = '图书已被借阅或交换';
-                                showTip(bookWasSold,'danger');
-                            }
-                        }
-                   },
-                   error:function(xhr,status,error){
-                       alert('status='+status+',error='+error);
-                   }
-                });
-            }
-            /*
-             $('.close-button').on('click', function(c){
-             console.log("delete current book.");
-             $('.cart-header').fadeOut('slow', function(c){
-             $('.cart-header').hide();
-             });
-             });
-             */
-        </script>
+    }
+</script>
 
 
 
