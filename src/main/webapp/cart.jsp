@@ -135,10 +135,10 @@
             </div>
         </s:iterator>
             <s:if test="#buyOrBorrow=='borrow'">
-                <button class="checkout-but" onclick="window.location.href='<%=path%>/orderAction/'">提交订单</button>
+                <button class="checkout-but" onclick="window.location.href='<%=path%>/borrowAction/borrowCheckout'">提交订单</button>
             </s:if>
             <s:elseif test="#buyOrBorrow=='buy'">
-                <button class="checkout-but" onclick="window.location.href='<%=path%>/orderAction/'">提交订单</button>
+                <button class="checkout-but" onclick="window.location.href='<%=path%>/orderAction/buyCheckout'">提交订单</button>
             </s:elseif>
         </s:else>
     </div>
