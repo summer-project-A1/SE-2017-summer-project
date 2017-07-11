@@ -126,6 +126,9 @@
                 <s:elseif test="#bookProfile.canBorrow==false && #bookProfile.canExchange==true">
                     <p>此书可以交换</p>
                 </s:elseif>
+                <s:elseif test="#bookProfile.canBorrow==false && #bookProfile.canExchange==false">
+                    <p>此书是摆设</p>
+                </s:elseif>
                 <div class="btn_form">
                     <s:if test="#bookProfile.bookStatus=='BORROWED'">
                         <s:if test="#bookProfile.reserved==false">
