@@ -34,7 +34,10 @@
   margin-right: 0px;
   margin-left: 0px;
 }
-
+#msg
+{
+	color:#FF0000;
+}
     </style>
 </head>
 <body>
@@ -161,7 +164,7 @@
                 <label>图书封面</label><font color="#FF0000">*</font><input name=coverPicture type=file class=file>
             </div>
             <div class="form-group form-group-auto">
-                <label id=warning></label>
+                <label id=msg></label>
             </div>
             <div class="clearfix"> </div>
             <div id=confirm class="register-but">
@@ -208,39 +211,46 @@
         $("#exchangeCredit").hide();
     });
     $("#commit").click(function(){
-        var obj=document.getElementById("warning");
-        if($("input[name='coverPicture']").val()=="")
-            {obj.innerText="图书封面必须上传";return;}
-        if($("input[name='bookName']").val()=="")
-            {obj.innerText="图书名称必须填写";return;}
-        if($("input[name='author']").val()=="")
-            {obj.innerText="图书作者必须填写";return;}
-        if($("input[name='isbn']").val()=="")
-            {obj.innerText="图书ISBN必须填写";return;}
-        if($("input[name='press']").val()=="")
-            {obj.innerText="图书出版社必须填写";return;}
-        if($("input[name='publishYear']").val()=="")
-            {obj.innerText="图书出版年份必须填写";return;}
-        if($("input[name='publishMonth']").val()=="")
-            {obj.innerText="图书出版月份必须填写";return;}
-        if($("input[name='editionMonth']").val()==""||$("input[name='editionYear']").val()==""
-                ||$("input[name='editionVersion']").val()=="")
-            {obj.innerText="图书版次信息不全";return;}
-        if($("input[name='page']").val()=="")
-            {obj.innerText="图书页数必须填写";return;}
-        if($("input[name='buyCredit']").val()=="")
-            {obj.innerText="图书页数必须填写";return;}
-        if($("input[name='canBorrow']").val()=="")
-            {obj.innerText="请确认是否可借阅";return;}
-        if($("input[name='canBorrow']").val()=='1'&&$("input[name='borrowCredit']").val()=='')
-            {obj.innerText="请输入借阅所需积分";return;}
-        if($("input[name='canExchange']").val()=='')
-            {obj.innerText="请确认是否可交换";return;}
-        if($("#introduction").val()=='')
-            {obj.innerText="请输入简介";return;}
-        obj.innerText="提交中...";
-        $("#form").submit();
-    });
+		var obj=document.getElementById("msg");
+		var filepath=$("input[name='coverPicture']").val();
+		if(filepath=="")
+			{obj.innerText="图书封面必须上传";return;}
+		var index=filepath.lastIndexOf(".");
+		var type=filepath.substring(index+1,filepath.length).toUpperCase();
+		if(type!="BMP"&&type!="GIF"&&type!="JPG"&&type!="JPEG"&&type!="PNG"&&
+				type!="SVG"&&type!="TIFF"&&type!="DDS"&&type!="WDP"&&type!="WEBP"&&
+					type!="EMF"&&type!="ICO"&&type!="PNG"&&type!="WMF")
+			{obj.innerText="请上传正确的图片格式";return;}
+		if($("input[name='bookName']").val()=="")
+			{obj.innerText="图书名称必须填写";return;}
+		if($("input[name='author']").val()=="")
+			{obj.innerText="图书作者必须填写";return;}
+		if($("input[name='isbn']").val()=="")
+			{obj.innerText="图书ISBN必须填写";return;}
+		if($("input[name='press']").val()=="")
+			{obj.innerText="图书出版社必须填写";return;}
+		if($("input[name='publishYear']").val()=="")
+			{obj.innerText="图书出版年份必须填写";return;}
+		if($("input[name='publishMonth']").val()=="")
+			{obj.innerText="图书出版月份必须填写";return;}
+		if($("input[name='editionMonth']").val()==""||$("input[name='editionYear']").val()==""
+				||$("input[name='editionVersion']").val()=="")
+			{obj.innerText="图书版次信息不全";return;}
+		if($("input[name='page']").val()=="")
+			{obj.innerText="图书页数必须填写";return;}
+		if($("input[name='buyCredit']").val()=="")
+			{obj.innerText="请输入购买所需积分";return;}
+		if($("input[name='canBorrow']:checked").val()=="")
+			{obj.innerText="请确认是否可借阅";return;}
+		if($("input[name='canBorrow']:checked").val()=='1'&&$("input[name='borrowCredit']").val()=='')
+			{obj.innerText="请输入借阅所需积分";return;}
+		if($("input[name='canExchange']").val()=='')
+			{obj.innerText="请确认是否可交换";return;}
+		if($("#introduction").val()=='')
+			{obj.innerText="请输入简介";return;}
+		$("#msg").css('color','#FFFFFF');
+		$("#msg").text="提交中...";
+		$("#form").submit();
     </script>
     <jsp:include page="footer.jsp"/>
 </body>
