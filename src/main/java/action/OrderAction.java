@@ -85,8 +85,7 @@ public class OrderAction extends ActionSupport {
             int bookID = orderItem.getBookID();
             allBookInfo.add(this.bookService.showBookInfo(bookID));
         }
-        ActionContext.getContext().put("orderID", newOrder.getOrderID());
-        ActionContext.getContext().put("totalPrice", newOrder.getTotalPrice());
+        ActionContext.getContext().put("order", newOrder);
         ActionContext.getContext().put("booksInOrder", allBookInfo);
         return "createBuy";
     }
@@ -94,8 +93,7 @@ public class OrderAction extends ActionSupport {
         Map orderInfo = this.orderService.getOrderDetailByID(this.orderID);
         Order order = (Order)orderInfo.get("order");
         List<BookInfo> booksInOrder = (List<BookInfo>)orderInfo.get("booksInOrder");
-        ActionContext.getContext().put("orderID", order.getOrderID());
-        ActionContext.getContext().put("totalPrice", order.getTotalPrice());
+        ActionContext.getContext().put("order", order);
         ActionContext.getContext().put("booksInOrder", booksInOrder);
         return SUCCESS;
     }
