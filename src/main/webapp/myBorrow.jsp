@@ -87,6 +87,32 @@
         });
     }
 
+    function commentBook(bookID){
+        var commentFormID = "commentForm" + bookID;
+        $("#"+commentFormID).show();
+    }
+
+    function submitComment(bookID){
+        var commentID = "comment" + bookID;
+        var commentFormID = "commentForm" + bookID;
+        var commentContent = $("#"+commentID).val();
+        if(commentContent.length==0){
+            $("#comment_status").html("<span style='color:red'>评论不可为空！</span>");
+        }else{
+            $("#"+commentFormID).submit();
+        }
+    }
+
+    function creditRating(bookID){
+        var creditRatingFormID = "creditRatingForm" + bookID;
+        $("#"+creditRatingFormID).show();
+    }
+
+    function submitRating(bookID){
+        var creaditRatingFormID = "creditRatingForm" + bookID;
+        $("#"+creaditRatingFormID).submit();
+    }
+
 </script>
 
 <!--
@@ -100,7 +126,6 @@
         <li><a href="#">我的购买</a></li>
     </ul>
 </div> -->
-
 <div id="wrapper">
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top" role="navigation"
@@ -193,6 +218,23 @@
                         <div class="delivery">
                             <p>应还日期：<s:property value="yhDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                             <p>归还日期：<s:property value="returnDate"/></p>
+                            <button type="button" id="commentBtn<s:property value="bookID"/>" onclick="commentBook(<s:property value="bookID"/>)">图书评论</button>
+                            <button type="button" id="creditRatingBtn<s:property value="bookID"/>" onclick="creditRating(<s:property value="bookID"/>)">信用评价</button>
+                            <form id="commentForm<s:property value="bookID"/>" style="display: none">
+                                <input type="hidden" id="bookID<s:property value="bookID"/>" name="bookID" value="<s:property value="bookID"/>"/>
+                                <textarea id="comment<s:property value="bookID"/>" name="comment" class="form-control" rows="3"></textarea>
+                                <button type="button" onclick="submitComment(<s:property value="bookID"/>)">提交</button>
+                                <div id="comment_status"></div>
+                            </form>
+                            <form id="creditRatingForm<s:property value="bookID"/>" style="display: none">
+                                <select name="creditRating" class="form-control form-control-noNewline">
+                                    <option value="-1">差评</option>
+                                    <option value="0">中评</option>
+                                    <option value="1">好评</option>
+                                </select>
+                                <button type="button" onclick="submitRating(<s:property value="bookID"/>)">评价</button>
+                                <div id="comment_status2"></div>
+                            </form>
                             <div class="clearfix"></div>
                         </div>
                     </div>
