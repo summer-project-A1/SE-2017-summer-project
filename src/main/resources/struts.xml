@@ -146,7 +146,7 @@
             </result>
             <result name="borrowCheckout">/checkout.jsp</result>
             <allowed-methods>
-                borrowCheckout,createBorrowOrder，showMyBorrow,delayBook,returnBook
+                borrowCheckout,createBorrowOrder,showMyBorrow,delayBook,returnBook
             </allowed-methods>
         </action>
     </package>

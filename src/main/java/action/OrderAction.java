@@ -85,8 +85,8 @@ public class OrderAction extends ActionSupport {
             allBookInfo.add(this.bookService.showBookInfo(bookID));
         }
         ActionContext.getContext().put("orderID", newOrder.getOrderID());
-        ActionContext.getContext().put("orderID", newOrder.getTotalPrice());
-        ActionContext.getContext().put("bookInfo", allBookInfo);
+        ActionContext.getContext().put("totalPrice", newOrder.getTotalPrice());
+        ActionContext.getContext().put("booksInOrder", allBookInfo);
         return "createBuy";
     }
     public String confirmOrder() {       // 用户付款确认订单，修改订单状态

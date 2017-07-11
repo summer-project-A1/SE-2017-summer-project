@@ -145,33 +145,6 @@
 
 
 
-    function addToCart(bookID)
-    {
-
-        //showTip('Added to your cart!', 'success');
-        console.log('amount: '+parseInt($('.item_quantity').first().val()));
-        $.ajax({
-            url: base_url + 'cartAction/addToCart',
-            type: 'POST',
-            data: {
-                'bookID': bookID,
-                'amount': $('.item_quantity').first().val()
-            },
-            success: function (msg) {
-                //console.log(msg.success);
-
-                if (msg.success) {
-                    showTip('添加成功!', 'success');
-                }
-                else {
-                    showTip('添加失败', 'danger');
-                }
-            },
-            error:function(xhr,status,error){
-                alert('status='+status+',error='+error);
-            }
-        });
-    }
     //左侧分类栏js脚本
     $(document).ready(function(){
         $(".tab1 .single-bottom").hide();
@@ -251,11 +224,11 @@
                             <div class="ofr">
                                 <p class="pric1">作者：<s:property value="author"/></p><br>
                                 <p class="pric1">分类：<s:property value="category"/></p><br>
-                                <p class="disc">当前状态：<s:if test="status.toString()==@common.constants.BookStatus@IDLE.toString()">空闲</s:if><s:elseif test="status.toString()==@common.constants.BookStatus@BORROWED.toString()">正被借阅</s:elseif><s:else>正被交换</s:else></p><br>
+                                <p class="disc">当前状态：<s:if test="bookStatus==IDLE">空闲</s:if>
+                                    <s:elseif test="bookStatus==BORROWED">正被借阅</s:elseif>
+                                    <s:else>正被交换</s:else></p><br>
                                 <p class="disc">预约状态：<s:if test="reserved==0">未被预约</s:if><s:else>已被预约</s:else></p>
                             </div>
-                            <input type="text" class="item_quantity" value="1" maxlength="8" />
-                            <input type="button" class="item_add items" value="添加" onclick="addToCart(<s:property value="bookID"/>)">
                             <div class="clearfix"> </div>
                         </div>
                     </div>
@@ -358,7 +331,6 @@
     </div>
 </div>
 <!--//products-->
-<div id="tip"></div>
 <jsp:include page="footer.jsp"/>
 </body>
 </html>
