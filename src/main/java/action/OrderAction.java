@@ -86,7 +86,7 @@ public class OrderAction extends ActionSupport {
             allBookInfo.add(this.bookService.showBookInfo(bookID));
         }
         ActionContext.getContext().put("orderID", newOrder.getOrderID());
-        ActionContext.getContext().put("totalCredit", newOrder.getTotalPrice());
+        ActionContext.getContext().put("totalPrice", newOrder.getTotalPrice());
         ActionContext.getContext().put("booksInOrder", allBookInfo);
         return "createBuy";
     }
