@@ -219,7 +219,7 @@
         if($("input[name='coverPicture']").val()=="")
             {obj.innerText="图书封面必须上传";return;}
         if($("input[name='otherPicture']").val()=="")
-        {obj.innerText="必须上传三张图片";return;}
+        {obj.innerText="必须上传";return;}
         if($("input[name='bookName']").val()=="")
             {obj.innerText="图书名称必须填写";return;}
         if($("input[name='author']").val()=="")
