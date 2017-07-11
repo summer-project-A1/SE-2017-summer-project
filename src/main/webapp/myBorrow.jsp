@@ -92,7 +92,7 @@
         $("#"+commentFormID).show();
     }
 
-    function submitComment(bookID){
+    function submitComment(bookID,borrowID){
         var commentID = "comment" + bookID;
         var commentFormID = "commentForm" + bookID;
         var commentContent = $("#"+commentID).val();
@@ -222,6 +222,7 @@
                             <button type="button" id="creditRatingBtn<s:property value="bookID"/>" onclick="creditRating(<s:property value="bookID"/>)">信用评价</button>
                             <form id="commentForm<s:property value="bookID"/>" style="display: none">
                                 <input type="hidden" id="bookID<s:property value="bookID"/>" name="bookID" value="<s:property value="bookID"/>"/>
+                                <input type="hidden" id="borrowID<s:property value="borrowID"/>" name="borrowID" value="<s:property value="borrowID"/>"/>
                                 <textarea id="comment<s:property value="bookID"/>" name="comment" class="form-control" rows="3"></textarea>
                                 <button type="button" onclick="submitComment(<s:property value="bookID"/>)">提交</button>
                                 <div id="comment_status"></div>
