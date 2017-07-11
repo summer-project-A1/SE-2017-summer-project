@@ -72,15 +72,11 @@
             <div class="col-md-4 single-grid">
                 <div class="flexslider">
                     <ul class="slides">
-                        <li data-thumb="<%=path%>/imageAction/showImage?imageID=<s:property value="#bookProfile.imageID"/>">
-                            <div class="thumb-image"> <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="#bookProfile.imageID"/>" data-imagezoom="true" class="img-responsive"> </div>
-                        </li>
-                        <li data-thumb="<%=path%>/images/s2.png">
-                            <div class="thumb-image"> <img src="<%=path%>/images/s2.png" data-imagezoom="true" class="img-responsive"> </div>
-                        </li>
-                        <li data-thumb="<%=path%>/images/s3.png">
-                            <div class="thumb-image"> <img src="<%=path%>/images/s3.png" data-imagezoom="true" class="img-responsive"> </div>
-                        </li>
+                        <s:iterator value="#bookProfile.otherPictureIDList" var="otherPictureID">
+                            <li data-thumb="<%=path%>/imageAction/showImage?imageID=<s:property value="otherPictureID"/>">
+                                <div class="thumb-image"> <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="otherPictureID"/>" data-imagezoom="true" class="img-responsive"> </div>
+                            </li>
+                        </s:iterator>
                     </ul>
                 </div>
             </div>
@@ -125,6 +121,9 @@
                 </s:elseif>
                 <s:elseif test="#bookProfile.canBorrow==false && #bookProfile.canExchange==true">
                     <p>此书可以交换</p>
+                </s:elseif>
+                <s:elseif test="#bookProfile.canBorrow==false && #bookProfile.canExchange==false">
+                    <p>此书是摆设</p>
                 </s:elseif>
                 <div class="btn_form">
                     <s:if test="#bookProfile.bookStatus=='BORROWED'">

@@ -68,28 +68,27 @@
 
 
     <package name="orderAction" extends="struts-default,json-default" namespace="/orderAction">
-        <!-- OrderAction 全部需要isLogin拦截
-        <action name="*" class="action.OrderAction" method="{1}">
-            <result name="cart">/cart.jsp</result>
-            <result name="ajax" type="json">
-                <param name="root">params</param>
-            </result>
-            <result name="emptyCart" type="redirectAction">
-                <param name="actionName">showCart</param>
+        <interceptors>
+            <interceptor name="isLogin" class="action.interceptor.IsLoginInterceptor"/>
+            <interceptor-stack name="loginAuthCheck">
+                <interceptor-ref name="isLogin"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
 
-            </result>
-            <allowed-methods>
-                showCart,addToCart,removeFromCart,emptyCart
-            </allowed-methods>
-        </action>
-        -->
+        <default-interceptor-ref name="loginAuthCheck"/>
+
+        <global-results>
+            <result name="login" type="redirect">/signin.jsp</result>
+        </global-results>
         <action name="*" class="action.OrderAction" method="{1}">
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
             <result name="buyCheckout">/checkout.jsp</result>
+            <result name="showOrder">/showBuyOrder.jsp</result>
             <allowed-methods>
-                createOrder,buyCheckout,createBuyOrder,confirmOrder,cancelOrder
+              buyCheckout,createBuyOrder,confirmOrder,cancelOrder
             </allowed-methods>
         </action>
     </package>
@@ -103,15 +102,15 @@
         </global-results>
         <action name="showBookRelease" class="action.BookAction" method="showBookRelease">
             <result name="showBookRelease">/bookRelease.jsp</result>
-            <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="isLogin"/>
+            <interceptor-ref name="defaultStack"/>
         </action>
         <action name="uploadBook" class="action.BookAction" method="uploadBook">
             <result name="showBooks" type="redirectAction">
                 <param name="actionName">showAllBooks</param>
             </result>
-            <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="isLogin"/>
+            <interceptor-ref name="defaultStack"/>
         </action>
         <action name="*" class="action.BookAction" method="{1}">
             <result name="showBooks">/products.jsp</result>
@@ -139,6 +138,19 @@
     </package>
 
     <package name="borrowAction" extends="struts-default,json-default" namespace="/borrowAction">
+        <interceptors>
+            <interceptor name="isLogin" class="action.interceptor.IsLoginInterceptor"/>
+            <interceptor-stack name="loginAuthCheck">
+                <interceptor-ref name="isLogin"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="loginAuthCheck"/>
+
+        <global-results>
+                <result name="login" type="redirect">/signin.jsp</result>
+        </global-results>
         <action name="*" class="action.BorrowAction" method="{1}">
             <result name="showMyBorrow">/myBorrow.jsp</result>
             <result name="ajax" type="json">
