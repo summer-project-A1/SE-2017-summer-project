@@ -27,6 +27,7 @@
     var totalBookAmount;
     var pageCount;
     var currPage;
+    var isLastBlock =<s:property value="#isLastBlock"/>;
 
     $.urlParam = function(name){
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
@@ -70,11 +71,14 @@
         amountPerPage = $("#selectAmountPerPage").val();
         totalBookAmount = '<s:property value="#totalBookAmount"/>';
         pageCount = Math.ceil(totalBookAmount / amountPerPage);
-        var prevPage= firstPage-pageCount;
+        var lastPage= '<s:property value="#firstPage"/>';
         var succPage= firstPage+pageCount;
-        if(prevPage>0){
-            $('#pagination-digg').append("<li class='previous'><a href='?part="+prevBlock+"&firstPage="+prevPage+"'>&laquo;"+prevPage+" </a></li>");
+        if(lastPage>0){
+            $('#pagination-digg').append("<li class='previous'><a href='?part="+prevBlock+"&firstPage="+lastPage+"'>&laquo;"+lastPage+" </a></li>");
 
+        }
+        else{
+            lastPage=1;
         }
         if(pageCount>=1){
             for(var i=firstPage;i<succPage;i++){
@@ -91,7 +95,10 @@
                 $('#product'+j).show();
             }
         }
-        $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+succPage+"'>"+succPage+" &raquo;</a></li>");
+        if(!isLastBlock){
+            $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+lastPage+"'>"+succPage+" &raquo;</a></li>");
+
+        }
 
 
 
@@ -102,13 +109,16 @@
             amountPerPage = $("#selectAmountPerPage").val();
             totalBookAmount = '<s:property value="#totalBookAmount"/>';
             pageCount = Math.ceil(totalBookAmount / amountPerPage);
-            var prevPage = firstPage - pageCount;
+            var lastPage= '<s:property value="#firstPage"/>';
             var succPage = firstPage + pageCount;
             $('#pagination-digg').empty();
 
-            if(prevPage>0){
-                $('#pagination-digg').append("<li class='previous'><a href='?part="+prevBlock+"&firstPage="+prevPage+"'>&laquo;"+prevPage+"</a></li>");
+            if(lastPage>0){
+                $('#pagination-digg').append("<li class='previous'><a href='?part="+prevBlock+"&firstPage="+lastPage+"'>&laquo;"+lastPage+"</a></li>");
 
+            }
+            else{
+                lastPage=1;
             }
             if(pageCount>=1){
                 for(var i=firstPage;i<succPage;i++){
@@ -130,7 +140,9 @@
                     $('#product'+j).show();
                 }
             }
-            $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+succPage+"'>"+succPage+" &raquo;</a></li>");
+            if(!isLastBlock){
+                $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+lastPage+"'>"+succPage+" &raquo;</a></li>");
+            }
 
         });
     });

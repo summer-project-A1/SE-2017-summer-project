@@ -270,7 +270,7 @@ public class BookAction extends ActionSupport {
             this.part = 1;
         }
         if(this.firstPage == null) {
-            this.firstPage = 1;
+            this.firstPage = 0;
         }
         List<BookInfo> allBooks = this.bookService.showAllBookInfoByPage(this.part,9);
         List<BookInfo> nextPage = this.bookService.showAllBookInfoByPage(this.part+1, 9);
