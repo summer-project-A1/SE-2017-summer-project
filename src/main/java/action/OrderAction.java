@@ -27,7 +27,8 @@ public class OrderAction extends ActionSupport {
     private CartService cartService;
     
     private String buyOrBorrow;
-        
+    private Integer orderID;
+    
     private Map params; 
     
     /* ========================================================= */
@@ -84,10 +85,18 @@ public class OrderAction extends ActionSupport {
             int bookID = orderItem.getBookID();
             allBookInfo.add(this.bookService.showBookInfo(bookID));
         }
-        ActionContext.getContext().put("orderID", newOrder.getOrderID());
-        ActionContext.getContext().put("orderID", newOrder.getTotalPrice());
-        ActionContext.getContext().put("bookInfo", allBookInfo);
-        return "createBuy";
+        ActionContext.getContext().put("order", newOrder);
+        ActionContext.getContext().put("booksInOrder", allBookInfo);
+        return "showOrder";
+    }
+    public String showOrderById() {
+        Map orderInfo = this.orderService.getOrderDetailByID(this.orderID);
+        Order order = (Order)orderInfo.get("order");
+        List<BookInfo> booksInOrder = (List<BookInfo>)orderInfo.get("booksInOrder");
+        ActionContext.getContext().put("order", order);
+        ActionContext.getContext().put("orderStatus", order.getStatus().toString());
+        ActionContext.getContext().put("booksInOrder", booksInOrder);
+        return "showOrder";
     }
     public String confirmOrder() {       // 用户付款确认订单，修改订单状态
         return SUCCESS;

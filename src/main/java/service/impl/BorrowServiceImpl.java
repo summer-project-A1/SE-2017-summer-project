@@ -295,6 +295,10 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         newBorrowHistory.setInDate(returnDate);
         newBorrowHistory.setUserID(user.getUserID());
         newBorrowHistory.setYhDate(borrow.getYhDate());
+        newBorrowHistory.setProvince(borrow.getProvince());
+        newBorrowHistory.setCity(borrow.getCity());
+        newBorrowHistory.setDistrict(borrow.getDistrict());
+        newBorrowHistory.setAddress(borrow.getAddress());
         this.bookDao.update(book);
         this.borrowHistoryDao.save(newBorrowHistory);
         this.borrowDao.delete(borrow);
@@ -322,6 +326,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         calendar.add(Calendar.DATE, this.delayDay);
         Date newYhDate = calendar.getTime();
         borrow.setYhDate(newYhDate);
+        borrow.setDelayCount(borrow.getDelayCount()+1);
         this.borrowDao.update(borrow);
         returnMap.put("success", true);
         returnMap.put("yhdate", newYhDate);

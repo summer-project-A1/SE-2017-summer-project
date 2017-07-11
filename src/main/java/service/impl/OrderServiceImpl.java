@@ -16,6 +16,7 @@ import dao.BookReleaseDao;
 import dao.OrderDao;
 import dao.UserDao;
 import model.Book;
+import model.BookInfo;
 import model.BookRelease;
 import model.Order;
 import model.OrderItem;
@@ -66,31 +67,21 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
     
     @Override
     public Map getOrderDetailByID(int orderID) {
-        // 返回值Map，其中包含key为orderitem的List<Map>，每个Map是订单项中的book的详情（部分属性）
+        // 返回值Map，其中包含key为order的Order类，key为booksInOrder的List<BookInfo>
         Map result = new HashMap();
-        List<Map> orderItems = new ArrayList<Map>();
+        List<BookInfo> booksInOrder = new ArrayList<BookInfo>();
         Order order = this.orderDao.getOrderByID(orderID);
         if(order == null) {
             return null;
         }
         for(OrderItem orderItem : order.getOrderItems()) {
             int bookID = orderItem.getBookID();
-            Book book = this.bookDao.getBookByID(bookID);
-            Map bookProfile =  this.bookDao.getBookProfileMap(book);
-            Map orderItemDetail = new HashMap();
-            orderItemDetail.put("bookID", bookProfile.get("bookID"));
-            orderItemDetail.put("bookName", bookProfile.get("bookName"));
-            orderItemDetail.put("isbn", bookProfile.get("isbn"));
-            orderItemDetail.put("author", bookProfile.get("author"));
-            orderItemDetail.put("category1", bookProfile.get("category1"));
-            orderItemDetail.put("category2", bookProfile.get("category2"));
-            orderItemDetail.put("buyCredit", bookProfile.get("buyCredit"));
-            orderItemDetail.put("coverPicture", bookProfile.get("coverPicture"));
-            orderItems.add(orderItemDetail);
+            BookInfo bookInfo = this.bookDao.getBookInfoByID(bookID);
+            bookInfo.setBuyCredit(orderItem.getPrice());
+            booksInOrder.add(bookInfo);
         }
-        result.put("orderID", orderID);
-        result.put("totalCredit", order.getTotalPrice());
-        result.put("orderItems", orderItems);
+        result.put("order", order);
+        result.put("booksInOrder", booksInOrder);
         return result;
     }
     
