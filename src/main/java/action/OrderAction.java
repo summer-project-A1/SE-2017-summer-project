@@ -88,7 +88,7 @@ public class OrderAction extends ActionSupport {
         ActionContext.getContext().put("orderID", newOrder.getOrderID());
         ActionContext.getContext().put("totalPrice", newOrder.getTotalPrice());
         ActionContext.getContext().put("booksInOrder", allBookInfo);
-        return "createBuy";
+        return "showOrder";
     }
     public String showOrderById() {
         Map orderInfo = this.orderService.getOrderDetailByID(this.orderID);
@@ -97,7 +97,7 @@ public class OrderAction extends ActionSupport {
         ActionContext.getContext().put("orderID", order.getOrderID());
         ActionContext.getContext().put("totalCredit", order.getTotalPrice());
         ActionContext.getContext().put("booksInOrder", booksInOrder);
-        return SUCCESS;
+        return "showOrder";
     }
     public String confirmOrder() {       // 用户付款确认订单，修改订单状态
         return SUCCESS;

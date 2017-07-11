@@ -88,8 +88,9 @@
                 <param name="root">params</param>
             </result>
             <result name="buyCheckout">/checkout.jsp</result>
+            <result name="showOrder">/showBuyOrder.jsp</result>
             <allowed-methods>
-                createOrder,buyCheckout,createBuyOrder,confirmOrder,cancelOrder
+              buyCheckout,createBuyOrder,confirmOrder,cancelOrder
             </allowed-methods>
         </action>
     </package>

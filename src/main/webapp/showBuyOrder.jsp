@@ -57,7 +57,7 @@
     <div id=confirm>
         <label>合计:</label>
         <label id=totalCredit>1000</label><br>
-        <!--<label id=totalCredit><s:property value="totalCredit"/></label><br>-->
+        <!--<label id=totalCredit><s:property value="totalPrice"/></label><br>-->
         <a id=commit href="#" class="add-cart item_add">确认订单并付款</a>
     </div>
     </div>
