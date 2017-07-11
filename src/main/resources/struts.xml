@@ -163,4 +163,12 @@
         </action>
     </package>
 
+    <package name="commentAction" extends="struts-default,json-default" namespace="/commentAction">
+        <action name="*" class="action.CommentAction" method="{1}">
+            <result name="commentBook"></result>
+            <allowed-methods>
+                commentBook
+            </allowed-methods>
+        </action>
+    </package>
 </struts>
