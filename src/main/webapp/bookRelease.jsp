@@ -161,6 +161,13 @@
                 <label>图书封面</label><font color="#FF0000">*</font><input name=coverPicture type=file class=file>
             </div>
             <div class="form-group form-group-auto">
+                <label>其他图片（一）</label><font color="#FF0000">*</font><input name=otherPicture type=file class=file>
+            </div>
+            <div class="form-group form-group-auto">
+                <label>其他图片（二）</label><font color="#FF0000">*</font><input name=otherPicture type=file class=file>
+            </div>
+
+            <div class="form-group form-group-auto">
                 <label id=warning></label>
             </div>
             <div class="clearfix"> </div>
@@ -211,6 +218,8 @@
         var obj=document.getElementById("warning");
         if($("input[name='coverPicture']").val()=="")
             {obj.innerText="图书封面必须上传";return;}
+        if($("input[name='otherPicture']").val()=="")
+        {obj.innerText="必须上传三张图片";return;}
         if($("input[name='bookName']").val()=="")
             {obj.innerText="图书名称必须填写";return;}
         if($("input[name='author']").val()=="")

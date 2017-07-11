@@ -37,7 +37,7 @@ public class BookProfile {
     private String bookQuality;
     private String bookDamage;
     private String intro;
-    private List<String> otherPictureID;
+    private List<String> otherPictureIDList;
     /* ============ */
     private File coverPicture;
     private File[] otherPicture;
@@ -212,11 +212,11 @@ public class BookProfile {
     public void setIntro(String intro) {
         this.intro = intro;
     }
-    public List<String> getOtherPictureID() {
-        return otherPictureID;
+    public List<String> getOtherPictureIDList() {
+        return otherPictureIDList;
     }
-    public void setOtherPictureID(List<String> otherPictureID) {
-        this.otherPictureID = otherPictureID;
+    public void setOtherPictureIDList(List<String> otherPictureIDList) {
+        this.otherPictureIDList = otherPictureIDList;
     }
     public File getCoverPicture() {
         return coverPicture;
