@@ -193,6 +193,11 @@
                         <div class="delivery">
                             <p>应还日期：<s:property value="yhDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                             <p>归还日期：<s:property value="returnDate"/></p>
+                            <button id="commentBtn<s:property value="bookID"/>" onclick="commentBook(<s:property value="bookID"/>)">评论</button>
+                            <form style="display: none">
+                                <input type="hidden" name="bookID" value="<s:property value="bookID"/>"/>
+                                <textarea id="comment<s:property value="bookID"/>" name="comment" class="form-control" rows="3"></textarea>
+                            </form>
                             <div class="clearfix"></div>
                         </div>
                     </div>
