@@ -25,7 +25,7 @@
         }
 
         }
-        @media ( min-width :768px) {
+        @media ( min-width :1440px) {
             #wrapper {
                 background-color: #5D4B33;
                 margin-right:70%;
