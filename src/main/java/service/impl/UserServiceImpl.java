@@ -106,7 +106,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     public boolean logout() {
         Boolean logined = isLogined();
         if (logined) {
-            clearLoginedUserInfo();
+            //clearLoginedUserInfo();
+            getHttpSession().clear();
         }
         return true;
     }

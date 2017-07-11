@@ -118,6 +118,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             BorrowProfile borrowProfile = new BorrowProfile();
             int bookID = borrow.getBookID();
             BookInfo bookInfo = this.bookDao.getBookInfoByID(bookID);
+            borrowProfile.setBorrowID(borrow.getBorrowID());
             borrowProfile.setBookID(bookID);
             borrowProfile.setBookName(bookInfo.getBookName());
             borrowProfile.setAuthor(bookInfo.getAuthor());
@@ -135,6 +136,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             BorrowProfile borrowProfileHistory = new BorrowProfile();
             int bookID = borrowHistory.getBookID();
             BookInfo bookInfo = this.bookDao.getBookInfoByID(bookID);
+            borrowProfileHistory.setBorrowID(borrowHistory.getBhID());
             borrowProfileHistory.setBookID(bookID);
             borrowProfileHistory.setBookName(bookInfo.getBookName());
             borrowProfileHistory.setAuthor(bookInfo.getAuthor());
