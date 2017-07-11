@@ -30,5 +30,5 @@ public class CommentAction extends ActionSupport {
         this.commentservice.commentBook(this.borrowID,this.bookID,this.comment);
         return "commentBook";
     }
-
+    
 }
