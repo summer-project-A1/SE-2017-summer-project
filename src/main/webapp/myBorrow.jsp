@@ -260,6 +260,7 @@
                             <div class="clearfix"></div>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </s:iterator>
