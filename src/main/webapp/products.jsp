@@ -27,6 +27,7 @@
     var totalBookAmount;
     var pageCount;
     var currPage;
+    var isLastBlock =<s:property value="#isLastBlock"/>;
 
     $.urlParam = function(name){
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
@@ -94,7 +95,10 @@
                 $('#product'+j).show();
             }
         }
-        $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+lastPage+"'>"+succPage+" &raquo;</a></li>");
+        if(!isLastBlock){
+            $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+lastPage+"'>"+succPage+" &raquo;</a></li>");
+
+        }
 
 
 
@@ -136,7 +140,9 @@
                     $('#product'+j).show();
                 }
             }
-            $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+lastPage+"'>"+succPage+" &raquo;</a></li>");
+            if(!isLastBlock){
+                $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+lastPage+"'>"+succPage+" &raquo;</a></li>");
+            }
 
         });
     });
