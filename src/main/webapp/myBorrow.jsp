@@ -5,11 +5,12 @@
 <head>
     <title>myBorrow</title>
     <style>
-        #wrapper {
-            background-color: #5D4B33;
-            margin-right:70%;
-        }
+
         @media ( min-width :768px) {
+            #wrapper {
+                background-color: #5D4B33;
+                margin-right:70%;
+            }
             .sidebar {
                 z-index: 1;
                 position: absolute;
@@ -17,11 +18,31 @@
                 margin-top: 51px;
                 background-color: #5D4B33;
             }
+            #cartinfo{
+                margin-top: 51px;
+                margin-left:30%;
+                margin-right:10%;
         }
-        #cartinfo{
-            margin-top: 51px;
-            margin-left:30%;
-            margin-right:10%;
+
+        }
+        @media ( min-width :768px) {
+            #wrapper {
+                background-color: #5D4B33;
+                margin-right:70%;
+            }
+            .sidebar {
+                z-index: 1;
+                position: absolute;
+                width:100%;
+                margin-top: 51px;
+                background-color: #5D4B33;
+            }
+            #cartinfo{
+                margin-top: 21px;
+                margin-left:10%;
+                margin-right:10%;
+            }
+
         }
     </style>
 
@@ -217,14 +238,14 @@
                         </ul>
                         <div class="delivery">
                             <p>应还日期：<s:property value="yhDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                            <p>归还日期：<s:property value="returnDate"/></p>
-                            <button type="button" id="commentBtn<s:property value="bookID"/>" onclick="commentBook(<s:property value="bookID"/>)">图书评论</button>
-                            <button type="button" id="creditRatingBtn<s:property value="bookID"/>" onclick="creditRating(<s:property value="bookID"/>)">信用评价</button>
+                            <p>归还日期：<s:property value="returnDate"/></p><br>
+                            <a href="#" id="commentBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="commentBook(<s:property value="bookID"/>)">图书评论</a>
+                            <a href="#" id="creditRatingBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="creditRating(<s:property value="bookID"/>)">信用评价</a>
                             <form id="commentForm<s:property value="bookID"/>" style="display: none">
                                 <input type="hidden" id="bookID<s:property value="bookID"/>" name="bookID" value="<s:property value="bookID"/>"/>
                                 <input type="hidden" id="borrowID<s:property value="borrowID"/>" name="borrowID" value="<s:property value="borrowID"/>"/>
                                 <textarea id="comment<s:property value="bookID"/>" name="comment" class="form-control" rows="3"></textarea>
-                                <button type="button" onclick="submitComment(<s:property value="bookID"/>)">提交</button>
+                                <a href="#" class="add-cart item_add" onclick="submitComment(<s:property value="bookID"/>)">提交</a>
                                 <div id="comment_status"></div>
                             </form>
                             <form id="creditRatingForm<s:property value="bookID"/>" style="display: none">
@@ -233,7 +254,7 @@
                                     <option value="0">中评</option>
                                     <option value="1">好评</option>
                                 </select>
-                                <button type="button" onclick="submitRating(<s:property value="bookID"/>)">评价</button>
+                                <a href="#" class="add-cart item_add" onclick="submitRating(<s:property value="bookID"/>)">评价</a>
                                 <div id="comment_status2"></div>
                             </form>
                             <div class="clearfix"></div>
@@ -243,88 +264,6 @@
                 </div>
             </div>
         </s:iterator>
-
-        <!-- 以下为页面展示 -->
-        <!--
-        <div id="bookID1" class="cart-header">
-            <div class="cart-sec simpleCart_shelfItem">
-                <div class="cart-item cyc">
-                    <img src="<%=path%>/images/m1.png" class="img-responsive" alt="">
-                </div>
-                <div class="cart-item-info">
-                    <h4>
-                        <a href="<%=path%>/bookAction/showBookProfile?bookID=1">
-                            书名：计算机系统基础</a><br>
-                        <span>ISBN: 8888888888</span>
-                    </h4>
-                    <ul class="qty">
-                        <li><p>作者：臧斌宇</p></li>
-                        <li><p>分类：言情小说</p></li>
-                        <li><p>借阅积分：20</p></li>
-                    </ul>
-                    <div class="delivery">
-                        <p>应还日期：2017年10月30日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                        <p>尚未归还</p>
-                        <button>归还</button>
-                        <button>续借</button>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <div id="bookID2" class="cart-header">
-            <div class="cart-sec simpleCart_shelfItem">
-                <div class="cart-item cyc">
-                    <img src="<%=path%>/images/m1.png" class="img-responsive" alt="">
-                </div>
-                <div class="cart-item-info">
-                    <h4>
-                        <a href="<%=path%>/bookAction/showBookProfile?bookID=7">
-                            书名：计算机系统基础</a><br>
-                        <span>ISBN: 8888</span>
-                    </h4>
-                    <ul class="qty">
-                        <li><p>作者：臧斌宇</p></li>
-                        <li><p>分类：言情小说</p></li>
-                        <li><p>借阅积分：20</p></li>
-                    </ul>
-                    <div class="delivery">
-                        <p>应还日期：2017年10月30日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                        <p>尚未归还</p>
-                        <button>归还</button>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <div id="bookID3" class="cart-header">
-            <div class="cart-sec simpleCart_shelfItem">
-                <div class="cart-item cyc">
-                    <img src="<%=path%>/images/m1.png" class="img-responsive" alt="">
-                </div>
-                <div class="cart-item-info">
-                    <h4>
-                        <a href="<%=path%>/bookAction/showBookProfile?bookID=7">
-                            书名：计算机系统基础</a><br>
-                        <span>ISBN: 8888</span>
-                    </h4>
-                    <ul class="qty">
-                        <li><p>作者：臧斌宇</p></li>
-                        <li><p>分类：言情小说</p></li>
-                        <li><p>借阅积分：20</p></li>
-                    </ul>
-                    <div class="delivery">
-                        <p>应还日期：2017年10月30日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                        <p>归还日期：2017年10月15日</p>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        -->
 </div>
 </div>
 </body>
