@@ -18,7 +18,6 @@
 <div class="cart-items">
     <div class="container">
         <div id="tip"> </div>
-        <h2>我的购物车</h2>
         <script>
             function deleteBook(bookID) {
                 console.log("delete current book, bookid: "+bookID);
@@ -102,10 +101,10 @@
         <div id="tip"></div>
         <s:else>
             <s:if test="#buyOrBorrow=='borrow'">
-                <h3>借阅清单</h3><br>
+                <h3>借阅购物车</h3><br>
             </s:if>
             <s:elseif test="#buyOrBorrow=='buy'">
-                <h3>购买清单</h3><br>
+                <h3>购买购物车</h3><br>
             </s:elseif>
         <s:iterator value="#booksInCart" status="st">
             <div id="<s:property value="bookID"/>" class="cart-header">
