@@ -117,6 +117,8 @@
         <property name="imageDao" ref="imageDao"></property>
     </bean>
     <bean id="borrowService" class="service.impl.BorrowServiceImpl">
+        <property name="borrowDay" value="20"></property>
+        <property name="delayDay" value="10"></property>
         <property name="bookDao" ref="bookDao"></property>
         <property name="bookReleaseDao" ref="bookReleaseDao"></property>
         <property name="userDao" ref="userDao"></property>
@@ -153,6 +155,8 @@
     <bean id="orderAction" class="action.OrderAction">
         <property name="orderService" ref="orderService"></property>
         <property name="borrowService" ref="borrowService"></property>
+        <property name="bookService" ref="bookService"></property>
+        <property name="cartService" ref="cartService"></property>
     </bean>
     <bean id="cartAction" class="action.CartAction">
         <property name="cartService" ref="cartService"/>
@@ -166,6 +170,7 @@
         <property name="bookService" ref="bookService"></property>
     </bean>
     <bean id="borrowAction" class="action.BorrowAction">
-        <property name="borrowService" ref="borrowService"/>
+        <property name="borrowService" ref="borrowService"></property>
+        <property name="cartService" ref="cartService"></property>
     </bean>
 </beans>

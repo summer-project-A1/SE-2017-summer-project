@@ -33,7 +33,7 @@
 <div id="wapper">
 	<div id=header>
 		<label>确认</label>
-		<s:if test="#action==borrowCheckOut">
+		<s:if test="#action==borrowCheckout">
         	<label id=type>借阅</label>
         </s:if>
         <s:else>
@@ -59,7 +59,7 @@
                         <li><p>分类：<s:property value="category2"/></p></li>
                     </ul>
                     <div class="delivery">
-                    	<s:if test="#action==borrowCheckOut">
+                    	<s:if test="#action==borrowCheckout">
                     		<p>借阅所需积分：<s:property value="borrowCredit"/></p>
                     	</s:if>
                     	<s:else>

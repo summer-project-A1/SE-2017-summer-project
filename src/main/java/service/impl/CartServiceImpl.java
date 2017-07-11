@@ -8,6 +8,7 @@ import java.util.Map;
 
 import dao.BookDao;
 import model.Book;
+import model.BookInfo;
 import service.CartService;
 
 public class CartServiceImpl extends BaseServiceImpl implements CartService {
@@ -38,9 +39,9 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
         
         for(Map<String, Object> cartListItem : cartList) {
             int bookID = (int)cartListItem.get("bookID");
-            Book book = this.bookDao.getBookByID(bookID);
-            if(book != null) {
-                resultList.add(book);
+            BookInfo bookInfo = this.bookDao.getBookInfoByID(bookID);
+            if(bookInfo != null) {
+                resultList.add(bookInfo);
             }
         }
         return resultList;
@@ -151,9 +152,9 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
         
         for(Map<String, Object> cartListItem : cartList) {
             int bookID = (int)cartListItem.get("bookID");
-            Book book = this.bookDao.getBookByID(bookID);
-            if(book != null) {
-                resultList.add(book);
+            BookInfo bookInfo = this.bookDao.getBookInfoByID(bookID);
+            if(bookInfo != null) {
+                resultList.add(bookInfo);
             }
         }
         return resultList;
