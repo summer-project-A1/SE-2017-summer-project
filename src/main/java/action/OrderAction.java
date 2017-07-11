@@ -95,7 +95,7 @@ public class OrderAction extends ActionSupport {
         Order order = (Order)orderInfo.get("order");
         List<BookInfo> booksInOrder = (List<BookInfo>)orderInfo.get("booksInOrder");
         ActionContext.getContext().put("orderID", order.getOrderID());
-        ActionContext.getContext().put("totalCredit", order.getTotalPrice());
+        ActionContext.getContext().put("totalPrice", order.getTotalPrice());
         ActionContext.getContext().put("booksInOrder", booksInOrder);
         return SUCCESS;
     }
