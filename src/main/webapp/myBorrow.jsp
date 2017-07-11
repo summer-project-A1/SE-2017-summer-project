@@ -239,10 +239,10 @@
                             <div class="clearfix"></div>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </s:iterator>
-
 
         <!-- 以下为页面展示 -->
         <!--
