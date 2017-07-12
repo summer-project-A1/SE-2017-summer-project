@@ -71,9 +71,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         userProfile.put("name", registerInfo.getName());
         userProfile.put("gender", registerInfo.getGender());
         userProfile.put("mobile", registerInfo.getMobile());
-        userProfile.put("deliveryAddressID", new ArrayList());
+        userProfile.put("deliveryAddress", new ArrayList());
         
-        String profileID = this.userDao.saveUserProfile(userProfile);
+        String profileID = this.userDao.saveUserProfileInMongo(userProfile);
         newUser.setProfileID(profileID);
         newUser.setEmail(email);
         newUser.setNickName(registerInfo.getNickName());
