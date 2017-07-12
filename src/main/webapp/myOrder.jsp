@@ -5,27 +5,26 @@
 <head>
     <title>myOrder</title>
     <style>
-        #wrapper {
-            background-color: #5D4B33;
-            margin-right:70%;
-        }
+
         @media ( min-width :768px) {
-            .sidebar {
-                z-index: 1;
-                position: absolute;
-                width:100%;
-                margin-top: 51px;
-                background-color: #5D4B33;
-            }
-        }
-        #cartinfo{
+            #cartinfo{
             margin-top: 51px;
             margin-left:30%;
             margin-right:10%;
+            }
+        }
+        @media ( min-width :1440px) {
+            #cartinfo{
+                margin-top: 21px;
+                margin-left:10%;
+                margin-right:10%;
+            }
+
         }
     </style>
 </head>
 <body>
+<div class="products">
 
 <script>
     function creditRating(borrowID){
@@ -44,34 +43,50 @@
     <nav class="navbar navbar-default navbar-static-top" role="navigation"
          style="margin-bottom: 0">
 
-        <div class="nav navbar-header">
-            <a class="navbar-brand" href="#">我的账户</a>
+    <div class="container">
+        <div class="col-md-3 rsiderbar span_1_of_left">
+            <section class="sky-form">
+                <div class="product_right">
+                    <h3 class="m_2"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>操作选单</h3>
+
+                    <div class="tab1">
+                        <ul class="place">
+                            <li class="sort"><a href="#">个人信息</a></li>
+                        </ul>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="tab1">
+                        <ul class="place">
+                            <li class="sort"><a href="#">我的发布</a></li>
+                        </ul>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="tab1">
+                        <ul class="place">
+                            <li class="sort"><a href="#">我的借阅</a></li>
+                        </ul>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="tab1">
+                        <ul class="place">
+                            <li class="sort"><a href="#">我的交换</a></li>
+                        </ul>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="tab1">
+                        <ul class="place">
+                            <li class="sort"><a href="#">我的订单</a></li>
+                        </ul>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </section>
         </div>
-        <div class="navbar-default sidebar" role="navigation">
-            <div class="sidebar-nav navbar-collapse">
-                <ul class="nav" id="side-menu">
-                    <li><a href="#" style="color: #FFFFFF"><i class="fa fa-user fa-fw"></i>
-                        全部图书</a></li>
-                    <li><a href="#" style="color: #FFFFFF"><i class="fa fa-book fa-fw"></i>
-                        个人信息</a></li>
-                    <li><a href="#" style="color: #FFFFFF" ><i
-                            class="fa fa-reorder fa-fw"></i>我的发布</a></li>
-                    <li><a href="<%=path%>/borrowAction/showMyBorrow" style="color: #FFFFFF"><i
-                            class="fa fa-table fa-fw"></i> 我的借阅</a></li>
-                    <li><a href="#" style="color: #FFFFFF"><i class="fa fa-user fa-fw"></i>
-                        我的交换</a></li>
-                    <li><a href="#" style="color: #FFFFFF" class="active"><i class="fa fa-user fa-fw"></i>
-                        我的购买</a></li>
-                </ul>
-            </div>
-            <!-- /.sidebar-collapse -->
-        </div>
-        <!-- /.navbar-static-side --> </nav>
-</div>
-<br>
-<h3 align="center">我的购买</h3>
-<div id="tip"></div>
-<div id="cartinfo" class="cart-item">
+
+    <h3 align="center">我的购买</h3>
+    <div id="tip"></div>
+    <div id="cartinfo" class="cart-item">
     <div class="container">
 
         <!-- 迭代器显示订单信息 -->
@@ -85,7 +100,7 @@
             <s:url action="confirmReceipt" namespace="/orderAction" var="confirmReceiptLink">
                 <s:param name="orderID"><s:property value="orderID"/></s:param>
             </s:url>
-            
+
             <div id="<s:property value="orderID"/>" class="cart-header">
                 <div class="cart-sec simpleCart_shelfItem">
                     <div class="cart-item cyc">
@@ -146,13 +161,13 @@
                     </div>
                 </div>
             </div>
-            
+
         </s:iterator>
-        
-        
-        
-        
-        
+
+
+
+
+
         <!-- 以下为静态展示 -->
         <div id="bookID1" class="cart-header">
             <div class="cart-sec simpleCart_shelfItem">
@@ -276,6 +291,8 @@
                 <div class="clearfix"></div>
             </div>
         </div><hr>
+    </div>
+</div>
     </div>
 </div>
 </body>
