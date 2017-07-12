@@ -24,8 +24,6 @@
     </style>
 </head>
 <body>
-<div class="products">
-
 <script>
     function creditRating(borrowID){
         var creditRatingFormID = "creditRatingForm" + borrowID;
@@ -37,14 +35,9 @@
         $("#"+creaditRatingFormID).submit();
     }
 </script>
-
-<div id="wrapper">
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-static-top" role="navigation"
-         style="margin-bottom: 0">
-
-    <div class="container">
-        <div class="col-md-3 rsiderbar span_1_of_left">
+    <div class="products">
+        <div class="container">
+            <div class="col-md-3 rsiderbar span_1_of_left">
             <section class="sky-form">
                 <div class="product_right">
                     <h3 class="m_2"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>操作选单</h3>
@@ -84,10 +77,10 @@
             </section>
         </div>
 
-    <h3 align="center">我的购买</h3>
-    <div id="tip"></div>
-    <div id="cartinfo" class="cart-item">
-    <div class="container">
+            <h3 align="center">我的购买</h3>
+            <div id="tip"></div>
+            <div id="cartinfo" class="cart-item">
+                <div class="container">
 
         <!-- 迭代器显示订单信息 -->
         <s:iterator value="#orderList" status="st">
@@ -292,8 +285,8 @@
             </div>
         </div><hr>
     </div>
-</div>
+            </div>
+        </div>
     </div>
-</div>
 </body>
 </html>
