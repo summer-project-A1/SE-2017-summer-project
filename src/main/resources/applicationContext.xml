@@ -102,6 +102,8 @@
     </bean>
     <bean id="orderDao" class="dao.impl.OrderDaoImpl" parent="baseDao">
     </bean>
+    <bean id="commentDao" class="dao.impl.CommentDaoImpl" parent="baseDao"> 
+    </bean> 
     <bean id="imageDao" class="dao.impl.ImageDaoImpl" parent="baseDao">
     </bean>
 
@@ -134,6 +136,9 @@
         <property name="bookReleaseDao" ref="bookReleaseDao"></property>
         <property name="userDao" ref="userDao"></property>
         <property name="orderDao" ref="orderDao"></property>
+    </bean>
+    <bean id="commentService" class="service.impl.CommentServiceImpl"> 
+        <property name="commentdao" ref="commentDao"/> 
     </bean>
     <bean id="historyService" class="service.impl.HistoryServiceImpl">
         <property name="borrowDao" ref="borrowDao"></property>
@@ -172,5 +177,8 @@
     <bean id="borrowAction" class="action.BorrowAction">
         <property name="borrowService" ref="borrowService"></property>
         <property name="cartService" ref="cartService"></property>
+    </bean>
+    <bean id="commentAction" class="action.CommentAction">
+        <property name="commentService" ref="commentService"></property>
     </bean>
 </beans>
