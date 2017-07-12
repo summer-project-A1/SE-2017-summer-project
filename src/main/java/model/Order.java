@@ -15,9 +15,9 @@ public class Order {               // 使用积分下单购买书
     private String address;
     private Date fhDate;
     private Date shDate;
-    private String trackingNo;
-	private int buyer_comment;
-	private int seller_comment;
+	private String trackingNo;
+	private int buyerComment;
+	private int sellerComment;
     
     /* ================================================= */
 	
@@ -94,18 +94,7 @@ public class Order {               // 使用积分下单购买书
 	public void setTrackingNo(String trackingNo) {
 		this.trackingNo = trackingNo;
 	}
-	public int getBuyer_comment() {
-		return buyer_comment;
-	}
-	public void setBuyer_comment(int buyer_comment) {
-		this.buyer_comment = buyer_comment;
-	}
-	public int getSeller_comment() {
-		return seller_comment;
-	}
-	public void setSeller_comment(int seller_comment) {
-		this.seller_comment = seller_comment;
-	}
+	
 	public Date getPayDate() {
 		return payDate;
 	}
@@ -127,4 +116,16 @@ public class Order {               // 使用积分下单购买书
 		this.bookID = bookID;
 	}
     
+	public int getBuyerComment() {
+		return buyerComment;
+	}
+	public void setBuyerComment(int buyerComment) {
+		this.buyerComment = buyerComment;
+	}
+	public int getSellerComment() {
+		return sellerComment;
+	}
+	public void setSellerComment(int sellerComment) {
+		this.sellerComment = sellerComment;
+	}
 }
