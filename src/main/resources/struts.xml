@@ -88,7 +88,7 @@
             <result name="buyCheckout">/checkout.jsp</result>
             <result name="showOrder">/showBuyOrder.jsp</result>
             <allowed-methods>
-              buyCheckout,createBuyOrder,confirmOrder,cancelOrder
+              buyCheckout,createBuyOrder,confirmOrder,cancelOrder,showOrderById
             </allowed-methods>
         </action>
     </package>
