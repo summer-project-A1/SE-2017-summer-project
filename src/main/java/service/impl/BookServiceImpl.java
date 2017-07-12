@@ -177,6 +177,7 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         bookProfile.setBookDamage((String)bookProfileInMongo.get("bookDamage"));
         bookProfile.setIntro((String)bookProfileInMongo.get("intro"));
         bookProfile.setOtherPictureIDList((List<String>)bookProfileInMongo.get("otherPictureID"));
+
         
         return bookProfile;
     }

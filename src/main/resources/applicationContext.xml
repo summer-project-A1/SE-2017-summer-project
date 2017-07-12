@@ -140,6 +140,7 @@
     </bean>
     <bean id="commentService" class="service.impl.CommentServiceImpl">
         <property name="commentdao" ref="commentDao"/>
+        <property name="userDao" ref="userDao"/>
     </bean>
     <bean id="historyService" class="service.impl.HistoryServiceImpl">
         <property name="borrowDao" ref="borrowDao"/>
@@ -157,6 +158,7 @@
     </bean>
     <bean id="bookAction" class="action.BookAction">
         <property name="bookService" ref="bookService"/>
+        <property name="commentService" ref="commentService"/>
     </bean>
     <bean id="orderAction" class="action.OrderAction">
         <property name="orderService" ref="orderService"/>
@@ -178,5 +180,8 @@
     <bean id="borrowAction" class="action.BorrowAction">
         <property name="borrowService" ref="borrowService"/>
         <property name="cartService" ref="cartService"/>
+    </bean>
+    <bean id="commentAction" class="action.CommentAction">
+        <property name="commentService" ref="commentService"/>
     </bean>
 </beans>
