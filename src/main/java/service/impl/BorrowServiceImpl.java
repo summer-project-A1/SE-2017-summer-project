@@ -15,7 +15,6 @@ import dao.BorrowHistoryDao;
 import dao.ReserveDao;
 import dao.UserDao;
 import model.Book;
-import model.BookInfo;
 import model.BookRelease;
 import model.Borrow;
 import model.BorrowHistory;
@@ -105,9 +104,6 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
     @Override
     public Map showMyBorrow() {
         // Map中包含两个List<BorrowProfile>，分别对应Borrow和BorrowHistory
-        if(!isLogined()) {
-            return null;
-        }
         User user = getLoginedUserInfo();
         int userID = user.getUserID();
         List<Borrow> borrows = this.borrowDao.getBorrowByUserID(userID);
@@ -117,14 +113,14 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         for(Borrow borrow : borrows) {
             BorrowProfile borrowProfile = new BorrowProfile();
             int bookID = borrow.getBookID();
-            BookInfo bookInfo = this.bookDao.getBookInfoByID(bookID);
+            Book book = this.bookDao.getBookByID(bookID);
             borrowProfile.setBookID(bookID);
-            borrowProfile.setBookName(bookInfo.getBookName());
-            borrowProfile.setAuthor(bookInfo.getAuthor());
-            borrowProfile.setCategory1(bookInfo.getCategory1().toString());
-            borrowProfile.setImageID(bookInfo.getImageID());
-            borrowProfile.setIsbn(bookInfo.getIsbn());
-            borrowProfile.setBorrowPrice(bookInfo.getBorrowCredit());
+            borrowProfile.setBookName(book.getBookName());
+            borrowProfile.setAuthor(book.getAuthor());
+            borrowProfile.setCategory1(book.getCategory1().toString());
+            borrowProfile.setImageID(book.getImageID());
+            borrowProfile.setIsbn(book.getIsbn());
+            borrowProfile.setBorrowPrice(book.getBorrowCredit());
             borrowProfile.setReturned(false);
             borrowProfile.setDelayed((borrow.getDelayCount()!=0));
             borrowProfile.setYhDate(borrow.getYhDate());
@@ -134,7 +130,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         for(BorrowHistory borrowHistory : borrowHistories) {
             BorrowProfile borrowProfileHistory = new BorrowProfile();
             int bookID = borrowHistory.getBookID();
-            BookInfo bookInfo = this.bookDao.getBookInfoByID(bookID);
+            Book bookInfo = this.bookDao.getBookByID(bookID);
             borrowProfileHistory.setBookID(bookID);
             borrowProfileHistory.setBookName(bookInfo.getBookName());
             borrowProfileHistory.setAuthor(bookInfo.getAuthor());
@@ -145,7 +141,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             borrowProfileHistory.setReturned(true);
             borrowProfileHistory.setDelayed((borrowHistory.getDelayCount()!=0));
             borrowProfileHistory.setYhDate(borrowHistory.getYhDate());
-            borrowProfileHistory.setReturnDate(borrowHistory.getInDate());
+            borrowProfileHistory.setReturnDate(borrowHistory.getReturnDate());
             borrowHistoryBook.add(borrowProfileHistory);
         }
         Map result = new HashMap();
@@ -156,25 +152,23 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
     
     @Override
     public boolean borrowBook(int bookID) {
-        if(!isLogined()) {
-            return false;
-        }
         Book book = this.bookDao.getBookByID(bookID);
         if(book==null || book.getStatus() != BookStatus.IDLE) {
             return false;
         }
         BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
         User user = getLoginedUserInfo();
-        if(user.getCredit() < bookRelease.getBorrowCredit()) {
+        if(user.getCredit() < book.getBorrowCredit()) {
             return false;
         }
-        user.setCredit(user.getCredit() - bookRelease.getBorrowCredit());
+        user.setCredit(user.getCredit() - book.getBorrowCredit());
         this.userDao.update(user);
         Borrow newBorrow = new Borrow();
         newBorrow.setBookID(bookID);
-        newBorrow.setUserID(user.getUserID());
+        newBorrow.setUserID1(user.getUserID());
+        newBorrow.setUserID2(bookRelease.getUserID());
         newBorrow.setBorrowDate(new Date());
-        newBorrow.setBorrowPrice(bookRelease.getBorrowCredit());
+        newBorrow.setBorrowPrice(book.getBorrowCredit());
         Calendar now = Calendar.getInstance();
         now.add(Calendar.DATE, this.borrowDay);
         Date yhDate = now.getTime();
@@ -210,7 +204,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             int bookID = (int)cartListItem.get("bookID");
             Book book = this.bookDao.getBookByID(bookID);
             BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
-            totalNeededCredit += bookRelease.getBorrowCredit();
+            totalNeededCredit += book.getBorrowCredit();
             if(book.getStatus().equals(BookStatus.IDLE)) {
                 allIdleBookInCart.add(book);
                 allIdleBookReleaseInCart.add(bookRelease);
@@ -245,14 +239,12 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                 BookRelease bookRelease = allIdleBookReleaseInCart.get(i);
                 Borrow newBorrow = new Borrow();
                 newBorrow.setBookID(book.getBookID());
-                newBorrow.setUserID(user.getUserID());
+                newBorrow.setUserID1(user.getUserID());
+                newBorrow.setUserID2(bookRelease.getUserID());
                 newBorrow.setBorrowDate(new Date());
-                newBorrow.setBorrowPrice(bookRelease.getBorrowCredit());
+                newBorrow.setBorrowPrice(book.getBorrowCredit());
                 newBorrow.setYhDate(yhDate);
-                newBorrow.setProvince(user.getProvince());      // 订单地址？？？？待定
-                newBorrow.setCity(user.getCity());
-                newBorrow.setDistrict(user.getDistrict());
-                newBorrow.setAddress(user.getAddress());
+                newBorrow.setBorrowAddress(user.getAddress());
                 newBorrow.setDelayCount(0);
                 this.borrowDao.save(newBorrow);
                 book.setStatus(BookStatus.BORROWED);
@@ -276,7 +268,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         }
         User user = getLoginedUserInfo();
         Borrow borrow = this.borrowDao.getBorrowByID(borrowID);
-        if(borrow.getUserID() != user.getUserID()) {
+        if(borrow.getUserID1() != user.getUserID()) {
             returnMap.put("success", false);
             return returnMap;
         }
@@ -292,13 +284,10 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         newBorrowHistory.setBookID(bookID);
         newBorrowHistory.setBorrowDate(borrow.getBorrowDate());
         newBorrowHistory.setBorrowPrice(borrow.getBorrowPrice());
-        newBorrowHistory.setInDate(returnDate);
-        newBorrowHistory.setUserID(user.getUserID());
+        newBorrowHistory.setReturnDate(returnDate);
+        newBorrowHistory.setUserID1(user.getUserID());
         newBorrowHistory.setYhDate(borrow.getYhDate());
-        newBorrowHistory.setProvince(borrow.getProvince());
-        newBorrowHistory.setCity(borrow.getCity());
-        newBorrowHistory.setDistrict(borrow.getDistrict());
-        newBorrowHistory.setAddress(borrow.getAddress());
+        newBorrowHistory.setBorrowAddress(borrow.getBorrowAddress());
         this.bookDao.update(book);
         this.borrowHistoryDao.save(newBorrowHistory);
         this.borrowDao.delete(borrow);
@@ -316,7 +305,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         }
         User user = getLoginedUserInfo();
         Borrow borrow = this.borrowDao.getBorrowByID(borrowID);
-        if(borrow.getUserID() != user.getUserID()) {
+        if(borrow.getUserID1() != user.getUserID()) {
             returnMap.put("success", false);
             return returnMap;
         }

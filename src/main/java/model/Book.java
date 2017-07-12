@@ -8,11 +8,13 @@ public class Book {
     private String isbn;
     private String author;            // 作者
     private String press;             // 出版社
-    private Integer category1;
-    private Integer category2;
+    private String category1;
+    private String category2;
     private int canExchange;      // 用户发布时决定书是否可被交换
     private int canBorrow;        // 用户发布时决定书是否可被借阅
     private int reserved;         // 书当前是否已被预约 
+    private int borrowCredit;           // 设定借书需要的积分
+    private int buyCredit;         // 设定购买书需要的积分
     private BookStatus status;               // 书当前状态（空闲/正被借阅/正被交换/正被售出（尚未考虑））
     private String profileID;         // 书的详细信息在monggodb中的id
     private String imageID;           // 书的图片在monggodb中的图片
@@ -49,19 +51,20 @@ public class Book {
     public void setPress(String press) {
         this.press = press;
     }
-    public Integer getCategory1() {
-        return category1;
-    }
-    public void setCategory1(Integer category1) {
-        this.category1 = category1;
-    }
-    public Integer getCategory2() {
-        return category2;
-    }
-    public void setCategory2(Integer category2) {
-        this.category2 = category2;
-    }
-    public int getCanExchange() {
+    
+    public String getCategory1() {
+		return category1;
+	}
+	public void setCategory1(String category1) {
+		this.category1 = category1;
+	}
+	public String getCategory2() {
+		return category2;
+	}
+	public void setCategory2(String category2) {
+		this.category2 = category2;
+	}
+	public int getCanExchange() {
         return canExchange;
     }
     public void setCanExchange(int canExchange) {
@@ -79,7 +82,32 @@ public class Book {
     public void setReserved(int reserved) {
         this.reserved = reserved;
     }
-    public BookStatus getStatus() {
+   
+	/**
+	 * @return the borrowCredit
+	 */
+	public int getBorrowCredit() {
+		return borrowCredit;
+	}
+	/**
+	 * @param borrowCredit the borrowCredit to set
+	 */
+	public void setBorrowCredit(int borrowCredit) {
+		this.borrowCredit = borrowCredit;
+	}
+	/**
+	 * @return the buyCredit
+	 */
+	public int getBuyCredit() {
+		return buyCredit;
+	}
+	/**
+	 * @param buyCredit the buyCredit to set
+	 */
+	public void setBuyCredit(int buyCredit) {
+		this.buyCredit = buyCredit;
+	}
+	public BookStatus getStatus() {
         return status;
     }
     public void setStatus(BookStatus status) {

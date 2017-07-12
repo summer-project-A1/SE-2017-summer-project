@@ -9,6 +9,7 @@ public class User {
     private String email;       // 邮箱作为登录名，具有唯一性
     private int credit;         // 用户积分
     private UserRole role;      // 用户角色（管理员/普通）
+    private int honesty;
     private String province;        // 用户地址（区别于收货地址）
     private String city;
     private String district;
@@ -54,7 +55,13 @@ public class User {
     public void setRole(UserRole role) {
         this.role = role;
     }
-    public String getProvince() {
+    public int getHonesty() {
+		return honesty;
+	}
+	public void setHonesty(int honesty) {
+		this.honesty = honesty;
+	}
+	public String getProvince() {
         return province;
     }
     public void setProvince(String province) {

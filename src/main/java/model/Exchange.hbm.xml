@@ -7,9 +7,16 @@
         <id name="exchangeID" column="exchange_id">
             <generator class="native"/>
         </id>
-        <property name="userID" column="user_id" />
+        <property name="userID1" column="user1_id" />
+        <property name="userID2" column="user2_id" />
         <property name="wantedID" column="wanted_id" />
         <property name="hadID" column="had_id" />
         <property name="applyDate" column="applydate" type="timestamp" />
+        <property name="fh_date1" column="fh_date1" type="timestamp" />
+        <property name="fh_date2" column="fh_date2" type="timestamp" />
+        <property name="sh_date1" column="sh_date1" type="timestamp" />
+        <property name="sh_date2" column="sh_date2" type="timestamp" />
+        <property name="comment1" column="comment1"></property>
+        <property name="comment2" column="comment2"></property>
     </class>
 </hibernate-mapping>

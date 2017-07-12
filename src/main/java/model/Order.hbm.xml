@@ -7,21 +7,31 @@
         <id name="orderID" column="order_id">
             <generator class="native"/>
         </id>
-        <property name="userID" column="user_id" />
-        <property name="orderDate" column="orderdate" type="timestamp" />
-        <property name="totalPrice" column="total_price" />
+        <property name="buyerID" column="buyer_id" />
+        <property name="sellerID" column="seller_id"/>
+        <property name="bookID" column="bookid"></property>
+        <property name="orderDate" column="date" type="timestamp" />
+        <property name="price" column="price" />
         <property name="status" column="role">
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">common.constants.OrderStatus</param>
             </type>
         </property>
+        <!--  
         <property name="province" column="province" />
         <property name="city" column="city" />
         <property name="district" column="district" />
+        -->
         <property name="address" column="address" />
+        <!--  
         <set name="orderItems" cascade="all" table="orderitem">  
             <key column="order_id" foreign-key="order_id"></key>  
             <one-to-many class="model.OrderItem" />  
         </set>
+        -->
+        <property name="fhDate" column="fh_date" type="timestamp" />
+        <property name="shDate" column="sh_date" type="timestamp" />
+        <property name="trackingNo" column="trackingNo"></property>
+        <property name="buyer_comment" column="seller_comment"></property>
     </class>
 </hibernate-mapping>

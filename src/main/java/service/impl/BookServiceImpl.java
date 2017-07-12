@@ -12,7 +12,6 @@ import dao.BookDao;
 import dao.BookReleaseDao;
 import dao.ImageDao;
 import model.Book;
-import model.BookInfo;
 import model.BookProfile;
 import model.BookRelease;
 import service.BookService;
@@ -85,10 +84,12 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         newBook.setIsbn(bookProfile.getIsbn());
         newBook.setAuthor(bookProfile.getAuthor());
         newBook.setPress(bookProfile.getPress());
-        newBook.setCategory1(Integer.parseInt(bookProfile.getCategory1()));
-        newBook.setCategory2(Integer.parseInt(bookProfile.getCategory2()));
+        newBook.setCategory1(bookProfile.getCategory1());
+        newBook.setCategory2(bookProfile.getCategory2());
         newBook.setCanBorrow(bookProfile.getCanBorrow());
         newBook.setCanExchange(bookProfile.getCanExchange());
+        newBook.setBorrowCredit(bookProfile.getBorrowCredit());
+        newBook.setBuyCredit(bookProfile.getBuyCredit());
         newBook.setReserved(0);
         newBook.setStatus(BookStatus.IDLE);
         
@@ -105,8 +106,6 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         
         BookRelease newBookRelease = new BookRelease();
         newBookRelease.setBookID(newBook.getBookID());
-        newBookRelease.setBorrowCredit(bookProfile.getBorrowCredit());
-        newBookRelease.setBuyCredit(bookProfile.getBuyCredit());
         newBookRelease.setReleaseTime(new Date());
         newBookRelease.setUserID(getLoginedUserInfo().getUserID());
         this.bookReleaseDao.save(newBookRelease);
@@ -115,8 +114,8 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookInfo> showAllBookInfoByPage(int part,int pageSize) {
-        return this.bookDao.getAllBookInfoByPage(part,pageSize);
+    public List<Book> showAllBooksByPage(int part,int pageSize) {
+        return this.bookDao.getAllBooksByPage(part, pageSize);
     }
 
     @Override
@@ -135,8 +134,8 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         return null;
     }
 
-    public BookInfo showBookInfo(int bookID) {
-        return this.bookDao.getBookInfoByID(bookID);
+    public Book showBook(int bookID) {
+        return this.bookDao.getBookByID(bookID);
     }
     
     @Override
@@ -161,8 +160,8 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         bookProfile.setBookStatus(book.getStatus().toString());
         bookProfile.setImageID(book.getImageID());
         
-        bookProfile.setBorrowCredit(bookRelease.getBorrowCredit());
-        bookProfile.setBuyCredit(bookRelease.getBuyCredit());
+        bookProfile.setBorrowCredit(book.getBorrowCredit());
+        bookProfile.setBuyCredit(book.getBuyCredit());
         bookProfile.setReleaseTime(bookRelease.getReleaseTime());
         
         bookProfile.setPublishYear((int)bookProfileInMongo.get("publishYear"));

@@ -9,6 +9,7 @@ public class UserProfile {
     private String password;        // 加密后的密码
     private String email;
     private int credit;
+    private int honest;
     private String imageID;
     private String province;        // 用户地址，区别于收货地址
     private String city;
@@ -58,7 +59,13 @@ public class UserProfile {
     public void setCredit(int credit) {
         this.credit = credit;
     }
-    public String getImageID() {
+    public int getHonest() {
+		return honest;
+	}
+	public void setHonest(int honest) {
+		this.honest = honest;
+	}
+	public String getImageID() {
         return imageID;
     }
     public void setImageID(String imageID) {
