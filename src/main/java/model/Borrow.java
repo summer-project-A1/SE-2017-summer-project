@@ -4,25 +4,25 @@ import java.util.Date;
 
 public class Borrow {                // 保存已被借出但尚未还回的借书记录
     private int borrowID;
-    private int userID1;
-    private int userID2;
+    private int userID1;      //借书人id，对应买家
+    private int userID2;       //被借书人id，对应卖家
     private int bookID;
     private Date yhDate;         // 应还时间
     private int borrowPrice;         // 借书花费的积分
     private int delayCount;     // 延期次数（目前设定最多1次）
-    private int status;
-    private String borrowAddress;
-    private String returnAddress;
-    private String trackingNo1;
-    private String trackingNo2;
-    private Date orderDate;
+    private int status;         // 图书状态
+    private String borrowAddress;  //借书人收货地址
+    private String returnAddress;  //被借书者收货地址
+    private String trackingNo1;    //借书人还书时快递单号
+    private String trackingNo2;   //被借书者借书时快递单号
+    private Date orderDate;   //下单时间
     private Date payDate;    //付款时间
     private Date fhDate;   //卖家发货时间
     private Date borrowDate;   //买家确认收货时间，即借书时间
-    private Date returnDate;   //买家还书时间
-    private Date shDate;  //卖家收货时间
-    private int comment1;
-    private int comment2;
+    private Date returnDate;   //买家还书时间，即买家填还书快递单号时间
+    private Date shDate;   //卖家收货时间
+    private int comment1;  //买家对卖家信用评价
+    private int comment2;  //卖家对买家信用评价
     
     /* =============================================================== */
     

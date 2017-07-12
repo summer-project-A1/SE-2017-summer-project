@@ -9,7 +9,7 @@ public class User {
     private String email;       // 邮箱作为登录名，具有唯一性
     private int credit;         // 用户积分
     private UserRole role;      // 用户角色（管理员/普通）
-    private int honesty;
+    private int honesty;       //信用积分
     private String province;        // 用户地址（区别于收货地址）
     private String city;
     private String district;
