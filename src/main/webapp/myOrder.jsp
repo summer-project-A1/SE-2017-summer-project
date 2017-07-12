@@ -7,11 +7,19 @@
     <style>
 
         @media ( min-width :768px) {
-        }
-        #cartinfo{
+            #cartinfo{
             margin-top: 51px;
             margin-left:30%;
             margin-right:10%;
+            }
+        }
+        @media ( min-width :1440px) {
+            #cartinfo{
+                margin-top: 21px;
+                margin-left:10%;
+                margin-right:10%;
+            }
+
         }
     </style>
 </head>
