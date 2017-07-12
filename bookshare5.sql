@@ -49,7 +49,7 @@ CREATE TABLE `Book` (
   `canexchange` int(11) NOT NULL,
   `canborrow` int(11) NOT NULL,
   `borrow_price` int(11) NOT NULL,
-  `exchange_price` int(11) NOT NULL,
+  `buy_price` int(11) NOT NULL,
   `reserved` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `profile_id` varchar(50) NOT NULL,
