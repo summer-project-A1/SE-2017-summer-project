@@ -7,12 +7,15 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import model.Book;
 import model.BookProfile;
+import model.CommentProfile;
 import service.BookService;
+import service.CommentService;
 
 public class BookAction extends ActionSupport {
     private static final long serialVersionUID = -9028260230073194219L;
     
     private BookService bookService;
+	private CommentService commentService;
 
     /*
         分页使用的两个变量
@@ -24,6 +27,7 @@ public class BookAction extends ActionSupport {
     private int bookID;
     private String bookName;
     private BookProfile bookProfile;
+	private List<CommentProfile> commentProfileList;
 
     public BookAction() {
     }
@@ -37,6 +41,13 @@ public class BookAction extends ActionSupport {
         this.bookService = bookService;
     }
 
+    public CommentService getCommentService() {
+        return commentService;
+    }
+
+    public void setCommentService(CommentService commentService) {
+        this.commentService = commentService;
+    }
     public int getPart(){
         return this.part;
     }
@@ -45,12 +56,12 @@ public class BookAction extends ActionSupport {
         this.part=part;
     }
 
-    public Integer getFirstPage(){
+    public Integer getFirstPage() {
         return this.part;
     }
 
     public void setFirstPage(Integer firstPage){
-        this.firstPage=firstPage;
+        this.firstPage = firstPage;
     }
 
     public int getUserID() {
@@ -73,10 +84,10 @@ public class BookAction extends ActionSupport {
         this.bookName = bookName;
     }
     public BookProfile getBookProfile(){
-        return  this.bookProfile;
+        return this.bookProfile;
     }
-    public void setBookProfile(BookProfile bookProfile){
-        this.bookProfile=bookProfile;
+    public void setBookProfile(BookProfile bookProfile) {
+        this.bookProfile = bookProfile;
     }
 
     /* ============================================================== */
@@ -112,7 +123,9 @@ public class BookAction extends ActionSupport {
     }
     public String showBookProfile() {
         this.bookProfile = this.bookService.showBookProfile(this.bookID);
+        this.commentProfileList = this.commentService.getBookComment(this.bookID);
         ActionContext.getContext().put("bookProfile",bookProfile);
+        ActionContext.getContext().put("commentProfileList",commentProfileList);
         return "showBookProfile";
     }
 }

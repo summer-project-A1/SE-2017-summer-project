@@ -24,7 +24,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		String hql = "from User u where u.userID = :userID";
 		Query query = getSession().createQuery(hql).setParameter("userID", userID);
 		List<User> users = query.list();
-		User user = users.size() == 0 ? users.get(0) : null;
+		User user = users.size() == 1 ? users.get(0) : null;
 		return user;
 	}
 

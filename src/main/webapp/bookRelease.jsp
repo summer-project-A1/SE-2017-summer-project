@@ -34,10 +34,7 @@
   margin-right: 0px;
   margin-left: 0px;
 }
-#msg
-{
-	color:#FF0000;
-}
+
     </style>
 </head>
 <body>
@@ -126,102 +123,6 @@
                 <label>借阅所需积分</label><font color="#FF0000">*</font>&nbsp;
                 <input type="number" step="1" min="0" name="bookProfile.borrowCredit" class="form-control form-control-noNewline">
             </div>
-<<<<<<< HEAD
-            <div class="form-group form-group-auto">
-                <label>作者</label><font color="#FF0000">*</font><input name=author type=text class=form-control>
-            </div>
-            <div class="form-group form-group-auto">
-                <label>ISBN</label><font color="#FF0000">*</font><input name=isbn type=text class=form-control>
-            </div>
-            <div class="form-group form-group-auto">
-                <label>出版社</label><font color="#FF0000">*</font><input name=press type=text class=form-control>
-            </div>
-            <div class="form-group form-group-auto">
-                <label>出版时间</label><font color="#FF0000">*</font>&nbsp;
-                    <input name=publishYear type=text class="form-control form-control-noNewline">&nbsp;<label>年</label>&nbsp;
-                    <input name=publishMonth type=text class="form-control form-control-noNewline">&nbsp;<label>月</label>
-            </div>
-            <div class="form-group form-group-auto">
-                <label>版次</label><font color="#FF0000">*</font>&nbsp;
-                <input name=editionYear type=text class="form-control form-control-noNewline">&nbsp;<label>年</label>&nbsp;
-                <input name=editionMonth type=text class="form-control form-control-noNewline">&nbsp;<label>月</label>&nbsp;
-                <label>第</label>&nbsp;<input name=editionVersion type=text class="form-control form-control-noNewline">&nbsp;<label>版</label>
-            </div>
-            <div class="form-group form-group-auto">
-                <label>类别</label><font color="#FF0000">*</font>&nbsp;
-                <select id=cate name=category1 class="form-control form-control-noNewline">
-                    <option value=0>小说</option>
-                    <option value=1>文学</option>
-                    <option value=2>管理</option>
-                    <option value=4>其他</option>
-                </select>&nbsp;
-                <select id=category name=category2 class="form-control form-control-noNewline">
-                    <option value="00">言情</option>
-                    <option value="01">玄幻</option>
-                    <option value="02">武侠</option>
-                    <option value="03">其他</option>
-                </select>
-            </div>
-            <div class="form-group form-group-auto">    
-                <label>页数</label><font color="#FF0000">*</font>&nbsp;
-                    <input name=page type=number step=1 min=0 class="form-control form-control-noNewline">&nbsp;&nbsp;&nbsp;
-                <label>装帧</label><font color="#FF0000">*</font>&nbsp;
-                    <select name=bookBinding class="form-control form-control-noNewline">
-                        <option value="0">线装</option>
-                        <option value="1">平装</option>
-                        <option value="2">精装</option>
-                    </select>&nbsp;&nbsp;&nbsp;
-                <label>开本</label><font color="#FF0000">*</font>&nbsp;
-                    <select name=bookFormat class="form-control form-control-noNewline">
-                        <option value="0">正度</option>
-                        <option value="1">对开</option>
-                        <option value="2">4开</option>
-                        <option value="3">8开</option>
-                        <option value="4">16开</option>
-                        <option value="5">32开</option>
-                    </select>&nbsp;&nbsp;&nbsp;
-                <label>成色</label><font color="#FF0000">*</font>&nbsp;
-                    <select name=bookQuality class="form-control form-control-noNewline">
-                        <option value="10">全新</option>
-                        <option value="9">9成新</option>
-                        <option value="7">7成新</option>
-                        <option value="5">5成新</option>
-                        <option value="3">3成新</option>
-                        <option value="1">1成新</option>
-                    </select>
-            </div>
-            <div class="form-group form-group-auto">
-                <label>购买所需积分</label><font color="#FF0000">*</font>&nbsp;
-                    <input name=buyCredit type=number step=1 min=0 name=buyCredit class="form-control form-control-noNewline">&nbsp;&nbsp;&nbsp;
-                <label>是否可交换</label><font color="#FF0000">*</font>&nbsp;
-                <input type=radio name=canExchange value=1><label>是</label>&nbsp;
-                <input type=radio name=canExchange value=0><label>否</label>
-            </div>
-            <div class="form-group form-group-auto">
-                <label>是否可借阅</label><font color="#FF0000">*</font>&nbsp;
-                    <input id=cb1 type=radio name=canBorrow value=1><label>是</label>&nbsp;
-                    <input id=cb0 type=radio name=canBorrow value=0><label>否</label>&nbsp;&nbsp;&nbsp;
-                <div id=borrowCredit style='display:none;'>
-                    <label>借阅所需积分</label><font color="#FF0000">*</font>&nbsp;
-                    <input type=number step=1 min=0 name=borrowCredit class="form-control form-control-noNewline">
-                </div>
-            </div>
-            <div class="form-group form-group-auto">
-                <label>简介</label><font color="#FF0000">*</font><textarea id=introduction name=intro class="form-control" rows="3"></textarea>
-            </div>
-            <div class="form-group form-group-auto">
-                <label>图书封面</label><font color="#FF0000">*</font><input name=coverPicture type=file class=file>
-            </div>
-            <div class="form-group form-group-auto">
-                <label id=msg></label>
-            </div>
-            <div class="clearfix"> </div>
-            <div id=confirm class="register-but">
-                <input type="button" id=commit value="确认发布">
-            </div>
-            <div class="clearfix"> </div>
-        </form>
-=======
         </div>
         <div class="form-group form-group-auto">
             <label>简介</label><font color="#FF0000">*</font><textarea id="bookProfile.introduction" name="bookProfile.intro" class="form-control" rows="3"></textarea>
@@ -235,7 +136,6 @@
         <div class="form-group form-group-auto">
             <label>其他图片（二）</label><font color="#FF0000">*</font><input name="bookProfile.otherPicture"  type="file" class="file">
         </div>
->>>>>>> refs/remotes/origin/master
 
         <div class="form-group form-group-auto">
             <label id=warning></label>
@@ -292,48 +192,6 @@
         $("#exchangeCredit").hide();
     });
     $("#commit").click(function(){
-<<<<<<< HEAD
-		var obj=document.getElementById("msg");
-		var filepath=$("input[name='coverPicture']").val();
-		if(filepath=="")
-			{obj.innerText="图书封面必须上传";return;}
-		var index=filepath.lastIndexOf(".");
-		var type=filepath.substring(index+1,filepath.length).toUpperCase();
-		if(type!="BMP"&&type!="GIF"&&type!="JPG"&&type!="JPEG"&&type!="PNG"&&
-				type!="SVG"&&type!="TIFF"&&type!="DDS"&&type!="WDP"&&type!="WEBP"&&
-					type!="EMF"&&type!="ICO"&&type!="PNG"&&type!="WMF")
-			{obj.innerText="请上传正确的图片格式";return;}
-		if($("input[name='bookName']").val()=="")
-			{obj.innerText="图书名称必须填写";return;}
-		if($("input[name='author']").val()=="")
-			{obj.innerText="图书作者必须填写";return;}
-		if($("input[name='isbn']").val()=="")
-			{obj.innerText="图书ISBN必须填写";return;}
-		if($("input[name='press']").val()=="")
-			{obj.innerText="图书出版社必须填写";return;}
-		if($("input[name='publishYear']").val()=="")
-			{obj.innerText="图书出版年份必须填写";return;}
-		if($("input[name='publishMonth']").val()=="")
-			{obj.innerText="图书出版月份必须填写";return;}
-		if($("input[name='editionMonth']").val()==""||$("input[name='editionYear']").val()==""
-				||$("input[name='editionVersion']").val()=="")
-			{obj.innerText="图书版次信息不全";return;}
-		if($("input[name='page']").val()=="")
-			{obj.innerText="图书页数必须填写";return;}
-		if($("input[name='buyCredit']").val()=="")
-			{obj.innerText="请输入购买所需积分";return;}
-		if($("input[name='canBorrow']:checked").val()=="")
-			{obj.innerText="请确认是否可借阅";return;}
-		if($("input[name='canBorrow']:checked").val()=='1'&&$("input[name='borrowCredit']").val()=='')
-			{obj.innerText="请输入借阅所需积分";return;}
-		if($("input[name='canExchange']").val()=='')
-			{obj.innerText="请确认是否可交换";return;}
-		if($("#introduction").val()=='')
-			{obj.innerText="请输入简介";return;}
-		$("#msg").css('color','#FFFFFF');
-		$("#msg").text="提交中...";
-		$("#form").submit();
-=======
         var obj=$('#bookinfo').find('#warning');
         if($("input[name='bookProflie.coverPicture']").val()=="")
             {obj.innerText="图书封面必须上传";return;}
@@ -369,7 +227,6 @@
         obj.innerText="提交中...";
         $("#form").submit();
     });
->>>>>>> refs/remotes/origin/master
     </script>
     <jsp:include page="footer.jsp"/>
 </body>

@@ -4,6 +4,9 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import service.CommentService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by lvjiawei on 2017/7/11.
  */
@@ -11,8 +14,10 @@ public class CommentAction extends ActionSupport {
     private CommentService commentService;
     private int borrowID;
     private int bookID;
+    private int commentID;
     private String comment;
-    
+
+    private Map params;
     /* =================================================== */
     
     public CommentService getCommentService() {
@@ -39,10 +44,38 @@ public class CommentAction extends ActionSupport {
     public void setComment(String comment) {
         this.comment = comment;
     }
+    public int getCommentID() {
+        return commentID;
+    }
+
+    public void setCommentID(int commentID) {
+        this.commentID = commentID;
+    }
+
+    public Map getParams() {
+        return params;
+    }
+
+    public void setParams(Map params) {
+        this.params = params;
+    }
+
 
     public String commentBook(){
         this.commentService.commentBook(this.borrowID,this.bookID,this.comment);
         return "commentBook";
     }
+
+    public String deleteComment(){
+        params = new HashMap();
+        if(this.commentService.deleteComment(this.commentID)){
+            params.put("success",true);
+        }else{
+            params.put("success",false);
+        }
+        return "ajax";
+    }
+
+
 
 }

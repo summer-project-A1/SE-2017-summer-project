@@ -169,8 +169,11 @@
                 <param name="namespace">/borrowAction</param>
                 <param name="actionName">showMyBorrow</param>
             </result>
+            <result name="ajax" type="json">
+               <param name="root">params</param>
+            </result>
             <allowed-methods>
-                commentBook
+                commentBook,deleteComment
             </allowed-methods>
         </action>
     </package>
