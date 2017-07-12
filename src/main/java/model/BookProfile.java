@@ -40,7 +40,11 @@ public class BookProfile {
     private List<String> otherPictureIDList;
     /* ============ */
     private File coverPicture;
+    private String coverPictureFileName;
+    private String coverPictureContentType;
     private File[] otherPicture;
+    private String[] otherPictureFileName;
+    private String[] otherPictureContentType;
     
     /* ==================================================== */
     

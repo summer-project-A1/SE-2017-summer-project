@@ -170,11 +170,11 @@
                     <h3>用户注册</h3>
                     <div class="form-group form-group-auto">
                         <label>邮箱地址</label><font color="#FF0000">*</font>&nbsp;
-                        <input type="text" name="email" class="form-control" id="register_email"><div id="available_status"></div>
+                        <input type="text" name="registerInfo.email" class="form-control" id="register_email"><div id="available_status"></div>
                     </div>
                     <div class="form-group form-group-auto">
                         <label>密码</label><font color="#FF0000">*</font>&nbsp;
-                        <input type="password" name="password" class="form-control" id="register_password"><div id="available_status2"></div>
+                        <input type="password" name="registerInfo.plainPassword" class="form-control" id="register_password"><div id="available_status2"></div>
                     </div>
                     <div class="form-group form-group-auto">
                         <label>确认密码</label><font color="#FF0000">*</font>&nbsp;
@@ -182,11 +182,11 @@
                     </div>
                     <div class="form-group form-group-auto">
                         <label>昵称</label>&nbsp;
-                        <input type="text" name="nickName" class="form-control" id="nickName">
+                        <input type="text" name="registerInfo.nickName" class="form-control" id="nickName">
                     </div>
                     <div class="form-group form-group-auto">
                         <label>性别</label>&nbsp;
-                        <select id="gender" name="gender" class="form-control form-control-noNewline" >
+                        <select id="gender" name="registerInfo.gender" class="form-control form-control-noNewline" >
                             <option>请选择</option>
                             <option>男</option>
                             <option>女</option>
@@ -194,17 +194,17 @@
                     </div>
                     <div class="form-group form-group-auto">
                         <label>手机</label><font color="#FF0000">*</font>&nbsp;
-                        <input type="text" name="mobile" class="form-control" id="mobile"><div id="available_status4"></div>
+                        <input type="text" name="registerInfo.mobile" class="form-control" id="mobile"><div id="available_status4"></div>
                     </div>
                     <label>省市地区</label><font color="#FF0000">*</font>&nbsp;
                     <div class="form-group form-group-auto" id="city_4">
-                        <select class="prov form-control form-control-noNewline" id="province" name="province" style="width:auto"></select>
-                        <select class="city form-control form-control-noNewline"  disabled="disabled" id="city" name="city"  style="width:auto"></select>
-                        <select class="dist form-control form-control-noNewline" disabled="disabled" id="district" name="district" style="width: auto"></select>
+                        <select class="prov form-control form-control-noNewline" id="province" name="registerInfo.province" style="width:auto"></select>
+                        <select class="city form-control form-control-noNewline"  disabled="disabled" id="city" name="registerInfo.city"  style="width:auto"></select>
+                        <select class="dist form-control form-control-noNewline" disabled="disabled" id="district" name="registerInfo.district" style="width: auto"></select>
                     </div>
                     <div class="input">
                         <label>详细地址</label><font color="#FF0000">*</font>&nbsp;
-                        <input type="text" class="form-control" name="address" id="address">
+                        <input type="text" class="form-control" name="registerInfo.address" id="address">
                     </div>
                     <div class="clearfix"> </div>
                 <div class="register-but">
