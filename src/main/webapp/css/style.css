@@ -1065,10 +1065,10 @@ ul.place li.sort{
 	float:left;
 }
 ul.place li.by{
-	float:right;
+	float:left;
 }
 .single-bottom p {
-    font-size: 0.9em;
+    font-size: 1.2em;
     padding: 2px 24px;
     color: #555;
 }
