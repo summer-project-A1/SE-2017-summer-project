@@ -10,7 +10,8 @@
         <property name="buyerID" column="buyer_id" />
         <property name="sellerID" column="seller_id"/>
         <property name="bookID" column="bookid"></property>
-        <property name="orderDate" column="date" type="timestamp" />
+        <property name="orderDate" column="order_date" type="timestamp" />
+        <property name="payDate" column="pay_date" type="timestamp" />
         <property name="price" column="price" />
         <property name="status" column="role">
             <type name="org.hibernate.type.EnumType">
@@ -32,6 +33,7 @@
         <property name="fhDate" column="fh_date" type="timestamp" />
         <property name="shDate" column="sh_date" type="timestamp" />
         <property name="trackingNo" column="trackingNo"></property>
-        <property name="buyer_comment" column="seller_comment"></property>
+        <property name="buyerComment" column="buyer_comment"></property>
+        <property name="sellerComment" column="seller_comment"></property>
     </class>
 </hibernate-mapping>

@@ -9,6 +9,7 @@ public class ExchangeHistory {         // 准备交换并且已经被发布者�
     private int wantedID;           // 希望交换得到的书
     private int hadID;              // 交换发起者拥有的书
     private Date applyDate;
+    private Date responseDate;
     private Date fh_date1;
     private Date fh_date2;
     private Date sh_date1;
@@ -96,5 +97,17 @@ public class ExchangeHistory {         // 准备交换并且已经被发布者�
 	}
 	public void setComment2(int comment2) {
 		this.comment2 = comment2;
+	}
+	/**
+	 * @return the responseDate
+	 */
+	public Date getResponseDate() {
+		return responseDate;
+	}
+	/**
+	 * @param responseDate the responseDate to set
+	 */
+	public void setResponseDate(Date responseDate) {
+		this.responseDate = responseDate;
 	}
 }

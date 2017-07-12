@@ -10,6 +10,7 @@ public class Exchange {             // 准备交换但尚未被发布者确认�
     private int hadID;              // 交换发起者拥有的书
     private int status;
     private Date applyDate;
+    private Date responseDate;
     private Date fh_date1;
     private Date fh_date2;
     private Date sh_date1;
@@ -102,6 +103,18 @@ public class Exchange {             // 准备交换但尚未被发布者确认�
 	}
 	public void setComment2(int comment2) {
 		this.comment2 = comment2;
+	}
+	/**
+	 * @return the responseDate
+	 */
+	public Date getResponseDate() {
+		return responseDate;
+	}
+	/**
+	 * @param responseDate the responseDate to set
+	 */
+	public void setResponseDate(Date responseDate) {
+		this.responseDate = responseDate;
 	}
     
 }

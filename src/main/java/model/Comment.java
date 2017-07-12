@@ -4,7 +4,7 @@ public class Comment {         // 用户对书评论，只能在还书的时候�
     private int commentID;
     private int userID;
     private int bookID;
-    private int profileID;     // 评论的具体内容存在monggodb中，这里只保留id
+    private String profileID;     // 评论的具体内容存在monggodb中，这里只保留id
     
     /* ============================================= */
     
@@ -26,11 +26,17 @@ public class Comment {         // 用户对书评论，只能在还书的时候�
     public void setBookID(int bookID) {
         this.bookID = bookID;
     }
-    public int getProfileID() {
-        return profileID;
-    }
-    public void setProfileID(int profileID) {
-        this.profileID = profileID;
-    }
+	/**
+	 * @return the profileID
+	 */
+	public String getProfileID() {
+		return profileID;
+	}
+	/**
+	 * @param profileID the profileID to set
+	 */
+	public void setProfileID(String profileID) {
+		this.profileID = profileID;
+	}
     
 }

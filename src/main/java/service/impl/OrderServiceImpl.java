@@ -63,8 +63,10 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
     /* ========================================================= */
     
+    
     @Override
     public Map getOrderDetailByID(int orderID) {
+    	/*
         // 返回值Map，其中包含key为order的Order类，key为booksInOrder的List<Book>
         Map result = new HashMap();
         List<Book> booksInOrder = new ArrayList<Book>();
@@ -81,7 +83,10 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
         result.put("order", order);
         result.put("booksInOrder", booksInOrder);
         return result;
+        */
+    	return null;
     }
+    
     
     @Override
     public List<Order> createOrder() {
@@ -110,7 +115,6 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
         //newOrder.setOrderDate(new Date());
         //newOrder.setStatus(OrderStatus.UNPAID);
 
-        Set<BookRelease> allBookRelease = new HashSet<BookRelease>();
         List<Book> allBook = new ArrayList<Book>();
         boolean flag = true;
         Iterator iterator = buyCartList.iterator();
@@ -121,8 +125,6 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
             // 检查书的状态，修改并保存
             if(book.getStatus() == BookStatus.IDLE) {
                 allBook.add(book);
-                BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
-                allBookRelease.add(bookRelease);
             }
             else {
                 flag = false;
@@ -133,21 +135,21 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
             for(Book book : allBook) {
                 book.setStatus(BookStatus.BOUGHT);
                 bookDao.update(book);
-                Order orser
+                BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(book.getBookID());
+                Order order = new Order(loginedUser.getUserID(),bookRelease.getUserID(),new Date(),book.getBuyCredit(),OrderStatus.UNPAID,null);
+                orderDao.save(order);
             }
+            return result;
         }
         else {
             return null;
         }
-        newOrder.setOrderItems(newOrderItemList);
-        newOrder.setTotalPrice(totalCredit);
-        this.orderDao.save(newOrder);
-        getHttpSession().remove("buyCart");
-        return newOrder;
     }
 
+    
     @Override
     public boolean submitOrder(int orderID) {
+    	/*
         // 确认订单
         // 需要检查用户的积分是否足够支付
         if(!isLogined()) {
@@ -168,10 +170,15 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
         this.userDao.update(loginedUser);
         this.orderDao.update(order);
         return true;
+        */
+    	return true;
     }
+    
 
+    
     @Override
     public boolean cancelOrder(int orderID) {
+    	/*
         if(!isLogined()) {
             return false;
         }
@@ -192,8 +199,9 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
             book.setStatus(BookStatus.IDLE);
             this.bookDao.update(book);
         }
-        this.orderDao.update(order);
+        this.orderDao.update(order);*/
         return true;
     }
+    
     
 }

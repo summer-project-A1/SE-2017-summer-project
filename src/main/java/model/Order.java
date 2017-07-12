@@ -8,15 +8,19 @@ public class Order {               // 使用积分下单购买书
     private int buyerID;
     private int sellerID;
     private Date orderDate;
+    private Date payDate;
     private int price;
     private OrderStatus status;
     private String address;
     private Date fhDate;
     private Date shDate;
     private String trackingNo;
-    private int buyer_comment;
+	private int buyer_comment;
+	private int seller_comment;
     
-    public Order(int buyerID, int sellerID, Date orderDate, int price, OrderStatus status, String address) {
+    /* ================================================= */
+	
+	public Order(int buyerID, int sellerID, Date orderDate, int price, OrderStatus status, String address) {
 		super();
 		this.buyerID = buyerID;
 		this.sellerID = sellerID;
@@ -25,9 +29,6 @@ public class Order {               // 使用积分下单购买书
 		this.status = status;
 		this.address = address;
 	}
-	private int seller_comment;
-    
-    /* ================================================= */
     
 	public int getOrderID() {
 		return orderID;
@@ -100,6 +101,12 @@ public class Order {               // 使用积分下单购买书
 	}
 	public void setSeller_comment(int seller_comment) {
 		this.seller_comment = seller_comment;
+	}
+	public Date getPayDate() {
+		return payDate;
+	}
+	public void setPayDate(Date payDate) {
+		this.payDate = payDate;
 	}
     
 }

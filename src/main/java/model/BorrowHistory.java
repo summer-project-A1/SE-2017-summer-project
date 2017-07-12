@@ -14,6 +14,7 @@ public class BorrowHistory {                // 保存已被借出但尚未还回
     private String returnAddress;
     private String trackingNo1;
     private String trackingNo2;
+    private Date orderDate;
     private Date payDate;    //付款时间
     private Date fhDate;   //卖家发货时间
     private Date borrowDate;   //买家确认收货时间，即借书时间
@@ -134,6 +135,18 @@ public class BorrowHistory {                // 保存已被借出但尚未还回
 	}
 	public void setShDate(Date shDate) {
 		this.shDate = shDate;
+	}
+	/**
+	 * @return the orderDate
+	 */
+	public Date getOrderDate() {
+		return orderDate;
+	}
+	/**
+	 * @param orderDate the orderDate to set
+	 */
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
 	}
     
 }
