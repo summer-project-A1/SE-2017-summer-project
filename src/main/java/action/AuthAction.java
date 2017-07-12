@@ -15,17 +15,12 @@ public class AuthAction extends ActionSupport{
     private UserService userService;
 
     private Map params;
+    private UserProfile registerInfo;
 
     private String email;
     private String password;
     private String confirmpassword;
-    private String nickName;
-    private String gender;
-    private String mobile;
-    private String province;
-    private String city;
-    private String district;
-    private String address;
+
 
     /* =========================================================== */
 
@@ -53,60 +48,11 @@ public class AuthAction extends ActionSupport{
         this.confirmpassword = confirmpassword;
     }
 
-    public String getNickName() {
-        return nickName;
+    public void setRegisterInfo(UserProfile registerInfo){
+        this.registerInfo=registerInfo;
     }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public UserProfile getRegisterInfo(){
+       return this.registerInfo;
     }
 
     public UserService getUserService() {
@@ -129,7 +75,7 @@ public class AuthAction extends ActionSupport{
 
     public String checkEmailAvailable() {
         params = new HashMap();
-        if(this.userService.checkEmailAvailable(this.email)) {
+        if(this.userService.checkEmailAvailable(this.registerInfo.getEmail())) {
             params.put("result", true);
         }
         else {
@@ -139,25 +85,19 @@ public class AuthAction extends ActionSupport{
     }
 
     public String register() {
-        UserProfile registerInfo = new UserProfile();
-        registerInfo.setEmail(this.email);
-        registerInfo.setPlainPassword(this.password);
-        registerInfo.setMobile(this.mobile);
-        registerInfo.setProvince(this.province);
-        if(this.city != null && this.district == null ) {
+
+        if(this.registerInfo.getCity()!= null && this.registerInfo.getDistrict() == null ) {
             // 直辖市
             // 注意此时前台并不传递district到后台，且district的内容保存在city参数中！
-            registerInfo.setCity(this.province+"市");
-            registerInfo.setDistrict(this.city);
+            registerInfo.setCity(this.registerInfo.getProvince()+"市");
+            registerInfo.setDistrict(this.registerInfo.getCity());
         }
-        else {
-            // 普通省市（三个属性全有）或国外（只有province属性）
-            registerInfo.setCity(this.city);
-            registerInfo.setDistrict(this.district);
+        else if(this.registerInfo.getCity()==null&&this.registerInfo.getDistrict()==null){
+            registerInfo.setCity(this.registerInfo.getProvince());
+            registerInfo.setDistrict(this.registerInfo.getProvince());
         }
-        registerInfo.setAddress(this.address);
-        registerInfo.setNickName(this.nickName==null?"":this.nickName);
-        registerInfo.setGender(this.gender);
+
+        registerInfo.setNickName(this.registerInfo.getNickName()==null?"":this.registerInfo.getNickName());
 
         boolean result = this.userService.register(registerInfo);
         this.params = new HashMap();

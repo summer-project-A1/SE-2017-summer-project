@@ -3,10 +3,11 @@ package model;
 import java.util.Date;
 
 public class BorrowProfile {
+    private int borrowID;         // 对应Borrow类的borrowID或BorrowHistory类的borrowHistoryID
     private int bookID;           // 图书id
     private String bookName;      // 书名
     private String author;        // 作者
-    private String category1;        // 大分类
+    private String category1;     // 大分类
     private String imageID;       // 图片id
     private String isbn;          // isbn
     private int borrowPrice;      // 借阅积分
@@ -16,7 +17,13 @@ public class BorrowProfile {
     private Date returnDate;      // 归还日期
     
     /* ========================================================= */
-    
+
+    public int getBorrowID() {
+        return borrowID;
+    }
+    public void setBorrowID(int borrowID) {
+        this.borrowID = borrowID;
+    }
     public int getBookID() {
         return bookID;
     }
