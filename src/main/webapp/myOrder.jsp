@@ -93,19 +93,19 @@
                     </div>
                     <div class="cart-item-info">
                         <h4>
-                            <s:if test="status=='notPayed'">
+                            <s:if test="status=='NOTPAYED'">
                                 <p>订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：未支付</p>
                             </s:if>
-                            <s:elseif test="status=='canceled'">
+                            <s:elseif test="status=='CANCELED'">
                                 <p>订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已取消</p>
                             </s:elseif>
-                            <s:elseif test="status=='notShipped'">
+                            <s:elseif test="status=='NOTSHIPPED'">
                                 <p>订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：未发货</p>
                             </s:elseif>
-                            <s:elseif test="status=='shipped'">
+                            <s:elseif test="status=='SHIPPED'">
                                 <p>订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已发货</p>
                             </s:elseif>
-                            <s:elseif test="status=='completed'">
+                            <s:elseif test="status=='COMPLETED'">
                                 <p>订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已完成</p>
                             </s:elseif>
                         </h4><br>
@@ -117,20 +117,20 @@
                         <div class="delivery">
                             <p>收货人：<s:property value="receiver"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                             <p>收货地址：<s:property value="address"/></p><br>
-                            <s:if test="status=='notPayed'">
+                            <s:if test="status=='NOTPAYED'">
                                 <a href="${showOrderLink}" class="add-cart item_add">支付</a>
                                 <a href="${cancelOrderLink}" class="add-cart item_add">取消</a>
                             </s:if>
-                            <s:elseif test="status=='canceled'">
+                            <s:elseif test="status=='CANCELED'">
 
                             </s:elseif>
-                            <s:elseif test="status=='notShipped'">
+                            <s:elseif test="status=='NOTSHIPPED'">
 
                             </s:elseif>
-                            <s:elseif test="status=='shipped'">
+                            <s:elseif test="status=='SHIPPED'">
                                 <a href="${confirmReceiptLink}" class="add-cart item_add" onclick="">确认收货</a>
                             </s:elseif>
-                            <s:elseif test="status=='completed'">
+                            <s:elseif test="status=='COMPLETED'">
                                 <a href="#" id="creditRatingBtn<s:property value="orderID"/>" class="add-cart item_add" onclick="creditRating(<s:property value="orderID"/>)">信用评价</a>
                                 <form id="creditRatingForm<s:property value="orderID"/>" action="" method="post" style="display: none">
                                     <select name="creditRating" class="form-control form-control-noNewline">
