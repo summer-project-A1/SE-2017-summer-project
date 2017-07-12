@@ -15,7 +15,7 @@
         <property name="category2" column="category2" />
         <property name="canExchange" column="canexchange" />
         <property name="borrowCredit" column="borrow_price" />
-        <property name="exchangeCredit" column="exchange_price" />
+        <property name="buyCredit" column="buy_price" />
         <property name="canBorrow" column="canborrow" />
         <property name="reserved" column="reserved" />
         <property name="status" column="status">
