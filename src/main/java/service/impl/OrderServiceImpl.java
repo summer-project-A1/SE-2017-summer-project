@@ -110,7 +110,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
         Order newOrder = new Order();
         newOrder.setUserID(loginedUser.getUserID());
         newOrder.setOrderDate(new Date());
-        newOrder.setStatus(OrderStatus.UNPAID);
+        newOrder.setStatus(OrderStatus.NOTPAID);
 
         Set<OrderItem> newOrderItemList = new HashSet<OrderItem>();
         List<Book> allBook = new ArrayList<Book>();
@@ -170,7 +170,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
             return false;
         }
         loginedUser.setCredit(userCredit-orderCredit);
-        order.setStatus(OrderStatus.FINISHED);
+        order.setStatus(OrderStatus.COMPLETED);
         this.userDao.update(loginedUser);
         this.orderDao.update(order);
         return true;
@@ -189,10 +189,10 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
         if(order.getUserID() != loginedUser.getUserID()) {
             return false;
         }
-        if(order.getStatus() != OrderStatus.UNPAID) {
+        if(order.getStatus() != OrderStatus.NOTPAID) {
             return false;
         }
-        order.setStatus(OrderStatus.CANCELLED);
+        order.setStatus(OrderStatus.CANCELED);
         for(OrderItem orderItem : order.getOrderItems()) {
             Book book = this.bookDao.getBookByID(orderItem.getBookID());
             book.setStatus(BookStatus.IDLE);

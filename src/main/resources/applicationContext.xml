@@ -138,6 +138,8 @@
         <property name="orderDao" ref="orderDao"></property>
     </bean>
     <bean id="commentService" class="service.impl.CommentServiceImpl">
+        <property name="borrowDao" ref="borrowDao"></property>
+        <property name="commentDao" ref="commentDao"></property>
     </bean>
     <bean id="historyService" class="service.impl.HistoryServiceImpl">
         <property name="borrowDao" ref="borrowDao"></property>
@@ -166,6 +168,9 @@
         <property name="cartService" ref="cartService"/>
         <property name="orderService" ref="orderService"/>
         <property name="borrowService" ref="borrowService"/>
+    </bean>
+    <bean id="commentAction" class="action.commentAction">
+        <property name="commentService" ref="commentService"></property>
     </bean>
     <bean id="imageAction" class="action.ImageAction">
         <property name="imageService" ref="imageService"></property>
