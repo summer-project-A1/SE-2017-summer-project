@@ -136,7 +136,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
                 book.setStatus(BookStatus.BOUGHT);
                 bookDao.update(book);
                 BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(book.getBookID());
-                Order order = new Order(loginedUser.getUserID(),bookRelease.getUserID(),new Date(),book.getBuyCredit(),OrderStatus.UNPAID,null);
+                Order order = new Order(loginedUser.getUserID(),book.getBookID(),bookRelease.getUserID(),new Date(),book.getBuyCredit(),OrderStatus.UNPAID,null);
                 orderDao.save(order);
             }
             return result;

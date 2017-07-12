@@ -7,6 +7,7 @@ public class Order {               // 使用积分下单购买书
     private int orderID;
     private int buyerID;
     private int sellerID;
+    private int bookID;
     private Date orderDate;
     private Date payDate;
     private int price;
@@ -20,19 +21,22 @@ public class Order {               // 使用积分下单购买书
     
     /* ================================================= */
 	
-	public Order(int buyerID, int sellerID, Date orderDate, int price, OrderStatus status, String address) {
+	
+    
+	public int getOrderID() {
+		return orderID;
+	}
+	public Order(int buyerID, int sellerID, int bookID, Date orderDate, int price, OrderStatus status, String address) {
 		super();
 		this.buyerID = buyerID;
 		this.sellerID = sellerID;
+		this.bookID = bookID;
 		this.orderDate = orderDate;
 		this.price = price;
 		this.status = status;
 		this.address = address;
 	}
-    
-	public int getOrderID() {
-		return orderID;
-	}
+	
 	public void setOrderID(int orderID) {
 		this.orderID = orderID;
 	}
@@ -107,6 +111,20 @@ public class Order {               // 使用积分下单购买书
 	}
 	public void setPayDate(Date payDate) {
 		this.payDate = payDate;
+	}
+
+	/**
+	 * @return the bookID
+	 */
+	public int getBookID() {
+		return bookID;
+	}
+
+	/**
+	 * @param bookID the bookID to set
+	 */
+	public void setBookID(int bookID) {
+		this.bookID = bookID;
 	}
     
 }
