@@ -219,6 +219,7 @@
                     <div class="delivery">
                         <p>收货人：高仓靖博&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                         <p>收货地址：东川路800号</p><br>
+                        <p>发货时间：2017-6-10   20:42:48</p><br>
                         <a href="${confirmReceiptLink}" id="confirmBtn" class="add-cart item_add" onclick="">确认收货</a>
                         <div class="clearfix"></div>
                     </div>
@@ -243,6 +244,8 @@
                     <div class="delivery">
                         <p>收货人：Bjarne&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                         <p>收货地址：东川路800号</p><br>
+                        <p>发货时间：2017-6-10   20:42:48&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p>收货时间：2017-6-10   20:42:48</p><br>
                         <a href="#" id="commentBtn" class="add-cart item_add" onclick="">信用评价</a>
                         <div class="clearfix"></div>
                     </div>

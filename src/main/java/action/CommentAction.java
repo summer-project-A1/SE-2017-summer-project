@@ -40,4 +40,9 @@ public class CommentAction extends ActionSupport {
         this.comment = comment;
     }
 
+    public String commentBook(){
+        this.commentService.commentBook(this.borrowID,this.bookID,this.comment);
+        return "commentBook";
+    }
+
 }

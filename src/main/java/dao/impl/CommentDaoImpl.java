@@ -1,7 +1,11 @@
 package dao.impl;
 
 import java.util.List;
+import java.util.Map;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import org.bson.types.ObjectId;
 import org.hibernate.query.Query;
 
 import dao.CommentDao;
@@ -16,5 +20,12 @@ public class CommentDaoImpl extends BaseDaoImpl implements CommentDao {
         List<Comment> comments = query.list();
         return comments;
     }
-    
+
+    @Override
+    public String saveBookComment(Map bookComment){
+        DBCollection collection = getMongoDb().getCollection("book_comment");
+        BasicDBObject document = new BasicDBObject(bookComment);
+        collection.insert(document);
+        return ((ObjectId)document.get("_id")).toString();
+    }
 }

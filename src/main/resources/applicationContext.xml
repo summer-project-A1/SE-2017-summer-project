@@ -44,6 +44,7 @@
 				<value>model/Order.hbm.xml</value>
                 <value>model/OrderItem.hbm.xml</value>
                 <value>model/Reserve.hbm.xml</value>
+                <value>model/Comment.hbm.xml</value>
 			</list>
 		</property>
 		<!-- Hibernate SessionFactory -->
@@ -138,6 +139,7 @@
         <property name="orderDao" ref="orderDao"/>
     </bean>
     <bean id="commentService" class="service.impl.CommentServiceImpl">
+        <property name="commentdao" ref="commentDao"/>
     </bean>
     <bean id="historyService" class="service.impl.HistoryServiceImpl">
         <property name="borrowDao" ref="borrowDao"/>
@@ -146,7 +148,7 @@
     <bean id="imageService" class="service.impl.ImageServiceImpl">
         <property name="imageDao" ref="imageDao"/>
     </bean>
-    
+
     <!-- ============================================================= -->
     
     <!-- Action -->

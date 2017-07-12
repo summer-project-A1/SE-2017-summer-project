@@ -284,7 +284,7 @@
                             <p>归还日期：<s:property value="returnDate"/></p><br>
                             <a href="#" id="commentBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="commentBook(<s:property value="bookID"/>)">图书评论</a>
                             <a href="#" id="creditRatingBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="creditRating(<s:property value="bookID"/>)">信用评价</a>
-                            <form id="commentForm<s:property value="bookID"/>" style="display: none">
+                            <form id="commentForm<s:property value="bookID"/>" style="display: none" action="<%=path%>/commentAction/commentBook" method="post">
                                 <input type="hidden" id="bookID<s:property value="bookID"/>" name="bookID" value="<s:property value="bookID"/>"/>
                                 <input type="hidden" id="borrowID<s:property value="borrowID"/>" name="borrowID" value="<s:property value="borrowID"/>"/>
                                 <textarea id="comment<s:property value="bookID"/>" name="comment" class="form-control" rows="3"></textarea>
