@@ -84,7 +84,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
     }
     
     @Override
-    public Order createOrder() {
+    public List<Order> createOrder() {
         /* 不验证积分是否足够
          * 修改书的状态
          * 跳转到订单页面
@@ -121,16 +121,19 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
             // 检查书的状态，修改并保存
             if(book.getStatus() == BookStatus.IDLE) {
                 allBook.add(book);
+                BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
+                allBookRelease.add(bookRelease);
             }
             else {
                 flag = false;
             }
-            BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
         }
         if(flag) {
+        	List<Order> result=new ArrayList<>();
             for(Book book : allBook) {
                 book.setStatus(BookStatus.BOUGHT);
-                this.bookDao.update(book);
+                bookDao.update(book);
+                Order orser
             }
         }
         else {
