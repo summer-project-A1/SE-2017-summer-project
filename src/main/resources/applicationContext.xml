@@ -42,7 +42,6 @@
 				<value>model/Borrow.hbm.xml</value>
 				<value>model/BorrowHistory.hbm.xml</value>
 				<value>model/Order.hbm.xml</value>
-                <value>model/OrderItem.hbm.xml</value>
                 <value>model/Reserve.hbm.xml</value>
 			</list>
 		</property>
