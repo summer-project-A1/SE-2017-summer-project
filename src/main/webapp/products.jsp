@@ -73,8 +73,8 @@
         pageCount = Math.ceil(totalBookAmount / amountPerPage);
         var lastPage= '<s:property value="#firstPage"/>';
         var succPage= firstPage+pageCount;
-        if(lastPage>0){
-            $('#pagination-digg').append("<li class='previous'><a href='?part="+prevBlock+"&firstPage="+lastPage+"'>&laquo;"+lastPage+" </a></li>");
+        if(lastPage>0&&prevBlock>0){
+            $('#pagination-digg').append("<li class='previous'><a href='?part="+prevBlock+"&firstPage="+lastPage+"'>&laquo;上一部分 </a></li>");
 
         }
         else{
@@ -96,7 +96,7 @@
             }
         }
         if(!isLastBlock){
-            $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+lastPage+"'>"+succPage+" &raquo;</a></li>");
+            $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+lastPage+"'>下一部分&raquo;</a></li>");
 
         }
 
@@ -113,8 +113,8 @@
             var succPage = firstPage + pageCount;
             $('#pagination-digg').empty();
 
-            if(lastPage>0){
-                $('#pagination-digg').append("<li class='previous'><a href='?part="+prevBlock+"&firstPage="+lastPage+"'>&laquo;"+lastPage+"</a></li>");
+            if(lastPage>0&&prevBlock>0){
+                $('#pagination-digg').append("<li class='previous'><a href='?part="+prevBlock+"&firstPage="+lastPage+"'>&laquo;上一部分</a></li>");
 
             }
             else{
@@ -141,7 +141,7 @@
                 }
             }
             if(!isLastBlock){
-                $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+lastPage+"'>"+succPage+" &raquo;</a></li>");
+                $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+lastPage+"'>下一部分 &raquo;</a></li>");
             }
 
         });
