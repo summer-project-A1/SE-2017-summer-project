@@ -89,7 +89,7 @@
             <div id="<s:property value="orderID"/>" class="cart-header">
                 <div class="cart-sec simpleCart_shelfItem">
                     <div class="cart-item cyc">
-                        <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
+                        <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="coverPicture"/>" class="img-responsive" alt="">
                     </div>
                     <div class="cart-item-info">
                         <h4>
