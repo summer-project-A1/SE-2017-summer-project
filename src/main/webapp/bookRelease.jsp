@@ -23,8 +23,8 @@
 #bookinfo
 {
     margin-top: 51px;
-    margin-left:30%;
-    margin-right:10%;
+    margin-left:20%;
+    margin-right:20%;
 }
 .form-control-noNewline {
     width:100px;
@@ -39,146 +39,123 @@
 </head>
 <body>
 
-    <div id="wrapper">
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation"
-            style="margin-bottom: 0">
-
-        <div class="nav navbar-header">
-            <a class="navbar-brand" href="#">图书发布</a>
+<div id=bookinfo>
+    <form id="form" action="<%=path%>/bookAction/uploadBook" method=post enctype="multipart/form-data" role="form" class="form-horizontal" accept-charset="UTF-8">
+        <h3 style="text-align: center;">发布图书</h3>
+        <div class="form-group form-group-auto">
+            <label>书名</label><font color="#FF0000">*</font><input name="bookProfile.bookName" type="text" class="form-control">
         </div>
-        <div class="navbar-default sidebar" role="navigation">
-            <div class="sidebar-nav navbar-collapse">
-                <ul class="nav" id="side-menu">
-                    <li><a href="#" style="color: #FFFFFF"><i class="fa fa-user fa-fw"></i>
-                            全部图书</a></li>
-                    <li><a href="#" style="color: #FFFFFF"><i class="fa fa-book fa-fw"></i>
-                            个人信息</a></li>
-                    <li><a href="#" style="color: #FFFFFF" class="active"><i
-                            class="fa fa-reorder fa-fw"></i>我的发布</a></li>
-                    <li><a href="#" style="color: #FFFFFF"><i
-                            class="fa fa-table fa-fw"></i> 我的借阅</a></li>
-                    <li><a href="#" style="color: #FFFFFF"><i class="fa fa-user fa-fw"></i>
-                            我的交换</a></li>
-                    <li><a href="#" style="color: #FFFFFF"><i class="fa fa-user fa-fw"></i>
-                            我的订单</a></li>
-                </ul>
-            </div>
-            <!-- /.sidebar-collapse -->
+        <div class="form-group form-group-auto">
+            <label>作者</label><font color="#FF0000">*</font><input name="bookProfile.author" type="text" class="form-control">
         </div>
-        <!-- /.navbar-static-side --> </nav>
-    </div>
-    
-    <div id=bookinfo>
-        <form id="form" action="<%=path%>/bookAction/uploadBook" method=post enctype="multipart/form-data" role="form" class="form-horizontal" accept-charset="UTF-8">
-            <h3 style="text-align: center;">发布图书</h3>
-            <div class="form-group form-group-auto">
-                <label>书名</label><font color="#FF0000">*</font><input name="bookProfile.bookName" type="text" class="form-control">
+        <div class="form-group form-group-auto">
+            <label>ISBN</label><font color="#FF0000">*</font><input name="bookProfile.isbn" type="text" class="form-control">
+        </div>
+        <div class="form-group form-group-auto">
+            <label>出版社</label><font color="#FF0000">*</font><input name=bookProfile.press type="text" class="form-control">
+        </div>
+        <div class="form-group form-group-auto">
+            <label>出版时间</label><font color="#FF0000">*</font>&nbsp;
+            <input name="bookProfile.publishYear" type="text" class="form-control form-control-noNewline">&nbsp;<label>年</label>&nbsp;
+            <input name="bookProfile.publishMonth" type="text" class="form-control form-control-noNewline">&nbsp;<label>月</label>
+        </div>
+        <div class="form-group form-group-auto">
+            <label>版次</label><font color="#FF0000">*</font>&nbsp;
+            <input name="bookProfile.editionYear" type="text" class="form-control form-control-noNewline">&nbsp;<label>年</label>&nbsp;
+            <input name="bookProfile.editionMonth" type="text" class="form-control form-control-noNewline">&nbsp;<label>月</label>&nbsp;
+            <label>第</label>&nbsp;<input name="bookProfile.editionVersion" type="text" class="form-control form-control-noNewline">&nbsp;<label>版</label>
+        </div>
+        <div class="form-group form-group-auto">
+            <label>类别</label><font color="#FF0000">*</font>&nbsp;
+            <select id="cate" name="bookProfile.category1" class="form-control form-control-noNewline">
+                <option value="0">小说</option>
+                <option value="1">文学</option>
+                <option value="2">管理</option>
+                <option value="4">其他</option>
+            </select>&nbsp;
+            <select id="category" name="bookProfile.category2" class="form-control form-control-noNewline">
+                <option value="00">言情</option>
+                <option value="01">玄幻</option>
+                <option value="02">武侠</option>
+                <option value="03">其他</option>
+            </select>
+        </div>
+        <div class="form-group form-group-auto">
+            <label>页数</label><font color="#FF0000">*</font>&nbsp;
+            <input name="bookProfile.page" type="number" step="50" min="0" class="form-control form-control-noNewline">&nbsp;&nbsp;&nbsp;
+            <label>装帧</label><font color="#FF0000">*</font>&nbsp;
+            <select name="bookProfile.bookBinding" class="form-control form-control-noNewline">
+                <option value="0">线装</option>
+                <option value="1">平装</option>
+                <option value="2">精装</option>
+            </select>&nbsp;&nbsp;&nbsp;
+            <label>开本</label><font color="#FF0000">*</font>&nbsp;
+            <select name="bookProfile.bookFormat" class="form-control form-control-noNewline">
+                <option value="0">正度</option>
+                <option value="1">对开</option>
+                <option value="2">4开</option>
+                <option value="3">8开</option>
+                <option value="4">16开</option>
+                <option value="5">32开</option>
+            </select>&nbsp;&nbsp;&nbsp;
+            <label>成色</label><font color="#FF0000">*</font>&nbsp;
+            <select name="bookProfile.bookQuality" class="form-control form-control-noNewline">
+                <option value="10">全新</option>
+                <option value="9">9成新</option>
+                <option value="7">7成新</option>
+                <option value="5">5成新</option>
+                <option value="3">3成新</option>
+                <option value="1">1成新</option>
+            </select>
+        </div>
+        <div class="form-group form-group-auto">
+            <label>购买所需积分</label><font color="#FF0000">*</font>&nbsp;
+            <input name="bookProfile.buyCredit" type="number" step="1" min="0" class="form-control form-control-noNewline">&nbsp;&nbsp;&nbsp;
+            <label>是否可交换</label><font color="#FF0000">*</font>&nbsp;
+            <input type="radio" name="bookProfile.canExchange" value="1"><label>是</label>&nbsp;
+            <input type="radio" name="bookProfile.canExchange" value="0"><label>否</label>
+        </div>
+        <div class="form-group form-group-auto">
+            <label>是否可借阅</label><font color="#FF0000">*</font>&nbsp;
+            <input id="cb1" type="radio" name="bookProfile.canBorrow" value="1"><label>是</label>&nbsp;
+            <input id="cb0" type="radio" name="bookProfile.canBorrow" value="0"><label>否</label>&nbsp;&nbsp;&nbsp;
+            <div id="borrowCredit" style="display:none;">
+                <label>借阅所需积分</label><font color="#FF0000">*</font>&nbsp;
+                <input type="number" step="1" min="0" name="bookProfile.borrowCredit" class="form-control form-control-noNewline">
             </div>
-            <div class="form-group form-group-auto">
-                <label>作者</label><font color="#FF0000">*</font><input name="bookProfile.author" type="text" class="form-control">
-            </div>
-            <div class="form-group form-group-auto">
-                <label>ISBN</label><font color="#FF0000">*</font><input name="bookProfile.isbn" type="text" class="form-control">
-            </div>
-            <div class="form-group form-group-auto">
-                <label>出版社</label><font color="#FF0000">*</font><input name=bookProfile.press type="text" class="form-control">
-            </div>
-            <div class="form-group form-group-auto">
-                <label>出版时间</label><font color="#FF0000">*</font>&nbsp;
-                    <input name="bookProfile.publishYear" type="text" class="form-control form-control-noNewline">&nbsp;<label>年</label>&nbsp;
-                    <input name="bookProfile.publishMonth" type="text" class="form-control form-control-noNewline">&nbsp;<label>月</label>
-            </div>
-            <div class="form-group form-group-auto">
-                <label>版次</label><font color="#FF0000">*</font>&nbsp;
-                <input name="bookProfile.editionYear" type="text" class="form-control form-control-noNewline">&nbsp;<label>年</label>&nbsp;
-                <input name="bookProfile.editionMonth" type="text" class="form-control form-control-noNewline">&nbsp;<label>月</label>&nbsp;
-                <label>第</label>&nbsp;<input name="bookProfile.editionVersion" type="text" class="form-control form-control-noNewline">&nbsp;<label>版</label>
-            </div>
-            <div class="form-group form-group-auto">
-                <label>类别</label><font color="#FF0000">*</font>&nbsp;
-                <select id="cate" name="bookProfile.category1" class="form-control form-control-noNewline">
-                    <option value="0">小说</option>
-                    <option value="1">文学</option>
-                    <option value="2">管理</option>
-                    <option value="4">其他</option>
-                </select>&nbsp;
-                <select id="category" name="bookProfile.category2" class="form-control form-control-noNewline">
-                    <option value="00">言情</option>
-                    <option value="01">玄幻</option>
-                    <option value="02">武侠</option>
-                    <option value="03">其他</option>
-                </select>
-            </div>
-            <div class="form-group form-group-auto">    
-                <label>页数</label><font color="#FF0000">*</font>&nbsp;
-                    <input name="bookProfile.page" type="number" step="50" min="0" class="form-control form-control-noNewline">&nbsp;&nbsp;&nbsp;
-                <label>装帧</label><font color="#FF0000">*</font>&nbsp;
-                    <select name="bookProfile.bookBinding" class="form-control form-control-noNewline">
-                        <option value="0">线装</option>
-                        <option value="1">平装</option>
-                        <option value="2">精装</option>
-                    </select>&nbsp;&nbsp;&nbsp;
-                <label>开本</label><font color="#FF0000">*</font>&nbsp;
-                    <select name="bookProfile.bookFormat" class="form-control form-control-noNewline">
-                        <option value="0">正度</option>
-                        <option value="1">对开</option>
-                        <option value="2">4开</option>
-                        <option value="3">8开</option>
-                        <option value="4">16开</option>
-                        <option value="5">32开</option>
-                    </select>&nbsp;&nbsp;&nbsp;
-                <label>成色</label><font color="#FF0000">*</font>&nbsp;
-                    <select name="bookProfile.bookQuality" class="form-control form-control-noNewline">
-                        <option value="10">全新</option>
-                        <option value="9">9成新</option>
-                        <option value="7">7成新</option>
-                        <option value="5">5成新</option>
-                        <option value="3">3成新</option>
-                        <option value="1">1成新</option>
-                    </select>
-            </div>
-            <div class="form-group form-group-auto">
-                <label>购买所需积分</label><font color="#FF0000">*</font>&nbsp;
-                    <input name="bookProfile.buyCredit" type="number" step="1" min="0" class="form-control form-control-noNewline">&nbsp;&nbsp;&nbsp;
-                <label>是否可交换</label><font color="#FF0000">*</font>&nbsp;
-                <input type="radio" name="bookProfile.canExchange" value="1"><label>是</label>&nbsp;
-                <input type="radio" name="bookProfile.canExchange" value="0"><label>否</label>
-            </div>
-            <div class="form-group form-group-auto">
-                <label>是否可借阅</label><font color="#FF0000">*</font>&nbsp;
-                    <input id="cb1" type="radio" name="bookProfile.canBorrow" value="1"><label>是</label>&nbsp;
-                    <input id="cb0" type="radio" name="bookProfile.canBorrow" value="0"><label>否</label>&nbsp;&nbsp;&nbsp;
-                <div id="borrowCredit" style="display:none;">
-                    <label>借阅所需积分</label><font color="#FF0000">*</font>&nbsp;
-                    <input type="number" step="1" min="0" name="bookProfile.borrowCredit" class="form-control form-control-noNewline">
-                </div>
-            </div>
-            <div class="form-group form-group-auto">
-                <label>简介</label><font color="#FF0000">*</font><textarea id="bookProfile.introduction" name="bookProfile.intro" class="form-control" rows="3"></textarea>
-            </div>
-            <div class="form-group form-group-auto">
-                <label>图书封面</label><font color="#FF0000">*</font><input name="bookProfile.coverPicture" type="file" class="file">
-            </div>
-            <div class="form-group form-group-auto">
-                <label>其他图片（一）</label><font color="#FF0000">*</font><input name="bookProfile.otherPicture"  type="file" class="file">
-            </div>
-            <div class="form-group form-group-auto">
-                <label>其他图片（二）</label><font color="#FF0000">*</font><input name="bookProfile.otherPicture"  type="file" class="file">
-            </div>
+        </div>
+        <div class="form-group form-group-auto">
+            <label>简介</label><font color="#FF0000">*</font><textarea id="bookProfile.introduction" name="bookProfile.intro" class="form-control" rows="3"></textarea>
+        </div>
+        <div class="form-group form-group-auto">
+            <label>图书封面</label><font color="#FF0000">*</font><input name="bookProfile.coverPicture" type="file" class="file">
+        </div>
+        <div class="form-group form-group-auto">
+            <label>其他图片（一）</label><font color="#FF0000">*</font><input name="bookProfile.otherPicture"  type="file" class="file">
+        </div>
+        <div class="form-group form-group-auto">
+            <label>其他图片（二）</label><font color="#FF0000">*</font><input name="bookProfile.otherPicture"  type="file" class="file">
+        </div>
 
-            <div class="form-group form-group-auto">
-                <label id=warning></label>
-            </div>
-            <div class="clearfix"> </div>
-            <div id=confirm class="register-but">
-                <input type="button" id=commit value="确认发布">
-            </div>
-            <div class="clearfix"> </div>
-        </form>
+        <div class="form-group form-group-auto">
+            <label id=warning></label>
+        </div>
+        <div class="clearfix"> </div>
+        <div id=confirm class="register-but">
+            <input type="button" id=commit value="确认发布">
+        </div>
+        <div class="clearfix"> </div>
+    </form>
 
-    </div>
+</div>
+
+
+
+
+
+
     
+
     <script src="<%=path%>/js/fileinput.js"></script>
     <script src="<%=path%>/js/fileinput.min.js"></script>
     <script>
