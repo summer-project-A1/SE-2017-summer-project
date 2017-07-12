@@ -21,7 +21,7 @@
         <property name="status" column="status">
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">common.constants.BookStatus</param>
-            </type>
+            </type> 
         </property>
         <property name="profileID" column="profile_id" />
         <property name="imageID" column="image_id" />
