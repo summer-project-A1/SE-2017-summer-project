@@ -69,6 +69,8 @@ public class OrderAction extends ActionSupport {
     public void setParams(Map params) {
         this.params = params;
     }
+    public Integer getOrderID(){return orderID;}
+    public void setOrderID(Integer orderID){this.orderID = orderID;}
     
     /* ========================================================= */
     

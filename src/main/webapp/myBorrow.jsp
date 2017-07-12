@@ -7,7 +7,6 @@
     <style>
 
         @media ( min-width :768px) {
-            }
             #cartinfo{
                 margin-top: 51px;
                 margin-left:30%;
@@ -16,7 +15,6 @@
 
         }
         @media ( min-width :1440px) {
-            }
             #cartinfo{
                 margin-top: 21px;
                 margin-left:10%;
@@ -30,6 +28,26 @@
 <body>
 
 <script>
+    function confirmReceipt(borrowID){
+        var confirmBtnID = "confirmBtn"+borrowID;
+        $.ajax({
+           url:'<%=path%>/borrowAction/confirmReceipt',
+           type:'POST',
+           data:{'borrowID':borrowID},
+           success:function(msg){
+               if(msg.success){
+                   showTip('已确认收货！','success');
+                   window.setTimeout("window.location='<%=path%>/borrowAction/showMyBorrow'",1500);
+               }else{
+                   showTip('发生错误！', 'danger');
+               }
+           },
+            error:function(xhr,status,error){
+                alert('status='+status+',error='+error);
+            }
+        });
+    }
+
     function returnBook(bookID){
         var returnBtnID = "returnBtn"+bookID;
         var delayBtnID = "delayBtn"+bookID;
@@ -98,7 +116,7 @@
         var commentFormID = "commentForm" + bookID;
         var commentContent = $("#"+commentID).val();
         if(commentContent.length==0){
-            $("#comment_status").html("<span style='color:red'>评论不可为空！</span>");
+            showTip('评论不可为空','danger');
         }else{
             $("#"+commentFormID).submit();
         }
@@ -199,57 +217,162 @@
                     </div>
                 </s:iterator>
 
-                <!-- 以下迭代显示已归还的图书 -->
-                <s:iterator value="#borrowHistoryBook" status="map_state">
-                    <div id="borrowHistory<s:property value="bookID"/>" class="cart-header">
-                        <div class="cart-sec simpleCart_shelfItem">
-                            <div class="cart-item cyc">
-                                <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
-                            </div>
-                            <div class="cart-item-info">
-                                <h4>
-                                    <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
-                                        书名：<s:property value="bookName"/></a><br>
-                                    <span>ISBN:<s:property value="isbn"/></span>
-                                </h4>
-                                <ul class="qty">
-                                    <li><p>作者：<s:property value="author"/></p></li>
-                                    <li><p>分类：<s:property value="category"/></p></li>
-                                    <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
-                                </ul>
-                                <div class="delivery">
-                                    <p>应还日期：<s:property value="yhDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                    <p>归还日期：<s:property value="returnDate"/></p><br>
-                                    <a href="#" id="commentBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="commentBook(<s:property value="bookID"/>)">图书评论</a>
-                                    <a href="#" id="creditRatingBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="creditRating(<s:property value="bookID"/>)">信用评价</a>
-                                    <form id="commentForm<s:property value="bookID"/>" style="display: none">
-                                        <input type="hidden" id="bookID<s:property value="bookID"/>" name="bookID" value="<s:property value="bookID"/>"/>
-                                        <input type="hidden" id="borrowID<s:property value="borrowID"/>" name="borrowID" value="<s:property value="borrowID"/>"/>
-                                        <textarea id="comment<s:property value="bookID"/>" name="comment" class="form-control" rows="3"></textarea>
-                                        <a href="#" class="add-cart item_add" onclick="submitComment(<s:property value="bookID"/>)">提交</a>
-                                        <div id="comment_status"></div>
-                                    </form>
-                                    <form id="creditRatingForm<s:property value="bookID"/>" style="display: none">
-                                        <select name="creditRating" class="form-control form-control-noNewline">
-                                            <option value="-1">差评</option>
-                                            <option value="0">中评</option>
-                                            <option value="1">好评</option>
-                                        </select>
-                                        <a href="#" class="add-cart item_add" onclick="submitRating(<s:property value="bookID"/>)">评价</a>
-                                        <div id="comment_status2"></div>
-                                    </form>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
+        <!-- 以下迭代显示已归还的图书 -->
+        <s:iterator value="#borrowHistoryBook" status="map_state">
+            <div id="borrowHistory<s:property value="bookID"/>" class="cart-header">
+                <div class="cart-sec simpleCart_shelfItem">
+                    <div class="cart-item cyc">
+                        <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
+                    </div>
+                    <div class="cart-item-info">
+                        <h4>
+                            <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
+                                书名：<s:property value="bookName"/></a><br>
+                            <span>ISBN:<s:property value="isbn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已完成</span>
+                        </h4>
+                        <ul class="qty">
+                            <li><p>作者：<s:property value="author"/></p></li>
+                            <li><p>分类：<s:property value="category"/></p></li>
+                            <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
+                        </ul>
+                        <div class="delivery">
+                            <p>应还日期：<s:property value="yhDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p>归还日期：<s:property value="returnDate"/></p><br>
+                            <a href="#" id="commentBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="commentBook(<s:property value="bookID"/>)">图书评论</a>
+                            <a href="#" id="creditRatingBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="creditRating(<s:property value="bookID"/>)">信用评价</a>
+                            <form id="commentForm<s:property value="bookID"/>" style="display: none" action="<%=path%>/commentAction/commentBook" method="post">
+                                <input type="hidden" id="bookID<s:property value="bookID"/>" name="bookID" value="<s:property value="bookID"/>"/>
+                                <input type="hidden" id="borrowID<s:property value="borrowID"/>" name="borrowID" value="<s:property value="borrowID"/>"/>
+                                <textarea id="comment<s:property value="bookID"/>" name="comment" class="form-control" rows="3"></textarea>
+                                <a href="#" class="add-cart item_add" onclick="submitComment(<s:property value="bookID"/>)">提交</a>
+                            </form>
+                            <form id="creditRatingForm<s:property value="bookID"/>" style="display: none">
+                                <select name="creditRating" class="form-control form-control-noNewline">
+                                    <option value="-1">差评</option>
+                                    <option value="0">中评</option>
+                                    <option value="1">好评</option>
+                                </select>
+                                <a href="#" class="add-cart item_add" onclick="submitRating(<s:property value="bookID"/>)">评价</a>
+                                <div id="comment_status2"></div>
+                            </form>
                             <div class="clearfix"></div>
                         </div>
                     </div>
-                </s:iterator>
+                    <div class="clearfix"></div>
+                </div>
+            </div><hr>
+        </s:iterator>
+
+        <!-- 测试样式 -->
+        <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
+            <div class="cart-sec simpleCart_shelfItem">
+                <div class="cart-item cyc">
+                    <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
+                </div>
+                <div class="cart-item-info">
+                    <h4>
+                        <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
+                            书名：<s:property value="bookName"/></a><br>
+                        <span>ISBN:<s:property value="isbn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：未发货</span>
+                    </h4>
+                    <ul class="qty">
+                        <li><p>作者：<s:property value="author"/></p></li>
+                        <li><p>分类：<s:property value="category1"/></p></li>
+                        <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
+                    </ul>
+                    <div class="delivery">
+                        <p id="yhdate<s:property value="bookID"/>">应还日期：<s:property value="yhDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p id="returnDate<s:property value="bookID"/>">尚未归还</p>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
             </div>
-        </div>
-    </div>
+        </div><hr>
+
+        <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
+            <div class="cart-sec simpleCart_shelfItem">
+                <div class="cart-item cyc">
+                    <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
+                </div>
+                <div class="cart-item-info">
+                    <h4>
+                        <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
+                            书名：<s:property value="bookName"/></a><br>
+                        <span>ISBN:<s:property value="isbn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已发货</span>
+                    </h4>
+                    <ul class="qty">
+                        <li><p>作者：<s:property value="author"/></p></li>
+                        <li><p>分类：<s:property value="category1"/></p></li>
+                        <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
+                    </ul>
+                    <div class="delivery">
+                        <p id="yhdate<s:property value="bookID"/>">应还日期：<s:property value="yhDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p id="returnDate<s:property value="bookID"/>">尚未归还</p><br>
+                            <a href="#" id="returnBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="returnBook(<s:property value="bookID"/>)">确认收货</a>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div><hr>
+
+        <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
+            <div class="cart-sec simpleCart_shelfItem">
+                <div class="cart-item cyc">
+                    <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
+                </div>
+                <div class="cart-item-info">
+                    <h4>
+                        <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
+                            书名：<s:property value="bookName"/></a><br>
+                        <span>ISBN:<s:property value="isbn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：未归还</span>
+                    </h4>
+                    <ul class="qty">
+                        <li><p>作者：<s:property value="author"/></p></li>
+                        <li><p>分类：<s:property value="category1"/></p></li>
+                        <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
+                    </ul>
+                    <div class="delivery">
+                        <p id="yhdate<s:property value="bookID"/>">应还日期：<s:property value="yhDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p id="returnDate<s:property value="bookID"/>">尚未归还</p><br>
+                            <a href="#" id="returnBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="returnBook(<s:property value="bookID"/>)">归还</a>
+                            <a href="#" id="delayBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="delayBook(<s:property value="bookID"/>)">续借</a>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div><hr>
+
+        <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
+            <div class="cart-sec simpleCart_shelfItem">
+                <div class="cart-item cyc">
+                    <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
+                </div>
+                <div class="cart-item-info">
+                    <h4>
+                        <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
+                            书名：<s:property value="bookName"/></a><br>
+                        <span>ISBN:<s:property value="isbn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已归还</span>
+                    </h4>
+                    <ul class="qty">
+                        <li><p>作者：<s:property value="author"/></p></li>
+                        <li><p>分类：<s:property value="category1"/></p></li>
+                        <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
+                    </ul>
+                    <div class="delivery">
+                        <p id="yhdate<s:property value="bookID"/>">应还日期：<s:property value="yhDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p id="returnDate<s:property value="bookID"/>">已归还，待确认</p>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div><hr>
+
+
 </div>
-
-
+</div>
 </body>
 </html>
