@@ -97,7 +97,6 @@ CREATE TABLE `Borrow` (
   `shdate`   timestamp NULL DEFAULT NULL,
   `comment1`   int(4) DEFAULT NULL,
   `comment2`   int(4) DEFAULT NULL,
-  KEY `user_id` (`user_id`),
   KEY `book_id` (`book_id`)
 );
 
@@ -125,7 +124,6 @@ CREATE TABLE `BorrowHistory` (
   `shdate`   timestamp NULL DEFAULT NULL,
   `comment1`   int(4) DEFAULT NULL,
   `comment2`   int(4) DEFAULT NULL,
-  KEY `user_id` (`user_id`),
   KEY `book_id` (`book_id`)
 );
 
