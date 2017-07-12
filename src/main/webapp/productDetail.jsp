@@ -62,6 +62,27 @@
                 }
             });
         }
+
+        function deleteComment(commentID){
+            var commentDivID = "comment"+commentID;
+            $.ajax({
+               url:'<%=path%>/commentAction/deleteComment',
+               type:'POST',
+               data:{'commentID': commentID},
+               success: function(msg){
+                   if(msg.success){
+                       showTip('删除评论成功!','success');
+                       $("#"+commentDivID).remove();
+                   }
+                   else{
+                       showTip('删除评论失败!',"danger");
+                   }
+               },
+                error:function(xhr,status,error){
+                    alert('status='+status+',error='+error);
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -206,7 +227,16 @@
                 </div>
                 <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                     <div class="panel-body">
-                        此处放图书评论
+                        <s:iterator value="#commentProfileList" status="st">
+                        <div id="comment<s:property value="userID"/>">
+                            用户：<s:property value="email"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <s:if test="email==#session.userInfo.email">
+                                <a href="#" onclick="deleteComment(<s:property value="commentID"/>)">删除评论</a>
+                            </s:if><br>
+                            评论时间：<s:property value="commentDate"/><br>
+                            评论内容：<s:property value="commentContent"/><br><br>
+                        </div>
+                        </s:iterator>
                     </div>
                 </div>
             </div>
