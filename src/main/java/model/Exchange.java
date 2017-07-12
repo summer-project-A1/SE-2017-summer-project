@@ -4,19 +4,19 @@ import java.sql.Date;
 
 public class Exchange {             // 准备交换但尚未被发布者确认的图书交换记录
     private int exchangeID;
-    private int userID1;
-    private int userID2;
+    private int userID1;     //申请交换人的id
+    private int userID2;     //被申请人的id
     private int wantedID;           // 希望交换得到的书
     private int hadID;              // 交换发起者拥有的书
     private int status;
-    private Date applyDate;
-    private Date responseDate;
-    private Date fh_date1;
-    private Date fh_date2;
-    private Date sh_date1;
-    private Date sh_date2;
-    private int comment1;
-    private int comment2;
+    private Date applyDate;   //申请人申请时间
+    private Date responseDate;  //被申请人回应时间
+    private Date fh_date1;    //申请人发货时间
+    private Date fh_date2;    //被申请人发货时间
+    private Date sh_date1;    //申请人收货时间
+    private Date sh_date2;    //被申请者收货时间
+    private int comment1;     //申请人对被申请者的信用评价
+    private int comment2;     //被申请人对申请人的信用评价
     
     /* =================================================== */
     
