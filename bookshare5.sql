@@ -90,6 +90,7 @@ CREATE TABLE `Borrow` (
   `return_address` varchar(100) NOT NULL,
   `trackingNo1` varchar(30) NOT NULL,
   `trackingNo2` varchar(30) NOT NULL,
+  `order_date`  timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `pay_date`    timestamp NULL DEFAULT NULL,
   `fhdate`   timestamp NULL DEFAULT NULL,
   `borrow_date`   timestamp NULL DEFAULT NULL,
@@ -117,6 +118,7 @@ CREATE TABLE `BorrowHistory` (
   `return_address` varchar(100) NOT NULL,
   `trackingNo1` varchar(30) NOT NULL,
   `trackingNo2` varchar(30) NOT NULL,
+  `order_date`  timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `pay_date`    timestamp NULL DEFAULT NULL,
   `fhdate`   timestamp NULL DEFAULT NULL,
   `borrow_date`   timestamp NULL DEFAULT NULL,
@@ -140,7 +142,8 @@ CREATE TABLE `Exchange` (
   `wanted_id` int(11) NOT NULL,
   `had_id` int(11) NOT NULL,
   `status` int(4) NOT NULL,
-  `applydate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `apply_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `response_date` timestamp NULL DEFAULT NULL,
   `fh_date1`   timestamp NULL DEFAULT NULL,
   `fh_date2`   timestamp NULL DEFAULT NULL,
   `sh_date1`   timestamp NULL DEFAULT NULL,
@@ -162,7 +165,8 @@ CREATE TABLE `ExchangeHistory` (
   `wanted_id` int(11) NOT NULL,
   `had_id` int(11) NOT NULL,
   `status` int(4) NOT NULL,
-  `applydate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `apply_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `response_date` timestamp NULL DEFAULT NULL,
   `fh_date1`   timestamp NULL DEFAULT NULL,
   `fh_date2`   timestamp NULL DEFAULT NULL,
   `sh_date1`   timestamp NULL DEFAULT NULL,
@@ -183,7 +187,8 @@ CREATE TABLE `Orders` (
   `seller_id` int(11) NOT NULL,
   `bookid`  int(11) NOT NULL,
   `price`   int(11) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `order_date`  timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `pay_date`    timestamp NULL DEFAULT NULL,
   `status` int(11) NOT NULL,
   `address` varchar(100) NOT NULL,
   `fh_date`  timestamp NULL DEFAULT NULL,
@@ -225,7 +230,7 @@ CREATE TABLE `Comment` (
   `borrow_id` int(11) NOT NULL PRIMARY KEY,
   `user_id` int(11) NOT NULL,
   `book_id` int(11) NOT NULL,
-  `profile_id` int(11) NOT NULL
+  `profile_id` varchar(25) NOT NULL
 );
 
 

@@ -17,7 +17,8 @@
         <property name="returnAddress" column="returnAddress" />
         <property name="trackingNo1" column="trackingNo1" />
         <property name="trackingNo2" column="trackingNo2" />
-        <property name="payDate" column="payDate" type="timestamp" />
+        <property name="orderDate" column="order_date" type="timestamp"></property>
+        <property name="payDate" column="pay_date" type="timestamp" />
         <property name="fhDate" column="fhDate" type="timestamp" />
         <property name="borrowDate" column="borrowdate" type="timestamp" />
         <property name="returnDate" column="returnDate" type="timestamp" />

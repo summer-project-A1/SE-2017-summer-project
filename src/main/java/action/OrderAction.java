@@ -14,9 +14,7 @@ import service.CartService;
 import service.OrderService;
 
 import model.Book;
-import model.BookInfo;
 import model.Order;
-import model.OrderItem;
 
 public class OrderAction extends ActionSupport {
     private static final long serialVersionUID = 2210578889662002765L;
@@ -79,20 +77,20 @@ public class OrderAction extends ActionSupport {
         return "buyCheckout";
     }
     public String createBuyOrder() {     // 用户创建订单，添加到数据库，跳转到付款页面
-        Order newOrder = this.orderService.createOrder();
-        List<BookInfo> allBookInfo = new ArrayList<BookInfo>();
+        /*Order newOrder = this.orderService.createOrder();
+        List<Book> allBook = new ArrayList<Book>();
         for(OrderItem orderItem : newOrder.getOrderItems()) {
             int bookID = orderItem.getBookID();
-            allBookInfo.add(this.bookService.showBookInfo(bookID));
+            allBook.add(this.bookService.showBook(bookID));
         }
         ActionContext.getContext().put("order", newOrder);
-        ActionContext.getContext().put("booksInOrder", allBookInfo);
+        ActionContext.getContext().put("booksInOrder", allBook);*/
         return "showOrder";
     }
     public String showOrderById() {
         Map orderInfo = this.orderService.getOrderDetailByID(this.orderID);
         Order order = (Order)orderInfo.get("order");
-        List<BookInfo> booksInOrder = (List<BookInfo>)orderInfo.get("booksInOrder");
+        List<Book> booksInOrder = (List<Book>)orderInfo.get("booksInOrder");
         ActionContext.getContext().put("order", order);
         ActionContext.getContext().put("orderStatus", order.getStatus().toString());
         ActionContext.getContext().put("booksInOrder", booksInOrder);
