@@ -70,7 +70,7 @@
 
     function setDefaultAddr(addrID){
         $.ajax({
-           url:'<%=path%>/',
+           url:'<%=path%>/userAction/setDefaultAddress',
            type:'POST',
            data:{'addrID':addrID},
            success:function(msg){
@@ -87,26 +87,18 @@
                var toAddLabel = "addrLabel"+oldDefaultAddrID;
                var toAddLink = "setDefaultAddr"+oldDefaultAddrID;
 
-               var htmlstr1 = "";
-               var htmlstr2 = "";
                if(oldDefaultAddr != null && oldDefaultAddr != null){
-                   htmlstr1 = '<input type="ratio" id="address'+oldDefaultAddrID+'" name="address" value="'+oldDefaultAddr+'"/>';
-                   htmlstr2 = '<label id="addrLabel'+oldDefaultAddrID+'" for="address'+oldDefaultAddrID+'">'+oldDefaultAddr+'</label><a href="#" id="setDefaultAddr'+oldDefaultAddrID+'" onclick="setDefaultAddr('+oldDefaultAddrID+')">设为默认地址</a>' +
-                       '<a href="#" id="deleteAddr'+oldDefaultAddrID+'" onclick="deleteAddr('+oldDefaultAddrID+')">删除地址</a><br>';
+                   var htmlstr1 = '<div id="'+oldDefaultAddrID+'"><input type="ratio" id="address'+oldDefaultAddrID+'" name="address" value="'+oldDefaultAddr+'"/>'
+                   +'<label id="addrLabel'+oldDefaultAddrID+'" for="address'+oldDefaultAddrID+'">'+oldDefaultAddr+'</label><a href="#" id="setDefaultAddr'+oldDefaultAddrID+'" onclick="setDefaultAddr(\''+oldDefaultAddrID+'\')">设为默认地址</a>' +
+                       '<a href="#" id="deleteAddr'+oldDefaultAddrID+'" onclick="deleteAddress(\''+oldDefaultAddrID+'\')">删除地址</a></div>';
                    showTip('更换默认地址成功','success');
                    $("#defaultAddr").html(newDefaultAddr);
-                   $("#"+toDeleteAddr).remove();
-                   $("#"+toDeleteLabel).remove();
-                   $("#"+toDeleteLink).remove();
+                   $("#"+newDefaultAddrID).remove();
                    $("#addrForm").append(htmlstr1);
-                   $("#addrForm").append(htmlstr2);
                }else{
                    showTip('更换默认地址成功','success');
-
-                   var htmlstr3 = '<input type="radio" id="defaultAddr" name="address" value="'+newDefaultAddr+'"/><label for="defaultAddr">'+newDefaultAddr+'</label><label id="defaultAddrLabel">默认地址</label><br>';
-                   $("#"+toDeleteAddr).remove();
-                   $("#"+toDeleteLabel).remove();
-                   $("#"+toDeleteLink).remove();
+                   var htmlstr3 = '<div id="'+newDefaultAddrID+'">'+'<input type="radio" id="defaultAddr" name="address" value="'+newDefaultAddr+'"/><label for="defaultAddr">'+newDefaultAddr+'</label><label id="defaultAddrLabel">默认地址</label></div>';
+                   $("#"+newDefaultAddrID).remove();
                    $("#addrForm").append(htmlstr3);
                }
 
@@ -128,19 +120,18 @@
         }else{
             var params = $("#newAddrForm").serialize();
             $.ajax({
-                url:'<%=path%>/',
+                url:'<%=path%>/userAction/addAddress',
                 type:'POST',
                 data:params,
                 success:function(msg){
                     showTip('添加新地址成功','success');
                     $("#newAddrForm").remove();
-                    var newAddress = msg.newAddr;
-                    var newAddressID = msg.newAddrID;
-                    var htmlstr1 = '<input type="ratio" id="address'+newAddressID+'" name="address" value="'+newAddress+'"/>';
-                    var htmlstr2 = '<label id="addrLabel'+newAddressID+'" for="address'+newAddressID+'">'+newAddress+'</label><a href="#" id="setDefaultAddr'+newAddressID+'" onclick="setDefaultAddr('+newAddressID+')">设为默认地址&nbsp;&nbsp;&nbsp;&nbsp;</a>' +
-                        '<a href="#" id="deleteAddr'+newAddressID+'" onclick="deleteAddr('+newAddressID+')">删除地址</a><br>';
+                    var newAddress = msg.newAddress;
+                    var newAddressID = msg.newAddressID;
+                    var htmlstr1 = '<div id="'+newAddressID+'"><input type="radio" id="address'+newAddressID+'" name="address" value="'+newAddress+'"/>'
+                    +'<label id="addrLabel'+newAddressID+'" for="address'+newAddressID+'">'+newAddress+'</label><a href="#" id="setDefaultAddr'+newAddressID+'" onclick="setDefaultAddr(\''+newAddressID+'\')">设为默认地址&nbsp;&nbsp;&nbsp;&nbsp;</a>' +
+                        '<a href="#" id="deleteAddr'+newAddressID+'" onclick="deleteAddress(\''+newAddressID+'\')">删除地址</a></div>';
                     $("#addrForm").append(htmlstr1);
-                    $("#addrForm").append(htmlstr2);
                 },
                 error:function(xhr,status,error){
                     alert('status='+status+',error='+error);
@@ -149,21 +140,24 @@
         }
     }
 
-    function deleteAddr(addrID){
+    function deleteAddress(addrID){
         var addressID = "address"+addrID;
         var addrLabelID = "addrLabel"+addrID;
         var setDefaultID = "setDefaultAddr"+addrID;
         var deleteAddrID = "deleteAddr"+addrID;
+        var divID = addrID;
         $.ajax({
-            url:'<%=path%>/',
+            url:'<%=path%>/userAction/deleteAddress',
             type:'POST',
             data:{'addrID':addrID},
             success:function(msg){
                 showTip('删除地址成功','success');
+                /*
                 $("#"+addressID).remove();
                 $("#"+addrLabelID).remove();
                 $("#"+setDefaultID).remove();
-                $("#"+deleteAddrID).remove();
+                $("#"+deleteAddrID).remove();*/
+                $("#"+divID).remove();
 
             },
             error:function(xhr,status,error){
@@ -223,14 +217,18 @@
                 <input type="hidden" name="action" value="<s:property value="#action"/>" />
 
                 <s:iterator value="#defaultAddrList" status="st">
+                    <div id="<s:property value="fullAddressID"/>">
                 <input type="radio" id="defaultAddr" name="address" value="<s:property value="fullAddressString"/>"/>
                 <label for="defaultAddr"><s:property value="fullAddressString"/></label><label id="defaultAddrLabel">默认地址</label><br>
+                    </div>
                 </s:iterator>
 
                 <s:iterator value="#addrList" status="st">
+                    <div id="<s:property value="fullAddressID"/>">
                     <input type="radio" id="address<s:property value="fullAddressID"/>" name="address" value="<s:property value="fullAddressString"/>"/>
-                    <label id="addrLabel<s:property value="fullAddressID"/>" for="address<s:property value="fullAddressID"/>"><s:property value="fullAddressString"/></label><a href="#" id="setDefaultAddr<s:property value="fullAddressID"/>" onclick="setDefaultAddr(<s:property value="fullAddressID"/>)">设为默认地址&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                    <a href="#" id="deleteAddr<s:property value="fullAddressID"/>" onclick="deleteAddr(<s:property value="fullAddressID"/>)">删除地址</a><br>
+                    <label id="addrLabel<s:property value="fullAddressID"/>" for="address<s:property value="fullAddressID"/>"><s:property value="fullAddressString"/></label><a href="#" id="setDefaultAddr<s:property value="fullAddressID"/>" onclick="setDefaultAddr('<s:property value="fullAddressID"/>')">设为默认地址&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <a href="#" id="deleteAddr<s:property value="fullAddressID"/>" onclick="deleteAddress('<s:property value="fullAddressID"/>')">删除地址</a>
+                    </div>
                 </s:iterator>
             </form>
             <a href="#" class="add-cart item_add" onclick="showAddrForm()">添加新地址</a>
@@ -242,7 +240,7 @@
                 </div>
                 <div class="input">
                     <label>详细地址</label><font color="#FF0000">*</font>&nbsp;
-                    <input type="text" id="newAddr" class="form-control" name="newAddress" >
+                    <input type="text" id="newAddr" class="form-control" name="address" >
                 </div>
                 <a href="#" class="add-cart item_add" onclick="addNewAddr()">添加</a>
             </form>
