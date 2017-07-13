@@ -16,10 +16,8 @@ import dao.BookReleaseDao;
 import dao.OrderDao;
 import dao.UserDao;
 import model.Book;
-import model.BookInfo;
 import model.BookRelease;
 import model.Order;
-import model.OrderItem;
 import model.User;
 import service.OrderService;
 
@@ -65,28 +63,33 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
     /* ========================================================= */
     
+    
     @Override
     public Map getOrderDetailByID(int orderID) {
-        // 返回值Map，其中包含key为order的Order类，key为booksInOrder的List<BookInfo>
+    	/*
+        // 返回值Map，其中包含key为order的Order类，key为booksInOrder的List<Book>
         Map result = new HashMap();
-        List<BookInfo> booksInOrder = new ArrayList<BookInfo>();
+        List<Book> booksInOrder = new ArrayList<Book>();
         Order order = this.orderDao.getOrderByID(orderID);
         if(order == null) {
             return null;
         }
         for(OrderItem orderItem : order.getOrderItems()) {
             int bookID = orderItem.getBookID();
-            BookInfo bookInfo = this.bookDao.getBookInfoByID(bookID);
-            bookInfo.setBuyCredit(orderItem.getPrice());
-            booksInOrder.add(bookInfo);
+            Book book = this.bookDao.getBookByID(bookID);
+            book.setBuyCredit(orderItem.getPrice());
+            booksInOrder.add(book);
         }
         result.put("order", order);
         result.put("booksInOrder", booksInOrder);
         return result;
+        */
+    	return null;
     }
     
+    
     @Override
-    public Order createOrder() {
+    public List<Order> createOrder() {
         /* 不验证积分是否足够
          * 修改书的状态
          * 跳转到订单页面
@@ -107,14 +110,12 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
             return null;
         }
         // now buyCartList must not be empty
-        Order newOrder = new Order();
-        newOrder.setUserID(loginedUser.getUserID());
-        newOrder.setOrderDate(new Date());
-        newOrder.setStatus(OrderStatus.UNPAID);
+        //Order newOrder = new Order();
+        //newOrder.setBuyerID(loginedUser.getUserID());
+        //newOrder.setOrderDate(new Date());
+        //newOrder.setStatus(OrderStatus.UNPAID);
 
-        Set<OrderItem> newOrderItemList = new HashSet<OrderItem>();
         List<Book> allBook = new ArrayList<Book>();
-        int totalCredit = 0;
         boolean flag = true;
         Iterator iterator = buyCartList.iterator();
         while(iterator.hasNext()) {
@@ -128,32 +129,27 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
             else {
                 flag = false;
             }
-            BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
-            OrderItem orderItem = new OrderItem();
-            orderItem.setBookID(bookID);
-            orderItem.setPrice(bookRelease.getBuyCredit());
-            totalCredit += bookRelease.getBuyCredit();
-            newOrderItemList.add(orderItem);
-            //iterator.remove();
         }
         if(flag) {
+        	List<Order> result=new ArrayList<>();
             for(Book book : allBook) {
                 book.setStatus(BookStatus.BOUGHT);
-                this.bookDao.update(book);
+                bookDao.update(book);
+                BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(book.getBookID());
+                Order order = new Order(loginedUser.getUserID(),book.getBookID(),bookRelease.getUserID(),new Date(),book.getBuyCredit(),OrderStatus.NOTPAID,null);
+                orderDao.save(order);
             }
+            return result;
         }
         else {
             return null;
         }
-        newOrder.setOrderItems(newOrderItemList);
-        newOrder.setTotalPrice(totalCredit);
-        this.orderDao.save(newOrder);
-        getHttpSession().remove("buyCart");
-        return newOrder;
     }
 
+    
     @Override
     public boolean submitOrder(int orderID) {
+    	/*
         // 确认订单
         // 需要检查用户的积分是否足够支付
         if(!isLogined()) {
@@ -174,10 +170,15 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
         this.userDao.update(loginedUser);
         this.orderDao.update(order);
         return true;
+        */
+    	return true;
     }
+    
 
+    
     @Override
     public boolean cancelOrder(int orderID) {
+    	/*
         if(!isLogined()) {
             return false;
         }
@@ -198,8 +199,9 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
             book.setStatus(BookStatus.IDLE);
             this.bookDao.update(book);
         }
-        this.orderDao.update(order);
+        this.orderDao.update(order);*/
         return true;
     }
+    
     
 }
