@@ -19,9 +19,13 @@
         }
         ;
 
+        var location = (window.location+'').split('/'); 
+        var basePath = location[0]+'//'+location[2]+'/'+location[3]; 
+        var url = basePath + '/js/xxx.js'; 
+
         // 默认值
         settings = $.extend({
-            url: "js/city.min.js",
+            url: basePath+"/js/city.min.js",
             prov: null,
             city: null,
             dist: null,
