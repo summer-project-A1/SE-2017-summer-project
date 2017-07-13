@@ -235,13 +235,13 @@
             <a href="#" class="add-cart item_add" onclick="showAddrForm()">添加新地址</a>
             <form id="newAddrForm" style="display: none">
                 <div class="form-group form-group-auto"  id="city_4">
-                    <select class="prov form-control form-control-noNewline" id="province" name="province" style="width:auto"></select>
-                    <select class="city form-control form-control-noNewline"  disabled="disabled" id="city" name="city"  style="width:auto"></select>
-                    <select class="dist form-control form-control-noNewline" disabled="disabled" id="district" name="district" style="width: auto"></select>
+                    <select class="prov form-control form-control-noNewline" id="province" name="FullAddress.province" style="width:auto"></select>
+                    <select class="city form-control form-control-noNewline"  disabled="disabled" id="city" name="FullAddress.city"  style="width:auto"></select>
+                    <select class="dist form-control form-control-noNewline" disabled="disabled" id="district" name="FullAddress.district" style="width: auto"></select>
                 </div>
                 <div class="input">
                     <label>详细地址</label><font color="#FF0000">*</font>&nbsp;
-                    <input type="text" id="newAddr" class="form-control" name="address" >
+                    <input type="text" id="newAddr" class="form-control" name="FullAddress.address" >
                 </div>
                 <a href="#" class="add-cart item_add" onclick="addNewAddr()">添加</a>
             </form>
