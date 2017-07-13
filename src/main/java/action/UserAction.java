@@ -7,6 +7,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import model.FullAddress;
+import model.UserProfile;
 import service.UserService;
 
 public class UserAction extends ActionSupport {
@@ -15,13 +16,10 @@ public class UserAction extends ActionSupport {
     private UserService userService; 
     
     private Map params;
+
+    private UserProfile userProfile;
     
-    private String email;
-    private String password;
-    private String confirmpassword;
-    private String name;
-    private String gender;
-    private String mobile;
+
     private String province;
     private String city;
     private String district;
@@ -35,53 +33,7 @@ public class UserAction extends ActionSupport {
     
     /* =========================================================== */
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    public String getConfirmpassword() {
-        return confirmpassword;
-    }
-
-    public void setConfirmpassword(String confirmpassword) {
-        this.confirmpassword = confirmpassword;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
 
     public String getProvince() {
         return province;
@@ -163,12 +115,36 @@ public class UserAction extends ActionSupport {
         this.addrID = addrID;
     }
 
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
+
+    public UserProfile getUserProfile(){
+        return this.userProfile;
+    }
+
     /* =========================================================== */
+
+
+    public String showUserProfile(){
+        ActionContext.getContext().put("userProfile",userProfile);
+        return "showUserProfile";
+    }
 
     public String updatePassword() {
         this.params = new HashMap();
         boolean result = this.userService.updatePassword(this.oldPassword, this.newPassword);
+        System.out.println("success: "+result);
         params.put("success", result);
+        return "ajax";
+    }
+
+    public String updateUserProfile(){
+        this.params = new HashMap();
+        //boolean result = this.userService.updateUserProfile(this.oldPassword, this.newPassword);
+        //System.out.println("success: "+result);
+        //params.put("success", result);
+        params.put("success", true);
         return "ajax";
     }
     
@@ -198,4 +174,6 @@ public class UserAction extends ActionSupport {
         this.params.put("result", result);
         return null;
     }
+
+
 }
