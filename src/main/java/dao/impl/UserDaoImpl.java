@@ -297,7 +297,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         }
         // 新地址添加默认属性
         DBObject query=new BasicDBObject();
-        query.put("_id", fullAddressID);
+        query.put("_id", new ObjectId(fullAddressID));
         query.put("userID", userID);
         DBObject newDefaultDelivery = collection.findOne(query);
         newDefaultDelivery.put("isDefault", true);
