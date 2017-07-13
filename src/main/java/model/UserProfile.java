@@ -2,13 +2,18 @@ package model;
 
 import java.util.List;
 
+import common.constants.UserRole;
+
 public class UserProfile {
-    private int userID;
+    private Integer userID;
     private String nickName;
     private String plainPassword;   // 明文密码
     private String password;        // 加密后的密码
     private String email;
     private int credit;
+    private int honest;
+    private UserRole role;
+    private String userRole; 
     private String imageID;
     private String province;        // 用户地址，区别于收货地址
     private String city;
@@ -22,10 +27,10 @@ public class UserProfile {
     
     /* ======================================================== */
     
-    public int getUserID() {
+    public Integer getUserID() {
         return userID;
     }
-    public void setUserID(int userID) {
+    public void setUserID(Integer userID) {
         this.userID = userID;
     }
     public String getNickName() {
@@ -58,8 +63,26 @@ public class UserProfile {
     public void setCredit(int credit) {
         this.credit = credit;
     }
-    public String getImageID() {
+    public int getHonest() {
+		return honest;
+	}
+	public void setHonest(int honest) {
+		this.honest = honest;
+	}
+	public String getImageID() {
         return imageID;
+    }
+    public UserRole getRole() {
+        return role;
+    }
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+    public String getUserRole() {
+        return userRole;
+    }
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
     public void setImageID(String imageID) {
         this.imageID = imageID;

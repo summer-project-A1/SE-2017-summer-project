@@ -16,6 +16,7 @@
                 <param name="enumClass">common.constants.UserRole</param>
             </type>
         </property>
+        <property name="honesty" column="honesty" />
         <property name="province" column="province" />
         <property name="city" column="city" />
         <property name="district" column="district" />

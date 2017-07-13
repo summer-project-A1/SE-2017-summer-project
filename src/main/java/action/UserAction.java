@@ -25,6 +25,10 @@ public class UserAction extends ActionSupport {
     private String district;
     private String address;
     
+    private String oldPassword;
+    private String newPassword;
+    private String confirmNewPassword;
+    
     /* =========================================================== */
 
     public String getEmail() {
@@ -107,6 +111,30 @@ public class UserAction extends ActionSupport {
         this.address = address;
     }
 
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getConfirmNewPassword() {
+        return confirmNewPassword;
+    }
+
+    public void setConfirmNewPassword(String confirmNewPassword) {
+        this.confirmNewPassword = confirmNewPassword;
+    }
+
     public UserService getUserService() {
         return userService;
     }
@@ -125,5 +153,10 @@ public class UserAction extends ActionSupport {
 
     /* =========================================================== */
 
-
+    public String updatePassword() {
+        this.params = new HashMap();
+        boolean result = this.userService.updatePassword(this.oldPassword, this.newPassword);
+        params.put("success", result);
+        return "ajax";
+    }
 }

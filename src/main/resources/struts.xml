@@ -49,6 +49,14 @@
             </allowed-methods>
         </action>
         -->
+        <action name="*" class="action.UserAction" method="{1}">
+            <result name="ajax" type="json">
+                <param name="root">params</param>
+            </result>
+            <allowed-methods>
+                updatePassword
+            </allowed-methods>
+        </action>
     </package>
 
     <package name="cartAction" extends="struts-default,json-default" namespace="/cartAction">
