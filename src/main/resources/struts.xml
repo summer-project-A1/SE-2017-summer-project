@@ -35,27 +35,27 @@
     
     
 	<package name="userAction" extends="struts-default,json-default" namespace="/userAction">
-        <!-- userAction 全部需要isLogin拦截
+        <interceptors>
+            <interceptor name="isLogin" class="action.interceptor.IsLoginInterceptor"/>
+            <interceptor-stack name="loginAuthCheck">
+                <interceptor-ref name="isLogin"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="loginAuthCheck"/>
+
+        <global-results>
+            <result name="login" type="redirect">/signin.jsp</result>
+        </global-results>
         <action name="*" class="action.UserAction" method="{1}">
-            <result name="logout" type="redirectAction">
-                <param name="actionName">index</param>
-                <param name="namespace">/</param>
-            </result>
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
-            <allowed-methods>
-                logout,login,register,checkEmailAvailable
-            </allowed-methods>
-        </action>
-        -->
-        <action name="*" class="action.UserAction" method="{1}">
-            <result name="ajax" type="json">
-                <param name="root">params</param>
-            </result>
+            <result name="showUserProfile">/userProfile.jsp</result>
             <result name="getAllAddress">/checkout.jsp</result>
             <allowed-methods>
-                updatePassword,getAllAddress,addAddress,setDefaultAddress,deleteAddress
+                showUserProfile,updatePassword,getAllAddress,addAddress,setDefaultAddress,deleteAddress
             </allowed-methods>
         </action>
     </package>

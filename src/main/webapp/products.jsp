@@ -240,9 +240,9 @@
                             </ul>
                             <div class="clearfix"> </div>
                             <div class="single-bottom">
-                                    <a href="<%=path%>"/>bookAction/showBooksByCategory1ID?category1ID=<s:property value="category1ID"/>"><p><s:property value="category1Name"/></p>
+                                    <a href="<%=path%>/bookAction/showBooksByCategory1Name?category1Name=<s:property value="category1Name"/>"><p><s:property value="category1Name"/></p>
                                 <s:iterator value="category2List" status="st2">
-                                    <a href="<%=path%>/bookAction/showBooksByCategory2ID"><p><s:property value="category2Name"/></p></a>
+                                    <a href="<%=path%>/bookAction/showBooksByCategory2Name?category2Name=<s:property value="category2Name"/>"><p><s:property value="category2Name"/></p></a>
                                 </s:iterator>
                             </div>
                             <script>

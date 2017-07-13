@@ -100,7 +100,6 @@
                         if(response.result == true){
                             //先替换原页面元素，等到用户刷新再真正判断session来载入真正的元素
                             var replace = "<label>"+"欢迎您!"+response.email+"</label><br>" +
-                                "<label><a href='myaccount.jsp'>个人信息</a></label><br>" +
                                 "<label><a href='myrelease.jsp'>我的发布</a></label><br>" +
                                 "<label><a href='<%=path%>/borrowAction/showMyBorrow'>我的借阅</a></label><br>" +
                                 "<label><a href='myexchange.jsp'>我的交换</a></label><br>" +
@@ -218,7 +217,7 @@
                 </div>
             </div>
             <div class="header-right login">
-                <a href="myaccount.html"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                <a href="<%=path%>/userAction/showUserProfile"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
                 <div id="loginBox">
                     <form id="loginForm">
                 <s:if test="#session.userInfo==null">
@@ -237,7 +236,6 @@
                 </s:if>
                 <s:else>
                             <label>欢迎您！<s:property value="#session.userInfo.email"/></label><br>
-                            <label><a href="myaccount.jsp">个人信息</a></label><br>
                             <label><a href="myrelease.jsp">我的发布</a></label><br>
                             <label><a href="<%=path%>/borrowAction/showMyBorrow">我的借阅</a></label><br>
                             <label><a href="myexchange.jsp">我的交换</a></label><br>
