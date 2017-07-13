@@ -247,7 +247,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         query.put("userID", userID);
         query.put("isDefault", true);
         Map result = (Map)collection.findOne(query);
-        return new FullAddress(result);
+        return result==null? null : new FullAddress(result);
     }
     
     @Override
