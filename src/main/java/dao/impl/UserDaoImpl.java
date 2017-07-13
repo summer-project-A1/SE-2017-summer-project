@@ -1,6 +1,7 @@
 package dao.impl;
 
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,9 +12,9 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 
+import model.FullAddress;
 import model.User;
-
-import dao.BaseDao;
+import model.UserProfile;
 import dao.UserDao;
 
 public class UserDaoImpl extends BaseDaoImpl implements UserDao {
@@ -38,6 +39,146 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         return null;
     }
 
+    @Override
+    public UserProfile getUserProfile(int userID) {
+        User user = this.getUserById(userID);
+        DBCollection collection = getMongoDb().getCollection("user_profile");
+        DBObject query=new BasicDBObject("_id", new ObjectId(user.getProfileID()));
+        DBObject obj = collection.findOne(query);
+        Map userProfileInMongo = (obj!=null) ? (Map)obj : null;
+        
+        UserProfile userProfile = new UserProfile();
+        userProfile.setUserID(user.getUserID());
+        userProfile.setNickName(user.getNickName());
+        userProfile.setEmail(user.getEmail());
+        userProfile.setCredit(user.getCredit());
+        userProfile.setRole(user.getRole());
+        userProfile.setUserRole(user.getRole().toString());
+        userProfile.setImageID(user.getImageID());
+        userProfile.setProvince(user.getProvince());
+        userProfile.setCity(user.getCity());
+        userProfile.setDistrict(user.getDistrict());
+        userProfile.setAddress(user.getAddress());
+        userProfile.setName((String)userProfileInMongo.get("name"));
+        userProfile.setGender((String)userProfileInMongo.get("gender"));
+        userProfile.setMobile((String)userProfileInMongo.get("mobile"));
+        List<FullAddress> deliveryAddress = new ArrayList<FullAddress>();
+        List<Map> deliveryAddressListMap = (List<Map>)userProfileInMongo.get("deliveryAddress");
+        for(Map tmp1 : deliveryAddressListMap) {
+            FullAddress tmp2 = new FullAddress();
+            tmp2.setProvince((String)tmp1.get("province"));
+            tmp2.setCity((String)tmp1.get("city"));
+            tmp2.setDistrict((String)tmp1.get("district"));
+            tmp2.setAddress((String)tmp1.get("address"));
+            tmp2.setIsDefault((Boolean)tmp1.get("isDefault"));
+            deliveryAddress.add(tmp2);
+        }
+        userProfile.setDeliveryAddress(deliveryAddress);
+        return userProfile;
+    }
+    
+    @Override
+    public boolean saveUserProfile(UserProfile newUserProfile) {
+        // 不涉及用户图片
+        DBCollection collection = getMongoDb().getCollection("user_profile");
+        Map userProfileInMongo;
+        userProfileInMongo = new HashMap();
+        
+        // 用户在mongodb中的属性
+        userProfileInMongo.put("name", newUserProfile.getName());
+        userProfileInMongo.put("gender", newUserProfile.getGender());
+        userProfileInMongo.put("mobile", newUserProfile.getMobile());
+        List<Map> deliveryAddress = new ArrayList<Map>();
+        for(FullAddress tmp1 : newUserProfile.getDeliveryAddress()) {
+            Map tmp2 = new HashMap();
+            tmp2.put("province", tmp1.getProvince());
+            tmp2.put("city", tmp1.getCity());
+            tmp2.put("district", tmp1.getDistrict());
+            tmp2.put("district", tmp1.getAddress());
+            tmp2.put("isDefault", tmp1.getIsDefault());
+            deliveryAddress.add(tmp2);
+        }
+        userProfileInMongo.put("deliveryAddress", deliveryAddress);
+        
+        String profileID;    // mongodb部分的id
+        BasicDBObject document = new BasicDBObject(userProfileInMongo);
+        collection.insert(document);
+        profileID = ((ObjectId)document.get("_id")).toString();
+        
+        // 用户在mysql中的属性
+        User newUser = new User();
+        newUser.setNickName(newUserProfile.getNickName());
+        newUser.setPassword(newUserProfile.getPassword());   // !!!!!
+        newUser.setEmail(newUserProfile.getEmail());
+        newUser.setCredit(newUserProfile.getCredit());
+        newUser.setRole(newUserProfile.getRole());
+        newUser.setProvince(newUserProfile.getProvince());
+        newUser.setCity(newUserProfile.getCity());
+        newUser.setDistrict(newUserProfile.getDistrict());
+        newUser.setAddress(newUserProfile.getAddress());
+        
+        newUser.setProfileID(profileID);
+        newUser.setImageID("");
+        
+        // 添加或更新
+        this.save(newUser);
+        return true;
+    }
+    
+    @Override
+    public boolean updateUserProfile(UserProfile newUserProfile) {
+        // 不涉及用户图片
+        DBCollection collection = getMongoDb().getCollection("user_profile");
+        Integer userID = newUserProfile.getUserID();
+        User oldUser = userID==null? null:this.getUserById(userID);
+        User newUser;
+        Map userProfileInMongo;
+        
+        newUser = oldUser;
+            
+        DBObject query=new BasicDBObject("_id", new ObjectId(oldUser.getProfileID()));
+        DBObject obj = collection.findOne(query);
+        userProfileInMongo = (obj!=null) ? (Map)obj : null;
+            
+        // 用户在mongodb中的属性
+        userProfileInMongo.put("name", newUserProfile.getName());
+        userProfileInMongo.put("gender", newUserProfile.getGender());
+        userProfileInMongo.put("mobile", newUserProfile.getMobile());
+        List<Map> deliveryAddress = new ArrayList<Map>();
+        for(FullAddress tmp1 : newUserProfile.getDeliveryAddress()) {
+            Map tmp2 = new HashMap();
+            tmp2.put("province", tmp1.getProvince());
+            tmp2.put("city", tmp1.getCity());
+            tmp2.put("district", tmp1.getDistrict());
+            tmp2.put("district", tmp1.getAddress());
+            tmp2.put("isDefault", tmp1.getIsDefault());
+            deliveryAddress.add(tmp2);
+        }
+        userProfileInMongo.put("deliveryAddress", deliveryAddress);
+        
+        String profileID;    // mongodb部分的id
+        BasicDBObject document = new BasicDBObject(userProfileInMongo);
+        collection.update(query, document);
+        profileID = oldUser.getProfileID();
+        
+        // 用户在mysql中的属性
+        newUser.setNickName(newUserProfile.getNickName());
+        newUser.setPassword(newUserProfile.getPassword());   // !!!!!
+        newUser.setEmail(newUserProfile.getEmail());
+        newUser.setCredit(newUserProfile.getCredit());
+        newUser.setRole(newUserProfile.getRole());
+        newUser.setProvince(newUserProfile.getProvince());
+        newUser.setCity(newUserProfile.getCity());
+        newUser.setDistrict(newUserProfile.getDistrict());
+        newUser.setAddress(newUserProfile.getAddress());
+        
+        //newUser.setProfileID(profileID);
+        
+        this.update(newUser);
+        return true;
+    }
+    
+    @Override
 	public List<User> getAllUsers() {
 		String hql = "from User";
 		Query query = getSession().createQuery(hql);
@@ -46,7 +187,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	}
 
     @Override
-    public Map getUserProfileMap(int userID) {
+    public Map getUserProfileMapInMongo(int userID) {
         DBCollection collection = getMongoDb().getCollection("user_profile");
         DBObject query=new BasicDBObject("userID", (Integer)userID);
         DBObject obj = collection.findOne(query);
@@ -55,7 +196,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public String saveUserProfile(Map userProfile) {
+    public String saveUserProfileInMongo(Map userProfile) {
         // 这里的userProfile只包括在mongodb中的属性！
         /*
         Iterator it = userProfile.entrySet().iterator();
@@ -72,15 +213,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean updateUserProfile(User user, Map userProfile) {
+    public boolean updateUserProfileInMongo(User user, Map userProfile) {
         // 这里的userProfile只包括在mongodb中的属性！
-        Iterator it = userProfile.entrySet().iterator();
-        while(it.hasNext()) {
-            Map.Entry entry = (Map.Entry)it.next();
-            System.out.println((String)entry.getKey());
-            System.out.println(entry.getValue());
-        }
-        
+
         DBCollection collection = getMongoDb().getCollection("user_profile");
         DBObject query=new BasicDBObject("_id", new ObjectId(user.getProfileID()));
         DBObject old = collection.findOne(query);

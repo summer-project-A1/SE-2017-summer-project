@@ -15,7 +15,6 @@ import com.mongodb.DBObject;
 import common.constants.BookStatus;
 import dao.BookDao;
 import model.Book;
-import model.BookInfo;
 import model.BookRelease;
 
 public class BookDaoImpl extends BaseDaoImpl implements BookDao {
@@ -27,42 +26,6 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
         List<Book> books = query.list();
         Book book = books.size() == 1 ? books.get(0) : null;
         return book;
-    }
-    
-    @Override
-    public BookInfo getBookInfoByID(int bookID) {
-        String hql = "from Book as b,BookRelease as br where b.bookID=br.bookID and b.bookID=:bookID";
-        Query query = getSession().createQuery(hql).setParameter("bookID", bookID);
-        List<Object> resultList = query.list();
-        if(resultList.size() != 1) {
-            return null;
-        }
-        Object[] hql_result_arr = (Object[]) resultList.get(0);  //取第一行的查询结果  
-        //将查询结果分成两半，分别转化为相应的实体  
-        Book book = (Book) hql_result_arr[0];  
-        BookRelease bookRelease = (BookRelease) hql_result_arr[1];  
-        //输出
-        BookInfo bookInfo = new BookInfo();
-        bookInfo.setBookID(book.getBookID());
-        bookInfo.setBookName(book.getBookName());
-        bookInfo.setIsbn(book.getIsbn());
-        bookInfo.setAuthor(book.getAuthor());
-        bookInfo.setPress(book.getPress());
-        //////////////??????????????????
-        bookInfo.setCategory1(book.getCategory1().toString());
-        //////////////??????????????????
-        bookInfo.setCategory2(book.getCategory2().toString());
-        bookInfo.setCanExchange(book.getCanExchange());
-        bookInfo.setCanBorrow(book.getCanBorrow());
-        bookInfo.setReserved(book.getReserved());
-        bookInfo.setStatus(book.getStatus());
-        bookInfo.setProfileID(book.getProfileID());
-        bookInfo.setImageID(book.getImageID());
-        bookInfo.setBorrowCredit(bookRelease.getBorrowCredit());
-        bookInfo.setBuyCredit(bookRelease.getBuyCredit());
-        bookInfo.setReleaseTime(bookRelease.getReleaseTime());
-        
-        return bookInfo;
     }
     
     @Override
@@ -88,45 +51,6 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
         query.setFirstResult((part-1)*pageSize); 
         query.setMaxResults(pageSize); 
         List<Book> result = query.list();
-        return result;
-    }
-    
-    @Override
-    public List<BookInfo> getAllBookInfoByPage(int part,int pageSize) {
-        String hql = "from Book as b,BookRelease as br where b.bookID=br.bookID";
-        Query query = getSession().createQuery(hql);
-        query.setFirstResult((part-1)*pageSize); 
-        query.setMaxResults(pageSize); 
-        List<Object> resultList = query.list();
-        List<BookInfo> result = new ArrayList();
-        for (int i = 0; i < resultList.size(); i++) {  
-            Object[] hql_result_arr = (Object[]) resultList.get(i);  //取其中一行的查询结果  
-            //将查询结果分成两半，分别转化为相应的实体  
-            Book book = (Book) hql_result_arr[0];  
-            BookRelease bookRelease = (BookRelease) hql_result_arr[1];  
-            //输出
-            BookInfo bookInfo = new BookInfo();
-            bookInfo.setBookID(book.getBookID());
-            bookInfo.setBookName(book.getBookName());
-            bookInfo.setIsbn(book.getIsbn());
-            bookInfo.setAuthor(book.getAuthor());
-            bookInfo.setPress(book.getPress());
-            //////////////??????????????????
-            bookInfo.setCategory1(book.getCategory1().toString());
-            //////////////??????????????????
-            bookInfo.setCategory2(book.getCategory2().toString());
-            bookInfo.setCanExchange(book.getCanExchange());
-            bookInfo.setCanBorrow(book.getCanBorrow());
-            bookInfo.setReserved(book.getReserved());
-            bookInfo.setStatus(book.getStatus());
-            bookInfo.setProfileID(book.getProfileID());
-            bookInfo.setImageID(book.getImageID());
-            bookInfo.setBorrowCredit(bookRelease.getBorrowCredit());
-            bookInfo.setBuyCredit(bookRelease.getBuyCredit());
-            bookInfo.setReleaseTime(bookRelease.getReleaseTime());
-            
-            result.add(bookInfo);
-        }
         return result;
     }
 

@@ -10,7 +10,5 @@
         <property name="userID" column="user_id" />
         <property name="bookID" column="book_id" />
         <property name="releaseTime" column="release_time" type="timestamp" />
-        <property name="borrowCredit" column="borrow_price" />
-        <property name="buyCredit" column="exchange_price" />
     </class>
 </hibernate-mapping>

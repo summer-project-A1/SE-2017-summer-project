@@ -10,6 +10,6 @@ public interface UserService extends BaseService {
     public boolean checkEmailAvailable(String email);
     public boolean logout();
     public Map showUserProfile(int userID);
+    public boolean updatePassword(String oldPlainPassword, String newPlainPassword);
     public boolean updateUserProfile(int userID, Map newUserProfile);
-    public boolean updateUserPassword(String oldPassword, String newPassword);
 }
