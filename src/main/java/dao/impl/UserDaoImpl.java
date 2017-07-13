@@ -173,7 +173,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         newUser.setAddress(newUserProfile.getAddress());
         
         //newUser.setProfileID(profileID);
-        
+        new ObjectId();
         this.update(newUser);
         return true;
     }
@@ -232,4 +232,76 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         return true;
     }
 
+    @Override
+    public FullAddress getDeliveryAddressByID(int userID, String fullAddressID) {
+        DBCollection collection = getMongoDb().getCollection("delivery_address");
+        DBObject query=new BasicDBObject("_id", new ObjectId(fullAddressID));
+        Map result = (Map)collection.findOne(query);
+        return new FullAddress(result);
+    }
+    
+    @Override
+    public FullAddress getDefaultDeliveryAddress(int userID) {
+        DBCollection collection = getMongoDb().getCollection("delivery_address");
+        DBObject query=new BasicDBObject();
+        query.put("userID", userID);
+        query.put("isDefault", true);
+        Map result = (Map)collection.findOne(query);
+        return new FullAddress(result);
+    }
+    
+    @Override
+    public FullAddress addDeliveryAddress(int userID, FullAddress fullAddress) {
+        DBCollection collection = getMongoDb().getCollection("delivery_address");
+        Map fullAddressMap = fullAddress.toMap();
+        fullAddressMap.put("userID", userID);
+        BasicDBObject document = new BasicDBObject(fullAddressMap);
+        collection.insert(document);
+        return new FullAddress((Map)document);
+    }
+    
+    @Override
+    public List<FullAddress> getAllDeliveryAddress(int userID) {
+        DBCollection collection = getMongoDb().getCollection("delivery_address");
+        DBObject query=new BasicDBObject("userID", userID);
+        List<DBObject> allDeliveryAddress = collection.find(query).toArray();
+        List<FullAddress> fullAddressList = new ArrayList<FullAddress>();
+        for(DBObject tmp : allDeliveryAddress) {
+            fullAddressList.add(new FullAddress((Map)tmp));
+        }
+        return fullAddressList;
+    }
+    
+    @Override
+    public boolean removeDeliveryAddress(int userID, String fullAddressID) {
+        DBCollection collection = getMongoDb().getCollection("delivery_address");
+        DBObject query=new BasicDBObject();
+        query.put("_id", new ObjectId(fullAddressID));
+        query.put("userID", userID);
+        collection.remove(query);
+        return true;
+    }
+    
+    @Override
+    public boolean setDefaultDeliveryAddress(int userID, String fullAddressID) {
+        DBCollection collection = getMongoDb().getCollection("delivery_address");
+        // 去掉旧的默认地址的默认属性
+        DBObject queryDefault=new BasicDBObject();
+        queryDefault.put("userID", userID);
+        queryDefault.put("isDefault", true);
+        DBObject defaultDelivery = collection.findOne(queryDefault);
+        if(defaultDelivery != null) {
+            defaultDelivery.put("isDefault", false);
+            DBObject queryOne = new BasicDBObject("_id", defaultDelivery.get("_id"));
+            collection.update(queryOne, defaultDelivery);
+        }
+        // 新地址添加默认属性
+        DBObject query=new BasicDBObject();
+        query.put("_id", fullAddressID);
+        query.put("userID", userID);
+        DBObject newDefaultDelivery = collection.findOne(query);
+        newDefaultDelivery.put("isDefault", true);
+        collection.update(query, newDefaultDelivery);
+        return true;
+    }
 }

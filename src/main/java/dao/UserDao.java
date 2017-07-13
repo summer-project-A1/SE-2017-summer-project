@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 import java.util.Map;
 
+import model.FullAddress;
 import model.User;
 import model.UserProfile;
 
@@ -17,4 +18,10 @@ public interface UserDao extends BaseDao {
     public boolean updateUserProfileInMongo(User user, Map userProfile);
     public List<User> getAllUsers();
     
+    public FullAddress getDeliveryAddressByID(int userID, String fullAddressID);
+    public FullAddress getDefaultDeliveryAddress(int userID);
+    public FullAddress addDeliveryAddress(int userID, FullAddress fullAddress);
+    public List<FullAddress> getAllDeliveryAddress(int userID);
+    public boolean removeDeliveryAddress(int userID, String fullAddressID);
+    public boolean setDefaultDeliveryAddress(int userID, String FullAddressID);
 }
