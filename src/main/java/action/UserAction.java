@@ -3,8 +3,10 @@ package action;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import model.FullAddress;
 import service.UserService;
 
 public class UserAction extends ActionSupport {
@@ -28,6 +30,8 @@ public class UserAction extends ActionSupport {
     private String oldPassword;
     private String newPassword;
     private String confirmNewPassword;
+    
+    private String addrID;
     
     /* =========================================================== */
 
@@ -150,6 +154,14 @@ public class UserAction extends ActionSupport {
     public void setParams(Map params) {
         this.params = params;
     }
+    
+    public String getAddrID() {
+        return addrID;
+    }
+
+    public void setAddrID(String addrID) {
+        this.addrID = addrID;
+    }
 
     /* =========================================================== */
 
@@ -158,5 +170,29 @@ public class UserAction extends ActionSupport {
         boolean result = this.userService.updatePassword(this.oldPassword, this.newPassword);
         params.put("success", result);
         return "ajax";
+    }
+    
+    public String getAllAddress() {     // 应合并到checkout的action中
+        Map result = this.userService.getAllDeliveryAddress();
+        ActionContext.getContext().put("defaultAddrList", result.get("defaultAddrList"));
+        ActionContext.getContext().put("addrList", result.get("addrList"));
+        return "getAllAddress";
+    }
+    public String addAddress() {
+        FullAddress fullAddress = new FullAddress();
+        fullAddress.setProvince(this.province);
+        fullAddress.setCity(this.city);
+        fullAddress.setDistrict(this.district);
+        fullAddress.setAddress(this.address);
+        fullAddress.setIsDefault(false);
+        this.params = this.userService.addDeliveryAddress(fullAddress);
+        return "ajax";
+    }
+    public String setDefaultAddress() {
+        this.params = this.userService.setDefaultDeliveryAddress(this.addrID);
+        return "ajax";
+    }
+    public String deleteAddress() {
+        return null;
     }
 }

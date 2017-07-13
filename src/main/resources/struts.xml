@@ -53,8 +53,9 @@
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
+            <result name="getAllAddress">/checkout.jsp</result>
             <allowed-methods>
-                updatePassword
+                updatePassword,getAllAddress,addAddress,setDefaultAddress,deleteAddress
             </allowed-methods>
         </action>
     </package>

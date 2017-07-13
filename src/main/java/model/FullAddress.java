@@ -1,5 +1,10 @@
 package model;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.bson.types.ObjectId;
+
 public class FullAddress {
     private String fullAddressID;      // 保存在mongodb中的完整address
     private String province;
@@ -7,6 +12,38 @@ public class FullAddress {
     private String district;
     private String address;
     private Boolean isDefault;         // 是否为默认收货地址
+    
+    private String fullAddressString;   // 四部分地址拼起来的字符串，只用于前端展示
+    
+    /* ======================================================= */
+    
+    public FullAddress() {
+        
+    }
+    
+    public FullAddress(Map fullAddressMap) {
+        this.fullAddressID = ((ObjectId)fullAddressMap.get("_id")).toString();
+        this.province = (String)fullAddressMap.get("province");
+        this.city = (String)fullAddressMap.get("city");
+        this.district = (String)fullAddressMap.get("district");
+        this.address = (String)fullAddressMap.get("address");
+        this.isDefault = (Boolean)fullAddressMap.get("isDefault");
+    }
+    
+    public Map toMap() {
+        Map fullAddressMap = new HashMap();
+        fullAddressMap.put("fullAddressID", this.fullAddressID==null? null:new ObjectId(this.fullAddressID));
+        fullAddressMap.put("province", this.province);
+        fullAddressMap.put("city", this.city);
+        fullAddressMap.put("district", this.district);
+        fullAddressMap.put("address", this.address);
+        fullAddressMap.put("isDefault", this.isDefault);
+        return fullAddressMap;
+    }
+    
+    public String toFullAddressString() {
+        return this.province + this.city + this.district + this.address;
+    }
     
     /* ======================================================= */
     
@@ -45,6 +82,12 @@ public class FullAddress {
     }
     public void setIsDefault(Boolean isDefault) {
         this.isDefault = isDefault;
+    }
+    public String getFullAddressString() {
+        return fullAddressString;
+    }
+    public void setFullAddressString(String fullAddressString) {
+        this.fullAddressString = fullAddressString;
     }
     
 }

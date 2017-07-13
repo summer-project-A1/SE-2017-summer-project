@@ -2,6 +2,7 @@ package service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -10,6 +11,7 @@ import common.constants.UserRole;
 import common.utils.MD5Util;
 import common.utils.PasswordUtil;
 import dao.UserDao;
+import model.FullAddress;
 import model.User;
 import model.UserProfile;
 import service.UserService;
@@ -139,4 +141,57 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         return false;
     }
     
+    @Override
+    public Map addDeliveryAddress(FullAddress fullAddress) {
+        int userID = this.getLoginedUserInfo().getUserID();
+        Map params = new HashMap();
+        FullAddress result = this.userDao.addDeliveryAddress(userID, fullAddress);
+        params.put("result", true);
+        params.put("newAddressID", result.getFullAddressID());
+        params.put("newAddress", result.toFullAddressString());
+        return params;
+    }
+    
+    @Override
+    public Map getAllDeliveryAddress() {
+        int userID = this.getLoginedUserInfo().getUserID();
+        Map params = new HashMap();
+        List<FullAddress> defaultAddress = new ArrayList<FullAddress>();
+        List<FullAddress> otherAddress = new ArrayList<FullAddress>();
+        List<FullAddress> all = this.userDao.getAllDeliveryAddress(userID);
+        for(FullAddress tmp : all) {
+            tmp.setFullAddressString(tmp.toFullAddressString());
+            if(tmp.getIsDefault()) {
+                defaultAddress.add(tmp);
+            }
+            else {
+                otherAddress.add(tmp);
+            }
+        }
+        params.put("result", true);
+        params.put("defaultAddrList", defaultAddress);
+        params.put("addrList", otherAddress);
+        return params;
+    }
+    
+    @Override
+    public Map setDefaultDeliveryAddress(String fullAddressID) {
+        int userID = this.getLoginedUserInfo().getUserID();
+        Map params = new HashMap();
+        FullAddress oldDefault = this.userDao.getDefaultDeliveryAddress(userID);
+        this.userDao.setDefaultDeliveryAddress(userID, fullAddressID);
+        FullAddress newDefault = this.userDao.getDeliveryAddressByID(userID, fullAddressID);
+        params.put("result",true);
+        if(oldDefault != null) { 
+            params.put("oldDefaultAddrID", oldDefault.getFullAddressID());
+            params.put("oldDefaultAddr", oldDefault.toFullAddressString());
+        }
+        else {
+            params.put("oldDefaultAddrID", null);
+            params.put("oldDefaultAddr", null);
+        }
+        params.put("newDefaultAddrID", newDefault.getFullAddressID());
+        params.put("newDefaultAddr", newDefault.toFullAddressString());
+        return params;
+    }
 }
