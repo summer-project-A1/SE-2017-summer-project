@@ -160,28 +160,6 @@
     //左侧分类栏js脚本
     $(document).ready(function(){
         $(".tab1 .single-bottom").hide();
-        $(".tab2 .single-bottom").hide();
-        $(".tab3 .single-bottom").hide();
-
-
-        $(".tab1 ul").click(function(){
-            $(".tab1 .single-bottom").slideToggle(300);
-            $(".tab2 .single-bottom").hide();
-            $(".tab3 .single-bottom").hide();
-
-        })
-        $(".tab2 ul").click(function(){
-            $(".tab2 .single-bottom").slideToggle(300);
-            $(".tab1 .single-bottom").hide();
-            $(".tab3 .single-bottom").hide();
-
-        })
-        $(".tab3 ul").click(function(){
-            $(".tab3 .single-bottom").slideToggle(300);
-            $(".tab1 .single-bottom").hide();
-            $(".tab2 .single-bottom").hide();
-
-        })
     });
 
     //每页显示数量选框js脚本
@@ -254,47 +232,28 @@
             <section  class="sky-form">
                 <div class="product_right">
                     <h4 class="m_2"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>图书类型</h4>
-                    <div class="tab1">
-                        <ul class="place">
-                            <li class="sort">类型1</li>
-                            <li class="by"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></li>
-                        </ul>
-                        <div class="clearfix"> </div>
-                        <div class="single-bottom">
-                            <a href="#"><p>Cassata</p></a>
-                            <a href="#"><p>Cheesecake</p></a>
-                            <a href="#"><p>Coconut cake</p></a>
-                            <a href="#"><p>Cupcake</p></a>
-                        </div>
-                    </div>
-                    <div class="tab2">
-                        <ul class="place">
-                            <li class="sort">类型2</li>
-                            <li class="by"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></li>
-                        </ul>
-                        <div class="clearfix"> </div>
-                        <div class="single-bottom">
-                            <a href="#"><p>Delicious Cakes</p></a>
-                            <a href="#"><p>Gingerbread</p></a>
-                        </div>
-                    </div>
-                    <div class="tab3">
-                        <ul class="place">
-                            <li class="sort">类型3</li>
-                            <li class="by"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></li>
-                        </ul>
-                        <div class="clearfix"> </div>
-                        <div class="single-bottom">
-                            <a href="#"><p>Milk Cakes</p></a>
-                            <a href="#"><p>Fruits Cakes</p></a>
-                        </div>
-                    </div>
+                    <s:iterator value="#category1List"  status="st1">
+                        <div  id="cate<s:property value="#st1.index"/>" class="tab1">
+                            <ul class="place">
+                                <li class="sort"><s:property value="category1Name"/></li>
+                                <li class="by"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></li>
+                            </ul>
+                            <div class="clearfix"> </div>
+                            <div class="single-bottom">
+                                    <a href="<%=path%>"/>bookAction/showBooksByCategory1ID?category1ID=<s:property value="category1ID"/>"><p><s:property value="category1Name"/></p>
+                                <s:iterator value="category2List" status="st2">
+                                    <a href="<%=path%>/bookAction/showBooksByCategory2ID"><p><s:property value="category2Name"/></p></a>
+                                </s:iterator>
+                            </div>
+                            <script>
+                                $("#cate"+"<s:property value='#st1.index'/>"+" ul").click(function(){
+                                    $(".tab1 .single-bottom").hide();
+                                    $("#cate"+"<s:property value='#st1.index'/>"+".single-bottom").slideToggle(300);
 
-                    <!--script-->
-                    <script>
-
-                    </script>
-                    <!--//script -->
+                                })
+                            </script>
+                        </div>
+                    </s:iterator>
                 </div>
             </section>
             <section  class="sky-form">
