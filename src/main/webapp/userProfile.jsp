@@ -8,17 +8,40 @@
     <script>
         $(document).ready(function(){
             $(".tab1 .single-bottom").hide();
+
+            $(".products .container form").hide();
+            $("#update-userProfile-form").show();
+
+
             $(".tab1 ul").click(function(){
                 $(".tab1 .single-bottom").slideToggle(300);
             });
+
+
+
+            $("#update-userProfile").click(function(){
+                $(".products .container form").hide();
+                $("#update-userProfile-form").show();
+                $("#gender").val('<s:property value="#userProfile.gender"/>');
+                $("#province").val('<s:property value="#userProflie.province"/>');
+                $("#city").val('<s:property value="#userProflie.city"/>');
+                $("#district").val('<s:property value="#userProflie.district"/>');
+            });
+
             $("#update-password").click(function(){
                 $(".products .container form").hide();
                 $("#update-password-form").show();
             });
+
+
+
             $("#update-image").click(function(){
                 $(".products .container form").hide();
                 $("#update-image-form").show();
             });
+
+
+
         <!--旧密码验证-->
             $("#update_oldPassword").focus();
             $("#update_oldPassword").keyup(function(){
@@ -29,6 +52,8 @@
                 $("#available_status1").html("<span style='color:green'>密码格式正确</span>");
             }
         });
+
+
             $("#update_oldPassword").blur(function(){
             var password = $("#update_oldPassword").val();
             if(password.length < 6 || password.length > 12){
@@ -37,6 +62,8 @@
                 $("#available_status1").html("<span style='color:green'>密码格式正确</span>");
             }
         });
+
+
 
         <!--新密码验证-->
             $("#update_newPassword").focus();
@@ -48,6 +75,9 @@
                 $("#available_status2").html("<span style='color:green'>密码格式正确</span>");
             }
         });
+
+
+
             $("#update_newPassword").blur(function(){
             var password = $("#update_newPassword").val();
             if(password.length < 6 || password.length > 12){
@@ -109,6 +139,30 @@
 
     </script>
 
+    <script type="text/javascript" src="<%=path%>/js/jquery.cityselect.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $("#city_4").citySelect({
+                nodata: "none",
+                required:false
+            });
+        });
+    </script>
+    <style>
+        @media ( min-width :768px) {
+
+            .form-control-noNewline {
+                width: 100px;
+                display: inline;
+            }
+
+            .form-horizontal .form-group-auto {
+                margin-right: 0px;
+                margin-left: 0px;
+            }
+        }
+    </style>
+
 
 </head>
 <body>
@@ -127,6 +181,7 @@
                         </ul>
                         <div class="clearfix"> </div>
                         <div class="single-bottom">
+                            <a id="update-userProfile" href="#"><p>修改个人信息</p></a>
                             <a id="update-password" href="#"><p>修改密码</p></a>
                             <a id="update-image" href="#"><p>修改头像</p></a>
                         </div>
@@ -178,6 +233,37 @@
             </div>
             <div class="clearfix"> </div>
             <a href="#" class="add-cart item_add" onclick="updatePassword()">修改密码</a>
+        </form>
+        <form id="update-userProfile-form" enctype="multipart/form-data" role="form" class="form-horizontal"accept-charset="UTF-8">
+            <h3>修改个人信息</h3>
+            <div class="form-group form-group-auto">
+                <label>昵称</label>
+                <input type="text" name="userProfile.nickName" value="<s:property value="#userProflie.nickName"/>" class="form-control" id="update_nickName">
+            </div>
+            <div class="form-group form-group-auto">
+                <label>性别</label>
+                <select id="gender" name="userProfile.gender" class="form-control form-control-noNewline" >
+                    <option>请选择</option>
+                    <option>男</option>
+                    <option>女</option>
+                </select>
+            </div>
+            <div class="form-group form-group-auto">
+                <label>手机</label>
+                <input type="text" name="userProfile.mobile" value="<s:property value="#userProfile.mobile"/>" class="form-control" id="mobile"><div id="available_status4"></div>
+            </div>
+            <label>省市地区</label>
+            <div class="form-group form-group-auto" id="city_4">
+                <select class="prov form-control form-control-noNewline" id="province" name="userPorfile.province"  style="width:auto"></select>
+                <select class="city form-control form-control-noNewline"  disabled="disabled" id="city" name="userProfile.city"  style="width:auto"></select>
+                <select class="dist form-control form-control-noNewline" disabled="disabled" id="district" name="userPorfile.district" style="width: auto"></select>
+            </div>
+            <div class="input">
+                <label>详细地址</label>
+                <input type="text" class="form-control" name="userPorfile.address" id="address">
+            </div>
+            <div class="clearfix"> </div>
+            <a href="#" class="add-cart item_add" onclick="updateUserProfile()">修改个人信息</a>
         </form>
         </div>
     </div>
