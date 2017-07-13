@@ -194,4 +194,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         params.put("newDefaultAddr", newDefault.toFullAddressString());
         return params;
     }
+    
+    @Override
+    public boolean deleteDeliveryAddress(String fullAddressID) {
+        int userID = this.getLoginedUserInfo().getUserID();
+        this.userDao.removeDeliveryAddress(userID, fullAddressID);
+        return true;
+    }
 }

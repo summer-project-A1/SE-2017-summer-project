@@ -193,6 +193,9 @@ public class UserAction extends ActionSupport {
         return "ajax";
     }
     public String deleteAddress() {
+        this.params = new HashMap();
+        boolean result = this.userService.deleteDeliveryAddress(this.addrID);
+        this.params.put("result", result);
         return null;
     }
 }

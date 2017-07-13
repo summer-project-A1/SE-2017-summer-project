@@ -18,4 +18,5 @@ public interface UserService extends BaseService {
     public Map addDeliveryAddress(FullAddress fullAddress);
     public Map getAllDeliveryAddress();
     public Map setDefaultDeliveryAddress(String fullAddressID);
+    public boolean deleteDeliveryAddress(String fullAddressID);
 }
