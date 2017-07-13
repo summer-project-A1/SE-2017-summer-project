@@ -119,13 +119,22 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateUserProfile(int userID, Map newUserProfile) {
-        // TODO 自动生成的方法存根
-        return false;
+    public boolean updatePassword(String oldPlainPassword, String newPlainPassword) {
+        User user = this.getLoginedUserInfo();
+        System.out.println(oldPlainPassword);
+        System.out.println(user.getPassword());
+        if(PasswordUtil.checkPassword(oldPlainPassword, user.getPassword())) {
+            user.setPassword(PasswordUtil.getEncryptedPassword(newPlainPassword));
+            this.userDao.update(user);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
-
+    
     @Override
-    public boolean updateUserPassword(String oldPassword, String newPassword) {
+    public boolean updateUserProfile(int userID, Map newUserProfile) {
         // TODO 自动生成的方法存根
         return false;
     }
