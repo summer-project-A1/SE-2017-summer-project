@@ -88,16 +88,17 @@
                var toAddLink = "setDefaultAddr"+oldDefaultAddrID;
 
                if(oldDefaultAddr != null && oldDefaultAddr != null){
-                   var htmlstr1 = '<div id="'+oldDefaultAddrID+'"><input type="ratio" id="address'+oldDefaultAddrID+'" name="address" value="'+oldDefaultAddr+'"/>'
-                   +'<label id="addrLabel'+oldDefaultAddrID+'" for="address'+oldDefaultAddrID+'">'+oldDefaultAddr+'</label><a href="#" id="setDefaultAddr'+oldDefaultAddrID+'" onclick="setDefaultAddr(\''+oldDefaultAddrID+'\')">设为默认地址</a>' +
+                   var htmlstr1 = '<div id="'+oldDefaultAddrID+'"><input type="radio" id="address'+oldDefaultAddrID+'" name="address" value="'+oldDefaultAddr+'"/>'
+                   +'<label id="addrLabel'+oldDefaultAddrID+'" for="address'+oldDefaultAddrID+'">'+oldDefaultAddr+'</label><a href="#" id="setDefaultAddr'+oldDefaultAddrID+'" onclick="setDefaultAddr(\''+oldDefaultAddrID+'\')">设为默认地址&nbsp;&nbsp;&nbsp;&nbsp;</a>' +
                        '<a href="#" id="deleteAddr'+oldDefaultAddrID+'" onclick="deleteAddress(\''+oldDefaultAddrID+'\')">删除地址</a></div>';
                    showTip('更换默认地址成功','success');
-                   $("#defaultAddr").html(newDefaultAddr);
+                   $("#defaultAddr").val(newDefaultAddr);
+                   $("#defaultAddrLabel").html(newDefaultAddr);
                    $("#"+newDefaultAddrID).remove();
                    $("#addrForm").append(htmlstr1);
                }else{
                    showTip('更换默认地址成功','success');
-                   var htmlstr3 = '<div id="'+newDefaultAddrID+'">'+'<input type="radio" id="defaultAddr" name="address" value="'+newDefaultAddr+'"/><label for="defaultAddr">'+newDefaultAddr+'</label><label id="defaultAddrLabel">默认地址</label></div>';
+                   var htmlstr3 = '<div id="'+newDefaultAddrID+'">'+'<input type="radio" id="defaultAddr" name="address" value="'+newDefaultAddr+'"/><label id="defaultAddrLabel" for="defaultAddr">'+newDefaultAddr+'</label><label>&nbsp;&nbsp;&nbsp;&nbsp;默认地址</label></div>';
                    $("#"+newDefaultAddrID).remove();
                    $("#addrForm").append(htmlstr3);
                }
@@ -125,11 +126,11 @@
                 data:params,
                 success:function(msg){
                     showTip('添加新地址成功','success');
-                    $("#newAddrForm").remove();
+                    $("#newAddrForm").hide();
                     var newAddress = msg.newAddress;
                     var newAddressID = msg.newAddressID;
                     var htmlstr1 = '<div id="'+newAddressID+'"><input type="radio" id="address'+newAddressID+'" name="address" value="'+newAddress+'"/>'
-                    +'<label id="addrLabel'+newAddressID+'" for="address'+newAddressID+'">'+newAddress+'</label><a href="#" id="setDefaultAddr'+newAddressID+'" onclick="setDefaultAddr(\''+newAddressID+'\')">设为默认地址&nbsp;&nbsp;&nbsp;&nbsp;</a>' +
+                    +'<label id="addrLabel'+newAddressID+'" for="address'+newAddressID+'">'+newAddress+'</label><a href="#" id="setDefaultAddr'+newAddressID+'" onclick="setDefaultAddr(\''+newAddressID+'\')">&nbsp;&nbsp;&nbsp;&nbsp;设为默认地址&nbsp;&nbsp;&nbsp;&nbsp;</a>' +
                         '<a href="#" id="deleteAddr'+newAddressID+'" onclick="deleteAddress(\''+newAddressID+'\')">删除地址</a></div>';
                     $("#addrForm").append(htmlstr1);
                 },
@@ -219,14 +220,14 @@
                 <s:iterator value="#defaultAddrList" status="st">
                     <div id="<s:property value="fullAddressID"/>">
                 <input type="radio" id="defaultAddr" name="address" value="<s:property value="fullAddressString"/>"/>
-                <label for="defaultAddr"><s:property value="fullAddressString"/></label><label id="defaultAddrLabel">默认地址</label><br>
+                <label id="defaultAddrLabel" for="defaultAddr"><s:property value="fullAddressString"/></label><label >&nbsp;&nbsp;&nbsp;&nbsp;默认地址</label><br>
                     </div>
                 </s:iterator>
 
                 <s:iterator value="#addrList" status="st">
                     <div id="<s:property value="fullAddressID"/>">
                     <input type="radio" id="address<s:property value="fullAddressID"/>" name="address" value="<s:property value="fullAddressString"/>"/>
-                    <label id="addrLabel<s:property value="fullAddressID"/>" for="address<s:property value="fullAddressID"/>"><s:property value="fullAddressString"/></label><a href="#" id="setDefaultAddr<s:property value="fullAddressID"/>" onclick="setDefaultAddr('<s:property value="fullAddressID"/>')">设为默认地址&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    <label id="addrLabel<s:property value="fullAddressID"/>" for="address<s:property value="fullAddressID"/>"><s:property value="fullAddressString"/></label><a href="#" id="setDefaultAddr<s:property value="fullAddressID"/>" onclick="setDefaultAddr('<s:property value="fullAddressID"/>')">&nbsp;&nbsp;&nbsp;&nbsp;设为默认地址&nbsp;&nbsp;&nbsp;&nbsp;</a>
                     <a href="#" id="deleteAddr<s:property value="fullAddressID"/>" onclick="deleteAddress('<s:property value="fullAddressID"/>')">删除地址</a>
                     </div>
                 </s:iterator>
@@ -246,41 +247,11 @@
             </form>
         </div>
 
-
-
-
-        <!-- 地址信息静态展示
-        <div id="address" class="address">
-            <form id="addrForm1" action="" method="post">
-                <h3>管理收货地址</h3>
-
-                <input type="radio" id="address1" name="address" value="address1" />
-                <label for="address1">address1 默认地址</label> <br>
-                <input type="radio" id="address2" name="address" value="address2"/>
-                <label for="address2">address2</label> <a href="#" onclick="setDefaultAddr()">设为默认&nbsp;&nbsp;&nbsp;&nbsp;</a><a href="#" onclick="deleteAddr()">删除地址</a><br>
-            </form>
-            <a href="#" class="add-cart item_add" onclick="showAddrForm()">添加新地址</a>
-            <form id="newAddrForm1" style="display: none" action="" method="post">
-                <div class="form-group form-group-auto"  id="city_4">
-                    <select class="prov form-control form-control-noNewline" id="province" name="province" style="width:auto"></select>
-                    <select class="city form-control form-control-noNewline"  disabled="disabled" id="city" name="city"  style="width:auto"></select>
-                    <select class="dist form-control form-control-noNewline" disabled="disabled" id="district" name="district" style="width: auto"></select>
-                </div>
-                <div class="input">
-                    <label>详细地址</label><font color="#FF0000">*</font>&nbsp;
-                    <input type="text" id="newAddr1" class="form-control" name="newAddress" >
-                </div>
-                <a href="#" class="add-cart item_add" onclick="">添加</a>
-            </form>
-        </div> -->
-
-
         <div id=confirm>
     	    <label >合计:</label>
-    	    <label id=totalCredit>240</label><br>
+    	    <label id=totalCredit><s:property value="#totalCredit"/></label><br>
         </div>
         <button type="button" id=commit class="checkout-but" onclick="gotoPay()">前去支付</button>
-
     </div>
 </div>
 
