@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="model.Category2" table="category2">
+        <id name="category2ID" column="category2_id">
+            <generator class="native"/>
+        </id>
+        <property name="category2Name" column="category2_name" />
+    </class>
+</hibernate-mapping>

@@ -11,9 +11,11 @@ public interface BookDao extends BaseDao {
     public int getAllBooksCount();
     public List<Book> getAllBooksByPage(int part,int pageSize);
     public List<Book> getBooksByUserID(int userID);
+    public List<Book> getBooksByCategory1NameByPage(String category1Name, int part, int pageSize);
+    public List<Book> getBooksByCategory2NameByPage(String category2Name, int part, int pageSize);
     public List<Book> searchByTextByPage(String searchText,int part,int pageSize);
     public List<Book> searchByCondition(Map condition);
-    public Map getBookProfileMap(Book book);
-    public String saveBookProfile(Map bookProfile);
-    public boolean updateBookProfile(Book book, Map bookProfile);
+    public Map getBookProfileMapInMongo(Book book);
+    public String saveBookProfileInMongo(Map bookProfileInMongo);
+    public boolean updateBookProfileInMongo(Book book, Map bookProfileInMong);
 }

@@ -7,17 +7,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import common.cache.AllBookCategory;
 import common.constants.BookStatus;
 import dao.BookDao;
 import dao.BookReleaseDao;
+import dao.CategoryDao;
 import dao.ImageDao;
 import model.Book;
 import model.BookProfile;
 import model.BookRelease;
+import model.Category1;
 import service.BookService;
 
 public class BookServiceImpl extends BaseServiceImpl implements BookService {
     private BookDao bookDao;
+    private CategoryDao categoryDao;
     private BookReleaseDao bookReleaseDao;
     private ImageDao imageDao;
     
@@ -32,6 +36,14 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     }   
     
     
+    public CategoryDao getCategoryDao() {
+        return categoryDao;
+    }
+
+    public void setCategoryDao(CategoryDao categoryDao) {
+        this.categoryDao = categoryDao;
+    }
+
     public BookReleaseDao getBookReleaseDao() {
         return bookReleaseDao;
     }
@@ -59,8 +71,6 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         bookProfileInMongo.put("category2", bookProfile.getCategory2());
         // bookProfileInMongo.put("publish", new HashMap(){{put("year",publishYear);put("month",publishMonth);}});
         // bookProfileInMongo.put("edtion", new HashMap(){{put("year",edtionYear);put("month",edtionMonth);put("version",edtionVersion);}});
-        bookProfileInMongo.put("publishYear", bookProfile.getPublishYear());
-        bookProfileInMongo.put("publishMonth", bookProfile.getPublishMonth());
         bookProfileInMongo.put("editionYear", bookProfile.getEditionYear());
         bookProfileInMongo.put("editionMonth", bookProfile.getEditionMonth());
         bookProfileInMongo.put("editionVersion", bookProfile.getEditionVersion());
@@ -86,6 +96,8 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         newBook.setPress(bookProfile.getPress());
         newBook.setCategory1(bookProfile.getCategory1());
         newBook.setCategory2(bookProfile.getCategory2());
+        newBook.setPublishYear(bookProfile.getPublishYear());
+        newBook.setPublishMonth(bookProfile.getPublishMonth());;
         newBook.setCanBorrow(bookProfile.getCanBorrow());
         newBook.setCanExchange(bookProfile.getCanExchange());
         newBook.setBorrowCredit(bookProfile.getBorrowCredit());
@@ -94,7 +106,7 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         newBook.setStatus(BookStatus.IDLE);
         
         // saveBookProfile
-        newBook.setProfileID(this.bookDao.saveBookProfile(bookProfileInMongo));
+        newBook.setProfileID(this.bookDao.saveBookProfileInMongo(bookProfileInMongo));
         if(bookProfile.getCoverPicture() != null) {
             // save coverPicture
             newBook.setImageID(this.imageDao.saveImage(bookProfile.getCoverPicture()));
@@ -143,7 +155,7 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         // 这里的返回值不仅包括mongodb中的内容，也包括mysql中的内容
         Book book = this.bookDao.getBookByID(bookID);
         BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
-        Map bookProfileInMongo = this.bookDao.getBookProfileMap(book);
+        Map bookProfileInMongo = this.bookDao.getBookProfileMapInMongo(book);
         BookProfile bookProfile = new BookProfile();
         
         bookProfile.setBookID(book.getBookID());
@@ -153,6 +165,8 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         bookProfile.setPress(book.getPress());
         bookProfile.setCategory1(book.getCategory1().toString());
         bookProfile.setCategory2(book.getCategory2().toString());
+        bookProfile.setPublishYear(book.getPublishYear());
+        bookProfile.setPublishMonth(book.getPublishMonth());
         bookProfile.setCanExchange(book.getCanExchange());
         bookProfile.setCanBorrow(book.getCanBorrow());
         bookProfile.setReserved(book.getReserved());
@@ -164,8 +178,6 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         bookProfile.setBuyCredit(book.getBuyCredit());
         bookProfile.setReleaseTime(bookRelease.getReleaseTime());
         
-        bookProfile.setPublishYear((int)bookProfileInMongo.get("publishYear"));
-        bookProfile.setPublishMonth((int)bookProfileInMongo.get("publishMonth"));
         bookProfile.setEditionYear((int)bookProfileInMongo.get("editionYear"));
         bookProfile.setEditionMonth((int)bookProfileInMongo.get("editionMonth"));
         bookProfile.setEditionVersion((int)bookProfileInMongo.get("editionVersion"));
@@ -177,8 +189,24 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         bookProfile.setIntro((String)bookProfileInMongo.get("intro"));
         bookProfile.setOtherPictureIDList((List<String>)bookProfileInMongo.get("otherPictureID"));
 
-        
         return bookProfile;
     }
     
+    @Override
+    public List<Book> showBooksByCategory1NameByPage(String category1Name, int part, int pageSize) {
+        return this.bookDao.getBooksByCategory1NameByPage(category1Name, part, pageSize);
+    }
+    
+    @Override
+    public List<Book> showBooksByCategory2NameByPage(String category2Name, int part, int pageSize) {
+        return this.bookDao.getBooksByCategory2NameByPage(category2Name, part, pageSize);
+    }
+    
+    @Override
+    public List<Category1> showAllCategory1s() {
+        if(AllBookCategory.getAllBookCategory()==null) {
+            AllBookCategory.setAllBookCategory(this.categoryDao.getAllCategory());
+        }
+        return AllBookCategory.getAllBookCategory();
+    }
 }

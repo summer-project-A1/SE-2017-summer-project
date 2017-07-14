@@ -10,6 +10,8 @@ public class Book {
     private String press;             // 出版社
     private String category1;
     private String category2;
+    private int publishYear;
+    private int publishMonth;
     private int canExchange;      // 用户发布时决定书是否可被交换
     private int canBorrow;        // 用户发布时决定书是否可被借阅
     private int reserved;         // 书当前是否已被预约 
@@ -64,7 +66,19 @@ public class Book {
 	public void setCategory2(String category2) {
 		this.category2 = category2;
 	}
-	public int getCanExchange() {
+	public int getPublishYear() {
+        return publishYear;
+    }
+    public void setPublishYear(int publishYear) {
+        this.publishYear = publishYear;
+    }
+    public int getPublishMonth() {
+        return publishMonth;
+    }
+    public void setPublishMonth(int publishMonth) {
+        this.publishMonth = publishMonth;
+    }
+    public int getCanExchange() {
         return canExchange;
     }
     public void setCanExchange(int canExchange) {

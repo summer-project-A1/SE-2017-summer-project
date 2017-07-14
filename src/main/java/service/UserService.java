@@ -13,7 +13,7 @@ public interface UserService extends BaseService {
     public boolean logout();
     public Map showUserProfile(int userID);
     public boolean updatePassword(String oldPlainPassword, String newPlainPassword);
-    public boolean updateUserProfile(int userID, Map newUserProfile);
+    public boolean updateUserProfile(UserProfile newUserProfile);
     
     public Map addDeliveryAddress(FullAddress fullAddress);
     public Map getAllDeliveryAddress();

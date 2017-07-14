@@ -136,7 +136,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     }
     
     @Override
-    public boolean updateUserProfile(int userID, Map newUserProfile) {
+    public boolean updateUserProfile(UserProfile newUserProfile) {
         // TODO 自动生成的方法存根
         return false;
     }
