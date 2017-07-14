@@ -108,6 +108,7 @@ public class BookAction extends ActionSupport {
     public void setCategory2Name(String category2Name) {
         this.category2Name = category2Name;
     }
+    
     /* ============================================================== */
 
     public String showAllBooks() {
