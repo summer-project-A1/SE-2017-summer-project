@@ -8,10 +8,7 @@ import java.util.Map;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import service.BookService;
-import service.BorrowService;
-import service.CartService;
-import service.OrderService;
+import service.*;
 
 import model.Book;
 import model.Order;
@@ -23,6 +20,7 @@ public class OrderAction extends ActionSupport {
     private BorrowService borrowService;
     private BookService bookService;
     private CartService cartService;
+    private UserService userService;
     
     private String buyOrBorrow;
     private Integer orderID;
@@ -69,6 +67,9 @@ public class OrderAction extends ActionSupport {
     }
     public Integer getOrderID(){return orderID;}
     public void setOrderID(Integer orderID){this.orderID = orderID;}
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
     
     /* ========================================================= */
     
@@ -76,6 +77,9 @@ public class OrderAction extends ActionSupport {
         List cart = this.cartService.showBuyCart();
         ActionContext.getContext().put("action","buyCheckout");
         ActionContext.getContext().put("booksInOrder",cart.isEmpty()?null:cart);
+        Map result = this.userService.getAllDeliveryAddress();
+        ActionContext.getContext().put("defaultAddrList", result.get("defaultAddrList"));
+        ActionContext.getContext().put("addrList", result.get("addrList"));
         return "buyCheckout";
     }
     public String createBuyOrder() {     // 用户创建订单，添加到数据库，跳转到付款页面
@@ -104,4 +108,6 @@ public class OrderAction extends ActionSupport {
     public String cancelOrder() {        // 取消订单（已创建但未付款确认）
         return SUCCESS;
     }
+
+
 }
