@@ -283,7 +283,7 @@
             </div>
             <label>省市地区</label>
             <div class="form-group form-group-auto" id="city_4">
-                <select class="prov form-control form-control-noNewline" id="province" name="userPorfile.province"  style="width:auto"></select>
+                <select class="prov form-control form-control-noNewline" id="province" name="userProfile.province"  style="width:auto"></select>
                 <select class="city form-control form-control-noNewline"  disabled="disabled" id="city" name="userProfile.city"  style="width:auto"></select>
                 <select class="dist form-control form-control-noNewline" disabled="disabled" id="district" name="userProfile.district" style="width: auto"></select>
             </div>
