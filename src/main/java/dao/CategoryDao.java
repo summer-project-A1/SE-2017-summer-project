@@ -1,7 +1,6 @@
 package dao;
 
 import java.util.List;
-
 import model.Category1;
 import model.Category2;
 

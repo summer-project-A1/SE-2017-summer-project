@@ -8,10 +8,9 @@
             <generator class="native"/>
         </id>
         <property name="category1Name" column="category1_name" />
-        <list name="category2List">
+        <bag name="category2List" table="category2" cascade="all" lazy="false">
             <key column="category1_id" foreign-key="category1_id"></key>
-            <index column="category1_id"></index>
-            <one-to-many class="Category2"/>
-        </list>
+            <one-to-many class="model.Category2" />
+        </bag>
     </class>
 </hibernate-mapping>

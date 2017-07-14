@@ -1,7 +1,6 @@
 package action;
 
 import java.util.List;
-
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -22,11 +21,10 @@ public class IndexAction extends ActionSupport {
     public String index() {
         ActionContext.getContext().put("title","ͼ�������ƽ̨");
         return "showIndex";
-    }    
-    public String header() {
-        List<Category1> category1List = this.bookService.showAllCategory1s();
-        ActionContext.getContext().put("category1List", category1List);
-        return "showHeader";
     }
-
+    public String header(){
+        List<Category1> c1 = this.bookService.showAllCategory1s();
+        ActionContext.getContext().put("category1List",bookService.showAllCategory1s());
+        return"showHeader";
+    }
 }
