@@ -114,17 +114,14 @@
                     url: "<%=path%>/authAction/register",
                     type: "post",
                     data: params,
-                    dataType: "text",
-                    success: function (data) {
-                        var response = eval("("+data+")");
-                        if(response.result == false){
-                            //var msg = response.message;
-                            showTip('注册失败!', 'danger');
-                        }
-                        if(response.result == true){
-                            //alert(response.message);
+                    success: function (msg) {
+                        if(msg.success){
                             showTip('注册成功!', 'success');
                             window.location.href='<%=path%>/index';
+                        }
+                        else{
+                            //var msg = response.message;
+                            showTip('注册失败!', 'danger');
                         }
                     }
                 });

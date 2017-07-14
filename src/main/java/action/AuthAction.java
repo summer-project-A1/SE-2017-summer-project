@@ -95,11 +95,11 @@ public class AuthAction extends ActionSupport{
         boolean result = this.userService.register(registerInfo);
         this.params = new HashMap();
         if(result) {
-            this.params.put("result", true);
+            this.params.put("success", true);
             //this.params.put("message", "注册成功");
         }
         else {
-            this.params.put("result", false);
+            this.params.put("success", false);
             //this.params.put("message", "注册失败");
         }
         return "ajax";

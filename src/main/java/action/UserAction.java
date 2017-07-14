@@ -133,19 +133,24 @@ public class UserAction extends ActionSupport {
 
     public String updatePassword() {
         this.params = new HashMap();
-        boolean result = this.userService.updatePassword(this.oldPassword, this.newPassword);
-        System.out.println("success: "+result);
-        params.put("success", result);
+        System.out.println("oldPassword: "+ oldPassword);
+        System.out.println("newPassword: "+ newPassword);
+        boolean result=this.userService.updatePassword(this.oldPassword, this.newPassword);
+        if(result){
+            params.put("success",true );
+
+        }
+        else{
+            params.put("success",false);
+
+        }
         return "ajax";
     }
 
     public String updateUserProfile(){
         this.params = new HashMap();
         boolean result = this.userService.updateUserProfile(this.userProfile);
-        //boolean result = this.userService.updateUserProfile(this.oldPassword, this.newPassword);
-        //System.out.println("success: "+result);
-        //params.put("success", result);
-        params.put("success", true);
+        params.put("success", result);
         return "ajax";
     }
     
