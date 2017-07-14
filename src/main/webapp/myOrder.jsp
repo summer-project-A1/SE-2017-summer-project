@@ -24,6 +24,8 @@
     </style>
 </head>
 <body>
+<!-- header -->
+<s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 <script>
     function creditRating(borrowID){
         var creditRatingFormID = "creditRatingForm" + borrowID;

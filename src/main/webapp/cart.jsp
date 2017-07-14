@@ -12,7 +12,8 @@
 
 </head>
 <body>
-
+<!-- header -->
+<s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 
 <!--cart-items-->
 <div class="cart-items">

@@ -38,7 +38,8 @@
     </style>
 </head>
 <body>
-
+<!-- header -->
+<s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 <div id=bookinfo>
     <form id="form" action="<%=path%>/bookAction/uploadBook" method=post enctype="multipart/form-data" role="form" class="form-horizontal" accept-charset="UTF-8">
         <h3 style="text-align: center;">发布图书</h3>

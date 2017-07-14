@@ -195,7 +195,8 @@
 
 </head>
 <body>
-<jsp:include page="<%=path%>/header"/>
+<!-- header -->
+<s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 <div class="products">
     <div class="container">
         <h2>个人信息</h2>

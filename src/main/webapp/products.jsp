@@ -10,7 +10,8 @@
     <meta name="keywords" content="" />
 </head>
 <body>
-
+<!-- header -->
+<s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 
 <script type="application/x-javascript">
     addEventListener

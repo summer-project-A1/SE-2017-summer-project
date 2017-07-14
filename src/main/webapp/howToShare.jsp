@@ -7,7 +7,8 @@
     <title>How To Share</title>
 </head>
 <body>
-
+<!-- header -->
+<s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 
 <div class="contact">
     <div class="container">

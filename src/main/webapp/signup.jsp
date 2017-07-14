@@ -8,7 +8,8 @@
 </head>
 <body>
 <!-- header -->
-
+<!-- header -->
+<s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 <script>
 
 

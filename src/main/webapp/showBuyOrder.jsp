@@ -21,6 +21,8 @@
 
 </head>
 <body>
+<!-- header -->
+<s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 <div class="products">
 
     <div class="container">

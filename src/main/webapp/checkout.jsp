@@ -58,6 +58,8 @@
 
 </head>
 <body>
+<!-- header -->
+<s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 <script type="text/javascript" src="<%=basePath%>js/jquery.cityselect.js"></script>
 
 <script>
