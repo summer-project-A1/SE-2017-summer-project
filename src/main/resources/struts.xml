@@ -55,7 +55,7 @@
             <result name="showUserProfile">/userProfile.jsp</result>
             <result name="getAllAddress">/checkout.jsp</result>
             <allowed-methods>
-                showUserProfile,updatePassword,getAllAddress,addAddress,setDefaultAddress,deleteAddress
+                showUserProfile,updatePassword,getAllAddress,addAddress,setDefaultAddress,deleteAddress,updateUserProfile
             </allowed-methods>
         </action>
     </package>
@@ -166,6 +166,7 @@
                 <param name="root">params</param>
             </result>
             <result name="borrowCheckout">/checkout.jsp</result>
+            <result name="createBorrowOrder"></result>
             <allowed-methods>
                 borrowCheckout,createBorrowOrder,showMyBorrow,delayBook,returnBook
             </allowed-methods>
