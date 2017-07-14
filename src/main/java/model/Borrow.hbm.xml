@@ -14,15 +14,15 @@
         <property name="borrowPrice" column="borrow_price" />
         <property name="delayCount" column="delay_count" />
         <property name="status" column="status" />
-        <property name="borrowAddress" column="borrowAddress" />
-        <property name="returnAddress" column="returnAddress" />
+        <property name="borrowAddress" column="borrow_address" />
+        <property name="returnAddress" column="return_address" />
         <property name="trackingNo1" column="trackingNo1" />
         <property name="trackingNo2" column="trackingNo2" />
         <property name="orderDate" column="order_date" type="timestamp"></property>
         <property name="payDate" column="pay_date" type="timestamp" />
         <property name="fhDate" column="fhDate" type="timestamp" />
-        <property name="borrowDate" column="borrowdate" type="timestamp" />
-        <property name="returnDate" column="returnDate" type="timestamp" />
+        <property name="borrowDate" column="borrow_date" type="timestamp" />
+        <property name="returnDate" column="return_date" type="timestamp" />
         <property name="shDate" column="shDate" type="timestamp" />
         <property name="comment1" column="comment1"></property>
         <property name="comment2" column="comment2"></property>
