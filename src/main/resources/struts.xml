@@ -55,7 +55,7 @@
             <result name="showUserProfile">/userProfile.jsp</result>
             <result name="getAllAddress">/checkout.jsp</result>
             <allowed-methods>
-                showUserProfile,updatePassword,getAllAddress,addAddress,setDefaultAddress,deleteAddress
+                showUserProfile,updatePassword,getAllAddress,addAddress,setDefaultAddress,deleteAddress,updateUserProfile
             </allowed-methods>
         </action>
     </package>

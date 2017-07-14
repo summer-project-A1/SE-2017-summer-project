@@ -4,9 +4,28 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script type="text/javascript" src="<%=path%>/js/jquery.cityselect.js"></script>
     <title>User Profile</title>
+    <script type="text/javascript">
+
+    </script>
+
     <script>
         $(document).ready(function(){
+            $(function() {
+                $("#city_4").citySelect({
+                    prov: "<s:property value='#userProfile.province'/>",
+                    city: "<s:property value='#userProfile.city'/>",
+                    dist: "<s:property value='#userProfile.district'/>",
+                    nodata: "none",
+                    required:false
+                });
+            });
+
+            $('#gender').ready(function () {
+                $("#gender").val('<s:property value="#userProfile.gender"/>');
+
+            });
             $(".tab1 .single-bottom").hide();
 
             $(".products .container form").hide();
@@ -19,13 +38,12 @@
 
 
 
+
+
             $("#update-userProfile").click(function(){
                 $(".products .container form").hide();
                 $("#update-userProfile-form").show();
-                $("#gender").val('<s:property value="#userProfile.gender"/>');
-                $("#province").val('<s:property value="#userProflie.province"/>');
-                $("#city").val('<s:property value="#userProflie.city"/>');
-                $("#district").val('<s:property value="#userProflie.district"/>');
+
             });
 
             $("#update-password").click(function(){
@@ -136,16 +154,26 @@
 
         }
 
-    </script>
-
-    <script type="text/javascript" src="<%=path%>/js/jquery.cityselect.js"></script>
-    <script type="text/javascript">
-        $(function() {
-            $("#city_4").citySelect({
-                nodata: "none",
-                required:false
+        function updateUserProfile(){
+            $.ajax({
+                url: "<%=path%>/userAction/updateUserProfile",
+                type: "post",
+                data: $("#update-userProfile-form").serialize(),
+                success: function(msg){
+                    if (msg.success) {
+                        showTip('修改个人信息成功', 'success');
+                    }
+                    else {
+                        showTip('修改个人信息失败', 'danger');
+                    }
+                },
+                error:function(xhr,status,error){
+                    alert('status='+status+',error='+error);
+                }
             });
-        });
+
+        }
+
     </script>
     <style>
         @media ( min-width :768px) {
@@ -161,6 +189,8 @@
             }
         }
     </style>
+
+
 
 
 </head>
@@ -255,11 +285,11 @@
             <div class="form-group form-group-auto" id="city_4">
                 <select class="prov form-control form-control-noNewline" id="province" name="userPorfile.province"  style="width:auto"></select>
                 <select class="city form-control form-control-noNewline"  disabled="disabled" id="city" name="userProfile.city"  style="width:auto"></select>
-                <select class="dist form-control form-control-noNewline" disabled="disabled" id="district" name="userPorfile.district" style="width: auto"></select>
+                <select class="dist form-control form-control-noNewline" disabled="disabled" id="district" name="userProfile.district" style="width: auto"></select>
             </div>
             <div class="input">
                 <label>详细地址</label>
-                <input type="text" class="form-control" name="userPorfile.address" id="address">
+                <input type="text" class="form-control" name="userProfile.address" value="<s:property value="#userProfile.address"/>" id="address">
             </div>
             <div class="clearfix"> </div>
             <a href="#" class="add-cart item_add" onclick="updateUserProfile()">修改个人信息</a>
