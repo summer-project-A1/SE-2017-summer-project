@@ -173,7 +173,7 @@
 
     <div class="container">
 
-        <h2>图书浏览</h2>
+        <h2><s:property value="categoryNameOfBooks"/>图书浏览</h2>
 
         <div class="col-md-9 product-model-sec">
             <div class="clearfix"> </div>

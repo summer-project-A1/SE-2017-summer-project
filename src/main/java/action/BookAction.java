@@ -23,6 +23,10 @@ public class BookAction extends ActionSupport {
     private Integer part;
     private Integer firstPage;
 
+    private String category1Name;
+    private String category2Name;
+
+
     private int userID;
     private int bookID;
     private String bookName;
@@ -89,7 +93,21 @@ public class BookAction extends ActionSupport {
     public void setBookProfile(BookProfile bookProfile) {
         this.bookProfile = bookProfile;
     }
+    public String getCategory1Name() {
+        return category1Name;
+    }
 
+    public void setCategory1Name(String category1Name) {
+        this.category1Name = category1Name;
+    }
+
+    public String getCategory2Name() {
+        return category2Name;
+    }
+
+    public void setCategory2Name(String category2Name) {
+        this.category2Name = category2Name;
+    }
     /* ============================================================== */
 
     public String showAllBooks() {
@@ -105,6 +123,7 @@ public class BookAction extends ActionSupport {
         ActionContext.getContext().put("allBooks",allBooks);
         ActionContext.getContext().put("totalBookAmount",allBooks.size());//应从数据库获取allBooks的大小
         ActionContext.getContext().put("firstPage", this.firstPage);
+        ActionContext.getContext().put("categoryNameOfBooks","");
         return "showBooks";
     }
 
@@ -128,4 +147,40 @@ public class BookAction extends ActionSupport {
         ActionContext.getContext().put("commentProfileList",commentProfileList);
         return "showBookProfile";
     }
+
+
+    public String showBooksByCategory1Name(){
+        if(this.part == null) {
+            this.part = 1;
+        }
+        if(this.firstPage == null) {
+            this.firstPage = 0;
+        }
+        List<Book> allBooks = this.bookService.showBooksByCategory1NameByPage(category1Name,this.part,9);
+        List<Book> nextPage = this.bookService.showBooksByCategory1NameByPage(category1Name,this.part+1, 9);
+        ActionContext.getContext().put("isLastPart",(nextPage.size()==0));
+        ActionContext.getContext().put("allBooks",allBooks);
+        ActionContext.getContext().put("totalBookAmount",allBooks.size());//应从数据库获取allBooks的大小
+        ActionContext.getContext().put("firstPage", this.firstPage);
+        ActionContext.getContext().put("categoryNameOfBooks",category1Name);
+        return "showBooks";
+    }
+    public String showBooksByCategory2Name(){
+        if(this.part == null) {
+            this.part = 1;
+        }
+        if(this.firstPage == null) {
+            this.firstPage = 0;
+        }
+        List<Book> allBooks = this.bookService.showBooksByCategory2NameByPage(category2Name,this.part,9);
+        List<Book> nextPage = this.bookService.showBooksByCategory2NameByPage(category2Name,this.part+1, 9);
+        ActionContext.getContext().put("isLastPart",(nextPage.size()==0));
+        ActionContext.getContext().put("allBooks",allBooks);
+        ActionContext.getContext().put("totalBookAmount",allBooks.size());//应从数据库获取allBooks的大小
+        ActionContext.getContext().put("firstPage", this.firstPage);
+        ActionContext.getContext().put("categoryNameOfBooks",category2Name);
+        return "showBooks";
+    }
 }
+
+

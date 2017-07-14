@@ -125,7 +125,7 @@
             <result name="showBooks">/products.jsp</result>
             <result name="showBookProfile">/productDetail.jsp</result>
             <allowed-methods>
-                showAllBooks,showUserReleasedBooks,showBookProfile
+                showAllBooks,showBooksByCategory1Name,showBooksByCategory2Name,showUserReleasedBooks,showBookProfile
             </allowed-methods>
         </action>
     </package>
@@ -173,6 +173,19 @@
     </package>
 
     <package name="commentAction" extends="struts-default,json-default" namespace="/commentAction">
+        <interceptors>
+            <interceptor name="isLogin" class="action.interceptor.IsLoginInterceptor"/>
+            <interceptor-stack name="loginAuthCheck">
+                <interceptor-ref name="isLogin"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="loginAuthCheck"/>
+
+        <global-results>
+            <result name="login" type="redirect">/signin.jsp</result>
+        </global-results>
         <action name="*" class="action.CommentAction" method="{1}">
             <result name="commentBook" type="redirectAction">
                 <param name="namespace">/borrowAction</param>
