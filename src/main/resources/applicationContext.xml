@@ -44,6 +44,8 @@
 				<value>model/Order.hbm.xml</value>
                 <value>model/Reserve.hbm.xml</value>
                 <value>model/Comment.hbm.xml</value>
+                <value>model/Category2.hbm.xml</value>
+                <value>model/Category1.hbm.xml</value>
 			</list>
 		</property>
 		<!-- Hibernate SessionFactory -->
