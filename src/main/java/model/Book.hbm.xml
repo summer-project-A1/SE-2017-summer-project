@@ -13,6 +13,8 @@
         <property name="press" column="press" />
         <property name="category1" column="category1" />
         <property name="category2" column="category2" />
+        <property name="publishYear" column="publish_year" />
+        <property name="publishMonth" column="publish_month" />
         <property name="canExchange" column="canexchange" />
         <property name="borrowCredit" column="borrow_price" />
         <property name="buyCredit" column="buy_price" />

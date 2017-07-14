@@ -15,7 +15,7 @@ public interface BookService extends BaseService {
     public List<Book> searchBook(Map condition);
     public Book showBook(int bookID);
     public BookProfile showBookProfile(int bookID);
-    public List<Book> showBooksByCategory1Name(String category1Name);
-    public List<Book> showBooksByCategory2Name(String category2Name);
+    public List<Book> showBooksByCategory1NameByPage(String category1Name, int part, int pageSize);
+    public List<Book> showBooksByCategory2NameByPage(String category2Name, int part, int pageSize);
     public List<Category1> showAllCategory1s();
 }

@@ -65,12 +65,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         List<FullAddress> deliveryAddress = new ArrayList<FullAddress>();
         List<Map> deliveryAddressListMap = (List<Map>)userProfileInMongo.get("deliveryAddress");
         for(Map tmp1 : deliveryAddressListMap) {
-            FullAddress tmp2 = new FullAddress();
-            tmp2.setProvince((String)tmp1.get("province"));
-            tmp2.setCity((String)tmp1.get("city"));
-            tmp2.setDistrict((String)tmp1.get("district"));
-            tmp2.setAddress((String)tmp1.get("address"));
-            tmp2.setIsDefault((Boolean)tmp1.get("isDefault"));
+            FullAddress tmp2 = new FullAddress(tmp1);
             deliveryAddress.add(tmp2);
         }
         userProfile.setDeliveryAddress(deliveryAddress);
@@ -79,7 +74,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     
     @Override
     public boolean saveUserProfile(UserProfile newUserProfile) {
-        // 不涉及用户图片
+        // 不涉及用户图片和密码
         DBCollection collection = getMongoDb().getCollection("user_profile");
         Map userProfileInMongo;
         userProfileInMongo = new HashMap();
@@ -127,14 +122,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     
     @Override
     public boolean updateUserProfile(UserProfile newUserProfile) {
-        // 不涉及用户图片
+        // 不涉及用户图片和密码
         DBCollection collection = getMongoDb().getCollection("user_profile");
         Integer userID = newUserProfile.getUserID();
         User oldUser = userID==null? null:this.getUserById(userID);
-        User newUser;
         Map userProfileInMongo;
-        
-        newUser = oldUser;
             
         DBObject query=new BasicDBObject("_id", new ObjectId(oldUser.getProfileID()));
         DBObject obj = collection.findOne(query);
@@ -146,13 +138,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         userProfileInMongo.put("mobile", newUserProfile.getMobile());
         List<Map> deliveryAddress = new ArrayList<Map>();
         for(FullAddress tmp1 : newUserProfile.getDeliveryAddress()) {
-            Map tmp2 = new HashMap();
-            tmp2.put("province", tmp1.getProvince());
-            tmp2.put("city", tmp1.getCity());
-            tmp2.put("district", tmp1.getDistrict());
-            tmp2.put("district", tmp1.getAddress());
-            tmp2.put("isDefault", tmp1.getIsDefault());
-            deliveryAddress.add(tmp2);
+            deliveryAddress.add(tmp1.toMap());
         }
         userProfileInMongo.put("deliveryAddress", deliveryAddress);
         
@@ -162,19 +148,13 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         profileID = oldUser.getProfileID();
         
         // 用户在mysql中的属性
-        newUser.setNickName(newUserProfile.getNickName());
-        newUser.setPassword(newUserProfile.getPassword());   // !!!!!
-        newUser.setEmail(newUserProfile.getEmail());
-        newUser.setCredit(newUserProfile.getCredit());
-        newUser.setRole(newUserProfile.getRole());
-        newUser.setProvince(newUserProfile.getProvince());
-        newUser.setCity(newUserProfile.getCity());
-        newUser.setDistrict(newUserProfile.getDistrict());
-        newUser.setAddress(newUserProfile.getAddress());
+        oldUser.setNickName(newUserProfile.getNickName());
+        oldUser.setProvince(newUserProfile.getProvince());
+        oldUser.setCity(newUserProfile.getCity());
+        oldUser.setDistrict(newUserProfile.getDistrict());
+        oldUser.setAddress(newUserProfile.getAddress());
         
-        //newUser.setProfileID(profileID);
-        new ObjectId();
-        this.update(newUser);
+        this.update(oldUser);
         return true;
     }
     

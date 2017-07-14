@@ -141,6 +141,7 @@ public class UserAction extends ActionSupport {
 
     public String updateUserProfile(){
         this.params = new HashMap();
+        boolean result = this.userService.updateUserProfile(this.userProfile);
         //boolean result = this.userService.updateUserProfile(this.oldPassword, this.newPassword);
         //System.out.println("success: "+result);
         //params.put("success", result);
