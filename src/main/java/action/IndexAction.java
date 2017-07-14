@@ -19,4 +19,8 @@ public class IndexAction extends ActionSupport {
         ActionContext.getContext().put("title","图书分享交流平台");
         return "showIndex";
     }
+    public String header(){
+        ActionContext.getContext().put("category1List",bookService.showAllCategory1s());
+        return"showHeader";
+    }
 }

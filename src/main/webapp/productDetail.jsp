@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <!-- header -->
-<%@include file="header.jsp"%>
+<%@include file="global.jsp"%>
 
 <html>
 <head>

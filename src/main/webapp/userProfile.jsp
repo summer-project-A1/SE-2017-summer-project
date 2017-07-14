@@ -1,6 +1,6 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="header.jsp"%>
+<%@include file="global.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -195,6 +195,7 @@
 
 </head>
 <body>
+<jsp:include page="<%=path%>/header"/>
 <div class="products">
     <div class="container">
         <h2>个人信息</h2>

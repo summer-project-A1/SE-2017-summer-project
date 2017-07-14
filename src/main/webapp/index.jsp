@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@include file="header.jsp"%>
+<%@include file="global.jsp"%>
 <html>
 <head>
     <title><s:property value="#title"/></title>
@@ -12,8 +12,7 @@
 </head>
 <body>
 <!-- header -->
-
-<!-- home page -->
+<s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 <div class="banner">
     <div class="container">
         <h2 class="hdng">图书<span>分享</span>交流平台</h2>
