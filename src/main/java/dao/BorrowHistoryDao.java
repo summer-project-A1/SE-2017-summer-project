@@ -6,4 +6,5 @@ import model.BorrowHistory;
 
 public interface BorrowHistoryDao extends BaseDao {
     public List<BorrowHistory> getBorrowHistoryByUserID(int userID);
+    public BorrowHistory getBorrowHistoryByBorrowID(int borrowID);
 }

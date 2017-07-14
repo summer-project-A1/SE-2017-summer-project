@@ -138,7 +138,9 @@
         <property name="orderDao" ref="orderDao" />
     </bean>
     <bean id="commentService" class="service.impl.CommentServiceImpl"> 
-        <property name="commentdao" ref="commentDao"/> 
+        <property name="commentdao" ref="commentDao"/>
+        <property name="userDao" ref="userDao"/>
+        <property name="borrowHistoryDao" ref="borrowHistoryDao"/>
     </bean>
     <bean id="historyService" class="service.impl.HistoryServiceImpl">
         <property name="borrowDao" ref="borrowDao" />

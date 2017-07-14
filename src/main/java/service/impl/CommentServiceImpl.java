@@ -1,6 +1,8 @@
 package service.impl;
 
+import dao.BorrowHistoryDao;
 import dao.UserDao;
+import model.BorrowHistory;
 import model.CommentProfile;
 import model.User;
 import service.CommentService;
@@ -12,6 +14,7 @@ import java.util.*;
 public class CommentServiceImpl extends BaseServiceImpl implements CommentService {
     private CommentDao commentdao;
     private UserDao userDao;
+    private BorrowHistoryDao borrowHistoryDao;
 
     public CommentDao getCommentdao() {
         return commentdao;
@@ -27,6 +30,14 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    public BorrowHistoryDao getBorrowHistoryDao() {
+        return borrowHistoryDao;
+    }
+
+    public void setBorrowHistoryDao(BorrowHistoryDao borrowHistoryDao) {
+        this.borrowHistoryDao = borrowHistoryDao;
     }
 
 
@@ -80,5 +91,25 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
         this.commentdao.delete(comment);
         return true;
     }
+
+    @Override
+    public boolean honestyRatingInBorrow(int borrowID,int creditRating){
+        BorrowHistory bh = this.borrowHistoryDao.getBorrowHistoryByBorrowID(borrowID);
+        int userID1 = bh.getUserID1();
+        int userID2 = bh.getUserID2();
+        User user = getLoginedUserInfo();
+        int currentID = user.getUserID();
+        int ratingID = 0;
+        if(currentID == userID1){
+            ratingID = userID2;
+        }else{
+            ratingID = userID1;
+        }
+        User ratingUser = this.userDao.getUserById(ratingID);
+        ratingUser.setCredit(ratingUser.getCredit()+creditRating);
+        this.userDao.update(ratingUser);
+        return true;
+    }
+
 
 }

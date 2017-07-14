@@ -191,11 +191,15 @@
                 <param name="namespace">/borrowAction</param>
                 <param name="actionName">showMyBorrow</param>
             </result>
+            <result name="honestyRatingWhenBorrow" type="redirectAction">
+                <param name="namespace">/borrowAction</param>
+                <param name="actionName">showMyBorrow</param>
+            </result>
             <result name="ajax" type="json">
                <param name="root">params</param>
             </result>
             <allowed-methods>
-                commentBook,deleteComment
+                commentBook,deleteComment,honestyRatingWhenBorrow
             </allowed-methods>
         </action>
     </package>
