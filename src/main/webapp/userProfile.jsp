@@ -121,7 +121,6 @@
                 url: "<%=path%>/userAction/updatePassword",
                 type: "post",
                 data: $("#update-password-form").serialize(),
-                dataType: "text",
                 success: function(msg){
                     if (msg.success) {
                         showTip('修改密码成功', 'success');

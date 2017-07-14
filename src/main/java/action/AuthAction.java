@@ -85,14 +85,7 @@ public class AuthAction extends ActionSupport{
     }
 
     public String register() {
-
-        if(this.registerInfo.getCity()!= null && this.registerInfo.getDistrict() == null ) {
-            // 直辖市
-            // 注意此时前台并不传递district到后台，且district的内容保存在city参数中！
-            registerInfo.setCity(this.registerInfo.getProvince()+"市");
-            registerInfo.setDistrict(this.registerInfo.getCity());
-        }
-        else if(this.registerInfo.getCity()==null&&this.registerInfo.getDistrict()==null){
+        if(this.registerInfo.getCity()==null&&this.registerInfo.getDistrict()==null){
             registerInfo.setCity(this.registerInfo.getProvince());
             registerInfo.setDistrict(this.registerInfo.getProvince());
         }
@@ -102,11 +95,11 @@ public class AuthAction extends ActionSupport{
         boolean result = this.userService.register(registerInfo);
         this.params = new HashMap();
         if(result) {
-            this.params.put("result", true);
+            this.params.put("success", true);
             //this.params.put("message", "注册成功");
         }
         else {
-            this.params.put("result", false);
+            this.params.put("success", false);
             //this.params.put("message", "注册失败");
         }
         return "ajax";
