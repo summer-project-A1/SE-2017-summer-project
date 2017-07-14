@@ -267,7 +267,7 @@
             <h3>修改个人信息</h3>
             <div class="form-group form-group-auto">
                 <label>昵称</label>
-                <input type="text" name="userProfile.nickName" value="<s:property value="#userProflie.nickName"/>" class="form-control" id="update_nickName">
+                <input type="text" name="userProfile.nickName" value="<s:property value="#userProfile.nickName"/>" class="form-control" id="update_nickName">
             </div>
             <div class="form-group form-group-auto">
                 <label>性别</label>
