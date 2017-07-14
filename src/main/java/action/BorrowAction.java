@@ -6,6 +6,7 @@ import model.Book;
 import service.BorrowService;
 import service.CartService;
 import service.OrderService;
+import service.UserService;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -16,6 +17,7 @@ public class BorrowAction extends ActionSupport {
 
     private BorrowService borrowService;
     private CartService cartService;
+    private UserService userService;
 
     private int bookID;
     private Map params;
@@ -33,6 +35,11 @@ public class BorrowAction extends ActionSupport {
     }
     public void setCartService(CartService cartService) {
         this.cartService = cartService;
+    }
+
+    public UserService getUserService(){return userService;}
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
     
     public int getBookID() {
@@ -52,14 +59,18 @@ public class BorrowAction extends ActionSupport {
     
     public String borrowCheckout() {        // 从购物车跳转到地址确认页面，不修改数据库
         List cart = this.cartService.showBorrowCart();
+
         ActionContext.getContext().put("action","borrowCheckout");
         ActionContext.getContext().put("booksInOrder",cart.isEmpty()?null:cart);
+        Map result = this.userService.getAllDeliveryAddress();
+        ActionContext.getContext().put("defaultAddrList", result.get("defaultAddrList"));
+        ActionContext.getContext().put("addrList", result.get("addrList"));
         return "borrowCheckout";
     }
     
     public String createBorrowOrder() {     // 用户创建订单，添加到数据库，跳转到付款页面
         this.borrowService.borrowAllBookInBorrowCart();
-        return "createBuy";
+        return "createBorrowOrder";
     }
     
     public String showMyBorrow(){
@@ -96,4 +107,6 @@ public class BorrowAction extends ActionSupport {
         this.params = this.borrowService.returnBook(this.bookID);
         return "ajax";
     }
+
+
 }

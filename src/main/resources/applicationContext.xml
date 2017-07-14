@@ -164,6 +164,7 @@
         <property name="borrowService" ref="borrowService" />
         <property name="bookService" ref="bookService" />
         <property name="cartService" ref="cartService" />
+        <property name="userService" ref="userService"/>
     </bean>
     <bean id="cartAction" class="action.CartAction">
         <property name="cartService" ref="cartService"/>
@@ -179,6 +180,7 @@
     <bean id="borrowAction" class="action.BorrowAction">
         <property name="borrowService" ref="borrowService" />
         <property name="cartService" ref="cartService" />
+        <property name="userService" ref="userService"/>
     </bean>
     <bean id="commentAction" class="action.CommentAction">
         <property name="commentService" ref="commentService" />
