@@ -1,6 +1,7 @@
 package action;
 
 import java.util.List;
+import java.util.Set;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -26,9 +27,11 @@ public class IndexAction extends ActionSupport {
     }
     public String header(){
         List<Category1> c1 = this.bookService.showAllCategory1s();
+        System.out.println(c1.size());
         for(Category1 t1 : c1) {
             System.out.println(t1.getCategory1Name());
             List<Category2> c2 = t1.getCategory2List();
+            System.out.println(c2.size());
             for(Category2 t2 : c2) {
                 System.out.println(t2.getCategory2Name());
             }
