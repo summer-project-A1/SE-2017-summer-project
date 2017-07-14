@@ -29,6 +29,9 @@ public class OrderAction extends ActionSupport {
     
     private Map params; 
     
+    private String address;     // 这里的address是四部分拼在一起后的！
+    private List<Integer> orderIDList;
+    
     /* ========================================================= */
 
     public OrderService getOrderService() {
@@ -67,11 +70,27 @@ public class OrderAction extends ActionSupport {
     public void setParams(Map params) {
         this.params = params;
     }
-    public Integer getOrderID(){return orderID;}
-    public void setOrderID(Integer orderID){this.orderID = orderID;}
+    public Integer getOrderID() {
+        return orderID;
+    }
+    public void setOrderID(Integer orderID) {
+        this.orderID = orderID;
+    }
     
     /* ========================================================= */
     
+    public String getAddress() {
+        return address;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    public List<Integer> getOrderIDList() {
+        return orderIDList;
+    }
+    public void setOrderIDList(List<Integer> orderIDList) {
+        this.orderIDList = orderIDList;
+    }
     public String buyCheckout() {        // 从购物车跳转到地址确认页面，不修改数据库
         List cart = this.cartService.showBuyCart();
         ActionContext.getContext().put("action","buyCheckout");
@@ -87,6 +106,8 @@ public class OrderAction extends ActionSupport {
         }
         ActionContext.getContext().put("order", newOrder);
         ActionContext.getContext().put("booksInOrder", allBook);*/
+        //List<OrderProfile> orderProfileList = this.orderService.createOrders();
+        //ActionContext.getContext().put("",orderProfileList);
         return "showOrder";
     }
     public String showOrderById() {
@@ -98,7 +119,8 @@ public class OrderAction extends ActionSupport {
         ActionContext.getContext().put("booksInOrder", booksInOrder);
         return "showOrder";
     }
-    public String confirmOrder() {       // 用户付款确认订单，修改订单状态
+    public String confirmOrder() {       // 用户付款确认订单（允许多个订单），修改订单状态
+        //boolean result = this.orderService.confirmOrder(this.orderIDList);
         return SUCCESS;
     }
     public String cancelOrder() {        // 取消订单（已创建但未付款确认）

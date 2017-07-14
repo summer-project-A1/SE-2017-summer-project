@@ -68,7 +68,7 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
             return false;
         }
         Map bookProfileInMongo = new HashMap();
-        bookProfileInMongo.put("category2", bookProfile.getCategory2());
+//        bookProfileInMongo.put("category2", bookProfile.getCategory2());
         // bookProfileInMongo.put("publish", new HashMap(){{put("year",publishYear);put("month",publishMonth);}});
         // bookProfileInMongo.put("edtion", new HashMap(){{put("year",edtionYear);put("month",edtionMonth);put("version",edtionVersion);}});
         bookProfileInMongo.put("editionYear", bookProfile.getEditionYear());
@@ -163,8 +163,8 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         bookProfile.setIsbn(book.getIsbn());
         bookProfile.setAuthor(book.getAuthor());
         bookProfile.setPress(book.getPress());
-        bookProfile.setCategory1(book.getCategory1().toString());
-        bookProfile.setCategory2(book.getCategory2().toString());
+        bookProfile.setCategory1(book.getCategory1());
+        bookProfile.setCategory2(book.getCategory2());
         bookProfile.setPublishYear(book.getPublishYear());
         bookProfile.setPublishMonth(book.getPublishMonth());
         bookProfile.setCanExchange(book.getCanExchange());
