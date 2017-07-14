@@ -173,7 +173,7 @@
 
     <div class="container">
 
-        <h2><s:property value="categoryNameOfBooks"/>图书浏览</h2>
+        <h2>图书浏览</h2>
 
         <div class="col-md-9 product-model-sec">
             <div class="clearfix"> </div>
@@ -240,7 +240,7 @@
                             </ul>
                             <div class="clearfix"> </div>
                             <div class="single-bottom">
-                                    <a href="<%=path%>/bookAction/showBooksByCategory1Name?category1Name=<s:property value="category1Name"/>"><p><s:property value="category1Name"/></p>
+                                    <a href="<%=path%>>bookAction/showBooksByCategory1Name?category1Name=<s:property value="category1Name"/>"><p><s:property value="category1Name"/></p>
                                 <s:iterator value="category2List" status="st2">
                                     <a href="<%=path%>/bookAction/showBooksByCategory2Name?category2Name=<s:property value="category2Name"/>"><p><s:property value="category2Name"/></p></a>
                                 </s:iterator>
