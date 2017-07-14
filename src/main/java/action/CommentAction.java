@@ -16,6 +16,7 @@ public class CommentAction extends ActionSupport {
     private int bookID;
     private int commentID;
     private String comment;
+    private int creditRating;
 
     private Map params;
     /* =================================================== */
@@ -59,6 +60,13 @@ public class CommentAction extends ActionSupport {
     public void setParams(Map params) {
         this.params = params;
     }
+    public int getCreditRating() {
+        return creditRating;
+    }
+
+    public void setCreditRating(int creditRating) {
+        this.creditRating = creditRating;
+    }
 
 
     public String commentBook(){
@@ -76,6 +84,10 @@ public class CommentAction extends ActionSupport {
         return "ajax";
     }
 
+    public String honestyRatingWhenBorrow(){
+        this.commentService.honestyRatingInBorrow(this.borrowID,this.creditRating);
+        return "honestyRatingWhenBorrow";
+    }
 
 
 }
