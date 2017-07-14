@@ -7,6 +7,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import model.Book;
 import model.BookProfile;
+import model.Category1;
 import model.CommentProfile;
 import service.BookService;
 import service.CommentService;
@@ -148,7 +149,12 @@ public class BookAction extends ActionSupport {
         ActionContext.getContext().put("commentProfileList",commentProfileList);
         return "showBookProfile";
     }
-
+    
+    public String getCategory1List() {
+        List<Category1> category1List = this.bookService.showAllCategory1s();
+        ActionContext.getContext().put("category1List", category1List);
+        return "";
+    }
 
     public String showBooksByCategory1Name(){
         if(this.part == null) {
