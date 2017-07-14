@@ -11,7 +11,7 @@ public interface UserService extends BaseService {
     public boolean register(UserProfile registerInfo);
     public boolean checkEmailAvailable(String email);
     public boolean logout();
-    public Map showUserProfile(int userID);
+    public UserProfile showUserProfile();
     public boolean updatePassword(String oldPlainPassword, String newPlainPassword);
     public boolean updateUserProfile(UserProfile newUserProfile);
     

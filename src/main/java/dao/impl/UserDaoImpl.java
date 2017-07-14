@@ -64,9 +64,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         userProfile.setMobile((String)userProfileInMongo.get("mobile"));
         List<FullAddress> deliveryAddress = new ArrayList<FullAddress>();
         List<Map> deliveryAddressListMap = (List<Map>)userProfileInMongo.get("deliveryAddress");
-        for(Map tmp1 : deliveryAddressListMap) {
-            FullAddress tmp2 = new FullAddress(tmp1);
-            deliveryAddress.add(tmp2);
+        if(deliveryAddressListMap != null) {
+            for(Map tmp1 : deliveryAddressListMap) {
+                FullAddress tmp2 = new FullAddress(tmp1);
+                deliveryAddress.add(tmp2);
+            }
         }
         userProfile.setDeliveryAddress(deliveryAddress);
         return userProfile;

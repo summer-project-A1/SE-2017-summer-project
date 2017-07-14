@@ -139,8 +139,8 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
         System.out.println(hql);
         Query query = getSession().createQuery(hql);
         query.setParameters(args.toArray(), types.toArray(new Type[0]));
-        query.list();
-        return null;
+        List<Book> books = query.list();
+        return books;
         /*
         a图书所有者
         a地区

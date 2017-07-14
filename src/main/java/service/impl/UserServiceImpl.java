@@ -37,7 +37,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             if(email != null) {
                 User userinfo = getUserDao().getUserByEmail(email);
                 if(userinfo != null) {
-                    if(MD5Util.encoderByMd5(plainPassword).toLowerCase().equals(userinfo.getPassword().toLowerCase())) {
+                    if(PasswordUtil.checkPassword(plainPassword, userinfo.getPassword())) {
                         setLoginedUserInfo(userinfo);
                         logined = true;
                     }
@@ -115,9 +115,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     }
 
     @Override
-    public Map showUserProfile(int userID) {
-        // TODO 自动生成的方法存根
-        return null;
+    public UserProfile showUserProfile() {
+        int userID = this.getLoginedUserInfo().getUserID();
+        return this.userDao.getUserProfile(userID);
     }
 
     @Override

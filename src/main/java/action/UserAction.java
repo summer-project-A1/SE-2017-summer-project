@@ -127,7 +127,8 @@ public class UserAction extends ActionSupport {
 
 
     public String showUserProfile(){
-        ActionContext.getContext().put("userProfile",userProfile);
+        this.userProfile = this.userService.showUserProfile();
+        ActionContext.getContext().put("userProfile",this.userProfile);
         return "showUserProfile";
     }
 
