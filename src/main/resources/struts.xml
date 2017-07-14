@@ -166,6 +166,7 @@
                 <param name="root">params</param>
             </result>
             <result name="borrowCheckout">/checkout.jsp</result>
+            <result name="createBorrowOrder"></result>
             <allowed-methods>
                 borrowCheckout,createBorrowOrder,showMyBorrow,delayBook,returnBook
             </allowed-methods>
