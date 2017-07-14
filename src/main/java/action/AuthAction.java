@@ -85,14 +85,7 @@ public class AuthAction extends ActionSupport{
     }
 
     public String register() {
-
-        if(this.registerInfo.getCity()!= null && this.registerInfo.getDistrict() == null ) {
-            // 直辖市
-            // 注意此时前台并不传递district到后台，且district的内容保存在city参数中！
-            registerInfo.setCity(this.registerInfo.getProvince()+"市");
-            registerInfo.setDistrict(this.registerInfo.getCity());
-        }
-        else if(this.registerInfo.getCity()==null&&this.registerInfo.getDistrict()==null){
+        if(this.registerInfo.getCity()==null&&this.registerInfo.getDistrict()==null){
             registerInfo.setCity(this.registerInfo.getProvince());
             registerInfo.setDistrict(this.registerInfo.getProvince());
         }
