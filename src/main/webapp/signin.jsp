@@ -4,27 +4,29 @@
 
 <html>
 <head>
+    <s:action name="header" executeResult="true" namespace="/"/>
+
     <title>Sign in</title>
+    <script>
+
+
+
+        $(document).ready(function(){
+            $("#login_email").focus();
+            $("#login_email").keyup(function(){
+                var email = $("#login_email").val();
+                if(email.indexOf("@") < 0){
+                    $("#available_status").html("<span style='color:red'>请输入正确的邮件地址</span>");
+                }else{
+                    $("#available_status").html("<span></span>");
+                }
+            });
+        });
+    </script>
+
 </head>
 <body>
 <!-- header -->
-
-<script>
-
-
-
-    $(document).ready(function(){
-        $("#login_email").focus();
-        $("#login_email").keyup(function(){
-            var email = $("#login_email").val();
-            if(email.indexOf("@") < 0){
-                $("#available_status").html("<span style='color:red'>请输入正确的邮件地址</span>");
-            }else{
-                $("#available_status").html("<span></span>");
-            }
-        });
-    });
-</script>
 
 
 <div class="account">

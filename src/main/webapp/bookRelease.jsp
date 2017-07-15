@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <s:action name="header" executeResult="true" namespace="/"/>
     <title>Release Book</title>
 
     <style>
@@ -38,6 +39,7 @@
     </style>
 </head>
 <body>
+<!-- header -->
 
 <div id=bookinfo>
     <form id="form" action="<%=path%>/bookAction/uploadBook" method=post enctype="multipart/form-data" role="form" class="form-horizontal" accept-charset="UTF-8">

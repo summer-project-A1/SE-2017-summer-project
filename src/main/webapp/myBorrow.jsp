@@ -3,6 +3,7 @@
 <%@include file="global.jsp"%>
 <html>
 <head>
+    <s:action name="header" executeResult="true" namespace="/"/>
     <title>myBorrow</title>
     <style>
 
@@ -23,149 +24,151 @@
 
         }
     </style>
+    <script>
+        function payBook(borrowID){
+            var statusID = "status"+borrowID;
+            var payDateID = 'payDate'+borrowID;
+            var payBtnID = 'payBtn'+borrowID;
+            $.ajax({
+                url:'<%=path%>/borrowAction/payBorrow',
+                type:'POST',
+                data:{'borrowID':borrowID},
+                success:function(msg){
+                    if(msg.success){
+                        var payDate = msg.payDate;
+                        showTip('支付成功！','success');
+                        $("#"+statusID).html("当前状态：卖家未发货");
+                        $("#"+payBtnID).remove();
+                        $("#"+payDateID).html("付款日期："+payDate);
+                        $("#"+payDateID).show();
+                    }else{
+                        showTip('发生错误！', 'danger');
+                    }
+                },
+                error:function(xhr,status,error){
+                    alert('status='+status+',error='+error);
+                }
+            });
+        }
+
+        function confirmReceipt(borrowID){
+            var confirmBtnID = "confirmBtn"+borrowID;
+            var statusID = "status"+borrowID;
+            var borrowDateID = "borrowDate"+borrowID;
+            $.ajax({
+                url:'<%=path%>/borrowAction/confirmReceipt',
+                type:'POST',
+                data:{'borrowID':borrowID},
+                success:function(msg){
+                    if(msg.success){
+                        var borrowDate = msg.borrowDate;
+                        showTip('已确认收货！','success');
+                        $("#"+statusID).html("当前状态：买家未归还");
+                        $("#"+confirmBtnID).remove();
+                        $("#"+borrowDateID).html("收货日期："+borrowDate);
+                        $("#"+borrowDateID).show();
+                        //window.setTimeout("window.location='<%=path%>/borrowAction/showMyBorrow'",1500);
+                    }else{
+                        showTip('发生错误！', 'danger');
+                    }
+                },
+                error:function(xhr,status,error){
+                    alert('status='+status+',error='+error);
+                }
+            });
+        }
+
+        function returnBook(borrowID){
+            var returnBtnID = "returnBtn"+borrowID;
+            var delayBtnID = "delayBtn"+borrowID;
+            var returnDateID = "returnDate"+borrowID;
+            $.ajax({
+                url:'<%=path%>/borrowAction/returnBook',
+                type:'POST',
+                data:{
+                    'borrowID':borrowID,
+                },
+                success:function(msg){
+                    if (msg.success) {
+                        var returnDate = msg.returnDate;
+                        $("#"+returnBtnID).remove();
+                        $("#"+delayBtnID).remove();
+                        $("#"+returnDateID).html("归还日期："+returnDate);
+                        $("#"+returnDateID).show();
+                        showTip('已归还图书！', 'success');
+                    }
+                    else {
+                        showTip('发生错误！', 'danger');
+                    }
+                },
+                error:function(xhr,status,error){
+                    alert('status='+status+',error='+error);
+                }
+
+            });
+        }
+
+        function delayBook(borrowID){
+            var delayBtnID = "delayBtn"+borrowID;
+            var yhdateID = "yhdate"+borrowID;
+            $.ajax({
+                url:'<%=path%>/borrowAction/delayBook',
+                type:'POST',
+                data:{
+                    'borrowID':borrowID
+                },
+                success:function(msg){
+                    if (msg.success) {
+                        var yhdate = msg.yhdate;
+                        $("#"+delayBtnID).remove();
+                        $("#"+yhdateID).html("应还日期："+yhdate);
+                        showTip('已续借图书！', 'success');
+
+                    }
+                    else {
+                        showTip('发生错误！', 'danger');
+                    }
+                },
+                error:function(xhr,status,error){
+                    alert('status='+status+',error='+error);
+                }
+
+            });
+        }
+
+        function commentBook(borrowID){
+            var commentFormID = "commentForm" + borrowID;
+            $("#"+commentFormID).show();
+        }
+
+        function submitComment(borrowID){
+            var commentID = "comment" + borrowID;
+            var commentFormID = "commentForm" + borrowID;
+            var commentContent = $("#"+commentID).val();
+            if(commentContent.length==0){
+                showTip('评论不可为空','danger');
+            }else{
+                $("#"+commentFormID).submit();
+            }
+        }
+
+        function creditRating(borrowID){
+            var creditRatingFormID = "creditRatingForm" + borrowID;
+            $("#"+creditRatingFormID).show();
+        }
+
+        function submitRating(borrowID){
+            var creaditRatingFormID = "creditRatingForm" + borrowID;
+            $("#"+creaditRatingFormID).submit();
+        }
+
+    </script>
+
 
 </head>
 <body>
 
-<script>
-    function payBook(borrowID){
-        var statusID = "status"+borrowID;
-        var payDateID = 'payDate'+borrowID;
-        var payBtnID = 'payBtn'+borrowID;
-        $.ajax({
-            url:'<%=path%>/borrowAction/payBorrow',
-            type:'POST',
-            data:{'borrowID':borrowID},
-            success:function(msg){
-                if(msg.success){
-                    var payDate = msg.payDate;
-                    showTip('支付成功！','success');
-                    $("#"+statusID).html("当前状态：卖家未发货");
-                    $("#"+payBtnID).remove();
-                    $("#"+payDateID).html("付款日期："+payDate);
-                    $("#"+payDateID).show();
-                }else{
-                    showTip('发生错误！', 'danger');
-                }
-            },
-            error:function(xhr,status,error){
-                alert('status='+status+',error='+error);
-            }
-        });
-    }
 
-    function confirmReceipt(borrowID){
-        var confirmBtnID = "confirmBtn"+borrowID;
-        var statusID = "status"+borrowID;
-        var borrowDateID = "borrowDate"+borrowID;
-        $.ajax({
-           url:'<%=path%>/borrowAction/confirmReceipt',
-           type:'POST',
-           data:{'borrowID':borrowID},
-           success:function(msg){
-               if(msg.success){
-                   var borrowDate = msg.borrowDate;
-                   showTip('已确认收货！','success');
-                   $("#"+statusID).html("当前状态：买家未归还");
-                   $("#"+confirmBtnID).remove();
-                   $("#"+borrowDateID).html("收货日期："+borrowDate);
-                   $("#"+borrowDateID).show();
-                   //window.setTimeout("window.location='<%=path%>/borrowAction/showMyBorrow'",1500);
-               }else{
-                   showTip('发生错误！', 'danger');
-               }
-           },
-            error:function(xhr,status,error){
-                alert('status='+status+',error='+error);
-            }
-        });
-    }
-
-    function returnBook(borrowID){
-        var returnBtnID = "returnBtn"+borrowID;
-        var delayBtnID = "delayBtn"+borrowID;
-        var returnDateID = "returnDate"+borrowID;
-        $.ajax({
-            url:'<%=path%>/borrowAction/returnBook',
-            type:'POST',
-            data:{
-                'borrowID':borrowID,
-            },
-            success:function(msg){
-                if (msg.success) {
-                    var returnDate = msg.returnDate;
-                    $("#"+returnBtnID).remove();
-                    $("#"+delayBtnID).remove();
-                    $("#"+returnDateID).html("归还日期："+returnDate);
-                    $("#"+returnDateID).show();
-                    showTip('已归还图书！', 'success');
-                }
-                else {
-                    showTip('发生错误！', 'danger');
-                }
-            },
-            error:function(xhr,status,error){
-                alert('status='+status+',error='+error);
-            }
-
-        });
-    }
-
-    function delayBook(borrowID){
-        var delayBtnID = "delayBtn"+borrowID;
-        var yhdateID = "yhdate"+borrowID;
-        $.ajax({
-            url:'<%=path%>/borrowAction/delayBook',
-            type:'POST',
-            data:{
-                'borrowID':borrowID
-            },
-            success:function(msg){
-                if (msg.success) {
-                    var yhdate = msg.yhdate;
-                    $("#"+delayBtnID).remove();
-                    $("#"+yhdateID).html("应还日期："+yhdate);
-                    showTip('已续借图书！', 'success');
-
-                }
-                else {
-                    showTip('发生错误！', 'danger');
-                }
-            },
-            error:function(xhr,status,error){
-                alert('status='+status+',error='+error);
-            }
-
-        });
-    }
-
-    function commentBook(borrowID){
-        var commentFormID = "commentForm" + borrowID;
-        $("#"+commentFormID).show();
-    }
-
-    function submitComment(borrowID){
-        var commentID = "comment" + borrowID;
-        var commentFormID = "commentForm" + borrowID;
-        var commentContent = $("#"+commentID).val();
-        if(commentContent.length==0){
-            showTip('评论不可为空','danger');
-        }else{
-            $("#"+commentFormID).submit();
-        }
-    }
-
-    function creditRating(borrowID){
-        var creditRatingFormID = "creditRatingForm" + borrowID;
-        $("#"+creditRatingFormID).show();
-    }
-
-    function submitRating(borrowID){
-        var creaditRatingFormID = "creditRatingForm" + borrowID;
-        $("#"+creaditRatingFormID).submit();
-    }
-
-</script>
 
 <div class="products">
 

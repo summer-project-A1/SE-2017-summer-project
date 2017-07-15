@@ -4,11 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <s:action name="header" executeResult="true" namespace="/"/>
+
     <script type="text/javascript" src="<%=path%>/js/jquery.cityselect.js"></script>
     <title>User Profile</title>
-    <script type="text/javascript">
-
-    </script>
 
     <script>
         $(document).ready(function(){
@@ -195,7 +194,6 @@
 
 </head>
 <body>
-<jsp:include page="<%=path%>/header"/>
 <div class="products">
     <div class="container">
         <h2>个人信息</h2>

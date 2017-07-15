@@ -6,6 +6,8 @@
 
 <html>
 <head>
+    <s:action name="header" executeResult="true" namespace="/"/>
+
     <title>Product Detail</title>
     <script src="<%=path%>/js/imagezoom.js"></script>
     <script defer src="<%=path%>/js/jquery.flexslider.js"></script>
@@ -86,6 +88,7 @@
     </script>
 </head>
 <body>
+<s:action name="header" executeResult="true" namespace="/"/>
 
 <div class="single">
     <div class="container">

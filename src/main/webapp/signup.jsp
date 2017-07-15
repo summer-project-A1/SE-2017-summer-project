@@ -4,160 +4,162 @@
 
 <html>
 <head>
+    <s:action name="header" executeResult="true" namespace="/"/>
     <title>Sign up</title>
+    <script>
+
+
+
+        $(document).ready(function(){
+            $("#register_email").focus();
+            $("#register_email").keyup(function(){
+                var email = $("#register_email").val();
+                if(email.indexOf("@") < 0){
+                    $("#available_status").html("<span style='color:red'>请输入正确的邮件地址</span>");
+                }else{
+                    $("#available_status").html("<span></span>");
+                }
+            });
+
+            $("#register_email").blur(function(){
+                var email = $("#register_email").val();
+                if(email.indexOf("@") < 0){
+                    $("#available_status").html("<span style='color:red'>请输入正确的邮件地址</span>");
+                }else{
+                    var param = $("#register_email").serialize();
+                    $.ajax({
+                        url:"<%=path%>/authAction/checkEmailAvailable",
+                        type:"get",
+                        data:param,
+                        dataType:"text",
+                        success: function (data) {
+                            var response = eval("("+data+")");
+                            //alert(response.result);
+                            if(response.result == false){
+                                $("#available_status").html("<span style='color:red'>该用户名已存在</span>");
+                            }
+                            if(response.result == true){
+                                $("#available_status").html("<span style='color:green'>该用户名可用</span>");
+                            }
+                        }
+                    });}
+            });
+            $("#register_password").focus();
+            $("#register_password").keyup(function(){
+                var password = $("#register_password").val();
+                if(password.length < 6 || password.length > 12){
+                    $("#available_status2").html("<span style='color:red'>密码在6-12位</span>");
+                }else{
+                    $("#available_status2").html("<span style='color:green'>密码格式正确</span>");
+                }
+            });
+            $("#register_password").blur(function(){
+                var password = $("#register_password").val();
+                if(password.length < 6 || password.length > 12){
+                    $("#available_status2").html("<span style='color:red'>密码在6-12位</span>");
+                }else{
+                    $("#available_status2").html("<span style='color:green'>密码格式正确</span>");
+                }
+            });
+            $("#register_confirmpassword").focus();
+            $("#register_confirmpassword").keyup(function(){
+                var confirmpassword = $("#register_confirmpassword").val();
+                var password = $("#register_password").val();
+                if(confirmpassword != password){
+                    $("#available_status3").html("<span style='color:red'>两次密码不一致</span>");
+                }else{
+                    $("#available_status3").html("<span></span>");
+                }
+            });
+
+            $("#register_confirmpassword").blur(function(){
+                var confirmpassword = $("#register_confirmpassword").val();
+                var password = $("#register_password").val();
+                if(confirmpassword != password){
+                    $("#available_status3").html("<span style='color:red'>两次密码不一致</span>");
+                }else{
+                    $("#available_status3").html("<span></span>");
+                }
+            });
+
+            $("#mobile").focus();
+            $("#mobile").keyup(function(){
+                var mobile = $("#mobile").val();
+                if(mobile.length != 11){
+                    $("#available_status4").html("<span style='color: red'>请输入11位手机号</span>");
+                }else{
+                    $("#available_status4").html("<span></span>");
+                }
+            });
+            $("#mobile").blur(function(){
+                var mobile = $("#mobile").val();
+                if(mobile.length != 11){
+                    $("#available_status4").html("<span style='color: red'>请输入11位手机号</span>");
+                }else{
+                    $("#available_status4").html("<span></span>");
+                }
+            });
+
+            $("#register").click(function(){
+                var email = $("#register_email").val();
+                var password = $("#register_password").val();
+                var confirmpassword = $("#register_confirmpassword").val();
+                var mobile = $("#mobile").val();
+                if(email.indexOf("@")>0 && password.length>0 && confirmpassword == password && mobile.length == 11){
+                    var params = $("#registerForm").serialize();
+                    $.ajax({
+                        url: "<%=path%>/authAction/register",
+                        type: "post",
+                        data: params,
+                        success: function (msg) {
+                            if(msg.success){
+                                showTip('注册成功!', 'success');
+                                window.location.href='<%=path%>/index';
+                            }
+                            else{
+                                //var msg = response.message;
+                                showTip('注册失败!', 'danger');
+                            }
+                        }
+                    });
+                }else{
+                    //alert("请重新输入注册信息");
+                    showTip('请重新输入注册信息!', 'danger');
+                }
+            });
+        });
+    </script>
+
+
+
+    <script type="text/javascript" src="<%=path%>/js/jquery.cityselect.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $("#city_4").citySelect({
+                nodata: "none",
+                required:false
+            });
+        });
+    </script>
+    <style>
+        @media ( min-width :768px) {
+
+            .form-control-noNewline {
+                width: 100px;
+                display: inline;
+            }
+
+            .form-horizontal .form-group-auto {
+                margin-right: 0px;
+                margin-left: 0px;
+            }
+        }
+    </style>
 </head>
 <body>
 <!-- header -->
 
-<script>
 
-
-
-    $(document).ready(function(){
-        $("#register_email").focus();
-        $("#register_email").keyup(function(){
-            var email = $("#register_email").val();
-            if(email.indexOf("@") < 0){
-                $("#available_status").html("<span style='color:red'>请输入正确的邮件地址</span>");
-            }else{
-                $("#available_status").html("<span></span>");
-            }
-        });
-
-        $("#register_email").blur(function(){
-            var email = $("#register_email").val();
-            if(email.indexOf("@") < 0){
-                $("#available_status").html("<span style='color:red'>请输入正确的邮件地址</span>");
-            }else{
-                var param = $("#register_email").serialize();
-            $.ajax({
-                url:"<%=path%>/authAction/checkEmailAvailable",
-                type:"get",
-                data:param,
-                dataType:"text",
-                success: function (data) {
-                    var response = eval("("+data+")");
-                    //alert(response.result);
-                    if(response.result == false){
-                        $("#available_status").html("<span style='color:red'>该用户名已存在</span>");
-                    }
-                    if(response.result == true){
-                        $("#available_status").html("<span style='color:green'>该用户名可用</span>");
-                    }
-                }
-            });}
-        });
-        $("#register_password").focus();
-        $("#register_password").keyup(function(){
-            var password = $("#register_password").val();
-            if(password.length < 6 || password.length > 12){
-                $("#available_status2").html("<span style='color:red'>密码在6-12位</span>");
-            }else{
-                $("#available_status2").html("<span style='color:green'>密码格式正确</span>");
-            }
-        });
-        $("#register_password").blur(function(){
-            var password = $("#register_password").val();
-            if(password.length < 6 || password.length > 12){
-                $("#available_status2").html("<span style='color:red'>密码在6-12位</span>");
-            }else{
-                $("#available_status2").html("<span style='color:green'>密码格式正确</span>");
-            }
-        });
-        $("#register_confirmpassword").focus();
-        $("#register_confirmpassword").keyup(function(){
-            var confirmpassword = $("#register_confirmpassword").val();
-            var password = $("#register_password").val();
-            if(confirmpassword != password){
-                $("#available_status3").html("<span style='color:red'>两次密码不一致</span>");
-            }else{
-                $("#available_status3").html("<span></span>");
-            }
-        });
-
-        $("#register_confirmpassword").blur(function(){
-            var confirmpassword = $("#register_confirmpassword").val();
-            var password = $("#register_password").val();
-            if(confirmpassword != password){
-                $("#available_status3").html("<span style='color:red'>两次密码不一致</span>");
-            }else{
-                $("#available_status3").html("<span></span>");
-            }
-        });
-
-        $("#mobile").focus();
-        $("#mobile").keyup(function(){
-           var mobile = $("#mobile").val();
-           if(mobile.length != 11){
-               $("#available_status4").html("<span style='color: red'>请输入11位手机号</span>");
-           }else{
-               $("#available_status4").html("<span></span>");
-           }
-        });
-        $("#mobile").blur(function(){
-            var mobile = $("#mobile").val();
-            if(mobile.length != 11){
-                $("#available_status4").html("<span style='color: red'>请输入11位手机号</span>");
-            }else{
-                $("#available_status4").html("<span></span>");
-            }
-        });
-
-        $("#register").click(function(){
-            var email = $("#register_email").val();
-            var password = $("#register_password").val();
-            var confirmpassword = $("#register_confirmpassword").val();
-            var mobile = $("#mobile").val();
-            if(email.indexOf("@")>0 && password.length>0 && confirmpassword == password && mobile.length == 11){
-                var params = $("#registerForm").serialize();
-                $.ajax({
-                    url: "<%=path%>/authAction/register",
-                    type: "post",
-                    data: params,
-                    success: function (msg) {
-                        if(msg.success){
-                            showTip('注册成功!', 'success');
-                            window.location.href='<%=path%>/index';
-                        }
-                        else{
-                            //var msg = response.message;
-                            showTip('注册失败!', 'danger');
-                        }
-                    }
-                });
-            }else{
-                //alert("请重新输入注册信息");
-                showTip('请重新输入注册信息!', 'danger');
-            }
-        });
-    });
-</script>
-
-
-
-<script type="text/javascript" src="<%=path%>/js/jquery.cityselect.js"></script>
-<script type="text/javascript">
-    $(function() {
-        $("#city_4").citySelect({
-            nodata: "none",
-            required:false
-        });
-    });
-</script>
-<style>
-    @media ( min-width :768px) {
-
-        .form-control-noNewline {
-            width: 100px;
-            display: inline;
-        }
-
-        .form-horizontal .form-group-auto {
-            margin-right: 0px;
-            margin-left: 0px;
-        }
-    }
-</style>
 <div class="account">
     <div class="container">
         <div id="tip"> </div>

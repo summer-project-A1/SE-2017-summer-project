@@ -3,6 +3,8 @@
 <%@ include file="global.jsp"%>
 <html>
 <head>
+    <s:action name="header" executeResult="true" namespace="/"/>
+
     <title>myOrder</title>
     <style>
 
@@ -22,19 +24,21 @@
 
         }
     </style>
+    <script>
+        function creditRating(borrowID){
+            var creditRatingFormID = "creditRatingForm" + borrowID;
+            $("#"+creditRatingFormID).show();
+        }
+
+        function submitRating(borrowID){
+            var creaditRatingFormID = "creditRatingForm" + borrowID;
+            $("#"+creaditRatingFormID).submit();
+        }
+    </script>
+
 </head>
 <body>
-<script>
-    function creditRating(borrowID){
-        var creditRatingFormID = "creditRatingForm" + borrowID;
-        $("#"+creditRatingFormID).show();
-    }
-
-    function submitRating(borrowID){
-        var creaditRatingFormID = "creditRatingForm" + borrowID;
-        $("#"+creaditRatingFormID).submit();
-    }
-</script>
+<s:action name="header" executeResult="true" namespace="/"/>
     <div class="products">
         <div class="container">
             <div class="col-md-3 rsiderbar span_1_of_left">

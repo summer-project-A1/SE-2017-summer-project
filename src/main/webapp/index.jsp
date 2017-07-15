@@ -3,6 +3,8 @@
 <%@include file="global.jsp"%>
 <html>
 <head>
+    <s:action name="header" executeResult="true" namespace="/"/>
+
     <title><s:property value="#title"/></title>
 
     <!-- Custom Theme files -->
@@ -12,7 +14,6 @@
 </head>
 <body>
 <!-- header -->
-<s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 <div class="banner">
     <div class="container">
         <h2 class="hdng">图书<span>分享</span>交流平台</h2>

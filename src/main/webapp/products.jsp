@@ -3,118 +3,77 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <s:action name="header" executeResult="true" namespace="/"/>
+
     <title>Products</title>
     <!-- Custom Theme files -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="" />
-</head>
-<body>
+
+    <script type="application/x-javascript">
+        addEventListener
+        ("load",
+            function() { setTimeout(hideURLbar, 0); },
+            false);
+        function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
 
 
-<script type="application/x-javascript">
-    addEventListener
-    ("load",
-        function() { setTimeout(hideURLbar, 0); },
-        false);
-    function hideURLbar(){ window.scrollTo(0,1); }
-</script>
+    <script type="text/javascript" id="sourcecode">
 
+        var amountPerPage;
+        var totalBookAmount;
+        var pageCount;
+        var currPage;
+        var isLastBlock =<s:property value="#isLastPart"/>;
 
-<script type="text/javascript" id="sourcecode">
-
-    var amountPerPage;
-    var totalBookAmount;
-    var pageCount;
-    var currPage;
-    var isLastBlock =<s:property value="#isLastPart"/>;
-
-    $.urlParam = function(name){
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-        if (r != null)
-            return unescape(r[2]);
-        return 0; //返回参数值
-    }
-    // showAllBooks?part=2
-    var currBlock= parseInt($.urlParam('part')); //2
-    if(currBlock==0){
-        currBlock=1;
-    }
-    var firstPage = parseInt($.urlParam('firstPage'));
-    if(firstPage==0){
-        firstPage=1;
-    }
-    var prevBlock = currBlock-1;
-    var succBlock = currBlock+1;
-
-   function switchPage(pageNo){
-        $('.product-grid').hide();
-        $('.active').replaceWith("<li id='"+currPage+"'><a href='javascript:switchPage("+currPage+");'>"+currPage+"</a><li>");
-        $('#'+pageNo).replaceWith("<li id='"+pageNo+"' class='active'>"+pageNo+"<li>");
-        var end=(parseInt(pageNo)-1)*parseInt(amountPerPage)+parseInt(amountPerPage);
-       console.log("end: "+end);
-       console.log("last product id: "+parseInt(totalBookAmount));
-       for(var j=(pageNo-1)*amountPerPage;j<end&&j<parseInt(totalBookAmount);j++){
-            console.log("show product"+j);
-            $('#product'+j).show();
+        $.urlParam = function(name){
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null)
+                return unescape(r[2]);
+            return 0; //返回参数值
         }
-        currPage=pageNo;
-
-    }
-
-
-
-    //当页面第一次加载时
-    $(document).ready(function() {
-        currPage=firstPage;
-        amountPerPage = $("#selectAmountPerPage").val();
-        totalBookAmount = '<s:property value="#totalBookAmount"/>';
-        pageCount = Math.ceil(totalBookAmount / amountPerPage);
-        var lastPage= '<s:property value="#firstPage"/>';
-        var succPage= firstPage+pageCount;
-        if(lastPage>0&&prevBlock>0){
-            $('#pagination-digg').append("<li class='previous'><a href='?part="+prevBlock+"&firstPage="+lastPage+"'>&laquo;上一部分 </a></li>");
-
+        // showAllBooks?part=2
+        var currBlock= parseInt($.urlParam('part')); //2
+        if(currBlock==0){
+            currBlock=1;
         }
-        else{
-            lastPage=1;
+        var firstPage = parseInt($.urlParam('firstPage'));
+        if(firstPage==0){
+            firstPage=1;
         }
-        if(pageCount>=1){
-            for(var i=firstPage;i<succPage;i++){
-                if(i==currPage){
-                    $('#pagination-digg').append("<li id='"+i+"' class='active'>"+i+"<li>");
+        var prevBlock = currBlock-1;
+        var succBlock = currBlock+1;
 
-                }else{
-                    $('#pagination-digg').append("<li id='"+i+"'><a href='javascript:switchPage("+i+");'>"+i+"</a><li>");
-                }
-
-            }
+        function switchPage(pageNo){
             $('.product-grid').hide();
-            for(var j=0;j<amountPerPage&&j<parseInt(totalBookAmount);j++){
+            $('.active').replaceWith("<li id='"+currPage+"'><a href='javascript:switchPage("+currPage+");'>"+currPage+"</a><li>");
+            $('#'+pageNo).replaceWith("<li id='"+pageNo+"' class='active'>"+pageNo+"<li>");
+            var end=(parseInt(pageNo)-1)*parseInt(amountPerPage)+parseInt(amountPerPage);
+            console.log("end: "+end);
+            console.log("last product id: "+parseInt(totalBookAmount));
+            for(var j=(pageNo-1)*amountPerPage;j<end&&j<parseInt(totalBookAmount);j++){
+                console.log("show product"+j);
                 $('#product'+j).show();
             }
-        }
-        if(!isLastBlock){
-            $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+lastPage+"'>下一部分&raquo;</a></li>");
+            currPage=pageNo;
 
         }
 
 
 
-        //当修改每页显示的数量后
-        $("#selectAmountPerPage").change(function () {
-            console.log("switch amount per page");
+        //当页面第一次加载时
+        $(document).ready(function() {
             currPage=firstPage;
             amountPerPage = $("#selectAmountPerPage").val();
             totalBookAmount = '<s:property value="#totalBookAmount"/>';
             pageCount = Math.ceil(totalBookAmount / amountPerPage);
             var lastPage= '<s:property value="#firstPage"/>';
-            var succPage = firstPage + pageCount;
-            $('#pagination-digg').empty();
-
+            var succPage= firstPage+pageCount;
             if(lastPage>0&&prevBlock>0){
-                $('#pagination-digg').append("<li class='previous'><a href='?part="+prevBlock+"&firstPage="+lastPage+"'>&laquo;上一部分</a></li>");
+                $('#pagination-digg').append("<li class='previous'><a href='?part="+prevBlock+"&firstPage="+lastPage+"'>&laquo;上一部分 </a></li>");
 
             }
             else{
@@ -131,40 +90,84 @@
 
                 }
                 $('.product-grid').hide();
-                var start=parseInt((currPage-1))*parseInt(amountPerPage);
-                var end= parseInt(start)+parseInt(amountPerPage);
-                console.log("end: "+end);
-                console.log("last product id: "+parseInt(totalBookAmount));
-                for(var j=start;j<end&&j<parseInt(totalBookAmount);j++){
-                    console.log("show product"+j);
+                for(var j=0;j<amountPerPage&&j<parseInt(totalBookAmount);j++){
                     $('#product'+j).show();
                 }
             }
             if(!isLastBlock){
-                $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+lastPage+"'>下一部分 &raquo;</a></li>");
+                $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+lastPage+"'>下一部分&raquo;</a></li>");
+
             }
 
+
+
+            //当修改每页显示的数量后
+            $("#selectAmountPerPage").change(function () {
+                console.log("switch amount per page");
+                currPage=firstPage;
+                amountPerPage = $("#selectAmountPerPage").val();
+                totalBookAmount = '<s:property value="#totalBookAmount"/>';
+                pageCount = Math.ceil(totalBookAmount / amountPerPage);
+                var lastPage= '<s:property value="#firstPage"/>';
+                var succPage = firstPage + pageCount;
+                $('#pagination-digg').empty();
+
+                if(lastPage>0&&prevBlock>0){
+                    $('#pagination-digg').append("<li class='previous'><a href='?part="+prevBlock+"&firstPage="+lastPage+"'>&laquo;上一部分</a></li>");
+
+                }
+                else{
+                    lastPage=1;
+                }
+                if(pageCount>=1){
+                    for(var i=firstPage;i<succPage;i++){
+                        if(i==currPage){
+                            $('#pagination-digg').append("<li id='"+i+"' class='active'>"+i+"<li>");
+
+                        }else{
+                            $('#pagination-digg').append("<li id='"+i+"'><a href='javascript:switchPage("+i+");'>"+i+"</a><li>");
+                        }
+
+                    }
+                    $('.product-grid').hide();
+                    var start=parseInt((currPage-1))*parseInt(amountPerPage);
+                    var end= parseInt(start)+parseInt(amountPerPage);
+                    console.log("end: "+end);
+                    console.log("last product id: "+parseInt(totalBookAmount));
+                    for(var j=start;j<end&&j<parseInt(totalBookAmount);j++){
+                        console.log("show product"+j);
+                        $('#product'+j).show();
+                    }
+                }
+                if(!isLastBlock){
+                    $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+lastPage+"'>下一部分 &raquo;</a></li>");
+                }
+
+            });
         });
-    });
 
 
 
 
-    $(function()
-    {
-        $('.scroll-pane').jScrollPane();
-    });
+        $(function()
+        {
+            $('.scroll-pane').jScrollPane();
+        });
 
 
 
-    //左侧分类栏js脚本
-    $(document).ready(function(){
-        $(".tab1 .single-bottom").hide();
-    });
+        //左侧分类栏js脚本
+        $(document).ready(function(){
+            $(".tab1 .single-bottom").hide();
+        });
 
-    //每页显示数量选框js脚本
+        //每页显示数量选框js脚本
 
-</script>
+    </script>
+
+</head>
+<body>
+
 
 
 
