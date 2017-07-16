@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <!-- header -->
-<%@include file="header.jsp"%>
+<%@include file="global.jsp"%>
 
 <html>
 <head>
@@ -86,7 +86,8 @@
     </script>
 </head>
 <body>
-
+<!-- header -->
+<s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 <div class="single">
     <div class="container">
         <div class="single-grids">

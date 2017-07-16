@@ -1,7 +1,10 @@
 package action;
 
+import java.util.List;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+
+import model.Category1;
 import service.BookService;
 
 /**
@@ -16,7 +19,12 @@ public class IndexAction extends ActionSupport {
         this.bookService = bookService;
     }
     public String index() {
-        ActionContext.getContext().put("title","Í¼Êé·ÖÏí½»Á÷Æ½Ì¨");
+        ActionContext.getContext().put("title","Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½Ì¨");
         return "showIndex";
+    }
+    public String header(){
+        List<Category1> c1 = this.bookService.showAllCategory1s();
+        ActionContext.getContext().put("category1List",bookService.showAllCategory1s());
+        return"showHeader";
     }
 }

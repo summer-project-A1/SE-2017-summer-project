@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="header.jsp"%>
+<%@include file="global.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +10,8 @@
     <meta name="keywords" content="" />
 </head>
 <body>
-
+<!-- header -->
+<s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 
 <script type="application/x-javascript">
     addEventListener
@@ -173,7 +174,7 @@
 
     <div class="container">
 
-        <h2><s:property value="categoryNameOfBooks"/>图书浏览</h2>
+        <h2>图书浏览</h2>
 
         <div class="col-md-9 product-model-sec">
             <div class="clearfix"> </div>
@@ -240,7 +241,7 @@
                             </ul>
                             <div class="clearfix"> </div>
                             <div class="single-bottom">
-                                    <a href="<%=path%>/bookAction/showBooksByCategory1Name?category1Name=<s:property value="category1Name"/>"><p><s:property value="category1Name"/></p>
+                                    <a href="<%=path%>>bookAction/showBooksByCategory1Name?category1Name=<s:property value="category1Name"/>"><p><s:property value="category1Name"/></p>
                                 <s:iterator value="category2List" status="st2">
                                     <a href="<%=path%>/bookAction/showBooksByCategory2Name?category2Name=<s:property value="category2Name"/>"><p><s:property value="category2Name"/></p></a>
                                 </s:iterator>

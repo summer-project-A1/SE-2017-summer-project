@@ -44,13 +44,15 @@
 				<value>model/Order.hbm.xml</value>
                 <value>model/Reserve.hbm.xml</value>
                 <value>model/Comment.hbm.xml</value>
+                <value>model/Category2.hbm.xml</value>
+                <value>model/Category1.hbm.xml</value>
 			</list>
 		</property>
 		<!-- Hibernate SessionFactory -->
 		<property name="hibernateProperties">
 			<value>
 				hibernate.dialect=org.hibernate.dialect.MySQLInnoDBDialect
-				hibernate.show_sql=false
+				hibernate.show_sql=true
 				hibernate.format_sql=true
 			</value>
 		</property>
@@ -92,6 +94,8 @@
     </bean>
     <bean id="bookDao" class="dao.impl.BookDaoImpl" parent="baseDao">
     </bean>
+    <bean id="categoryDao" class="dao.impl.CategoryDaoImpl" parent="baseDao">
+    </bean>
     <bean id="bookReleaseDao" class="dao.impl.BookReleaseDaoImpl" parent="baseDao">
     </bean>
     <bean id="borrowDao" class="dao.impl.BorrowDaoImpl" parent="baseDao">
@@ -116,6 +120,7 @@
     <bean id="bookService" class="service.impl.BookServiceImpl">
         <property name="bookDao" ref="bookDao" />
         <property name="bookReleaseDao" ref="bookReleaseDao" />
+        <property name="categoryDao" ref="categoryDao"/>
         <property name="imageDao" ref="imageDao" />
     </bean>
     <bean id="borrowService" class="service.impl.BorrowServiceImpl">

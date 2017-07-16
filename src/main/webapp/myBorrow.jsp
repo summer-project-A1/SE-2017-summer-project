@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@include file="header.jsp"%>
+<%@include file="global.jsp"%>
 <html>
 <head>
     <title>myBorrow</title>
@@ -26,7 +26,8 @@
 
 </head>
 <body>
-
+<!-- header -->
+<s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 <script>
     function payBook(borrowID){
         var statusID = "status"+borrowID;

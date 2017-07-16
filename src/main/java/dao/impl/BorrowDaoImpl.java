@@ -21,7 +21,7 @@ public class BorrowDaoImpl extends BaseDaoImpl implements BorrowDao {
 
     @Override
     public List<Borrow> getBorrowByUserID(int userID) {
-        String hql = "from Borrow where userID=:userID";
+        String hql = "from Borrow where userID1=:userID";   // 查找用户借来书的记录
         Query query = getSession().createQuery(hql);
         query.setParameter("userID", userID);
         List<Borrow> result = query.list();

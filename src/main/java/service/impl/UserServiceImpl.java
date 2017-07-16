@@ -137,8 +137,16 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     
     @Override
     public boolean updateUserProfile(UserProfile newUserProfile) {
-        // TODO 自动生成的方法存根
-        return false;
+        int userID = this.getLoginedUserInfo().getUserID();
+        UserProfile userProfile = this.userDao.getUserProfile(userID);
+        userProfile.setNickName(newUserProfile.getNickName());
+        userProfile.setGender(newUserProfile.getGender());
+        userProfile.setMobile(newUserProfile.getMobile());
+        userProfile.setProvince(newUserProfile.getProvince());
+        userProfile.setCity(newUserProfile.getCity());
+        userProfile.setDistrict(newUserProfile.getDistrict());
+        userProfile.setAddress(newUserProfile.getAddress());
+        return this.userDao.updateUserProfile(userProfile);
     }
     
     @Override
