@@ -10,7 +10,7 @@ public class BorrowProfile extends Borrow
     private String category2;
     private String imageID;           // 书的图片在monggodb中的图片
     private String email;       //被借书人id，对应卖家
-	private boolean bookComment;    //
+	private boolean bookComment;    //该借阅的书是否被评论过了
     
 	public String getBookName() {
 		return bookName;
