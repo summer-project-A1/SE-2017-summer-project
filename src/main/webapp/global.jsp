@@ -6,10 +6,7 @@
             + request.getServerName() + ":" + request.getServerPort()
             + path + "/";
 %>
-<!DOCTYPE html>
 
-<html>
-<head>
 
     <!-- Custom Theme files -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -126,7 +123,5 @@
             z-index: 9999;
         }
     </style>
-</head>
-</html>
 
 

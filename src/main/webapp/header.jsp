@@ -7,17 +7,12 @@
             + request.getServerName() + ":" + request.getServerPort()
             + path + "/";
 %>
-<!DOCTYPE html>
 
-<html>
-<head>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="" />
 
-</head>
-<body>
 <div class="header">
     <div class="container">
         <nav class="navbar navbar-default" role="navigation">
@@ -161,9 +156,6 @@
             <div class="clearfix"> </div>
         </div>
         <div class="clearfix"> </div>
-    </div>
 </div>
-</body>
-</html>
 
 
