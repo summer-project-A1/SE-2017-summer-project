@@ -104,49 +104,62 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
     @Override
     public Map showMyBorrow() {
         // Map中包含两个List<BorrowProfile>，分别对应Borrow和BorrowHistory
-        User user = getLoginedUserInfo();
-        int userID = user.getUserID();
+        User user1 = getLoginedUserInfo();
+        int userID = user1.getUserID();
+        //List<BorrowProfile> borrowBook = (List<BorrowProfile>)borrowDao.getBorrowByUserID(userID);
         List<Borrow> borrows = this.borrowDao.getBorrowByUserID(userID);
         List<BorrowHistory> borrowHistories = this.borrowHistoryDao.getBorrowHistoryByUserID(userID);
         List<BorrowProfile> borrowBook = new ArrayList();
         List<BorrowProfile> borrowHistoryBook = new ArrayList();
-        if(borrows != null) {
-            for(Borrow borrow : borrows) {
-                BorrowProfile borrowProfile = new BorrowProfile();
-                int bookID = borrow.getBookID();
-                Book book = this.bookDao.getBookByID(bookID);
-                borrowProfile.setBookID(bookID);
-                borrowProfile.setBookName(book.getBookName());
-                borrowProfile.setAuthor(book.getAuthor());
-                borrowProfile.setCategory1(book.getCategory1().toString());
-                borrowProfile.setImageID(book.getImageID());
-                borrowProfile.setIsbn(book.getIsbn());
-                borrowProfile.setBorrowPrice(book.getBorrowCredit());
-                borrowProfile.setReturned(false);
-                borrowProfile.setDelayed((borrow.getDelayCount()!=0));
-                borrowProfile.setYhDate(borrow.getYhDate());
-                borrowProfile.setReturnDate(null);
-                borrowBook.add(borrowProfile);
-            }
+        for(Borrow borrow : borrows) {
+            //BorrowProfile borrowProfile = new BorrowProfile();
+        	BorrowProfile borrowProfile = (BorrowProfile)borrow;
+            int bookID = borrow.getBookID();
+            Book book = this.bookDao.getBookByID(bookID);
+            BookRelease bookRelease=bookReleaseDao.getReleaseBookByBookID(bookID);
+            User user2=userDao.getUserById(bookRelease.getUserID());
+            borrowProfile.setBookName(book.getBookName());
+            borrowProfile.setIsbn(book.getIsbn());
+            borrowProfile.setPress(book.getPress());
+            borrowProfile.setAuthor(book.getAuthor());
+            borrowProfile.setCategory1(book.getCategory1());
+            borrowProfile.setCategory2(book.getCategory2());
+            borrowProfile.setImageID(book.getImageID());
+            borrowProfile.setEmail(user2.getEmail());
+            borrowBook.add(borrowProfile);
         }
-        if(borrowHistories != null) {
-            for(BorrowHistory borrowHistory : borrowHistories) {
-                BorrowProfile borrowProfileHistory = new BorrowProfile();
-                int bookID = borrowHistory.getBookID();
-                Book bookInfo = this.bookDao.getBookByID(bookID);
-                borrowProfileHistory.setBookID(bookID);
-                borrowProfileHistory.setBookName(bookInfo.getBookName());
-                borrowProfileHistory.setAuthor(bookInfo.getAuthor());
-                borrowProfileHistory.setCategory1(bookInfo.getCategory1().toString());
-                borrowProfileHistory.setImageID(bookInfo.getImageID());
-                borrowProfileHistory.setIsbn(bookInfo.getIsbn());
-                borrowProfileHistory.setBorrowPrice(bookInfo.getBorrowCredit());
-                borrowProfileHistory.setReturned(true);
-                borrowProfileHistory.setDelayed((borrowHistory.getDelayCount()!=0));
-                borrowProfileHistory.setYhDate(borrowHistory.getYhDate());
-                borrowProfileHistory.setReturnDate(borrowHistory.getReturnDate());
-                borrowHistoryBook.add(borrowProfileHistory);
-            }
+        for(BorrowHistory borrowHistory : borrowHistories) {
+        	BorrowProfile borrowProfile = new BorrowProfile();
+            int bookID = borrowHistory.getBookID();
+            Book book = this.bookDao.getBookByID(bookID);
+            BookRelease bookRelease=bookReleaseDao.getReleaseBookByBookID(bookID);
+            User user2=userDao.getUserById(bookRelease.getUserID());
+            borrowProfile.setBookID(bookID);
+            borrowProfile.setBookName(book.getBookName());
+            borrowProfile.setIsbn(book.getIsbn());
+            borrowProfile.setPress(book.getPress());
+            borrowProfile.setAuthor(book.getAuthor());
+            borrowProfile.setCategory1(book.getCategory1());
+            borrowProfile.setCategory2(book.getCategory2());
+            borrowProfile.setImageID(book.getImageID());
+            borrowProfile.setBorrowID(borrowHistory.getBhID());
+            borrowProfile.setYhDate(borrowHistory.getYhDate());
+            borrowProfile.setBorrowPrice(borrowHistory.getBorrowPrice());
+            borrowProfile.setDelayCount(borrowHistory.getDelayCount());
+            borrowProfile.setBorrowAddress(borrowHistory.getBorrowAddress());
+            borrowProfile.setReturnAddress(borrowHistory.getReturnAddress());
+            borrowProfile.setTrackingNo1(borrowHistory.getTrackingNo1());
+            borrowProfile.setTrackingNo2(borrowHistory.getTrackingNo2());
+            borrowProfile.setOrderDate(borrowHistory.getOrderDate());
+            borrowProfile.setPayDate(borrowHistory.getPayDate());
+            borrowProfile.setFhDate(borrowHistory.getFhDate());
+            borrowProfile.setBorrowDate(borrowHistory.getBorrowDate());
+            borrowProfile.setReturnAddress(borrowHistory.getReturnAddress());
+            borrowProfile.setShDate(borrowHistory.getShDate());
+            borrowProfile.setComment1(borrowHistory.getComment1());
+            borrowProfile.setComment2(borrowHistory.getComment2());
+            borrowProfile.setEmail(user2.getEmail());
+            borrowBook.add(borrowProfile);
         }
         Map result = new HashMap();
         result.put("borrowBook", borrowBook);
