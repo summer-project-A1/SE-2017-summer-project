@@ -171,7 +171,7 @@
             });
 
         }
-        
+
         function updateUserPicture() {
             $.ajax({
                 url: "<%=path%>/userAction/updateUserPicture",
@@ -254,7 +254,7 @@
                     </div>
                     <div class="tab1">
                         <ul class="place">
-                            <li class="sort"><a href="#">我的订单</a></li>
+                            <li class="sort"><a href="#">我的购买</a></li>
                         </ul>
                         <div class="clearfix"> </div>
                     </div>

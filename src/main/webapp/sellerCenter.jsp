@@ -1,9 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="global.jsp"%>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>myBorrow</title>
+    <script src="<%=path%>/js/jquery.cityselect.js"></script>
+    <script src="<%=path%>/js/fileinput.js"></script>
+    <script src="<%=path%>/js/fileinput.min.js"></script>
+    <title>Seller Center</title>
     <style>
 
         @media ( min-width :768px) {
@@ -12,7 +16,6 @@
                 margin-left:5%;
                 margin-right:10%;
             }
-
         }
         @media ( min-width :1440px) {
             #cartinfo{
@@ -24,164 +27,13 @@
         }
     </style>
     <script>
-        function payBook(borrowID){
-            var statusID = "status"+borrowID;
-            var payDateID = 'payDate'+borrowID;
-            var payBtnID = 'payBtn'+borrowID;
-            $.ajax({
-                url:'<%=path%>/borrowAction/payBorrow',
-                type:'POST',
-                data:{'borrowID':borrowID},
-                success:function(msg){
-                    if(msg.success){
-                        var payDate = msg.payDate;
-                        showTip('支付成功！','success');
-                        $("#"+statusID).html("当前状态：卖家未发货");
-                        $("#"+payBtnID).remove();
-                        $("#"+payDateID).html("付款日期："+payDate+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-                        $("#"+payDateID).show();
-                    }else{
-                        showTip('发生错误！', 'danger');
-                    }
-                },
-                error:function(xhr,status,error){
-                    alert('status='+status+',error='+error);
-                }
-            });
-        }
-
-        function confirmReceipt(borrowID){
-            var confirmBtnID = "confirmBtn"+borrowID;
-            var statusID = "status"+borrowID;
-            var borrowDateID = "borrowDate"+borrowID;
-            var returnAddrID = "returnAddr"+borrowID;
-            $.ajax({
-                url:'<%=path%>/borrowAction/confirmReceipt',
-                type:'POST',
-                data:{'borrowID':borrowID},
-                success:function(msg){
-                    if(msg.success){
-                        var borrowDate = msg.borrowDate;
-                        var returnAddr = msg.returnAddress;
-                        showTip('已确认收货！','success');
-                        $("#"+statusID).html("当前状态：买家未归还");
-                        $("#"+confirmBtnID).remove();
-                        $("#"+borrowDateID).html("收货日期："+borrowDate+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-                        $("#"+borrowDateID).show();
-                        $("#"+returnAddrID).html("归还地址："+returnAddr+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-                        $("#"+returnAddrID).show();
-                        //window.setTimeout("window.location='<%=path%>/borrowAction/showMyBorrow'",1500);
-                    }else{
-                        showTip('发生错误！', 'danger');
-                    }
-                },
-                error:function(xhr,status,error){
-                    alert('status='+status+',error='+error);
-                }
-            });
-        }
-
-        function returnBook(borrowID){
-            var returnBtnID = "returnBtn"+borrowID;
-            var delayBtnID = "delayBtn"+borrowID;
-            var returnDateID = "returnDate"+borrowID;
-            var trackingNOID = "trackingNO"+borrowID;
-            var trackingFormID = "tracking"+borrowID;
-            var trackingNO1 = $("#"+trackingNOID).val();
-            $.ajax({
-                url:'<%=path%>/borrowAction/returnBook',
-                type:'POST',
-                data:{
-                    'borrowID':borrowID,
-                    'trackingNo1':trackingNO1,
-                },
-                success:function(msg){
-                    if (msg.success) {
-                        var returnDate = msg.returnDate;
-                        $("#"+returnBtnID).remove();
-                        $("#"+delayBtnID).remove();
-                        $("#"+returnDateID).html("归还日期："+returnDate+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-                        $("#"+returnDateID).show();
-                        showTip('已归还图书！', 'success');
-                        $("#"+trackingFormID).hide();
-                    }
-                    else {
-                        showTip('发生错误！', 'danger');
-                    }
-                },
-                error:function(xhr,status,error){
-                    alert('status='+status+',error='+error);
-                }
-
-            });
-        }
-
-        function showReturnBook(borrowID){
-            var trackingFormID = "tracking"+borrowID;
-            $("#"+trackingFormID).show();
-        }
-
-        function delayBook(borrowID){
-            var delayBtnID = "delayBtn"+borrowID;
-            var yhdateID = "yhdate"+borrowID;
-            $.ajax({
-                url:'<%=path%>/borrowAction/delayBook',
-                type:'POST',
-                data:{
-                    'borrowID':borrowID
-                },
-                success:function(msg){
-                    if (msg.success) {
-                        var yhdate = msg.yhdate;
-                        $("#"+delayBtnID).remove();
-                        $("#"+yhdateID).html("应还日期："+yhdate);
-                        showTip('已续借图书！', 'success');
-
-                    }
-                    else {
-                        showTip('发生错误！', 'danger');
-                    }
-                },
-                error:function(xhr,status,error){
-                    alert('status='+status+',error='+error);
-                }
-
-            });
-        }
-
-        function commentBook(borrowID){
-            var commentFormID = "commentForm" + borrowID;
-            $("#"+commentFormID).show();
-        }
-
-        function submitComment(borrowID){
-            var commentID = "comment" + borrowID;
-            var commentFormID = "commentForm" + borrowID;
-            var commentContent = $("#"+commentID).val();
-            if(commentContent.length==0){
-                showTip('评论不可为空','danger');
-            }else{
-                $("#"+commentFormID).submit();
-            }
-        }
-
-        function creditRating(borrowID){
-            var creditRatingFormID = "creditRatingForm" + borrowID;
-            $("#"+creditRatingFormID).show();
-        }
-
-        function submitRating(borrowID){
-            var creaditRatingFormID = "creditRatingForm" + borrowID;
-            $("#"+creaditRatingFormID).submit();
-        }
-
-
         $(document).ready(function(){
 
             $(".tab1 .single-bottom").hide();
 
-            $("#borrow-book-list").hide();
-            $("#borrow-book-history-list").hide();
+            $("#lend-book-list").hide();
+            $("#lend-book-history-list").hide();
+            $("#sell-book-list").hide();
 
 
             $(".tab1 ul").click(function(){
@@ -192,34 +44,52 @@
 
 
 
-            $("#show-borrow-book-list").click(function(){
-                $("#borrow-book-list").hide();
-                $("#borrow-book-history-list").hide();
-                $("#borrow-book-list").show();
+            $("#show-lend-book-list").click(function(){
+                $("#lend-book-list").hide();
+                $("#lend-book-history-list").hide();
+                $("#sell-book-list").hide();
+                $("#lend-book-list").show();
 
             });
 
-            $("#show-borrow-book-history-list").click(function(){
-                $("#borrow-book-list").hide();
-                $("#borrow-book-history-list").hide();
-                $("#borrow-book-history-list").show();
+            $("#show-lend-book-history-list").click(function(){
+                $("#lend-book-list").hide();
+                $("#lend-book-history-list").hide();
+                $("#sell-book-list").hide();
+                $("#lend-book-history-list").show();
 
             });
+            $("#show-sell-book-list").click(function(){
+                $("#lend-book-list").hide();
+                $("#lend-book-history-list").hide();
+                $("#sell-book-list").hide();
+                $("#sell-book-list").show();
 
+            });
 
         });
 
-
     </script>
+    <style>
+        @media ( min-width :768px) {
+
+            .form-control-noNewline {
+                width: 100px;
+                display: inline;
+            }
+
+            .form-horizontal .form-group-auto {
+                margin-right: 0px;
+                margin-left: 0px;
+            }
+        }
+    </style>
 
 </head>
-
 <body>
 <!-- header -->
 <s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
-
 <div class="products">
-
     <div class="container">
         <div class="col-md-3 rsiderbar span_1_of_left">
             <section class="sky-form">
@@ -234,6 +104,18 @@
                     </div>
                     <div class="tab1">
                         <ul class="place">
+                            <li class="sort"><a href="#">卖家中心</a></li>
+                            <li class="by"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></li>
+                        </ul>
+                        <div class="clearfix"> </div>
+                        <div class="single-bottom">
+                            <a id="show-lend-book-list" href="#"><p>尚未归还的图书</p></a>
+                            <a id="show-lend-book-history-list" href="#"><p>已归还的图书</p></a>
+                            <a id="show-sell-book-list" href="#"><p>已卖出的图书</p></a>
+                        </div>
+                    </div>
+                    <div class="tab1">
+                        <ul class="place">
                             <li class="sort"><a href="#">我的发布</a></li>
                         </ul>
                         <div class="clearfix"> </div>
@@ -241,13 +123,8 @@
                     <div class="tab1">
                         <ul class="place">
                             <li class="sort"><a href="#">我的借阅</a></li>
-                            <li class="by"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></li>
                         </ul>
                         <div class="clearfix"> </div>
-                        <div class="single-bottom">
-                            <a id="show-borrow-book-list" href="#"><p>尚未归还的图书</p></a>
-                            <a id="show-borrow-book-history-list" href="#"><p>已归还的图书</p></a>
-                        </div>
                     </div>
                     <div class="tab1">
                         <ul class="place">
@@ -265,13 +142,14 @@
                 </div>
             </section>
         </div>
-        <h3 align="center">我的借阅</h3>
+        <h3 align="center">卖家中心</h3>
         <div id="tip"></div>
         <div id="cartinfo" class="cart-item">
             <div class="container">
-                <div id="borrow-book-list">
+                <div id="lend-book-list">
+                    <h4>尚未归还的图书</h4>
                     <!-- 以下迭代显示尚未归还的图书 -->
-                    <s:iterator value="#borrowBook" status="map_state">
+                    <s:iterator value="#lendBookList" status="map_state">
                         <div id="borrowBook<s:property value="borrowID"/>" class="cart-header">
                             <div class="cart-sec simpleCart_shelfItem">
                                 <div class="cart-item cyc">
@@ -387,11 +265,60 @@
                             </div>
                         </div>
                     </s:iterator>
+                    <div id="bookID1" class="cart-header">
+                        <div class="cart-sec simpleCart_shelfItem">
+                            <div class="cart-item cyc">
+                                <img src="<%=path%>/images/m5.png" class="img-responsive" alt="">
+                            </div>
+                            <div class="cart-item-info">
+                                <h4>
+                                    <a href="<%=path%>/">订单号:1580021000037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：未支付</a>
+                                </h4><br>
+                                <ul class="qty">
+                                    <li><p>书名：黄政的自传</p></li>
+                                    <li><p>下单时间：2017-6-10   20:42:48</p></li>
+                                    <li><p>总积分：1024</p></li>
+                                </ul>
+                                <div class="delivery">
+                                    <p>收货人：黄政&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                    <p>收货地址：东川路800号</p><br>
+                                    <a href="${showOrderLink}" id="payBtn" class="add-cart item_add">支付</a>
+                                    <a href="${cancelOrderLink}" id="cancelBtn" class="add-cart item_add">取消</a>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div><hr>
+                    <div id="bookID2" class="cart-header">
+                        <div class="cart-sec simpleCart_shelfItem">
+                            <div class="cart-item cyc">
+                                <img src="<%=path%>/images/m5.png" class="img-responsive" alt="">
+                            </div>
+                            <div class="cart-item-info">
+                                <h4>
+                                    <a href="<%=path%>/">订单号:1580021000037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：未发货</a>
+                                </h4><br>
+                                <ul class="qty">
+                                    <li><p>书名：黄政的自传</p></li>
+                                    <li><p>下单时间：2017-6-10   20:42:48</p></li>
+                                    <li><p>总积分：524</p></li>
+                                </ul>
+                                <div class="delivery">
+                                    <p>收货人：沈斯杰&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                    <p>收货地址：东川路800号</p><br>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div><hr>
 
                 </div>
-                <div id="borrow-book-history-list">
+                <div id="lend-book-history-list">
+                    <h4>已归还的图书</h4>
                     <!-- 以下迭代显示已归还的图书 -->
-                    <s:iterator value="#borrowHistoryBook" status="map_state">
+                    <s:iterator value="#lendBookHistoryList" status="map_state">
                         <div id="borrowHistory<s:property value="borrowID"/>" class="cart-header">
                             <div class="cart-sec simpleCart_shelfItem">
                                 <div class="cart-item cyc">
@@ -448,204 +375,199 @@
                             </div>
                         </div><hr>
                     </s:iterator>
-
+                    <div id="bookID3" class="cart-header">
+                        <div class="cart-sec simpleCart_shelfItem">
+                            <div class="cart-item cyc">
+                                <img src="<%=path%>/images/m5.png" class="img-responsive" alt="">
+                            </div>
+                            <div class="cart-item-info">
+                                <h4>
+                                    <a href="<%=path%>/">订单号:1580021000037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已发货</a>
+                                </h4><br>
+                                <ul class="qty">
+                                    <li><p>书名：黄政的自传</p></li>
+                                    <li><p>下单时间：2017-6-10   20:42:48</p></li>
+                                    <li><p>总积分：10240</p></li>
+                                </ul>
+                                <div class="delivery">
+                                    <p>收货人：高仓靖博&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                    <p>收货地址：东川路800号</p><br>
+                                    <p>付款时间：2017-6-10   20:42:48&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                    <p>发货时间：2017-6-10   20:42:48</p><br>
+                                    <a href="${confirmReceiptLink}" id="confirmBtn" class="add-cart item_add" onclick="">确认收货</a>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div><hr>
+                    <div id="bookID4" class="cart-header">
+                        <div class="cart-sec simpleCart_shelfItem">
+                            <div class="cart-item cyc">
+                                <img src="<%=path%>/images/m5.png" class="img-responsive" alt="">
+                            </div>
+                            <div class="cart-item-info">
+                                <h4>
+                                    <a href="<%=path%>/">订单号:1580021000037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已完成</a>
+                                </h4><br>
+                                <ul class="qty">
+                                    <li><p>书名：黄政的自传</p></li>
+                                    <li><p>下单时间：2017-6-10   20:42:48</p></li>
+                                    <li><p>总积分：10240</p></li>
+                                </ul>
+                                <div class="delivery">
+                                    <p>收货人：Bjarne&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                    <p>收货地址：东川路800号</p><br>
+                                    <p>付款时间：2017-6-10   20:42:48&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                    <p>发货时间：2017-6-10   20:42:48</p><br>
+                                    <p>收货时间：2017-6-10   20:42:48</p><br>
+                                    <a href="#" id="commentBtn" class="add-cart item_add" onclick="">信用评价</a>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div><hr>
                 </div>
+                <div id="sell-book-list">
+                    <h4>已卖出的图书</h4>
+                    <!-- 以下迭代显示已卖出的图书 -->
+                    <s:iterator value="#sellBookList" status="st">
+                        <div id="<s:property value="orderID"/>" class="cart-header">
+                            <div class="cart-sec simpleCart_shelfItem">
+                                <div class="cart-item cyc">
+                                    <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="coverPicture"/>" class="img-responsive" alt="">
+                                </div>
+                                <div class="cart-item-info">
+                                    <h4>
+                                        <s:if test="status=='NOTPAYED'">
+                                            <p id="status<s:property value="orderID"/>">订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：未支付</p>
+                                        </s:if>
+                                        <s:elseif test="status=='CANCELED'">
+                                            <p id="status<s:property value="orderID"/>">订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已取消</p>
+                                        </s:elseif>
+                                        <s:elseif test="status=='NOTSHIPPED'">
+                                            <p id="status<s:property value="orderID"/>">订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：未发货</p>
+                                        </s:elseif>
+                                        <s:elseif test="status=='SHIPPED'">
+                                            <p id="status<s:property value="orderID"/>">订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已发货</p>
+                                        </s:elseif>
+                                        <s:elseif test="status=='COMPLETED'">
+                                            <p id="status<s:property value="orderID"/>">订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已完成</p>
+                                        </s:elseif>
+                                    </h4><br>
+                                    <ul class="qty">
+                                        <li><p>书名：<s:property value="bookName"/></p></li>
+                                        <li><p>下单时间：<s:property value="orderDate"/></p></li>
+                                        <li><p>总积分：<s:property value="totalCredit"/></p></li>
+                                    </ul>
+                                    <div class="delivery">
+                                        <p>收货人：<s:property value="receiver"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                        <p>收货地址：<s:property value="address"/></p><br>
+                                        <s:if test="status=='NOTPAYED'">
+                                            <p id="payDate<s:property value="orderID"/>" style="display: none">付款时间：<s:property value="payDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                            <p id="fhDate<s:property value="orderID"/>" style="display: none">发货时间：<s:property value="fhDate"/></p><br>
+                                            <p id="shDate<s:property value="orderID"/>" style="display: none">收货时间：<s:property value="shDate"/></p><br>
 
-                <!-- 测试样式 -->
-                <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>
-                                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
-                                    书名：<s:property value="bookName"/></a><br>
-                                <span>ISBN:<s:property value="isbn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：买家未支付</span>
-                            </h4>
-                            <ul class="qty">
-                                <li><p>作者：<s:property value="author"/></p></li>
-                                <li><p>分类：<s:property value="category1"/></p></li>
-                                <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
-                                <li><p>出借人：</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p id="yhdate<s:property value="bookID"/>">下单日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <a href="#" id="returnBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="returnBook(<s:property value="bookID"/>)">支付</a>
+                                            <a href="#" id="payBtn<s:property value="orderID"/>" class="add-cart item_add" onclick="payOrder(<s:property value="orderID"/>)">支付</a>
+                                            <a href="#" id="cancelBtn<s:property value="orderID"/>" class="add-cart item_add" onclick="cancelOrder(<s:property value="orderID"/>)">取消</a>
+                                        </s:if>
+                                        <s:elseif test="status=='CANCELED'">
+
+                                        </s:elseif>
+                                        <s:elseif test="status=='NOTSHIPPED'">
+                                            <p id="payDate<s:property value="orderID"/>">付款时间：<s:property value="payDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                            <p id="fhDate<s:property value="orderID"/>" style="display: none">发货时间：<s:property value="fhDate"/></p><br>
+                                            <p id="shDate<s:property value="orderID"/>" style="display: none">收货时间：<s:property value="shDate"/></p><br>
+                                        </s:elseif>
+                                        <s:elseif test="status=='SHIPPED'">
+                                            <p id="payDate<s:property value="orderID"/>">付款时间：<s:property value="payDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                            <p id="fhDate<s:property value="orderID"/>">发货时间：<s:property value="fhDate"/></p><br>
+                                            <p id="shDate<s:property value="orderID"/>" style="display: none">收货时间：<s:property value="shDate"/></p><br>
+
+                                            <a id="confirmOrderBtn<s:property value="orderID"/>" href="#" class="add-cart item_add" onclick="confirmOrderReceipt(<s:property value="orderID"/>)">确认收货</a>
+                                        </s:elseif>
+                                        <s:elseif test="status=='COMPLETED'">
+                                            <p id="payDate<s:property value="orderID"/>">付款时间：<s:property value="payDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                            <p id="fhDate<s:property value="orderID"/>">发货时间：<s:property value="fhDate"/></p><br>
+                                            <p id="shDate<s:property value="orderID"/>">收货时间：<s:property value="shDate"/></p><br>
+
+                                            <a href="#" id="creditRatingBtn<s:property value="orderID"/>" class="add-cart item_add" onclick="creditRating(<s:property value="orderID"/>)">信用评价</a>
+                                            <form id="creditRatingForm<s:property value="orderID"/>" action="<%=path%>/commentAction/honestyRatingWhenBuy" method="post" style="display: none">
+                                                <input type="hidden" name="orderID" value="<s:property value="orderID"/>"/>
+                                                <select name="creditRating" class="form-control form-control-noNewline">
+                                                    <option value="-1">差评</option>
+                                                    <option value="0">中评</option>
+                                                    <option value="1">好评</option>
+                                                </select>
+                                                <a href="#" class="add-cart item_add" onclick="submitRating(<s:property value="orderID"/>)">评价</a>
+                                            </form>
+                                        </s:elseif>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
                                 <div class="clearfix"></div>
                             </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div><hr>
+                        </div><hr>
 
-                <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>
-                                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
-                                    书名：<s:property value="bookName"/></a><br>
-                                <span>ISBN:<s:property value="isbn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：卖家未发货</span>
-                            </h4>
-                            <ul class="qty">
-                                <li><p>作者：<s:property value="author"/></p></li>
-                                <li><p>分类：<s:property value="category1"/></p></li>
-                                <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
-                                <li><p>出借人：</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p id="yhdate<s:property value="bookID"/>">下单日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">付款日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <div class="clearfix"></div>
+                    </s:iterator>
+                    <div id="bookID4" class="cart-header">
+                        <div class="cart-sec simpleCart_shelfItem">
+                            <div class="cart-item cyc">
+                                <img src="<%=path%>/images/m5.png" class="img-responsive" alt="">
                             </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div><hr>
-
-                <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>
-                                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
-                                    书名：<s:property value="bookName"/></a><br>
-                                <span>ISBN:<s:property value="isbn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：卖家已发货</span>
-                            </h4>
-                            <ul class="qty">
-                                <li><p>作者：<s:property value="author"/></p></li>
-                                <li><p>分类：<s:property value="category1"/></p></li>
-                                <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
-                                <li><p>出借人：</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p id="yhdate<s:property value="bookID"/>">下单日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">付款日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>">发货日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>" style="display: none">收货日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>" style="display: none">应还日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>" style="display: none">归还日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>" style="display: none">完成日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="returnAddr<s:property value="borrowID"/>" style="display: none">归还地址：东川路800号</p><br>
-                                <a href="#" id="returnBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="returnBook(<s:property value="bookID"/>)">确认收货</a>
-                                <div class="clearfix"></div>
+                            <div class="cart-item-info">
+                                <h4>
+                                    <a href="<%=path%>/">订单号:1580021000037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已完成</a>
+                                </h4><br>
+                                <ul class="qty">
+                                    <li><p>书名：黄政的自传</p></li>
+                                    <li><p>下单时间：2017-6-10   20:42:48</p></li>
+                                    <li><p>总积分：10240</p></li>
+                                </ul>
+                                <div class="delivery">
+                                    <p>收货人：Bjarne&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                    <p>收货地址：东川路800号</p><br>
+                                    <p>付款时间：2017-6-10   20:42:48&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                    <p>发货时间：2017-6-10   20:42:48</p><br>
+                                    <p>收货时间：2017-6-10   20:42:48</p><br>
+                                    <a href="#" id="commentBtn" class="add-cart item_add" onclick="">信用评价</a>
+                                    <div class="clearfix"></div>
+                                </div>
                             </div>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div><hr>
-
-                <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>
-                                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
-                                    书名：<s:property value="bookName"/></a><br>
-                                <span>ISBN:<s:property value="isbn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：买家未归还</span>
-                            </h4>
-                            <ul class="qty">
-                                <li><p>作者：<s:property value="author"/></p></li>
-                                <li><p>分类：<s:property value="category1"/></p></li>
-                                <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
-                                <li><p>出借人：</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p id="yhdate<s:property value="bookID"/>">下单日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">付款日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>">发货日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">收货日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>">应还日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <a href="#" id="returnBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="returnBook(<s:property value="bookID"/>)">归还</a>
-                                <a href="#" id="delayBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="delayBook(<s:property value="bookID"/>)">续借</a>
-                                <div class="clearfix"></div>
+                    </div><hr>
+                    <div id="bookID4" class="cart-header">
+                        <div class="cart-sec simpleCart_shelfItem">
+                            <div class="cart-item cyc">
+                                <img src="<%=path%>/images/m5.png" class="img-responsive" alt="">
                             </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div><hr>
-
-                <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>
-                                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
-                                    书名：<s:property value="bookName"/></a><br>
-                                <span>ISBN:<s:property value="isbn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：买家已归还,待卖家确认</span>
-                            </h4>
-                            <ul class="qty">
-                                <li><p>作者：<s:property value="author"/></p></li>
-                                <li><p>分类：<s:property value="category1"/></p></li>
-                                <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
-                                <li><p>出借人：</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p id="yhdate<s:property value="bookID"/>">下单日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">付款日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>">发货日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">收货日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>">应还日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">归还日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>" style="display: none">完成日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="returnAddr<s:property value="borrowID"/>">归还地址：东川路800号</p><br>
-                                <div class="clearfix"></div>
+                            <div class="cart-item-info">
+                                <h4>
+                                    <a href="<%=path%>/">订单号:1580021000037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已取消</a>
+                                </h4><br>
+                                <ul class="qty">
+                                    <li><p>书名：黄政的自传</p></li>
+                                    <li><p>下单时间：2017-6-10   20:42:48</p></li>
+                                    <li><p>总积分：10240</p></li>
+                                </ul>
+                                <div class="delivery">
+                                    <p>收货人：Bjarne&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                    <p>收货地址：东川路800号</p><br>
+                                    <div class="clearfix"></div>
+                                </div>
                             </div>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div><hr>
-
-                <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>
-                                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
-                                    书名：<s:property value="bookName"/></a><br>
-                                <span>ISBN:<s:property value="isbn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：借阅已完成</span>
-                            </h4>
-                            <ul class="qty">
-                                <li><p>作者：<s:property value="author"/></p></li>
-                                <li><p>分类：<s:property value="category1"/></p></li>
-                                <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
-                                <li><p>出借人：</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p id="yhdate<s:property value="bookID"/>">下单日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">付款日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>">发货日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">收货日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>">应还日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">归还日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>">完成日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="returnAddr<s:property value="borrowID"/>">归还地址：东川路800号</p><br>
-                                <a href="#" id="returnBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="returnBook(<s:property value="bookID"/>)">图书评论</a>
-                                <a href="#" id="delayBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="delayBook(<s:property value="bookID"/>)">信用评价</a>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div><hr>
-
+                    </div><hr>
+                </div>
 
             </div>
         </div>
     </div>
 </div>
-
+</div>
+<jsp:include page="footer.jsp"/>
 </body>
 </html>
-

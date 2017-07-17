@@ -161,6 +161,8 @@
     <!-- Action -->
     <bean id="userAction" class="action.UserAction">
         <property name="userService" ref="userService" />
+        <property name="orderService" ref="orderService" />
+        <property name="borrowService" ref="borrowService" />
     </bean>
     <bean id="bookAction" class="action.BookAction">
         <property name="bookNumPerPage" value="9" />

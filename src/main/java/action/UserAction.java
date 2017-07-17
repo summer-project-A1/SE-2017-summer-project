@@ -7,14 +7,19 @@ import java.util.Map;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import model.Borrow;
 import model.FullAddress;
 import model.UserProfile;
+import service.BorrowService;
+import service.OrderService;
 import service.UserService;
 
 public class UserAction extends ActionSupport {
     private static final long serialVersionUID = -715680791767950984L;
 
-    private UserService userService; 
+    private UserService userService;
+    private OrderService orderService;
+    private BorrowService borrowService;
     
     private Map params;
 
@@ -140,9 +145,31 @@ public class UserAction extends ActionSupport {
     public UserProfile getUserProfile(){
         return this.userProfile;
     }
+    public OrderService getOrderService() {
+        return orderService;
+    }
+
+    public void setOrderService(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
+    public BorrowService getBorrowService() {
+        return borrowService;
+    }
+
+    public void setBorrowService(BorrowService borrowService) {
+        this.borrowService = borrowService;
+    }
 
     /* =========================================================== */
 
+
+    public String showSellerCenter(){
+        //ActionContext.getContext().put("lendBook",borrowService.getLendBookList());
+        //ActionContext.getContext().put("lendBookHistoryList",borrowService.getLendBookHistoryList());
+        //ActionContext.getContext().put("sellBookList",orderService.getSellBookList());
+        return "showSellerCenter";
+    }
 
     public String showUserProfile(){
         this.userProfile = this.userService.showUserProfile();

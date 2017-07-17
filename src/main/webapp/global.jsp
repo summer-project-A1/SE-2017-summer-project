@@ -95,11 +95,11 @@
                         if(response.result == true){
                             //先替换原页面元素，等到用户刷新再真正判断session来载入真正的元素
                             var replace = "<label>"+"欢迎您!"+response.email+"</label><br>" +
-                                "<label><a href='myaccount.jsp'>个人信息</a></label><br>" +
+                                "<label><a href='<%=path%>/userAction/showSellerCenter'>卖家中心</a></label><br>" +
                                 "<label><a href='myrelease.jsp'>我的发布</a></label><br>" +
                                 "<label><a href='<%=path%>/borrowAction/showMyBorrow'>我的借阅</a></label><br>" +
                                 "<label><a href='myexchange.jsp'>我的交换</a></label><br>" +
-                                "<label><a href='myorder.jsp'>我的订单</a></label><br>" +
+                                "<label><a href='myorder.jsp'>我的购买</a></label><br>" +
                                 "<label><a href='myreservation'>我的预约</a></label><br>"+
                                 "<label><a href='<%=path%>/authAction/logout'>"+"退出登录"+"</a><label><br>";
                             $('#loginForm').html(replace);

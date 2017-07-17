@@ -53,10 +53,11 @@
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
+            <result name="showSellerCenter">/sellerCenter.jsp</result>
             <result name="showUserProfile">/userProfile.jsp</result>
             <result name="getAllAddress">/checkout.jsp</result>
             <allowed-methods>
-                showUserProfile,updatePassword,getAllAddress,addAddress,setDefaultAddress,deleteAddress,updateUserProfile
+                showSellerCenter,showUserProfile,updatePassword,getAllAddress,addAddress,setDefaultAddress,deleteAddress,updateUserProfile
             </allowed-methods>
         </action>
     </package>
