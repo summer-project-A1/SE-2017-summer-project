@@ -145,7 +145,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             borrowProfile.setImageID(book.getImageID());
             borrowProfile.setBorrowID(borrowHistory.getBhID());
             borrowProfile.setYhDate(borrowHistory.getYhDate());
-            borrowProfile.setBorrowPrice(borrowHistory.getBorrowPrice());
+            borrowProfile.setBorrowCredit(borrowHistory.getBorrowPrice());
             borrowProfile.setDelayCount(borrowHistory.getDelayCount());
             borrowProfile.setBorrowAddress(borrowHistory.getBorrowAddress());
             borrowProfile.setReturnAddress(borrowHistory.getReturnAddress());
@@ -186,7 +186,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         newBorrow.setUserID1(user.getUserID());
         newBorrow.setUserID2(bookRelease.getUserID());
         newBorrow.setBorrowDate(new Date());
-        newBorrow.setBorrowPrice(book.getBorrowCredit());
+        newBorrow.setBorrowCredit(book.getBorrowCredit());
         Calendar now = Calendar.getInstance();
         now.add(Calendar.DATE, this.borrowDay);
         Date yhDate = now.getTime();
@@ -199,6 +199,58 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
     
     @Override
     public Map borrowAllBookInBorrowCart(String fullAddress) {
+        /*
+         * 用户创建订单，添加borrow到数据库，不验证/修改书的状态，不验证用户积分
+         */
+        Map returnMap = new HashMap();    // 返回值
+        User user = this.getLoginedUserInfo();
+        List<Map<String, Object>> cartList;
+        List<BorrowProfile> borrowProfileList = new ArrayList();
+        int totalNeededCredit = 0;  // 所需总积分
+        if(getHttpSession().containsKey("borrowCart")) {
+            cartList = (List<Map<String, Object>>)getHttpSession().get("borrowCart");
+        }
+        else {
+            cartList = new ArrayList<Map<String, Object>>();
+        }
+        
+        for(Map<String, Object> cartListItem : cartList) {
+            int bookID = (int)cartListItem.get("bookID");
+            Book book = this.bookDao.getBookByID(bookID);
+            BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
+            totalNeededCredit += book.getBorrowCredit();     
+            
+            Borrow newBorrow = new Borrow();
+            newBorrow.setBookID(book.getBookID());
+            newBorrow.setUserID1(user.getUserID());  // 借书人，买家
+            newBorrow.setUserID2(bookRelease.getUserID());  // 被借人，卖家
+            newBorrow.setOrderDate(new Date());
+            newBorrow.setBorrowCredit(book.getBorrowCredit());
+            newBorrow.setBorrowAddress(fullAddress);  // 买家收货地址
+            newBorrow.setDelayCount(0);   // 延期次数：0
+            newBorrow.setStatus(BorrowStatus.BUYER_NOTPAID);
+            this.borrowDao.save(newBorrow);
+            book.setStatus(BookStatus.BORROWED);
+            this.bookDao.update(book);
+            
+            BorrowProfile newBorrowProfile = new BorrowProfile();
+            newBorrowProfile.setBorrowID(newBorrow.getBorrowID());
+            newBorrowProfile.setBookID(newBorrow.getBookID());
+            newBorrowProfile.setImageID(book.getImageID());
+            newBorrowProfile.setIsbn(book.getIsbn());
+            newBorrowProfile.setAuthor(book.getAuthor());
+            newBorrowProfile.setCategory1(book.getCategory1());
+            newBorrowProfile.setCategory2(book.getCategory2());
+            newBorrowProfile.setBorrowCredit(book.getBorrowCredit());
+            borrowProfileList.add(newBorrowProfile);
+        }
+        getHttpSession().remove("borrowCart");
+        
+        returnMap.put("borrowProfileList", borrowProfileList);
+        returnMap.put("totalCredit", totalNeededCredit);
+        return returnMap;
+        
+        /*
         Map returnMap = new HashMap();    // 返回值
         if(!isLogined()) {
             returnMap.put("result", false);
@@ -242,6 +294,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             result = false;
             creditNotEnough = true;
         }
+        
         // 如果某本书被买走，则失败
         if(!allNotIdleBookInCart.isEmpty()) {
             result = false;
@@ -249,7 +302,6 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         }
         
         if(result) {
-            Date yhDate = new Date();
             user.setCredit(user.getCredit() - totalNeededCredit);
             this.userDao.update(user);
             for(int i=0; i<allIdleBookInCart.size(); i++) {
@@ -257,13 +309,13 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                 BookRelease bookRelease = allIdleBookReleaseInCart.get(i);
                 Borrow newBorrow = new Borrow();
                 newBorrow.setBookID(book.getBookID());
-                newBorrow.setUserID1(user.getUserID());
-                newBorrow.setUserID2(bookRelease.getUserID());
-                newBorrow.setBorrowDate(new Date());
+                newBorrow.setUserID1(user.getUserID());  // 借书人，买家
+                newBorrow.setUserID2(bookRelease.getUserID());  // 被借人，卖家
+                newBorrow.setOrderDate(new Date());
                 newBorrow.setBorrowPrice(book.getBorrowCredit());
-                newBorrow.setYhDate(yhDate);
                 newBorrow.setBorrowAddress(fullAddress);
                 newBorrow.setDelayCount(0);
+                newBorrow.setStatus(BorrowStatus.BUYER_NOTPAID);
                 this.borrowDao.save(newBorrow);
                 book.setStatus(BookStatus.BORROWED);
                 this.bookDao.update(book);
@@ -275,6 +327,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         returnMap.put("credit", creditNotEnough);
         returnMap.put("book", bookNotIdle);
         return returnMap;
+        */
     }
 
     @Override
@@ -302,7 +355,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         BorrowHistory newBorrowHistory = new BorrowHistory();
         newBorrowHistory.setBookID(bookID);
         newBorrowHistory.setBorrowDate(borrow.getBorrowDate());
-        newBorrowHistory.setBorrowPrice(borrow.getBorrowPrice());
+        newBorrowHistory.setBorrowPrice(borrow.getBorrowCredit());
         newBorrowHistory.setReturnDate(returnDate);
         newBorrowHistory.setUserID1(user.getUserID());
         newBorrowHistory.setYhDate(borrow.getYhDate());

@@ -2,15 +2,17 @@ package model;
 
 import java.util.Date;
 
+import common.constants.BorrowStatus;
+
 public class Borrow {                // 保存已被借出但尚未还回的借书记录
     private int borrowID;
     private int userID1;      //借书人id，对应买家
     private int userID2;       //被借书人id，对应卖家
     private int bookID;
     private Date yhDate;         // 应还时间
-    private int borrowPrice;         // 借书花费的积分
+    private int borrowCredit;         // 借书花费的积分
     private int delayCount;     // 延期次数（目前设定最多1次）
-    private int status;         // 图书状态
+    private BorrowStatus status;         // 借书信息的状态
     private String borrowAddress;  //借书人收货地址
     private String returnAddress;  //被借书者收货地址
     private String trackingNo1;    //借书人还书时快递单号
@@ -57,11 +59,11 @@ public class Borrow {                // 保存已被借出但尚未还回的借�
 	public void setYhDate(Date yhDate) {
 		this.yhDate = yhDate;
 	}
-	public int getBorrowPrice() {
-		return borrowPrice;
+	public int getBorrowCredit() {
+		return borrowCredit;
 	}
-	public void setBorrowPrice(int borrowPrice) {
-		this.borrowPrice = borrowPrice;
+	public void setBorrowCredit(int borrowCredit) {
+		this.borrowCredit = borrowCredit;
 	}
 	public int getDelayCount() {
 		return delayCount;
@@ -69,10 +71,10 @@ public class Borrow {                // 保存已被借出但尚未还回的借�
 	public void setDelayCount(int delayCount) {
 		this.delayCount = delayCount;
 	}
-	public int getStatus() {
+	public BorrowStatus getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(BorrowStatus status) {
 		this.status = status;
 	}
 	public String getBorrowAddress() {
