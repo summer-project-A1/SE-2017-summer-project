@@ -251,10 +251,10 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
     }
 
     @Override
-    public Boolean confirmBorrowOrder(List<Integer> borrowIDList) {
+    public Map confirmBorrowOrder(List<Integer> borrowIDList) {
         // 用户付款确认订单（允许多个订单），修改订单状态，验证并修改书的状态，验证并修改用户积分
+        Map returnMap = new HashMap();
         User user = this.getLoginedUserInfo();
-        
         int totalCredit = 0;        // 所有书总计需要的积分
         List<Book> allIdleBook = new ArrayList();    // 临时保存空闲的书
         List<BookRelease> allIdleBookRelease = new ArrayList();    // 临时保存空闲的书
@@ -297,6 +297,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             bookNotIdle = true;
         }
         
+        Date payDate = new Date();
         if(result) {
             user.setCredit(user.getCredit() - totalCredit);
             this.userDao.update(user);
@@ -305,12 +306,15 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                 BookRelease bookRelease = allIdleBookRelease.get(i);
                 Borrow borrow = allSuccessBorrow.get(i);
                 borrow.setStatus(BorrowStatus.SELLER_NOT_SHIPPED);
+                borrow.setPayDate(payDate);
                 this.borrowDao.update(borrow);
                 book.setStatus(BookStatus.BORROWED);
                 this.bookDao.update(book);
             }
         }
-        return true;
+        returnMap.put("success", result);
+        returnMap.put("payDate", payDate);
+        return returnMap;
     }
     
     @Override
