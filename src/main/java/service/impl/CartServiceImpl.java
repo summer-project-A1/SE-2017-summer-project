@@ -29,7 +29,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
     public Map showBorrowCart() {
         List<Map<String, Object>> cartList;
         Map result = new HashMap();
-        List booksInOrder = new ArrayList();
+        List booksInBorrowCart = new ArrayList();
         Integer totalCredit = 0;
         if(getHttpSession().containsKey("borrowCart")) {
             cartList = (List<Map<String, Object>>)getHttpSession().get("borrowCart");
@@ -42,11 +42,11 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
             int bookID = (int)cartListItem.get("bookID");
             Book book = this.bookDao.getBookByID(bookID);
             if(book != null) {
-                booksInOrder.add(book);
+                booksInBorrowCart.add(book);
                 totalCredit += book.getBorrowCredit();
             }
         }
-        result.put("booksInBorrowCart", booksInOrder);
+        result.put("booksInBorrowCart", booksInBorrowCart);
         result.put("totalCredit", totalCredit);
         return result;
     }
@@ -144,9 +144,11 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
     }
 
     @Override
-    public List showBuyCart() {
+    public Map showBuyCart() {
         List<Map<String, Object>> cartList;
-        List resultList = new ArrayList();
+        Map result = new HashMap();
+        List booksInBuyCart = new ArrayList();
+        Integer totalCredit = 0;
         if(getHttpSession().containsKey("buyCart")) {
             cartList = (List<Map<String, Object>>)getHttpSession().get("buyCart");
         }
@@ -158,10 +160,13 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
             int bookID = (int)cartListItem.get("bookID");
             Book book = this.bookDao.getBookByID(bookID);
             if(book != null) {
-                resultList.add(book);
+                booksInBuyCart.add(book);
+                totalCredit += book.getBorrowCredit();
             }
         }
-        return resultList;
+        result.put("booksInBuyCart", booksInBuyCart);
+        result.put("totalCredit", totalCredit);
+        return result;
     }
 
     @Override

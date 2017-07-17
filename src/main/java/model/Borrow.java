@@ -24,8 +24,8 @@ public class Borrow {                // 保存已被借出但尚未还回的借�
     private Date borrowDate;   //买家确认收货时间，即借书时间
     private Date returnDate;   //买家还书时间，即买家填还书快递单号时间
     private Date shDate;   //卖家收货时间
-    private int comment1;  //买家对卖家信用评价
-    private int comment2;  //卖家对买家信用评价
+    private Integer comment1;  //买家对卖家信用评价打分
+    private Integer comment2;  //卖家对买家信用评价打分
     
     /* =============================================================== */
     
@@ -139,16 +139,16 @@ public class Borrow {                // 保存已被借出但尚未还回的借�
 	public void setShDate(Date shDate) {
 		this.shDate = shDate;
 	}
-	public int getComment1() {
+	public Integer getComment1() {
 		return comment1;
 	}
-	public void setComment1(int comment1) {
+	public void setComment1(Integer comment1) {
 		this.comment1 = comment1;
 	}
-	public int getComment2() {
+	public Integer getComment2() {
 		return comment2;
 	}
-	public void setComment2(int comment2) {
+	public void setComment2(Integer comment2) {
 		this.comment2 = comment2;
 	}
 	/**
