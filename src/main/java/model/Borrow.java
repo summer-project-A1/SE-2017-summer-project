@@ -12,7 +12,8 @@ public class Borrow {                // 保存已被借出但尚未还回的借�
     private Date yhDate;         // 应还时间
     private int borrowCredit;         // 借书花费的积分
     private int delayCount;     // 延期次数（目前设定最多1次）
-    private BorrowStatus status;         // 借书信息的状态
+    private BorrowStatus status;   // 借书信息的状态
+    private String borrowStatus;   // 借书信息的状态（字符串）
     private String borrowAddress;  //借书人收货地址
     private String returnAddress;  //被借书者收货地址
     private String trackingNo1;    //借书人还书时快递单号
@@ -77,7 +78,13 @@ public class Borrow {                // 保存已被借出但尚未还回的借�
 	public void setStatus(BorrowStatus status) {
 		this.status = status;
 	}
-	public String getBorrowAddress() {
+	public String getBorrowStatus() {
+        return borrowStatus;
+    }
+    public void setBorrowStatus(String borrowStatus) {
+        this.borrowStatus = borrowStatus;
+    }
+    public String getBorrowAddress() {
 		return borrowAddress;
 	}
 	public void setBorrowAddress(String borrowAddress) {

@@ -110,8 +110,8 @@ public class BorrowAction extends ActionSupport {
         return "createBorrowOrder";
     }
     public String confirmBorrowOrder() {       // 用户付款确认订单（允许多个订单），修改订单状态
-        boolean result = this.borrowService.confirmBorrowOrder(this.borrowIDList);
-        return SUCCESS;
+        this.params = this.borrowService.confirmBorrowOrder(this.borrowIDList);
+        return "ajax";
     }
     public String showMyBorrow(){
         this.params = this.borrowService.showMyBorrow();
