@@ -23,6 +23,8 @@ public class BorrowAction extends ActionSupport {
     private int bookID;
     private Map params;
 
+	private int borrowID;
+    private String trackingNo1;
     private String address;
     private List<Integer> borrowIDList;
     
@@ -69,6 +71,18 @@ public class BorrowAction extends ActionSupport {
     }
     public void setBorrowIDList(List<Integer> borrowIDList) {
         this.borrowIDList = borrowIDList;
+    }
+    public int getBorrowID() {
+        return borrowID;
+    }
+    public void setBorrowID(int borrowID) {
+        this.borrowID = borrowID;
+    }
+    public String getTrackingNo1() {
+        return trackingNo1;
+    }
+    public void setTrackingNo1(String trackingNo1) {
+        this.trackingNo1 = trackingNo1;
     }
     
     /* ============================================================== */
@@ -130,7 +144,7 @@ public class BorrowAction extends ActionSupport {
             params.put("returnDate",returnDate);
         }
         */
-        this.params = this.borrowService.returnBook(this.bookID);
+        this.params = this.borrowService.returnBook(this.borrowID,this.trackingNo1);
         return "ajax";
     }
 

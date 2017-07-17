@@ -9,6 +9,6 @@ public interface BorrowService extends BaseService {
     public boolean borrowBook(int bookID);
     public Map createBorrowOrder(String fullAddress);
     public Boolean confirmBorrowOrder(List<Integer> borrowID);
-    public Map returnBook(int borrowID);
+    public Map returnBook(int borrowID,String trackingNo1);
     public Map delayBook(int borrowID);
 }
