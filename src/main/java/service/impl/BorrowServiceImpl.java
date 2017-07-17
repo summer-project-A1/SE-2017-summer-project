@@ -113,12 +113,28 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         List<BorrowProfile> borrowBook = new ArrayList();
         List<BorrowProfile> borrowHistoryBook = new ArrayList();
         for(Borrow borrow : borrows) {
-            //BorrowProfile borrowProfile = new BorrowProfile();
-        	BorrowProfile borrowProfile = (BorrowProfile)borrow;
+            BorrowProfile borrowProfile = new BorrowProfile();
+        	//BorrowProfile borrowProfile = (BorrowProfile)borrow;
             int bookID = borrow.getBookID();
             Book book = this.bookDao.getBookByID(bookID);
             BookRelease bookRelease=bookReleaseDao.getReleaseBookByBookID(bookID);
             User user2=userDao.getUserById(bookRelease.getUserID());
+            borrowProfile.setBorrowID(borrow.getBorrowID());
+            borrowProfile.setBookID(borrow.getBookID());
+            borrowProfile.setUserID1(borrow.getUserID1());
+            borrowProfile.setUserID2(borrow.getUserID2());
+            borrowProfile.setYhDate(borrow.getYhDate());
+            borrowProfile.setBorrowCredit(borrow.getBorrowCredit());
+            borrowProfile.setDelayCount(borrow.getDelayCount());
+            borrowProfile.setStatus(borrow.getStatus());
+            borrowProfile.setReturnAddress(borrow.getReturnAddress());
+            borrowProfile.setTrackingNo1(borrow.getTrackingNo1());
+            borrowProfile.setOrderDate(borrow.getOrderDate());
+            borrowProfile.setPayDate(borrow.getPayDate());
+            borrowProfile.setFhDate(borrow.getFhDate());
+            borrowProfile.setBorrowDate(borrow.getBorrowDate());
+            borrowProfile.setReturnDate(borrow.getReturnDate());
+            
             borrowProfile.setBookName(book.getBookName());
             borrowProfile.setIsbn(book.getIsbn());
             borrowProfile.setPress(book.getPress());
