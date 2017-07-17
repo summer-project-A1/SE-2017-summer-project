@@ -235,38 +235,56 @@
                     <h4 class="m_2"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>图书类型</h4>
                     <s:iterator value="#category1List"  status="st1">
                         <div  id="cate<s:property value="#st1.index"/>" class="tab1">
+                            <script>
+                                $(document).ready(function () {
+                                    $("#cate<s:property value='#st1.index'/> ul").click(function(){
+                                        $(".tab1 .single-bottom").hide();
+                                        $("#cate<s:property value='#st1.index'/> .single-bottom").slideToggle(300);
+
+                                    });
+                                });
+
+                            </script>
                             <ul class="place">
                                 <li class="sort"><s:property value="category1Name"/></li>
                                 <li class="by"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></li>
                             </ul>
                             <div class="clearfix"> </div>
                             <div class="single-bottom">
-                                    <a href="<%=path%>>bookAction/showBooksByCategory1Name?category1Name=<s:property value="category1Name"/>"><p><s:property value="category1Name"/></p>
+                                <a onclick=""><p><s:property value="category1Name"/></p></a>
                                 <s:iterator value="category2List" status="st2">
-                                    <a href="<%=path%>/bookAction/showBooksByCategory2Name?category2Name=<s:property value="category2Name"/>"><p><s:property value="category2Name"/></p></a>
+                                    <a onclick=""><p><s:property value="category2Name"/></p></a>
                                 </s:iterator>
                             </div>
-                            <script>
-                                $("#cate"+"<s:property value='#st1.index'/>"+" ul").click(function(){
-                                    $(".tab1 .single-bottom").hide();
-                                    $("#cate"+"<s:property value='#st1.index'/>"+".single-bottom").slideToggle(300);
 
-                                })
-                            </script>
                         </div>
                     </s:iterator>
                 </div>
             </section>
             <section  class="sky-form">
-                <h4><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>查询条件</h4>
+                <h4><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>图书状态</h4>
                 <div class="row row1 scroll-pane">
 
                     <div class="col col-4">
-                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>可交换</label>
-                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>可积分借阅</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox" onclick=""><i></i>可交换</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox" onclick=""><i></i>可积分借阅</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox" onclick=""><i></i>可预约</label>
                     </div>
                 </div>
             </section>
+            <section  class="sky-form">
+                <h4><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>图书年份</h4>
+                <div class="row row1 scroll-pane">
+
+                    <div class="col col-4">
+                        <a class="add-cart item_add" onclick="">2017</a>
+                        <a class="add-cart item_add" onclick="">2016</a><br>
+                        <a class="add-cart item_add" onclick="">2015</a>
+                        <a class="add-cart item_add" onclick="">2014</a><br>
+                    </div>
+                </div>
+            </section>
+
 
         </div>
         <div class="clearfix"> </div>

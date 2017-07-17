@@ -99,11 +99,11 @@ section.sky-form{
 	left: -5px;
 	width: 15px;
 	height: 15px;
-	background: url(../images/b-arrow.png);
+	background: url(../images/tick1.png);
 	text-align: center;
 }
 .sky-form .checkbox input + i:after {
-  color:#fff;
+  color: #ff0400;
 }
 .sky-form .radio input:checked + i,
 .sky-form .checkbox input:checked + i,

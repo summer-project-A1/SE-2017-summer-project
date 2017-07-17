@@ -125,7 +125,7 @@ public class BookAction extends ActionSupport {
         ActionContext.getContext().put("allBooks",allBooks);
         ActionContext.getContext().put("totalBookAmount",allBooks.size());//应从数据库获取allBooks的大小
         ActionContext.getContext().put("firstPage", this.firstPage);
-        ActionContext.getContext().put("categoryNameOfBooks","");
+        ActionContext.getContext().put("category1List",this.bookService.showAllCategory1s());
         return "showBooks";
     }
 
