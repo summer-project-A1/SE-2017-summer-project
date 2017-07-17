@@ -4,8 +4,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <s:action name="header" executeResult="true" namespace="/"/>
-
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Pay</title>
     <style>
@@ -23,12 +21,13 @@
 
 </head>
 <body>
-
+<!-- header -->
+<s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 <div class="products">
 
     <div class="container">
         <h2>订单确认</h2>
-        <s:iterator value="#booksInOrder" status="st">
+        <s:iterator value="#orderProfileList" status="st">
         <div id="<s:property value="bookID"/>" class="cart-header">
             <div class="close-icon" onclick="deleteBook(<s:property value="bookID"/>)"> </div>
             <div class="cart-sec simpleCart_shelfItem">
@@ -46,7 +45,7 @@
                         <li><p>分类：<s:property value="category2"/></p></li>
                     </ul>
                     <div class="delivery">
-                            <p>购买所需积分：<s:property value="buyCredit"/></p>
+                            <p>所需积分：<s:property value="buyCredit"/></p>
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -54,14 +53,16 @@
             </div>
         </div>
     </s:iterator>
-    <form id=orderInfo style="display:none">
-        <input name=orderID type=hidden value=<s:property value="#orderID"/> >
+    <form id="orderInfo" style="display:none">
+    	<s:iterator value="#orderProfileList" status="st">
+        	<input name="orderID" type="hidden" value="<s:property value="orderID"/>">
+        </s:iterator>
     </form>
     <div id=confirm>
         <label>合计:</label>
-        <label id=totalCredit>1000</label><br>
+        <label id="totalCredit"><s:property value="#totalCredit"/></label><br>
         <!--<label id=totalCredit><s:property value="totalPrice"/></label><br>-->
-        <a id=commit href="#" class="add-cart item_add">确认订单并付款</a>
+        <a id="commit" href="#" class="add-cart item_add">确认订单并付款</a>
     </div>
     </div>
 </div>

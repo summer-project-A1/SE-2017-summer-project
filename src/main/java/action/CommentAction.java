@@ -13,6 +13,7 @@ import java.util.Map;
 public class CommentAction extends ActionSupport {
     private CommentService commentService;
     private int borrowID;
+    private int orderID;
     private int bookID;
     private int commentID;
     private String comment;
@@ -33,6 +34,8 @@ public class CommentAction extends ActionSupport {
     public void setBorrowID(int borrowID) {
         this.borrowID = borrowID;
     }
+    public int getOrderID(){return orderID;}
+    public void setOrderID(int orderID){this.orderID = orderID;}
     public int getBookID() {
         return bookID;
     }
@@ -89,5 +92,9 @@ public class CommentAction extends ActionSupport {
         return "honestyRatingWhenBorrow";
     }
 
+    public String honestyRatingWhenBuy(){
+        this.commentService.honestyRatingInBuy(this.orderID,this.creditRating);
+        return "honestyRatingWhenBuy";
+    }
 
 }

@@ -1,13 +1,11 @@
 package service.impl;
 
 import dao.BorrowHistoryDao;
+import dao.OrderDao;
 import dao.UserDao;
-import model.BorrowHistory;
-import model.CommentProfile;
-import model.User;
+import model.*;
 import service.CommentService;
 import dao.CommentDao;
-import model.Comment;
 
 import java.util.*;
 
@@ -15,6 +13,7 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
     private CommentDao commentdao;
     private UserDao userDao;
     private BorrowHistoryDao borrowHistoryDao;
+    private OrderDao orderDao;
 
     public CommentDao getCommentdao() {
         return commentdao;
@@ -38,6 +37,14 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 
     public void setBorrowHistoryDao(BorrowHistoryDao borrowHistoryDao) {
         this.borrowHistoryDao = borrowHistoryDao;
+    }
+
+    public OrderDao getOrderDao() {
+        return orderDao;
+    }
+
+    public void setOrderDao(OrderDao orderDao) {
+        this.orderDao = orderDao;
     }
 
 
@@ -95,21 +102,47 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
     @Override
     public boolean honestyRatingInBorrow(int borrowID,int creditRating){
         BorrowHistory bh = this.borrowHistoryDao.getBorrowHistoryByBorrowID(borrowID);
-        int userID1 = bh.getUserID1();
-        int userID2 = bh.getUserID2();
+        int userID1 = bh.getUserID1(); //买家
+        int userID2 = bh.getUserID2(); //卖家
         User user = getLoginedUserInfo();
         int currentID = user.getUserID();
         int ratingID = 0;
         if(currentID == userID1){
-            ratingID = userID2;
+            ratingID = userID2; //买家评论卖家
+            bh.setComment1(creditRating);
         }else{
-            ratingID = userID1;
+            ratingID = userID1; //卖家评论买家
+            bh.setComment2(creditRating);
         }
         User ratingUser = this.userDao.getUserById(ratingID);
         ratingUser.setCredit(ratingUser.getCredit()+creditRating);
         this.userDao.update(ratingUser);
+        this.borrowHistoryDao.update(bh);
         return true;
     }
+
+    @Override
+    public boolean honestyRatingInBuy(int orderID,int creditRating){
+        Order order = this.orderDao.getOrderByID(orderID);
+        int buyerID = order.getBuyerID();
+        int sellerID = order.getSellerID();
+        User user = getLoginedUserInfo();
+        int currentID = user.getUserID();
+        int ratingID = 0;
+        if(currentID == buyerID){
+            ratingID = sellerID; //买家评论卖家
+            order.setBuyerComment(creditRating);
+        }else{
+            ratingID = sellerID;
+            order.setSellerComment(creditRating);
+        }
+        User ratingUser = this.userDao.getUserById(ratingID);
+        ratingUser.setCredit(ratingUser.getCredit()+creditRating);
+        this.userDao.update(ratingUser);
+        this.orderDao.update(order);
+        return true;
+    }
+
 
 
 }

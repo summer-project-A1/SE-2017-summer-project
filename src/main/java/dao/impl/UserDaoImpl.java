@@ -138,11 +138,13 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         userProfileInMongo.put("name", newUserProfile.getName());
         userProfileInMongo.put("gender", newUserProfile.getGender());
         userProfileInMongo.put("mobile", newUserProfile.getMobile());
-        List<Map> deliveryAddress = new ArrayList<Map>();
-        for(FullAddress tmp1 : newUserProfile.getDeliveryAddress()) {
-            deliveryAddress.add(tmp1.toMap());
+        if(newUserProfile.getDeliveryAddress() != null) {
+            List<Map> deliveryAddress = new ArrayList<Map>();
+            for(FullAddress tmp1 : newUserProfile.getDeliveryAddress()) {
+                deliveryAddress.add(tmp1.toMap());
+            }
+            userProfileInMongo.put("deliveryAddress", deliveryAddress);
         }
-        userProfileInMongo.put("deliveryAddress", deliveryAddress);
         
         String profileID;    // mongodb部分的id
         BasicDBObject document = new BasicDBObject(userProfileInMongo);

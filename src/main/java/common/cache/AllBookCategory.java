@@ -1,7 +1,6 @@
 package common.cache;
 
 import java.util.List;
-
 import model.Category1;
 
 public class AllBookCategory {

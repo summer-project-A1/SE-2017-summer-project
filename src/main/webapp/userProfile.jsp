@@ -4,11 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <s:action name="header" executeResult="true" namespace="/"/>
-
     <script type="text/javascript" src="<%=path%>/js/jquery.cityselect.js"></script>
     <title>User Profile</title>
-
     <script>
         $(document).ready(function(){
             $(function() {
@@ -194,6 +191,8 @@
 
 </head>
 <body>
+<!-- header -->
+<s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 <div class="products">
     <div class="container">
         <h2>个人信息</h2>
@@ -266,7 +265,7 @@
             <h3>修改个人信息</h3>
             <div class="form-group form-group-auto">
                 <label>昵称</label>
-                <input type="text" name="userProfile.nickName" value="<s:property value="#userProflie.nickName"/>" class="form-control" id="update_nickName">
+                <input type="text" name="userProfile.nickName" value="<s:property value="#userProfile.nickName"/>" class="form-control" id="update_nickName">
             </div>
             <div class="form-group form-group-auto">
                 <label>性别</label>

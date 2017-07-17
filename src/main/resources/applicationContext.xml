@@ -52,7 +52,7 @@
 		<property name="hibernateProperties">
 			<value>
 				hibernate.dialect=org.hibernate.dialect.MySQLInnoDBDialect
-				hibernate.show_sql=false
+				hibernate.show_sql=true
 				hibernate.format_sql=true
 			</value>
 		</property>
@@ -146,6 +146,7 @@
         <property name="commentdao" ref="commentDao"/>
         <property name="userDao" ref="userDao"/>
         <property name="borrowHistoryDao" ref="borrowHistoryDao"/>
+        <property name="orderDao" ref="orderDao"/>
     </bean>
     <bean id="historyService" class="service.impl.HistoryServiceImpl">
         <property name="borrowDao" ref="borrowDao" />
