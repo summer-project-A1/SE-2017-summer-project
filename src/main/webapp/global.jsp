@@ -46,6 +46,75 @@
             var $tip = $('#tip');
             $tip.attr('class', 'alert alert-' + type).text(tip).css('margin-left', - $tip.outerWidth() / 2).fadeIn(500).delay(1000).fadeOut(500);
         }
+
+        $(document).ready(function() {
+            $("#email").focus();
+            $("#email").keyup(function(){
+                var email = $("#email").val();
+                if(email.indexOf("@") < 0){
+                    $("#status1").html("<span style='color:red'>请输入正确的邮件地址</span>");
+                }else{
+                    $("#status1").html("<span></span>");
+                }
+            });
+            $("#email").blur(function(){
+                var email = $("#email").val();
+                if(email.indexOf("@") < 0){
+                    $("#status1").html("<span style='color:red'>请输入正确的邮件地址</span>");
+                }else{
+                    $("#status1").html("<span></span>");
+                }
+            });
+            $("#password").focus();
+            $("#password").keyup(function(){
+                var password = $("#password").val();
+                if(password.length < 1){
+                    $("#status2").html("<span style='color:red'>请输入密码</span>");
+                }else{
+                    $("#status2").html("<span></span>");
+                }
+            });
+            $("#password").blur(function(){
+                var password = $("#password").val();
+                if(password.length < 1){
+                    $("#status2").html("<span style='color:red'>请输入密码</span>");
+                }else{
+                    $("#status2").html("<span></span>");
+                }
+            });
+            $("#login").click(function () {
+                var params = $("#loginForm").serialize();
+                $.ajax({
+                    url: "<%=path%>/authAction/login",
+                    type: "post",
+                    data: params,
+                    dataType: "text",
+                    success: function (data) {
+                        var response = eval("("+data+")");
+                        if(response.result == false){
+                            showTip("登陆失败！","danger");
+                            //alert(msg);
+                        }
+                        if(response.result == true){
+                            //先替换原页面元素，等到用户刷新再真正判断session来载入真正的元素
+                            var replace = "<label>"+"欢迎您!"+response.email+"</label><br>" +
+                                "<label><a href='myaccount.jsp'>个人信息</a></label><br>" +
+                                "<label><a href='myrelease.jsp'>我的发布</a></label><br>" +
+                                "<label><a href='<%=path%>/borrowAction/showMyBorrow'>我的借阅</a></label><br>" +
+                                "<label><a href='myexchange.jsp'>我的交换</a></label><br>" +
+                                "<label><a href='myorder.jsp'>我的订单</a></label><br>" +
+                                "<label><a href='myreservation'>我的预约</a></label><br>"+
+                                "<label><a href='<%=path%>/authAction/logout'>"+"退出登录"+"</a><label><br>";
+                            $('#loginForm').html(replace);
+                            showTip("登陆成功！","success");
+                            //alert(response.message);
+                        }
+                    }
+                });
+            });
+        });
+
+
     </script>
     <style type="text/css">
         #tip {

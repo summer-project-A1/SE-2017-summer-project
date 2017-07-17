@@ -90,11 +90,15 @@
         var returnBtnID = "returnBtn"+borrowID;
         var delayBtnID = "delayBtn"+borrowID;
         var returnDateID = "returnDate"+borrowID;
+        var trackingNOID = "trackingNO"+borrowID;
+        var trackingFormID = "tracking"+borrowID;
+        var trackingNO1 = $("#"+trackingNOID).val();
         $.ajax({
             url:'<%=path%>/borrowAction/returnBook',
             type:'POST',
             data:{
                 'borrowID':borrowID,
+                'trackingNO1':trackingNO1,
             },
             success:function(msg){
                 if (msg.success) {
@@ -104,6 +108,7 @@
                     $("#"+returnDateID).html("归还日期："+returnDate+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                     $("#"+returnDateID).show();
                     showTip('已归还图书！', 'success');
+                    $("#"+trackingFormID).hide();
                 }
                 else {
                     showTip('发生错误！', 'danger');
@@ -114,6 +119,11 @@
             }
 
         });
+    }
+
+    function showReturnBook(borrowID){
+        var trackingFormID = "tracking"+borrowID;
+        $("#"+trackingFormID).show();
     }
 
     function delayBook(borrowID){
@@ -298,8 +308,12 @@
                                             <p id="shDate<s:property value="borrowID"/>" style="display: none">完成日期：<s:property value="shDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                             <p id="returnAddr<s:property value="borrowID"/>">归还地址：<s:property value="returnAddress"/></p><br>
 
-                                            <a href="#" id="returnBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="returnBook(<s:property value="borrowID"/>)">归还</a>
+                                            <a href="#" id="returnBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="showReturnBook(<s:property value="borrowID"/>)">归还</a>
                                             <a href="#" id="delayBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="delayBook(<s:property value="borrowID"/>)">续借</a>
+                                            <form id="tracking<s:property value="borrowID"/>" style="display: none">
+                                                <input type="text" id="trackingNO<s:property value="borrowID"/>" name="trackingNO1"/>
+                                                <a href="#" class="add-cart item_add" onclick="returnBook(<s:property value="borrowID"/>)">提交</a>
+                                            </form>
                                         </s:if>
                                         <s:elseif test="delayCount==1">
                                             <p id="orderDate<s:property value="borrowID"/>">下单日期：<s:property value="orderDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>

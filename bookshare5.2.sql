@@ -136,19 +136,19 @@ CREATE TABLE `BorrowHistory` (
 
 CREATE TABLE `Exchange` (
   `exchange_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `user1_id` int(11) NOT NULL,
-  `user2_id` int(11) NOT NULL,
-  `wanted_id` int(11) NOT NULL,
-  `had_id` int(11) NOT NULL,
+  `user1_id` int(11) NOT NULL,  -- 申请交换人的id
+  `user2_id` int(11) NOT NULL,  -- 被申请人的id
+  `wanted_id` int(11) NOT NULL,  -- 希望交换得到的书
+  `had_id` int(11) NOT NULL,  -- 交换发起者拥有的书
   `status` int(4) NOT NULL,
-  `apply_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `response_date` timestamp NULL DEFAULT NULL,
-  `fh_date1`   timestamp NULL DEFAULT NULL,
-  `fh_date2`   timestamp NULL DEFAULT NULL,
-  `sh_date1`   timestamp NULL DEFAULT NULL,
-  `sh_date2`   timestamp NULL DEFAULT NULL,
-  `comment1`   int(4) DEFAULT NULL,
-  `comment2`   int(4) DEFAULT NULL
+  `apply_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 申请人的申请时间
+  `response_date` timestamp NULL DEFAULT NULL, -- 被申请人的回应时间
+  `fh_date1`   timestamp NULL DEFAULT NULL,  -- 申请人发货时间
+  `fh_date2`   timestamp NULL DEFAULT NULL,  -- 被申请人发货时间
+  `sh_date1`   timestamp NULL DEFAULT NULL,  -- 申请人收货时间
+  `sh_date2`   timestamp NULL DEFAULT NULL,  -- 被申请者收货时间
+  `comment1`   int(4) DEFAULT NULL,  -- 申请人对被申请者的信用评价
+  `comment2`   int(4) DEFAULT NULL  -- 被申请人对申请人的信用评价
 );
 
 -- --------------------------------------------------------

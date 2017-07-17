@@ -98,7 +98,7 @@
             <result name="buyCheckout">/checkout.jsp</result>
             <result name="showOrder">/showBuyOrder.jsp</result>
             <allowed-methods>
-              buyCheckout,createBuyOrder,confirmOrder,cancelOrder,showOrderById
+              buyCheckout,createBuyOrder,confirmBuyOrder,cancelBuyOrder,showOrderById
             </allowed-methods>
         </action>
     </package>
@@ -167,7 +167,7 @@
                 <param name="root">params</param>
             </result>
             <result name="borrowCheckout">/checkout.jsp</result>
-            <result name="createBorrowOrder"></result>
+            <result name="createBorrowOrder">/showBuyOrder.jsp</result>
             <allowed-methods>
                 borrowCheckout,createBorrowOrder,showMyBorrow,delayBook,returnBook
             </allowed-methods>

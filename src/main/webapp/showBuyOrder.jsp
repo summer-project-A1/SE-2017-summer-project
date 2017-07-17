@@ -59,6 +59,10 @@
         	<input name="orderIDList" type="hidden" value="<s:property value="orderID"/>">
         </s:iterator>
     </form>
+            <div id="showAddress" class="address">
+                <h3>收货地址</h3>
+                <label id="orderAddrLabel"><s:property value="address"/></label><br>
+            </div>
     <div id="confirm">
         <label>合计:</label>
         <label id="totalCredit1"><s:property value="#totalCredit"/></label><br>
@@ -84,7 +88,7 @@
                                 <li><p>分类：<s:property value="category2"/></p></li>
                             </ul>
                             <div class="delivery">
-                                <p>所需积分：<s:property value="buyCredit"/></p>
+                                <p>所需积分：<s:property value="borrowCredit"/></p>
                                 <div class="clearfix"></div>
                             </div>
                         </div>
@@ -97,6 +101,10 @@
                     <input name="borrowIDList" type="hidden" value="<s:property value="borrowID"/>">
                 </s:iterator>
             </form>
+            <div id="showAddress" class="address">
+                <h3>收货地址</h3>
+                <label id="borrowAddrLabel"><s:property value="address"/></label><br>
+            </div>
             <div id="confirm">
                 <label>合计:</label>
                 <label id="totalCredit2"><s:property value="#totalCredit"/></label><br>
