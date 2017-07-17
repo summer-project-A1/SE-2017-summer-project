@@ -118,7 +118,8 @@ public class CartAction extends ActionSupport{
         return "ajax";
     }
     public String showBorrowCart() {
-        this.cart = this.cartService.showBorrowCart();
+        Map borrowInfo = this.cartService.showBorrowCart();
+        this.cart = (List<Book>)borrowInfo.get("booksInBorrowCart");
         ActionContext.getContext().put("buyOrBorrow","borrow");
         ActionContext.getContext().put("booksInCart",cart.isEmpty()?null:cart);
         return "cart";

@@ -46,7 +46,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
                 totalCredit += book.getBorrowCredit();
             }
         }
-        result.put("booksInOrder", booksInOrder);
+        result.put("booksInBorrowCart", booksInOrder);
         result.put("totalCredit", totalCredit);
         return result;
     }

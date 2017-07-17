@@ -60,10 +60,10 @@ public class BorrowAction extends ActionSupport {
     
     public String borrowCheckout() {        // 从购物车跳转到地址确认页面，不修改数据库
         Map borrowInfo = this.cartService.showBorrowCart();
-        List<Book> booksInOrder = (List<Book>)borrowInfo.get("booksInOrder");
+        List<Book> booksInBorrowCart = (List<Book>)borrowInfo.get("booksInBorrowCart");
         Integer totalCredit = (Integer)borrowInfo.get("totalCredit");
         ActionContext.getContext().put("action","borrowCheckout");
-        ActionContext.getContext().put("booksInOrder",booksInOrder.isEmpty()?null:booksInOrder);
+        ActionContext.getContext().put("booksInOrder",booksInBorrowCart.isEmpty()?null:booksInBorrowCart);
         ActionContext.getContext().put("totalCredit",totalCredit);
         Map result = this.userService.getAllDeliveryAddress();
         ActionContext.getContext().put("defaultAddrList", result.get("defaultAddrList"));
