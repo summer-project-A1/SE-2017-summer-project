@@ -65,14 +65,23 @@ public class BorrowAction extends ActionSupport {
         Map result = this.userService.getAllDeliveryAddress();
         ActionContext.getContext().put("defaultAddrList", result.get("defaultAddrList"));
         ActionContext.getContext().put("addrList", result.get("addrList"));
+        //ActionContext.getContext().put("totalCredit",<从service层传来>）;
         return "borrowCheckout";
     }
     
     public String createBorrowOrder() {     // 用户创建订单，添加到数据库，跳转到付款页面
-        this.borrowService.borrowAllBookInBorrowCart();
+        /*this.borrowService.borrowAllBookInBorrowCart();
+         */
+        //List<BorrowProfile> borrowProfileList = this.borrowService.<service的函数名>(this.address);
+        //ActionContext.getContext().put("buyOrBorrow","borrow");
+        //ActionContext.getContext().put("totalCredit",<从service层传来>）;
+        //ActionContext.getContext().put("borrowProfileList",borrowProfileList);
         return "createBorrowOrder";
     }
-    
+    public String confirmBorrowOrder() {       // 用户付款确认订单（允许多个订单），修改订单状态
+        //boolean result = this.orderService.confirmOrder(this.borrowIDList);
+        return SUCCESS;
+    }
     public String showMyBorrow(){
         this.params = this.borrowService.showMyBorrow();
         List borrowBook = (List)params.get("borrowBook");
