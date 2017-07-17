@@ -18,6 +18,7 @@ public class BookAction extends ActionSupport {
     private BookService bookService;
 	private CommentService commentService;
 
+	private Integer bookNumPerPage;
     /*
         分页使用的两个变量
      */
@@ -55,6 +56,22 @@ public class BookAction extends ActionSupport {
     }
     public int getPart(){
         return this.part;
+    }
+
+    public Integer getBookNumPerPage() {
+        return bookNumPerPage;
+    }
+
+    public void setBookNumPerPage(Integer bookNumPerPage) {
+        this.bookNumPerPage = bookNumPerPage;
+    }
+
+    public List<CommentProfile> getCommentProfileList() {
+        return commentProfileList;
+    }
+
+    public void setCommentProfileList(List<CommentProfile> commentProfileList) {
+        this.commentProfileList = commentProfileList;
     }
 
     public void setPart(Integer part){
@@ -119,8 +136,8 @@ public class BookAction extends ActionSupport {
         if(this.firstPage == null) {
             this.firstPage = 0;
         }
-        List<Book> allBooks = this.bookService.showAllBooksByPage(this.part,9);
-        List<Book> nextPage = this.bookService.showAllBooksByPage(this.part+1, 9);
+        List<Book> allBooks = this.bookService.showAllBooksByPage(this.part, this.bookNumPerPage);
+        List<Book> nextPage = this.bookService.showAllBooksByPage(this.part+1, this.bookNumPerPage);
         ActionContext.getContext().put("isLastPart",(nextPage.size()==0));
         ActionContext.getContext().put("allBooks",allBooks);
         ActionContext.getContext().put("totalBookAmount",allBooks.size());//应从数据库获取allBooks的大小
