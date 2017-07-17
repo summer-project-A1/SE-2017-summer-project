@@ -8,7 +8,7 @@ import model.OrderProfile;
 
 public interface OrderService extends BaseService {
     public Map getOrderDetailByID(int orderID);
-    public List<OrderProfile> createBuyOrder(String address);
-    public boolean submitBuyOrder(List<Integer> orders);
+    public Map createBuyOrder(String fullAddress);
+    public Map confirmBuyOrder(List<Integer> orderIDList);
     public boolean cancelOrder(int orderID);
 }

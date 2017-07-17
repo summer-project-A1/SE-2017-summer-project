@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import common.constants.BookStatus;
+import common.constants.BorrowStatus;
 import common.constants.OrderStatus;
 import dao.BookDao;
 import dao.BookReleaseDao;
@@ -17,6 +18,8 @@ import dao.OrderDao;
 import dao.UserDao;
 import model.Book;
 import model.BookRelease;
+import model.Borrow;
+import model.BorrowProfile;
 import model.Order;
 import model.User;
 import model.OrderProfile;
@@ -89,101 +92,126 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
     }
     
     
-    public List<OrderProfile> createBuyOrder(String address) {
+    public Map createBuyOrder(String fullAddress) {
         /* 不验证积分是否足够
-         * 修改书的状态
+         * 不修改书的状态
          * 跳转到订单页面
          */
-        if(!isLogined()) {
-            return null;
-        }
-        User loginedUser = getLoginedUserInfo();
-        List<Map<String, Object>> buyCartList;
+        Map returnMap = new HashMap();    // 返回值
+        User user = this.getLoginedUserInfo();
+        List<Map<String, Object>> cartList;
+        List<OrderProfile> orderProfileList = new ArrayList();
+        int totalNeededCredit = 0;  // 所需总积分
         if(getHttpSession().containsKey("buyCart")) {
-            buyCartList = (List<Map<String, Object>>)getHttpSession().get("buyCart");
+            cartList = (List<Map<String, Object>>)getHttpSession().get("buyCart");
         }
         else {
-            return null;
+            cartList = new ArrayList<Map<String, Object>>();
         }
         
-        if(buyCartList.isEmpty()) {
-            return null;
-        }
-        // now buyCartList must not be empty
-        //Order newOrder = new Order();
-        //newOrder.setBuyerID(loginedUser.getUserID());
-        //newOrder.setOrderDate(new Date());
-        //newOrder.setStatus(OrderStatus.UNPAID);
-
-        List<Book> allBook = new ArrayList<Book>();
-        boolean flag = true;
-        Iterator iterator = buyCartList.iterator();
-        while(iterator.hasNext()) {
-            Map<String, Object> cartListItem = (Map<String, Object>) iterator.next();
+        for(Map<String, Object> cartListItem : cartList) {
             int bookID = (int)cartListItem.get("bookID");
             Book book = this.bookDao.getBookByID(bookID);
-            // 检查书的状态，修改并保存
-            if(book.getStatus() == BookStatus.IDLE) {
-                allBook.add(book);
-            }
-            else {
-                flag = false;
-            }
+            BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
+            totalNeededCredit += book.getBorrowCredit();     
+            
+            Order newOrder = new Order();
+            newOrder.setBookID(book.getBookID());
+            newOrder.setBuyerID(user.getUserID());  // 买家
+            newOrder.setSellerID(bookRelease.getUserID());  // 卖家
+            newOrder.setOrderDate(new Date());
+            newOrder.setBuyCredit(book.getBuyCredit());
+            newOrder.setAddress(fullAddress);  // 买家收货地址
+            newOrder.setStatus(OrderStatus.NOTPAID);
+            this.orderDao.save(newOrder);
+            
+            OrderProfile newOrderProfile = new OrderProfile();
+            newOrderProfile.setOrderID(newOrder.getOrderID());
+            newOrderProfile.setBookID(newOrder.getBookID());
+            newOrderProfile.setImageID(book.getImageID());
+            newOrderProfile.setIsbn(book.getIsbn());
+            newOrderProfile.setOrderStatus(newOrder.getStatus().toString());
+            newOrderProfile.setAuthor(book.getAuthor());
+            newOrderProfile.setCategory1(book.getCategory1());
+            newOrderProfile.setCategory2(book.getCategory2());
+            newOrderProfile.setBuyCredit(book.getBuyCredit());
+            orderProfileList.add(newOrderProfile);
         }
-        if(flag) {
-        	List<OrderProfile> result=new ArrayList<>();
-            for(Book book : allBook) {
-                book.setStatus(BookStatus.BOUGHT);
-                bookDao.update(book);
-                BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(book.getBookID());
-                User user = userDao.getUserById(bookRelease.getUserID());
-                OrderProfile orderProfile = new OrderProfile(loginedUser.getUserID(),bookRelease.getUserID(),book.getBookID(),new Date(),book.getBuyCredit(),OrderStatus.NOTPAID,address);
-                orderDao.save((Order)orderProfile);
-                orderProfile.setBookName(book.getBookName());
-                orderProfile.setIsbn(book.getIsbn());
-                orderProfile.setAuthor(book.getAuthor());
-                orderProfile.setPress(book.getPress());
-                orderProfile.setCategory1(book.getCategory1());
-                orderProfile.setCategory2(book.getCategory2());
-                orderProfile.setImageID(book.getImageID());
-                orderProfile.setEmail(user.getEmail());
-                result.add(orderProfile);
-            }
-            return result;
-        }
-        else {
-            return null;
-        }
+        getHttpSession().remove("borrowCart");
+        
+        returnMap.put("orderProfileList", orderProfileList);
+        returnMap.put("totalCredit", totalNeededCredit);
+        return returnMap;
     }
 
     
     @Override
-    public boolean submitBuyOrder(List<Integer> orderIDs) {
+    public Map confirmBuyOrder(List<Integer> orderIDList) {
         // 确认付款
         // 需要检查用户的积分是否足够支付
-        User loginedUser = getLoginedUserInfo();
-        List<Order> orders=new ArrayList<>();
-        int totalPrice = 0;
-        for(Integer orderID : orderIDs)
-        {
-        	Order order = orderDao.getOrderByID(orderID);
-        	totalPrice += order.getPrice();
-        	orders.add(order);
+        // 需要检查书的状态
+        Map returnMap = new HashMap();
+        User user = this.getLoginedUserInfo();
+        int totalCredit = 0;        // 所有书总计需要的积分
+        List<Book> allIdleBook = new ArrayList();    // 临时保存空闲的书
+        List<BookRelease> allIdleBookRelease = new ArrayList();    // 临时保存空闲的书
+        List<Order> allSuccessOrder = new ArrayList();   // 保存所有能够成功的order
+        List<Book> allNotIdleBook = new ArrayList();    // 临时保存非空闲的书
+        List<BookRelease> allNotIdleBookRelease = new ArrayList();    // 临时保存非空闲的书
+        List<Order> allFailOrder = new ArrayList();   // 保存所有能够成功的order
+        
+        for(Integer orderID : orderIDList) {
+            Order order = this.orderDao.getOrderByID(orderID);
+            Integer bookID = order.getBookID();
+            Book book = this.bookDao.getBookByID(bookID);
+            BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
+            totalCredit += book.getBorrowCredit();
+            if(book.getStatus().equals(BookStatus.IDLE) && book.getReserved()==0) {  // 书是空闲的并且没有被预约
+                allIdleBook.add(book);
+                allIdleBookRelease.add(bookRelease);
+                allSuccessOrder.add(order);
+            }
+            else {
+                allNotIdleBook.add(book);
+                allNotIdleBookRelease.add(bookRelease);
+                allFailOrder.add(order);
+            }
         }
-        int userCredit = loginedUser.getCredit();
-        if(userCredit < totalPrice) {
-            return false;
+        
+        boolean result = true;
+        boolean creditNotEnough = false;
+        boolean bookNotIdle = false;
+        
+        // 只有用户积分能够完成本批订单的整体支付才能继续
+        if(user.getCredit() < totalCredit) {
+            result = false;
+            creditNotEnough = true;
         }
-        loginedUser.setCredit(userCredit-totalPrice);
-        userDao.update(loginedUser);
-        for(Order order : orders)
-        {
-        	Date date = new Date();
-        	order.setPayDate(date);
-        	order.setStatus(OrderStatus.NOTSHIPPED);
-        	orderDao.update(order);
+        
+        // 如果某本书已被买走/借走/交换等，则失败
+        if(!allNotIdleBook.isEmpty()) {
+            result = false;
+            bookNotIdle = true;
         }
-        return true;
+        
+        Date payDate = new Date();
+        if(result) {
+            user.setCredit(user.getCredit() - totalCredit);
+            this.userDao.update(user);
+            for(int i=0; i<allSuccessOrder.size(); i++) {
+                Book book = allIdleBook.get(i);
+                BookRelease bookRelease = allIdleBookRelease.get(i);
+                Order order = allSuccessOrder.get(i);
+                order.setStatus(OrderStatus.NOTSHIPPED);
+                order.setPayDate(payDate);
+                this.orderDao.update(order);
+                book.setStatus(BookStatus.BORROWED);
+                this.bookDao.update(book);
+            }
+        }
+        returnMap.put("success", result);
+        returnMap.put("payDate", payDate);
+        return returnMap;
     }
     
 

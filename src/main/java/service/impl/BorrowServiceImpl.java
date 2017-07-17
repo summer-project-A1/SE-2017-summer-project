@@ -305,13 +305,13 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         boolean creditNotEnough = false;
         boolean bookNotIdle = false;
         
-        // 只有用户积分能够完成购物车的整体支付才能继续
+        // 只有用户积分能够完成本批订单的整体支付才能继续
         if(user.getCredit() < totalCredit) {
             result = false;
             creditNotEnough = true;
         }
         
-        // 如果某本书被买走，则失败
+        // 如果某本书已被买走/借走/交换等，则失败
         if(!allNotIdleBook.isEmpty()) {
             result = false;
             bookNotIdle = true;

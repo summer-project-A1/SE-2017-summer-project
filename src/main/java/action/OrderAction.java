@@ -100,17 +100,15 @@ public class OrderAction extends ActionSupport {
         this.orderIDList = orderIDList;
     }
     public String buyCheckout() {        // 从购物车跳转到地址确认页面，不修改数据库
-        /*
-         * 不需要获得前台参数
-         * service层返回buy cart的list，所有的收货地址（包括默认地址）
-         */
-        List cart = this.cartService.showBuyCart();
+        Map buyInfo = this.cartService.showBuyCart();
+        List<Book> booksInBuyCart = (List<Book>)buyInfo.get("booksInBuyCart");
+        Integer totalCredit = (Integer)buyInfo.get("totalCredit");
         ActionContext.getContext().put("action","buyCheckout");
-        ActionContext.getContext().put("booksInOrder",cart.isEmpty()?null:cart);
+        ActionContext.getContext().put("booksInOrder",booksInBuyCart.isEmpty()?null:booksInBuyCart);
+        ActionContext.getContext().put("totalCredit",totalCredit);
         Map result = this.userService.getAllDeliveryAddress();
         ActionContext.getContext().put("defaultAddrList", result.get("defaultAddrList"));
         ActionContext.getContext().put("addrList", result.get("addrList"));
-        //ActionContext.getContext().put("totalCredit",<从service层传来>）;
         return "buyCheckout";
     }
     public String createBuyOrder() {     // 用户创建订单，添加到数据库，跳转到付款页面

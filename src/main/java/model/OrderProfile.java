@@ -15,6 +15,10 @@ public class OrderProfile extends Order
     private String imageID;
     private String email;
     
+    public OrderProfile() {
+        
+    }
+    
 	public OrderProfile(int buyerID, int sellerID, int bookID, Date orderDate, int price, OrderStatus status,
 			String address) {
 		super(buyerID, sellerID, bookID, orderDate, price, status, address);
