@@ -130,11 +130,11 @@ public class OrderAction extends ActionSupport {
         ActionContext.getContext().put("booksInOrder", booksInOrder);
         return "showOrder";
     }
-    public String confirmOrder() {       // 用户付款确认订单（允许多个订单），修改订单状态
+    public String confirmBuyOrder() {       // 用户付款确认订单（允许多个订单），修改订单状态
         //boolean result = this.orderService.confirmOrder(this.orderIDList);
         return SUCCESS;
     }
-    public String cancelOrder() {        // 取消订单（已创建但未付款确认）
+    public String cancelBuyOrder() {        // 取消订单（已创建但未付款确认）
         return SUCCESS;
     }
 }

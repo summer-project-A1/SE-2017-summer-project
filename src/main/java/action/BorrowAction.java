@@ -108,5 +108,11 @@ public class BorrowAction extends ActionSupport {
         return "ajax";
     }
 
+    public String confirmBorrowOrder(){  // 用户付款确认订单（允许多个订单），修改订单状态
+        return null;
+    }
+
+
+
 
 }
