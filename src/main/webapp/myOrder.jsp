@@ -45,6 +45,8 @@
                     $("#"+payDateID).show();
                     $("#"+payBtnID).remove();
                     $("#"+cancelBtnID).remove();
+                }else {
+                    showTip('发生错误！', 'danger');
                 }
             },
             error:function(xhr,status,error){
@@ -67,6 +69,8 @@
                     $("#"+statusID).html("订单号："+orderID+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已取消");
                     $("#"+payBtnID).remove();
                     $("#"+cancelBtnID).remove();
+                }else {
+                    showTip('发生错误！', 'danger');
                 }
             },
             error:function(xhr,status,error){
@@ -91,6 +95,8 @@
                     $("#"+shDateID).html("收货时间："+shDate);
                     $("#"+shDateID).show();
                     $("#"+confirmOrderBtnID).remove();
+                }else {
+                    showTip('发生错误！', 'danger');
                 }
             },
             error:function(xhr,status,error){
@@ -218,7 +224,7 @@
                                 <p id="shDate<s:property value="orderID"/>">收货时间：<s:property value="shDate"/></p><br>
 
                                 <a href="#" id="creditRatingBtn<s:property value="orderID"/>" class="add-cart item_add" onclick="creditRating(<s:property value="orderID"/>)">信用评价</a>
-                                <form id="creditRatingForm<s:property value="orderID"/>" action="<%=path%>/commentAction/honestyRatingwhenBuy" method="post" style="display: none">
+                                <form id="creditRatingForm<s:property value="orderID"/>" action="<%=path%>/commentAction/honestyRatingWhenBuy" method="post" style="display: none">
                                     <input type="hidden" name="orderID" value="<s:property value="orderID"/>"/>
                                     <select name="creditRating" class="form-control form-control-noNewline">
                                         <option value="-1">差评</option>
@@ -231,8 +237,9 @@
                             <div class="clearfix"></div>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
-            </div>
+            </div><hr>
 
         </s:iterator>
 
