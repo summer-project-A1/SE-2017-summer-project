@@ -33,10 +33,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         Boolean logined = isLogined();
         if(!logined) {
             if(email != null) {
-                User userinfo = getUserDao().getUserByEmail(email);
-                if(userinfo != null) {
-                    if(MD5Util.encoderByMd5(plainPassword).toLowerCase().equals(userinfo.getPassword().toLowerCase())) {
-                        setLoginedUserInfo(userinfo);
+                User user = userDao.getUserByEmail(email);
+                if(user != null) {
+                    if(MD5Util.encoderByMd5(plainPassword).toLowerCase().equals(user.getPassword().toLowerCase())) {
+                        setLoginedUserInfo(user);
                         logined = true;
                     }
                 }

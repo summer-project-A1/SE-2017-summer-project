@@ -1,87 +1,63 @@
 package model;
 
-import java.util.Date;
-
-public class BorrowProfile {
-    private int bookID;           // 图书id
-    private String bookName;      // 书名
-    private String author;        // 作者
-    private String category1;        // 大分类
-    private String imageID;       // 图片id
-    private String isbn;          // isbn
-    private int borrowPrice;      // 借阅积分
-    private Boolean returned;     // 是否归还了
-    private Boolean delayed;      // 是否延过期
-    private Date yhDate;          // 应还日期
-    private Date returnDate;      // 归还日期
+public class BorrowProfile extends Borrow
+{
+    private String bookName;
+    private String isbn;
+    private String author;            // 作者
+    private String press;             // 出版社
+    private String category1;
+    private String category2;
+    private String imageID;           // 书的图片在monggodb中的图片
+    private String email;       //被借书人id，对应卖家
     
-    /* ========================================================= */
-    
-    public int getBookID() {
-        return bookID;
-    }
-    public void setBookID(int bookID) {
-        this.bookID = bookID;
-    }
-    public String getBookName() {
-        return bookName;
-    }
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
-    }
-    public String getAuthor() {
-        return author;
-    }
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-    public String getCategory1() {
-        return category1;
-    }
-    public void setCategory1(String category1) {
-        this.category1 = category1;
-    }
-    public String getImageID() {
-        return imageID;
-    }
-    public void setImageID(String imageID) {
-        this.imageID = imageID;
-    }
-    public String getIsbn() {
-        return isbn;
-    }
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-    public int getBorrowPrice() {
-        return borrowPrice;
-    }
-    public void setBorrowPrice(int borrowPrice) {
-        this.borrowPrice = borrowPrice;
-    }
-    public Boolean getReturned() {
-        return returned;
-    }
-    public void setReturned(Boolean returned) {
-        this.returned = returned;
-    }
-    public Boolean getDelayed() {
-        return delayed;
-    }
-    public void setDelayed(Boolean delayed) {
-        this.delayed = delayed;
-    }
-    public Date getYhDate() {
-        return yhDate;
-    }
-    public void setYhDate(Date yhDate) {
-        this.yhDate = yhDate;
-    }
-    public Date getReturnDate() {
-        return returnDate;
-    }
-    public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
-    }
+	public String getBookName() {
+		return bookName;
+	}
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
+	}
+	public String getIsbn() {
+		return isbn;
+	}
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public String getPress() {
+		return press;
+	}
+	public void setPress(String press) {
+		this.press = press;
+	}
+	public String getCategory1() {
+		return category1;
+	}
+	public void setCategory1(String category1) {
+		this.category1 = category1;
+	}
+	public String getCategory2() {
+		return category2;
+	}
+	public void setCategory2(String category2) {
+		this.category2 = category2;
+	}
+	public String getImageID() {
+		return imageID;
+	}
+	public void setImageID(String imageID) {
+		this.imageID = imageID;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
     
 }

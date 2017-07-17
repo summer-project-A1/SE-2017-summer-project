@@ -19,6 +19,7 @@ import model.Book;
 import model.BookRelease;
 import model.Order;
 import model.User;
+import model.OrderProfile;
 import service.OrderService;
 
 public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
@@ -88,8 +89,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
     }
     
     
-    @Override
-    public List<Order> createOrder() {
+    public List<OrderProfile> createBuyOrder(String address) {
         /* 不验证积分是否足够
          * 修改书的状态
          * 跳转到订单页面
@@ -131,13 +131,23 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
             }
         }
         if(flag) {
-        	List<Order> result=new ArrayList<>();
+        	List<OrderProfile> result=new ArrayList<>();
             for(Book book : allBook) {
                 book.setStatus(BookStatus.BOUGHT);
                 bookDao.update(book);
                 BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(book.getBookID());
-                Order order = new Order(loginedUser.getUserID(),book.getBookID(),bookRelease.getUserID(),new Date(),book.getBuyCredit(),OrderStatus.UNPAID,null);
-                orderDao.save(order);
+                User user = userDao.getUserById(bookRelease.getUserID());
+                OrderProfile orderProfile = new OrderProfile(loginedUser.getUserID(),bookRelease.getUserID(),book.getBookID(),new Date(),book.getBuyCredit(),OrderStatus.UNPAID,address);
+                orderDao.save((Order)orderProfile);
+                orderProfile.setBookName(book.getBookName());
+                orderProfile.setIsbn(book.getIsbn());
+                orderProfile.setAuthor(book.getAuthor());
+                orderProfile.setPress(book.getPress());
+                orderProfile.setCategory1(book.getCategory1());
+                orderProfile.setCategory2(book.getCategory2());
+                orderProfile.setImageID(book.getImageID());
+                orderProfile.setEmail(user.getEmail());
+                result.add(orderProfile);
             }
             return result;
         }
@@ -148,60 +158,53 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
     
     @Override
-    public boolean submitOrder(int orderID) {
-    	/*
-        // 确认订单
+    public boolean submitBuyOrder(List<Integer> orderIDs) {
+        // 确认付款
         // 需要检查用户的积分是否足够支付
-        if(!isLogined()) {
-            return false;
-        }
         User loginedUser = getLoginedUserInfo();
-        Order order = this.orderDao.getOrderByID(orderID);
-        if(order == null) {
-            return false;
+        List<Order> orders=new ArrayList<>();
+        int totalPrice = 0;
+        for(Integer orderID : orderIDs)
+        {
+        	Order order = orderDao.getOrderByID(orderID);
+        	totalPrice += order.getPrice();
+        	orders.add(order);
         }
         int userCredit = loginedUser.getCredit();
-        int orderCredit = order.getTotalPrice();
-        if(userCredit < orderCredit) {
+        if(userCredit < totalPrice) {
             return false;
         }
-        loginedUser.setCredit(userCredit-orderCredit);
-        order.setStatus(OrderStatus.FINISHED);
-        this.userDao.update(loginedUser);
-        this.orderDao.update(order);
+        loginedUser.setCredit(userCredit-totalPrice);
+        userDao.update(loginedUser);
+        for(Order order : orders)
+        {
+        	Date date = new Date();
+        	order.setPayDate(date);
+        	order.setStatus(OrderStatus.NOTSHIPPED);
+        	orderDao.update(order);
+        }
         return true;
-        */
-    	return true;
     }
     
 
     
     @Override
     public boolean cancelOrder(int orderID) {
-    	/*
         if(!isLogined()) {
             return false;
         }
-        User loginedUser = getLoginedUserInfo();
-        Order order = this.orderDao.getOrderByID(orderID);
+        Order order = orderDao.getOrderByID(orderID);
         if(order == null) {
             return false;
         }
-        if(order.getUserID() != loginedUser.getUserID()) {
-            return false;
-        }
+        if(order.getBuyerID()!=getLoginedUserInfo().getUserID())
+        	return false;
         if(order.getStatus() != OrderStatus.UNPAID) {
             return false;
         }
         order.setStatus(OrderStatus.CANCELLED);
-        for(OrderItem orderItem : order.getOrderItems()) {
-            Book book = this.bookDao.getBookByID(orderItem.getBookID());
-            book.setStatus(BookStatus.IDLE);
-            this.bookDao.update(book);
-        }
-        this.orderDao.update(order);*/
+        orderDao.update(order);
         return true;
     }
-    
     
 }
