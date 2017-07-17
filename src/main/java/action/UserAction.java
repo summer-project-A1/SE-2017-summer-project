@@ -1,5 +1,6 @@
 package action;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,10 +25,20 @@ public class UserAction extends ActionSupport {
     private String city;
     private String district;
     private String address;
-    
+    /*
+        修改用户密码
+     */
     private String oldPassword;
     private String newPassword;
     private String confirmNewPassword;
+
+    /*
+        修改用户头像
+     */
+
+    private File userPicture;
+    private String userPictureFileName;
+    private String userPictureContentType;
     
     private String addrID;
     
@@ -89,6 +100,13 @@ public class UserAction extends ActionSupport {
 
     public void setConfirmNewPassword(String confirmNewPassword) {
         this.confirmNewPassword = confirmNewPassword;
+    }
+    public File getUserPicture() {
+        return userPicture;
+    }
+
+    public void setUserPicture(File userPicture) {
+        this.userPicture = userPicture;
     }
 
     public UserService getUserService() {
@@ -154,6 +172,14 @@ public class UserAction extends ActionSupport {
         params.put("success", result);
         return "ajax";
     }
+
+    public String updateUserPicture(){
+        this.params = new HashMap();
+        //boolean result = this.userService.updateUserPicture(this.userPicture);
+        //params.put("success", result);
+        params.put("success",true);
+        return "ajax";
+    }
     
     public String getAllAddress() {     // 应合并到checkout的action中
         Map result = this.userService.getAllDeliveryAddress();
@@ -181,6 +207,7 @@ public class UserAction extends ActionSupport {
         this.params.put("result", result);
         return null;
     }
+
 
 
 }

@@ -26,9 +26,11 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
     /* ====================================================== */
     
     @Override
-    public List showBorrowCart() {
+    public Map showBorrowCart() {
         List<Map<String, Object>> cartList;
-        List resultList = new ArrayList();
+        Map result = new HashMap();
+        List booksInOrder = new ArrayList();
+        Integer totalCredit = 0;
         if(getHttpSession().containsKey("borrowCart")) {
             cartList = (List<Map<String, Object>>)getHttpSession().get("borrowCart");
         }
@@ -40,10 +42,13 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
             int bookID = (int)cartListItem.get("bookID");
             Book book = this.bookDao.getBookByID(bookID);
             if(book != null) {
-                resultList.add(book);
+                booksInOrder.add(book);
+                totalCredit += book.getBorrowCredit();
             }
         }
-        return resultList;
+        result.put("booksInBorrowCart", booksInOrder);
+        result.put("totalCredit", totalCredit);
+        return result;
     }
 
     @Override

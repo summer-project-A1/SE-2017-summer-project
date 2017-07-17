@@ -163,6 +163,7 @@
         <property name="userService" ref="userService" />
     </bean>
     <bean id="bookAction" class="action.BookAction">
+        <property name="bookNumPerPage" value="9" />
         <property name="bookService" ref="bookService" />
     </bean>
     <bean id="orderAction" class="action.OrderAction">

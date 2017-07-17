@@ -4,7 +4,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script type="text/javascript" src="<%=path%>/js/jquery.cityselect.js"></script>
+    <script src="<%=path%>/js/jquery.cityselect.js"></script>
+    <script src="<%=path%>/js/fileinput.js"></script>
+    <script src="<%=path%>/js/fileinput.min.js"></script>
     <title>User Profile</title>
     <script>
         $(document).ready(function(){
@@ -48,10 +50,10 @@
             });
 
 
-
-            $("#update-image").click(function(){
+            $("#update-userPicture").click(function(){
                 $(".products .container form").hide();
-                $("#update-image-form").show();
+                $("#update-userPicture-form").show();
+
             });
 
 
@@ -169,6 +171,25 @@
             });
 
         }
+        
+        function updateUserPicture() {
+            $.ajax({
+                url: "<%=path%>/userAction/updateUserPicture",
+                type: "post",
+                data: $("#update-userPicture-form").serialize(),
+                success: function(msg){
+                    if (msg.success) {
+                        showTip('修改个人头像成功', 'success');
+                    }
+                    else {
+                        showTip('修改个人头像失败', 'danger');
+                    }
+                },
+                error:function(xhr,status,error){
+                    alert('status='+status+',error='+error);
+                }
+            });
+        }
 
     </script>
     <style>
@@ -210,7 +231,7 @@
                         <div class="single-bottom">
                             <a id="update-userProfile" href="#"><p>修改个人信息</p></a>
                             <a id="update-password" href="#"><p>修改密码</p></a>
-                            <a id="update-image" href="#"><p>修改头像</p></a>
+                            <a id="update-userPicture" href="#"><p>修改头像</p></a>
                         </div>
                     </div>
                     <div class="tab1">
@@ -291,6 +312,18 @@
             </div>
             <div class="clearfix"> </div>
             <a href="#" class="add-cart item_add" onclick="updateUserProfile()">修改个人信息</a>
+        </form>
+        <form id="update-userPicture-form" enctype="multipart/form-data" role="form" class="form-horizontal" accept-charset="UTF-8">
+            <h3>修改个人头像</h3>
+            <div class="form-group form-group-auto">
+                <label>个人头像</label>
+                <img src="<%=path%>/imageAction/showImage?imageID=<s:property value='#userProfile.imageID'/>"  class="img-responsive" alt="">
+                <div class="form-group form-group-auto">
+                    <label>上传头像</label><input name="userPicture" type="file" class="file">
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+            <a href="#" class="add-cart item_add" onclick="updateUserPicture()">修改个人头像</a>
         </form>
         </div>
     </div>
