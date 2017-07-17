@@ -229,20 +229,14 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             newBorrow.setBorrowAddress(fullAddress);  // 买家收货地址
             newBorrow.setDelayCount(0);   // 延期次数：0
             newBorrow.setStatus(BorrowStatus.BUYER_NOTPAID);
-            newBorrow.setYhDate(new Date());  // 无意义
-            newBorrow.setBorrowAddress("");
-            newBorrow.setReturnAddress("");
-            newBorrow.setTrackingNo1("");
-            newBorrow.setTrackingNo2("");
             this.borrowDao.save(newBorrow);
-            book.setStatus(BookStatus.BORROWED);
-            this.bookDao.update(book);
             
             BorrowProfile newBorrowProfile = new BorrowProfile();
             newBorrowProfile.setBorrowID(newBorrow.getBorrowID());
             newBorrowProfile.setBookID(newBorrow.getBookID());
             newBorrowProfile.setImageID(book.getImageID());
             newBorrowProfile.setIsbn(book.getIsbn());
+            newBorrowProfile.setBorrowStatus(newBorrow.getStatus().toString());
             newBorrowProfile.setAuthor(book.getAuthor());
             newBorrowProfile.setCategory1(book.getCategory1());
             newBorrowProfile.setCategory2(book.getCategory2());
@@ -254,39 +248,36 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         returnMap.put("borrowProfileList", borrowProfileList);
         returnMap.put("totalCredit", totalNeededCredit);
         return returnMap;
-        
-        /*
-        Map returnMap = new HashMap();    // 返回值
-        if(!isLogined()) {
-            returnMap.put("result", false);
-        }
+    }
+
+    @Override
+    public Boolean confirmBorrowOrder(List<Integer> borrowIDList) {
+        // 用户付款确认订单（允许多个订单），修改订单状态，验证并修改书的状态，验证并修改用户积分
         User user = this.getLoginedUserInfo();
-        List<Map<String, Object>> cartList;
-        List resultList = new ArrayList();
-        if(getHttpSession().containsKey("borrowCart")) {
-            cartList = (List<Map<String, Object>>)getHttpSession().get("borrowCart");
-        }
-        else {
-            cartList = new ArrayList<Map<String, Object>>();
-        }
         
-        int totalNeededCredit = 0;        // 购物车中所有书总计需要的积分
-        List<Book> allIdleBookInCart = new ArrayList();    // 临时保存空闲的书
-        List<BookRelease> allIdleBookReleaseInCart = new ArrayList();    // 临时保存空闲的书
-        List<Book> allNotIdleBookInCart = new ArrayList();    // 临时保存非空闲的书
-        List<BookRelease> allNotIdleBookReleaseInCart = new ArrayList();    // 临时保存非空闲的书
-        for(Map<String, Object> cartListItem : cartList) {
-            int bookID = (int)cartListItem.get("bookID");
+        int totalCredit = 0;        // 所有书总计需要的积分
+        List<Book> allIdleBook = new ArrayList();    // 临时保存空闲的书
+        List<BookRelease> allIdleBookRelease = new ArrayList();    // 临时保存空闲的书
+        List<Borrow> allSuccessBorrow = new ArrayList();   // 保存所有能够成功的borrow
+        List<Book> allNotIdleBook = new ArrayList();    // 临时保存非空闲的书
+        List<BookRelease> allNotIdleBookRelease = new ArrayList();    // 临时保存非空闲的书
+        List<Borrow> allFailBorrow = new ArrayList();   // 保存所有能够成功的borrow
+        
+        for(Integer borrowID : borrowIDList) {
+            Borrow borrow = this.borrowDao.getBorrowByID(borrowID);
+            Integer bookID = borrow.getBookID();
             Book book = this.bookDao.getBookByID(bookID);
             BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
-            totalNeededCredit += book.getBorrowCredit();
-            if(book.getStatus().equals(BookStatus.IDLE)) {
-                allIdleBookInCart.add(book);
-                allIdleBookReleaseInCart.add(bookRelease);
+            totalCredit += book.getBorrowCredit();
+            if(book.getStatus().equals(BookStatus.IDLE) && book.getReserved()==0) {  // 书是空闲的并且没有被预约
+                allIdleBook.add(book);
+                allIdleBookRelease.add(bookRelease);
+                allSuccessBorrow.add(borrow);
             }
             else {
-                allNotIdleBookInCart.add(book);
-                allNotIdleBookReleaseInCart.add(bookRelease);
+                allNotIdleBook.add(book);
+                allNotIdleBookRelease.add(bookRelease);
+                allFailBorrow.add(borrow);
             }
         }
         
@@ -295,49 +286,30 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         boolean bookNotIdle = false;
         
         // 只有用户积分能够完成购物车的整体支付才能继续
-        if(user.getCredit() < totalNeededCredit) {
+        if(user.getCredit() < totalCredit) {
             result = false;
             creditNotEnough = true;
         }
         
         // 如果某本书被买走，则失败
-        if(!allNotIdleBookInCart.isEmpty()) {
+        if(!allNotIdleBook.isEmpty()) {
             result = false;
             bookNotIdle = true;
         }
         
         if(result) {
-            user.setCredit(user.getCredit() - totalNeededCredit);
+            user.setCredit(user.getCredit() - totalCredit);
             this.userDao.update(user);
-            for(int i=0; i<allIdleBookInCart.size(); i++) {
-                Book book = allIdleBookInCart.get(i);
-                BookRelease bookRelease = allIdleBookReleaseInCart.get(i);
-                Borrow newBorrow = new Borrow();
-                newBorrow.setBookID(book.getBookID());
-                newBorrow.setUserID1(user.getUserID());  // 借书人，买家
-                newBorrow.setUserID2(bookRelease.getUserID());  // 被借人，卖家
-                newBorrow.setOrderDate(new Date());
-                newBorrow.setBorrowPrice(book.getBorrowCredit());
-                newBorrow.setBorrowAddress(fullAddress);
-                newBorrow.setDelayCount(0);
-                newBorrow.setStatus(BorrowStatus.BUYER_NOTPAID);
-                this.borrowDao.save(newBorrow);
+            for(int i=0; i<allSuccessBorrow.size(); i++) {
+                Book book = allIdleBook.get(i);
+                BookRelease bookRelease = allIdleBookRelease.get(i);
+                Borrow borrow = allSuccessBorrow.get(i);
+                borrow.setStatus(BorrowStatus.SELLER_NOT_SHIPPED);
+                this.borrowDao.update(borrow);
                 book.setStatus(BookStatus.BORROWED);
                 this.bookDao.update(book);
             }
-            getHttpSession().remove("borrowCart");
         }
-
-        returnMap.put("result", result);
-        returnMap.put("credit", creditNotEnough);
-        returnMap.put("book", bookNotIdle);
-        return returnMap;
-        */
-    }
-
-    @Override
-    public Boolean confirmBorrowOrder(List<Integer> borrowID) {
-        
         return true;
     }
     
