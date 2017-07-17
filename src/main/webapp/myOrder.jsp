@@ -9,7 +9,7 @@
         @media ( min-width :768px) {
             #cartinfo{
             margin-top: 51px;
-            margin-left:30%;
+            margin-left:5%;
             margin-right:10%;
             }
         }
@@ -27,13 +27,85 @@
 <!-- header -->
 <s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 <script>
-    function creditRating(borrowID){
-        var creditRatingFormID = "creditRatingForm" + borrowID;
+    function payOrder(orderID){
+        var statusID = "status"+orderID;
+        var payDateID = "payDate"+orderID;
+        var payBtnID = "payBtn"+orderID;
+        var cancelBtnID = "cancelBtn"+orderID;
+        $.ajax({
+            url:'<%=path%>/orderAction/payOrder',
+            type:'POST',
+            data:{'orderID':orderID},
+            success:function(msg){
+                if(msg.success){
+                    showTip('支付成功！','success');
+                    $("#"+statusID).html("订单号："+orderID+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：未发货");
+                    var payDate = msg.payDate;
+                    $("#"+payDateID).html("付款时间："+payDate+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                    $("#"+payDateID).show();
+                    $("#"+payBtnID).remove();
+                    $("#"+cancelBtnID).remove();
+                }
+            },
+            error:function(xhr,status,error){
+                alert('status='+status+',error='+error);
+            }
+        })
+    }
+
+    function cancelOrder(orderID){
+        var statusID = "status"+orderID;
+        var payBtnID = "payBtn"+orderID;
+        var cancelBtnID = "cancelBtn"+orderID;
+        $.ajax({
+            url:'<%=path%>/orderAction/cancelOrder',
+            type:'POST',
+            data:{'orderID':orderID},
+            success:function(msg){
+                if(msg.success){
+                    showTip('取消成功！','success');
+                    $("#"+statusID).html("订单号："+orderID+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已取消");
+                    $("#"+payBtnID).remove();
+                    $("#"+cancelBtnID).remove();
+                }
+            },
+            error:function(xhr,status,error){
+                alert('status='+status+',error='+error);
+            }
+        });
+    }
+
+    function confirmOrderReceipt(orderID){
+        var statusID = "status"+orderID;
+        var shDateID = "shDate"+orderID;
+        var confirmOrderBtnID = "confirmOrderBtn"+orderID;
+        $.ajax({
+            url:'<%=path%>/orderAction/confirmOrderReceipt',
+            type:'POST',
+            data:{'orderID':orderID},
+            success:function(msg){
+                if(msg.success){
+                    var shDate = msg.shDate;
+                    showTip('收货成功！','success');
+                    $("#"+statusID).html("订单号："+orderID+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已收货");
+                    $("#"+shDateID).html("收货时间："+shDate);
+                    $("#"+shDateID).show();
+                    $("#"+confirmOrderBtnID).remove();
+                }
+            },
+            error:function(xhr,status,error){
+                alert('status='+status+',error='+error);
+            }
+        });
+    }
+
+    function creditRating(orderID){
+        var creditRatingFormID = "creditRatingForm" + orderID;
         $("#"+creditRatingFormID).show();
     }
 
-    function submitRating(borrowID){
-        var creaditRatingFormID = "creditRatingForm" + borrowID;
+    function submitRating(orderID){
+        var creaditRatingFormID = "creditRatingForm" + orderID;
         $("#"+creaditRatingFormID).submit();
     }
 </script>
@@ -86,16 +158,6 @@
 
         <!-- 迭代器显示订单信息 -->
         <s:iterator value="#orderList" status="st">
-            <s:url action="showOrderById" namespace="/orderAction" var="showOrderLink">
-                <s:param name="orderID"><s:property value="orderID"/></s:param>
-            </s:url>
-            <s:url action="cancelOrder" namespace="/orderAction" var="cancelOrderLink">
-                <s:param name="orderID"><s:property value="orderID"/></s:param>
-            </s:url>
-            <s:url action="confirmReceipt" namespace="/orderAction" var="confirmReceiptLink">
-                <s:param name="orderID"><s:property value="orderID"/></s:param>
-            </s:url>
-
             <div id="<s:property value="orderID"/>" class="cart-header">
                 <div class="cart-sec simpleCart_shelfItem">
                     <div class="cart-item cyc">
@@ -104,19 +166,19 @@
                     <div class="cart-item-info">
                         <h4>
                             <s:if test="status=='NOTPAYED'">
-                                <p>订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：未支付</p>
+                                <p id="status<s:property value="orderID"/>">订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：未支付</p>
                             </s:if>
                             <s:elseif test="status=='CANCELED'">
-                                <p>订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已取消</p>
+                                <p id="status<s:property value="orderID"/>">订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已取消</p>
                             </s:elseif>
                             <s:elseif test="status=='NOTSHIPPED'">
-                                <p>订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：未发货</p>
+                                <p id="status<s:property value="orderID"/>">订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：未发货</p>
                             </s:elseif>
                             <s:elseif test="status=='SHIPPED'">
-                                <p>订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已发货</p>
+                                <p id="status<s:property value="orderID"/>">订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已发货</p>
                             </s:elseif>
                             <s:elseif test="status=='COMPLETED'">
-                                <p>订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已完成</p>
+                                <p id="status<s:property value="orderID"/>">订单号：<s:property value="orderID"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已完成</p>
                             </s:elseif>
                         </h4><br>
                         <ul class="qty">
@@ -128,21 +190,36 @@
                             <p>收货人：<s:property value="receiver"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                             <p>收货地址：<s:property value="address"/></p><br>
                             <s:if test="status=='NOTPAYED'">
-                                <a href="${showOrderLink}" class="add-cart item_add">支付</a>
-                                <a href="${cancelOrderLink}" class="add-cart item_add">取消</a>
+                                <p id="payDate<s:property value="orderID"/>" style="display: none">付款时间：<s:property value="payDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p id="fhDate<s:property value="orderID"/>" style="display: none">发货时间：<s:property value="fhDate"/></p><br>
+                                <p id="shDate<s:property value="orderID"/>" style="display: none">收货时间：<s:property value="shDate"/></p><br>
+
+                                <a href="#" id="payBtn<s:property value="orderID"/>" class="add-cart item_add" onclick="payOrder(<s:property value="orderID"/>)">支付</a>
+                                <a href="#" id="cancelBtn<s:property value="orderID"/>" class="add-cart item_add" onclick="cancelOrder(<s:property value="orderID"/>)">取消</a>
                             </s:if>
                             <s:elseif test="status=='CANCELED'">
 
                             </s:elseif>
                             <s:elseif test="status=='NOTSHIPPED'">
-
+                                <p id="payDate<s:property value="orderID"/>">付款时间：<s:property value="payDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p id="fhDate<s:property value="orderID"/>" style="display: none">发货时间：<s:property value="fhDate"/></p><br>
+                                <p id="shDate<s:property value="orderID"/>" style="display: none">收货时间：<s:property value="shDate"/></p><br>
                             </s:elseif>
                             <s:elseif test="status=='SHIPPED'">
-                                <a href="${confirmReceiptLink}" class="add-cart item_add" onclick="">确认收货</a>
+                                <p id="payDate<s:property value="orderID"/>">付款时间：<s:property value="payDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p id="fhDate<s:property value="orderID"/>">发货时间：<s:property value="fhDate"/></p><br>
+                                <p id="shDate<s:property value="orderID"/>" style="display: none">收货时间：<s:property value="shDate"/></p><br>
+
+                                <a id="confirmOrderBtn<s:property value="orderID"/>" href="#" class="add-cart item_add" onclick="confirmOrderReceipt(<s:property value="orderID"/>)">确认收货</a>
                             </s:elseif>
                             <s:elseif test="status=='COMPLETED'">
+                                <p id="payDate<s:property value="orderID"/>">付款时间：<s:property value="payDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p id="fhDate<s:property value="orderID"/>">发货时间：<s:property value="fhDate"/></p><br>
+                                <p id="shDate<s:property value="orderID"/>">收货时间：<s:property value="shDate"/></p><br>
+
                                 <a href="#" id="creditRatingBtn<s:property value="orderID"/>" class="add-cart item_add" onclick="creditRating(<s:property value="orderID"/>)">信用评价</a>
-                                <form id="creditRatingForm<s:property value="orderID"/>" action="" method="post" style="display: none">
+                                <form id="creditRatingForm<s:property value="orderID"/>" action="<%=path%>/commentAction/honestyRatingwhenBuy" method="post" style="display: none">
+                                    <input type="hidden" name="orderID" value="<s:property value="orderID"/>"/>
                                     <select name="creditRating" class="form-control form-control-noNewline">
                                         <option value="-1">差评</option>
                                         <option value="0">中评</option>
@@ -229,6 +306,7 @@
                     <div class="delivery">
                         <p>收货人：高仓靖博&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                         <p>收货地址：东川路800号</p><br>
+                        <p>付款时间：2017-6-10   20:42:48&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                         <p>发货时间：2017-6-10   20:42:48</p><br>
                         <a href="${confirmReceiptLink}" id="confirmBtn" class="add-cart item_add" onclick="">确认收货</a>
                         <div class="clearfix"></div>
@@ -254,7 +332,8 @@
                     <div class="delivery">
                         <p>收货人：Bjarne&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                         <p>收货地址：东川路800号</p><br>
-                        <p>发货时间：2017-6-10   20:42:48&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p>付款时间：2017-6-10   20:42:48&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p>发货时间：2017-6-10   20:42:48</p><br>
                         <p>收货时间：2017-6-10   20:42:48</p><br>
                         <a href="#" id="commentBtn" class="add-cart item_add" onclick="">信用评价</a>
                         <div class="clearfix"></div>

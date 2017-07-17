@@ -10,4 +10,5 @@ public interface CommentService extends BaseService {
     public List<CommentProfile> getBookComment(int bookID);
     public boolean deleteComment(int commentID);
     public boolean honestyRatingInBorrow(int borrowID,int creditRating);
+    public boolean honestyRatingInBuy(int orderID,int creditRating);
 }
