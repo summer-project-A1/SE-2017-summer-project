@@ -128,6 +128,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                 borrowProfile.setBorrowCredit(borrow.getBorrowCredit());
                 borrowProfile.setDelayCount(borrow.getDelayCount());
                 borrowProfile.setStatus(borrow.getStatus());
+                borrowProfile.setBorrowStatus(borrow.getStatus().toString());
                 borrowProfile.setReturnAddress(borrow.getReturnAddress());
                 borrowProfile.setTrackingNo1(borrow.getTrackingNo1());
                 borrowProfile.setOrderDate(borrow.getOrderDate());
@@ -402,6 +403,36 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         this.borrowDao.update(borrow);
         returnMap.put("success", true);
         returnMap.put("yhdate", newYhDate);
+        return returnMap;
+    }
+
+    @Override
+    public Map confirmBorrowReceipt(int borrowID){
+        Map returnMap = new HashMap();
+        if(!isLogined()) {
+            returnMap.put("success", false);
+            return returnMap;
+        }
+        User user = getLoginedUserInfo();
+        Borrow borrow = this.borrowDao.getBorrowByID(borrowID);
+        if(borrow.getUserID1() != user.getUserID()) {
+            returnMap.put("success", false);
+            return returnMap;
+        }
+        Date borrowDate = new Date();
+        borrow.setBorrowDate(borrowDate); //收货时间，即借书时间
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(borrowDate);
+        calendar.add(Calendar.DATE, this.borrowDay);
+        Date YhDate = calendar.getTime();
+        borrow.setYhDate(YhDate);   //应还时间
+        borrow.setStatus(BorrowStatus.BUYER_NOT_RETURNED);
+        this.borrowDao.update(borrow);
+        returnMap.put("success",true);
+        returnMap.put("yhDate",YhDate);
+        returnMap.put("borrowDate",borrowDate);
+        returnMap.put("returnAddress",borrow.getReturnAddress());
         return returnMap;
     }
     

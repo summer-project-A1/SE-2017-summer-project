@@ -169,7 +169,7 @@
             <result name="borrowCheckout">/checkout.jsp</result>
             <result name="createBorrowOrder">/showBuyOrder.jsp</result>
             <allowed-methods>
-                borrowCheckout,createBorrowOrder,showMyBorrow,delayBook,returnBook
+                borrowCheckout,createBorrowOrder,showMyBorrow,delayBook,returnBook,confirmBorrowOrder,confirmBorrowReceipt
             </allowed-methods>
         </action>
     </package>

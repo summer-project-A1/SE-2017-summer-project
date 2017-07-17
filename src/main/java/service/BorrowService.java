@@ -11,4 +11,5 @@ public interface BorrowService extends BaseService {
     public Map confirmBorrowOrder(List<Integer> borrowIDList);
     public Map returnBook(int borrowID,String trackingNo1);
     public Map delayBook(int borrowID);
+    public Map confirmBorrowReceipt(int borrowID);
 }
