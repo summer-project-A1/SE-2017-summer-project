@@ -239,7 +239,7 @@
                                 <h4>
                                     <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
                                         书名：<s:property value="bookName"/></a><br>
-                                    <s:if test="status=='NOTPAYED">
+                                    <s:if test="status=='NOTPAYED'">
                                         <span id="status<s:property value="borrowID"/>">当前状态：买家未付款</span>
                                     </s:if>
                                     <s:elseif test="status=='NOTSHIPPED'">
@@ -311,7 +311,7 @@
                                             <a href="#" id="returnBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="showReturnBook(<s:property value="borrowID"/>)">归还</a>
                                             <a href="#" id="delayBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="delayBook(<s:property value="borrowID"/>)">续借</a>
                                             <form id="tracking<s:property value="borrowID"/>" style="display: none">
-                                                <input type="text" id="trackingNO<s:property value="borrowID"/>" name="trackingNO1"/>
+                                                <input type="text" id="trackingNO<s:property value="borrowID"/>" name="trackingNO1" placeholder="请填写快递单号"/>
                                                 <a href="#" class="add-cart item_add" onclick="returnBook(<s:property value="borrowID"/>)">提交</a>
                                             </form>
                                         </s:if>
