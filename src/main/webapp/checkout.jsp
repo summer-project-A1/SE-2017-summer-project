@@ -222,7 +222,7 @@
                 <form id="addrForm" action="<%=path%>/orderAction/createBuyOrder" method="post">
             </s:elseif>
                 <h3>管理收货地址</h3>
-                <input type="hidden" name="action" value="<s:property value="#action"/>" />
+                <!--<input type="hidden" name="action" value="<s:property value="#action"/>" /> -->
 
                 <s:iterator value="#defaultAddrList" status="st">
                     <div id="<s:property value="fullAddressID"/>">

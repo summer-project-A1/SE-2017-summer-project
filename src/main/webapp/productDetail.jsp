@@ -64,7 +64,7 @@
         }
 
         function deleteComment(commentID){
-            var commentDivID = "comment"+commentID;
+            var commentDivID = "commentDiv"+commentID;
             $.ajax({
                url:'<%=path%>/commentAction/deleteComment',
                type:'POST',
@@ -229,7 +229,7 @@
                 <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                     <div class="panel-body">
                         <s:iterator value="#commentProfileList" status="st">
-                        <div id="comment<s:property value="userID"/>">
+                        <div id="commentDiv<s:property value="commentID"/>">
                             用户：<s:property value="email"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <s:if test="email==#session.userInfo.email">
                                 <a href="#" onclick="deleteComment(<s:property value="commentID"/>)">删除评论</a>

@@ -5,7 +5,7 @@
 <hibernate-mapping>
     <class name="model.Comment" table="comment">
         <id name="commentID" column="borrow_id">
-            <generator class="native"/>
+            <generator class="assigned"/>
         </id>
         <property name="userID" column="user_id" />
         <property name="bookID" column="book_id" />

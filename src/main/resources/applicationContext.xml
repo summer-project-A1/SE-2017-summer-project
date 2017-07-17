@@ -116,6 +116,7 @@
     <!-- Service -->
     <bean id="userService" class="service.impl.UserServiceImpl">
         <property name="userDao" ref="userDao" />
+        <property name="imageDao" ref="imageDao" />
     </bean>
     <bean id="bookService" class="service.impl.BookServiceImpl">
         <property name="bookDao" ref="bookDao" />
@@ -132,6 +133,7 @@
         <property name="borrowDao" ref="borrowDao" />
         <property name="borrowHistoryDao" ref="borrowHistoryDao" />
         <property name="reserveDao" ref="reserveDao" />
+        <property name="commentDao" ref="commentDao"/>
     </bean>
     <bean id="cartService" class="service.impl.CartServiceImpl">
         <property name="bookDao" ref="bookDao" />

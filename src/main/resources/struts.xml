@@ -57,7 +57,7 @@
             <result name="showUserProfile">/userProfile.jsp</result>
             <result name="getAllAddress">/checkout.jsp</result>
             <allowed-methods>
-                showSellerCenter,showUserProfile,updatePassword,getAllAddress,addAddress,setDefaultAddress,deleteAddress,updateUserProfile
+                showSellerCenter,showUserProfile,updatePassword,getAllAddress,addAddress,setDefaultAddress,deleteAddress,updateUserProfile,updateUserPicture
             </allowed-methods>
         </action>
     </package>
@@ -97,9 +97,10 @@
                 <param name="root">params</param>
             </result>
             <result name="buyCheckout">/checkout.jsp</result>
-            <result name="showOrder">/showBuyOrder.jsp</result>
+            <result name="createBuyOrder">/showBuyOrder.jsp</result>
+            <result name="showMyOrder">/myOrder.jsp</result>
             <allowed-methods>
-              buyCheckout,createBuyOrder,confirmOrder,cancelOrder,showOrderById
+              buyCheckout,createBuyOrder,confirmBuyOrder,cancelBuyOrder,showOrderById,showMyOrder,confirmBuyReceipt
             </allowed-methods>
         </action>
     </package>
@@ -168,9 +169,9 @@
                 <param name="root">params</param>
             </result>
             <result name="borrowCheckout">/checkout.jsp</result>
-            <result name="createBorrowOrder"></result>
+            <result name="createBorrowOrder">/showBuyOrder.jsp</result>
             <allowed-methods>
-                borrowCheckout,createBorrowOrder,showMyBorrow,delayBook,returnBook
+                borrowCheckout,createBorrowOrder,showMyBorrow,delayBook,returnBook,confirmBorrowOrder,confirmBorrowReceipt
             </allowed-methods>
         </action>
     </package>

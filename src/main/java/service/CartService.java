@@ -9,7 +9,7 @@ public interface CartService extends BaseService {
     public boolean removeFromBorrowCart(int bookID);
     public boolean emptyBorrowCart();
     
-    public List showBuyCart();
+    public Map showBuyCart();
     public boolean addToBuyCart(int bookID);
     public boolean removeFromBuyCart(int bookID);
     public boolean emptyBuyCart();

@@ -12,7 +12,8 @@ public class Borrow {                // 保存已被借出但尚未还回的借�
     private Date yhDate;         // 应还时间
     private int borrowCredit;         // 借书花费的积分
     private int delayCount;     // 延期次数（目前设定最多1次）
-    private BorrowStatus status;         // 借书信息的状态
+    private BorrowStatus status;   // 借书信息的状态
+    private String borrowStatus;   // 借书信息的状态（字符串）
     private String borrowAddress;  //借书人收货地址
     private String returnAddress;  //被借书者收货地址
     private String trackingNo1;    //借书人还书时快递单号
@@ -23,8 +24,8 @@ public class Borrow {                // 保存已被借出但尚未还回的借�
     private Date borrowDate;   //买家确认收货时间，即借书时间
     private Date returnDate;   //买家还书时间，即买家填还书快递单号时间
     private Date shDate;   //卖家收货时间
-    private int comment1;  //买家对卖家信用评价
-    private int comment2;  //卖家对买家信用评价
+    private Integer comment1;  //买家对卖家信用评价打分
+    private Integer comment2;  //卖家对买家信用评价打分
     
     /* =============================================================== */
     
@@ -77,7 +78,13 @@ public class Borrow {                // 保存已被借出但尚未还回的借�
 	public void setStatus(BorrowStatus status) {
 		this.status = status;
 	}
-	public String getBorrowAddress() {
+	public String getBorrowStatus() {
+        return borrowStatus;
+    }
+    public void setBorrowStatus(String borrowStatus) {
+        this.borrowStatus = borrowStatus;
+    }
+    public String getBorrowAddress() {
 		return borrowAddress;
 	}
 	public void setBorrowAddress(String borrowAddress) {
@@ -132,16 +139,16 @@ public class Borrow {                // 保存已被借出但尚未还回的借�
 	public void setShDate(Date shDate) {
 		this.shDate = shDate;
 	}
-	public int getComment1() {
+	public Integer getComment1() {
 		return comment1;
 	}
-	public void setComment1(int comment1) {
+	public void setComment1(Integer comment1) {
 		this.comment1 = comment1;
 	}
-	public int getComment2() {
+	public Integer getComment2() {
 		return comment2;
 	}
-	public void setComment2(int comment2) {
+	public void setComment2(Integer comment2) {
 		this.comment2 = comment2;
 	}
 	/**

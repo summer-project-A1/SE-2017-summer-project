@@ -16,6 +16,7 @@ import service.UserService;
 
 import model.Book;
 import model.Order;
+import model.OrderProfile;
 
 public class OrderAction extends ActionSupport {
     private static final long serialVersionUID = 2210578889662002765L;
@@ -85,8 +86,6 @@ public class OrderAction extends ActionSupport {
         this.userService = userService;
     }
     
-    /* ========================================================= */
-    
     public String getAddress() {
         return address;
     }
@@ -99,18 +98,26 @@ public class OrderAction extends ActionSupport {
     public void setOrderIDList(List<Integer> orderIDList) {
         this.orderIDList = orderIDList;
     }
+
+    /* ========================================================= */
+    
+    public String showMyOrder(){      // order对应buy（购买）
+
+        this.params = this.orderService.showMyOrder();
+        List orderBook = (List)params.get("orderProfileList");
+        ActionContext.getContext().put("orderList",orderBook);
+        return "showMyOrder";
+    }
     public String buyCheckout() {        // 从购物车跳转到地址确认页面，不修改数据库
-        /*
-         * 不需要获得前台参数
-         * service层返回buy cart的list，所有的收货地址（包括默认地址）
-         */
-        List cart = this.cartService.showBuyCart();
+        Map buyInfo = this.cartService.showBuyCart();
+        List<Book> booksInBuyCart = (List<Book>)buyInfo.get("booksInBuyCart");
+        Integer totalCredit = (Integer)buyInfo.get("totalCredit");
         ActionContext.getContext().put("action","buyCheckout");
-        ActionContext.getContext().put("booksInOrder",cart.isEmpty()?null:cart);
+        ActionContext.getContext().put("booksInOrder",booksInBuyCart.isEmpty()?null:booksInBuyCart);
+        ActionContext.getContext().put("totalCredit",totalCredit);
         Map result = this.userService.getAllDeliveryAddress();
         ActionContext.getContext().put("defaultAddrList", result.get("defaultAddrList"));
         ActionContext.getContext().put("addrList", result.get("addrList"));
-        //ActionContext.getContext().put("totalCredit",<从service层传来>）;
         return "buyCheckout";
     }
     public String createBuyOrder() {     // 用户创建订单，添加到数据库，跳转到付款页面
@@ -118,20 +125,13 @@ public class OrderAction extends ActionSupport {
          * 从前台接收拼好的address
          * service层返回一个List<OrderProfile>和totalCredit
          */
-        /*Order newOrder = this.orderService.createOrder();
-        List<Book> allBook = new ArrayList<Book>();
-        for(OrderItem orderItem : newOrder.getOrderItems()) {
-            int bookID = orderItem.getBookID();
-            allBook.add(this.bookService.showBook(bookID));
-        }
-        ActionContext.getContext().put("order", newOrder);
-        ActionContext.getContext().put("booksInOrder", allBook);
-        */
-        //List<OrderProfile> orderProfileList = this.orderService.createOrders(this.address);
-        //ActionContext.getContext().put("buyOrBorrow","buy");
-        //ActionContext.getContext().put("totalCredit",<从service层传来>）;
-        //ActionContext.getContext().put("orderProfileList",orderProfileList);
-        return "showOrder";
+        Map result = this.orderService.createBuyOrder(this.address);
+        List<OrderProfile> orderProfileList = (List<OrderProfile>)result.get("orderProfileList");
+        Integer totalCredit = (Integer)result.get("totalCredit");
+        ActionContext.getContext().put("buyOrBorrow","buy");
+        ActionContext.getContext().put("totalCredit",totalCredit);
+        ActionContext.getContext().put("orderProfileList",orderProfileList);
+        return "createBuyOrder";
     }
     public String showOrderById() {
         Map orderInfo = this.orderService.getOrderDetailByID(this.orderID);
@@ -147,10 +147,23 @@ public class OrderAction extends ActionSupport {
          * 从前台接收List<Integer> orderIDList传入service
          * 不需要service层返回特殊的内容
          */
-        //boolean result = this.orderService.confirmOrder(this.orderIDList);
-        return SUCCESS;
+        this.params = this.orderService.confirmBuyOrder(this.orderIDList);
+        return "ajax";
     }
-    public String cancelOrder() {        // 取消订单（已创建但未付款确认）
-        return SUCCESS;
+    public String cancelBuyOrder() {        // 取消订单（已创建但未付款确认）
+        Map returnMap = new HashMap();
+        if(this.orderService.cancelBuyOrder(this.orderID)){
+            returnMap.put("success",true);
+        }
+        else{
+            returnMap.put("success",false);
+        }
+        setParams(returnMap);
+        return "ajax";
+    }
+
+    public String confirmBuyReceipt(){
+        this.params = this.orderService.confirmBuyReceipt(this.orderID);
+        return "ajax";
     }
 }

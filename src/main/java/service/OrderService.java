@@ -7,8 +7,10 @@ import model.Order;
 import model.OrderProfile;
 
 public interface OrderService extends BaseService {
+    public Map showMyOrder();
     public Map getOrderDetailByID(int orderID);
-    public List<OrderProfile> createBuyOrder(String address);
-    public boolean submitBuyOrder(List<Integer> orders);
-    public boolean cancelOrder(int orderID);
+    public Map createBuyOrder(String fullAddress);
+    public Map confirmBuyOrder(List<Integer> orderIDList);
+    public boolean cancelBuyOrder(int orderID);
+    public Map confirmBuyReceipt(int orderID);
 }
