@@ -116,6 +116,7 @@
     <!-- Service -->
     <bean id="userService" class="service.impl.UserServiceImpl">
         <property name="userDao" ref="userDao" />
+        <property name="imageDao" ref="imageDao" />
     </bean>
     <bean id="bookService" class="service.impl.BookServiceImpl">
         <property name="bookDao" ref="bookDao" />

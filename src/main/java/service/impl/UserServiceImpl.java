@@ -1,5 +1,6 @@
 package service.impl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import com.opensymphony.xwork2.ActionContext;
 import common.constants.UserRole;
 import common.utils.MD5Util;
 import common.utils.PasswordUtil;
+import dao.ImageDao;
 import dao.UserDao;
 import model.FullAddress;
 import model.User;
@@ -18,6 +20,7 @@ import service.UserService;
 
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
     private UserDao userDao; 
+    private ImageDao imageDao;
     
     /* ======================================================== */
 
@@ -26,6 +29,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     }
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+    }
+    public ImageDao getImageDao() {
+        return imageDao;
+    }
+    public void setImageDao(ImageDao imageDao) {
+        this.imageDao = imageDao;
     }
     
     /* ======================================================== */
@@ -147,6 +156,18 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         userProfile.setDistrict(newUserProfile.getDistrict());
         userProfile.setAddress(newUserProfile.getAddress());
         return this.userDao.updateUserProfile(userProfile);
+    }
+    
+    @Override
+    public boolean updateUserPicture(File userPicture) {
+        User user = this.getLoginedUserInfo();
+        if(user.getImageID() != null && !user.getImageID().equals("")) {
+            this.imageDao.deleteImageById(user.getImageID());
+        }
+        String newImageID = this.imageDao.saveImage(userPicture);
+        user.setImageID(newImageID);
+        this.userDao.update(user);
+        return true;
     }
     
     @Override

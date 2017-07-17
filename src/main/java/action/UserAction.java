@@ -175,8 +175,8 @@ public class UserAction extends ActionSupport {
 
     public String updateUserPicture(){
         this.params = new HashMap();
-        //boolean result = this.userService.updateUserPicture(this.userPicture);
-        //params.put("success", result);
+        boolean result = this.userService.updateUserPicture(this.userPicture);
+        params.put("success", result);
         params.put("success",true);
         return "ajax";
     }
