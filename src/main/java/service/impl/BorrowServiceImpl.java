@@ -198,7 +198,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
     }
     
     @Override
-    public Map borrowAllBookInBorrowCart(String fullAddress) {
+    public Map createBorrowOrder(String fullAddress) {
         /*
          * 用户创建订单，添加borrow到数据库，不验证/修改书的状态，不验证用户积分
          */
@@ -330,6 +330,12 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         */
     }
 
+    @Override
+    public Boolean confirmBorrowOrder(List<Integer> borrowID) {
+        
+        return true;
+    }
+    
     @Override
     public Map returnBook(int borrowID) {
         Map returnMap = new HashMap();

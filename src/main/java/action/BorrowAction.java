@@ -24,6 +24,7 @@ public class BorrowAction extends ActionSupport {
     private Map params;
 
     private String address;
+    private List<Integer> borrowIDList;
     
     /* ============================================================== */
     
@@ -57,15 +58,21 @@ public class BorrowAction extends ActionSupport {
     public void setParams(Map params) {
         this.params = params;
     }
-
-    /* ============================================================== */
-    
     public String getAddress() {
         return address;
     }
     public void setAddress(String address) {
         this.address = address;
     }
+    public List<Integer> getBorrowIDList() {
+        return borrowIDList;
+    }
+    public void setBorrowIDList(List<Integer> borrowIDList) {
+        this.borrowIDList = borrowIDList;
+    }
+    
+    /* ============================================================== */
+    
     public String borrowCheckout() {        // 从购物车跳转到地址确认页面，不修改数据库
         Map borrowInfo = this.cartService.showBorrowCart();
         List<Book> booksInBorrowCart = (List<Book>)borrowInfo.get("booksInBorrowCart");
@@ -80,7 +87,7 @@ public class BorrowAction extends ActionSupport {
     }
     
     public String createBorrowOrder() {     // 用户创建订单，添加到数据库，跳转到付款页面（不修改书的状态）
-        Map result = this.borrowService.borrowAllBookInBorrowCart(this.address);
+        Map result = this.borrowService.createBorrowOrder(this.address);
         List<BorrowProfile> borrowProfileList = (List<BorrowProfile>)result.get("borrowProfileList");
         Integer totalCredit = (Integer)result.get("totalCredit");
         ActionContext.getContext().put("buyOrBorrow","borrow");
@@ -89,7 +96,7 @@ public class BorrowAction extends ActionSupport {
         return "createBorrowOrder";
     }
     public String confirmBorrowOrder() {       // 用户付款确认订单（允许多个订单），修改订单状态
-        //boolean result = this.orderService.confirmOrder(this.borrowIDList);
+        boolean result = this.borrowService.confirmBorrowOrder(this.borrowIDList);
         return SUCCESS;
     }
     public String showMyBorrow(){
