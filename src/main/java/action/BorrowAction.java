@@ -131,7 +131,7 @@ public class BorrowAction extends ActionSupport {
             params.put("yhdate",yhdate);
         }
         */
-        this.params = this.borrowService.delayBook(this.bookID);
+        this.params = this.borrowService.delayBook(this.borrowID);
         return "ajax";
     }
 
@@ -148,5 +148,9 @@ public class BorrowAction extends ActionSupport {
         return "ajax";
     }
 
+    public String confirmBorrowReceipt(){
+        this.params = this.borrowService.confirmBorrowReceipt(this.borrowID);
+        return "ajax";
+    }
 
 }
