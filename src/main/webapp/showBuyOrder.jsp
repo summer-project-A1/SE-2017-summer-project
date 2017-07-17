@@ -56,7 +56,7 @@
     </s:iterator>
     <form id="orderInfo" style="display:none" action="<%=path%>/orderAction/confirmBuyOrder" method="post">
     	<s:iterator value="#orderProfileList" status="st">
-        	<input name="orderID" type="hidden" value="<s:property value="orderID"/>">
+        	<input name="orderIDList" type="hidden" value="<s:property value="orderID"/>">
         </s:iterator>
     </form>
     <div id="confirm">
@@ -94,7 +94,7 @@
             </s:iterator>
             <form id="borrowInfo" style="display:none" action="<%=path%>/borrowAction/confirmBuyOrder" method="post">
                 <s:iterator value="#borrowProfileList" status="st">
-                    <input name="borrowID" type="hidden" value="<s:property value="borrowID"/>">
+                    <input name="borrowIDList" type="hidden" value="<s:property value="borrowID"/>">
                 </s:iterator>
             </form>
             <div id="confirm">
