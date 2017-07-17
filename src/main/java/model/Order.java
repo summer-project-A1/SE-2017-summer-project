@@ -17,8 +17,8 @@ public class Order {               // 使用积分下单购买书
     private Date fhDate;
     private Date shDate;
 	private String trackingNo;
-	private int buyerComment;    // 买家对卖家的信用评价打分
-	private int sellerComment;
+	private Integer buyerComment;    // 买家对卖家的信用评价打分
+	private Integer sellerComment;
     
     /* ================================================= */
 	
@@ -125,16 +125,16 @@ public class Order {               // 使用积分下单购买书
 		this.bookID = bookID;
 	}
     
-	public int getBuyerComment() {
+	public Integer getBuyerComment() {
 		return buyerComment;
 	}
-	public void setBuyerComment(int buyerComment) {
+	public void setBuyerComment(Integer buyerComment) {
 		this.buyerComment = buyerComment;
 	}
-	public int getSellerComment() {
+	public Integer getSellerComment() {
 		return sellerComment;
 	}
-	public void setSellerComment(int sellerComment) {
+	public void setSellerComment(Integer sellerComment) {
 		this.sellerComment = sellerComment;
 	}
 }

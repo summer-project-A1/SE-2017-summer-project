@@ -85,8 +85,6 @@ public class OrderAction extends ActionSupport {
         this.userService = userService;
     }
     
-    /* ========================================================= */
-    
     public String getAddress() {
         return address;
     }
@@ -98,6 +96,19 @@ public class OrderAction extends ActionSupport {
     }
     public void setOrderIDList(List<Integer> orderIDList) {
         this.orderIDList = orderIDList;
+    }
+
+    /* ========================================================= */
+    
+    public String showMyOrder(){      // order对应buy（购买）
+        /*
+        this.params = this.orderService.showMyOrder();
+        List orderBook = (List)params.get("orderBook");
+        List orderHistoryBook = (List)params.get("orderHistoryBook");
+        ActionContext.getContext().put("orderBook",orderBook);
+        ActionContext.getContext().put("orderHistoryBook",orderHistoryBook);
+        */
+        return "showMyOrder";
     }
     public String buyCheckout() {        // 从购物车跳转到地址确认页面，不修改数据库
         Map buyInfo = this.cartService.showBuyCart();

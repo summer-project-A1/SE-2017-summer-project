@@ -67,6 +67,10 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
     /* ========================================================= */
     
+    @Override
+    public Map showMyOrder() {
+        return null;
+    }
     
     @Override
     public Map getOrderDetailByID(int orderID) {

@@ -11,9 +11,19 @@ import model.Order;
 public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
 
     @Override
-    public List<Order> getOrdersByUserID(int userID) {
-        // TODO 自动生成的方法存根
-        return null;
+    public List<Order> getOrdersByBuyerID(int buyerID) {
+        String hql = "from Order where buyerID = :buyerID";
+        Query query = getSession().createQuery(hql).setParameter("buyerID", buyerID);
+        List<Order> orders = query.list();
+        return orders;
+    }
+    
+    @Override
+    public List<Order> getOrdersBySellerID(int sellerID) {
+        String hql = "from Order where sellerID = :sellerID";
+        Query query = getSession().createQuery(hql).setParameter("sellerID", sellerID);
+        List<Order> orders = query.list();
+        return orders;
     }
 
     @Override
