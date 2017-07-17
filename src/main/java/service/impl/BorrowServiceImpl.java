@@ -366,7 +366,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             returnMap.put("success", false);
             return returnMap;
         }
-        book.setStatus(BookStatus.IDLE);
+        //book.setStatus(BookStatus.IDLE); 此时不改书的状态，待卖家确认收到后再改
         Date returnDate = new Date();
         /*
         BorrowHistory newBorrowHistory = new BorrowHistory();

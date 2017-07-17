@@ -96,9 +96,10 @@
                 <param name="root">params</param>
             </result>
             <result name="buyCheckout">/checkout.jsp</result>
-            <result name="showOrder">/showBuyOrder.jsp</result>
+            <result name="createBuyOrder">/showBuyOrder.jsp</result>
+            <result name="showMyOrder">/myOrder.jsp</result>
             <allowed-methods>
-              buyCheckout,createBuyOrder,confirmOrder,cancelOrder,showOrderById
+              buyCheckout,createBuyOrder,confirmBuyOrder,cancelBuyOrder,showOrderById,showMyOrder,confirmBuyReceipt
             </allowed-methods>
         </action>
     </package>
@@ -192,14 +193,6 @@
             <result name="commentBook" type="redirectAction">
                 <param name="namespace">/borrowAction</param>
                 <param name="actionName">showMyBorrow</param>
-            </result>
-            <result name="honestyRatingWhenBorrow" type="redirectAction">
-                <param name="namespace">/borrowAction</param>
-                <param name="actionName">showMyBorrow</param>
-            </result>
-            <result name="honestyRatingWhenBuy" type="redirectAction">
-                <param name="namespace">/orderAction</param>
-                <param name="actionName">showMyOrder</param>
             </result>
             <result name="ajax" type="json">
                <param name="root">params</param>

@@ -113,11 +113,11 @@
                 if (msg.success) {
                     var returnDate = msg.returnDate;
                     $("#"+statusID).html("当前状态：买家已归还，待卖家确认");
-                    $("#"+returnBtnID).remove();
-                    $("#"+delayBtnID).remove();
                     $("#"+returnDateID).html("归还日期："+returnDate+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                     $("#"+returnDateID).show();
                     showTip('已归还图书！', 'success');
+                    $("#"+returnBtnID).remove();
+                    $("#"+delayBtnID).remove();
                     $("#"+trackingFormID).hide();
                 }
                 else {
@@ -186,8 +186,24 @@
     }
 
     function submitRating(borrowID){
-        var creaditRatingFormID = "creditRatingForm" + borrowID;
-        $("#"+creaditRatingFormID).submit();
+        var creditRatingFormID = "creditRatingForm" + borrowID;
+        var creditRatingBtnID = "creditRatingBtn" + borrowID;
+        var params = $("#"+creditRatingFormID).serialize();
+        $.ajax({
+            url:'<%=path%>/commentAction/honestyRatingWhenBorrow',
+            type:'POST',
+            data:params,
+            success:function(msg){
+                if(msg.success){
+                    showTip('信用评价成功！','success');
+                    $("#"+creditRatingBtnID).remove();
+                    $("#"+creditRatingFormID).remove();
+                }
+            },
+            error:function(xhr,status,error){
+                alert('status='+status+',error='+error);
+            }
+        });
     }
 
 </script>
@@ -328,7 +344,7 @@
                                             <a href="#" id="returnBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="showReturnBook(<s:property value="borrowID"/>)">归还</a>
                                             <a href="#" id="delayBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="delayBook(<s:property value="borrowID"/>)">续借</a>
                                             <form id="tracking<s:property value="borrowID"/>" style="display: none">
-                                                <input type="text" id="trackingNO<s:property value="borrowID"/>" name="trackingNO1" placeholder="请填写快递单号"/>
+                                                <input type="text" id="trackingNO<s:property value="borrowID"/>" name="trackingNo1" placeholder="请填写快递单号"/>
                                                 <a href="#" class="add-cart item_add" onclick="returnBook(<s:property value="borrowID"/>)">提交</a>
                                             </form>
                                         </s:if>
@@ -344,7 +360,7 @@
 
                                             <a href="#" id="returnBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="showReturnBook(<s:property value="borrowID"/>)">归还</a>
                                             <form id="tracking<s:property value="borrowID"/>" style="display: none">
-                                                <input type="text" id="trackingNO<s:property value="borrowID"/>" name="trackingNO1" placeholder="请填写快递单号"/>
+                                                <input type="text" id="trackingNO<s:property value="borrowID"/>" name="trackingNo1" placeholder="请填写快递单号"/>
                                                 <a href="#" class="add-cart item_add" onclick="returnBook(<s:property value="borrowID"/>)">提交</a>
                                             </form>
                                         </s:elseif>
@@ -397,10 +413,10 @@
                                     <p id="returnAddr<s:property value="borrowID"/>">归还地址：<s:property value="returnAddress"/></p><br>
 
                                     <s:if test="bookComment==false">
-                                        <a href="#" id="commentBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="commentBook(<s:property value="borrowID"/>)">图书评论</a>
+                                        <a href="#" id="commentBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="commentBook(<s:property value="borrowID"/>)">图书评论</a>
                                     </s:if>
                                     <s:if test="comment1==null">
-                                        <a href="#" id="creditRatingBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="creditRating(<s:property value="borrowID"/>)">信用评价</a>
+                                        <a href="#" id="creditRatingBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="creditRating(<s:property value="borrowID"/>)">信用评价</a>
                                     </s:if>
                                     <form id="commentForm<s:property value="borrowID"/>" style="display: none" action="<%=path%>/commentAction/commentBook" method="post">
                                         <input type="hidden" id="bookID<s:property value="bookID"/>" name="bookID" value="<s:property value="bookID"/>"/>

@@ -115,7 +115,7 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
             bh.setComment2(creditRating);
         }
         User ratingUser = this.userDao.getUserById(ratingID);
-        ratingUser.setCredit(ratingUser.getHonesty()+creditRating);
+        ratingUser.setHonesty(ratingUser.getHonesty()+creditRating);
         this.userDao.update(ratingUser);
         this.borrowHistoryDao.update(bh);
         return true;
@@ -137,7 +137,7 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
             order.setSellerComment(creditRating);
         }
         User ratingUser = this.userDao.getUserById(ratingID);
-        ratingUser.setCredit(ratingUser.getHonesty()+creditRating);
+        ratingUser.setHonesty(ratingUser.getHonesty()+creditRating);
         this.userDao.update(ratingUser);
         this.orderDao.update(order);
         return true;

@@ -13,7 +13,7 @@
         <property name="orderDate" column="order_date" type="timestamp" />
         <property name="payDate" column="pay_date" type="timestamp" />
         <property name="buyCredit" column="price" />
-        <property name="status" column="role">
+        <property name="status" column="status">
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">common.constants.OrderStatus</param>
             </type>

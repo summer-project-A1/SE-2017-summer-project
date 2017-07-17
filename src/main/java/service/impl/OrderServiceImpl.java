@@ -1,13 +1,6 @@
 package service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import common.constants.BookStatus;
 import common.constants.BorrowStatus;
@@ -69,6 +62,60 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
     
     @Override
     public Map showMyOrder() {
+        User buyer = getLoginedUserInfo();
+        int buyerID = buyer.getUserID();
+        List<Order>orders = this.orderDao.getOrdersByBuyerID(buyerID);
+        List<OrderProfile>orderProfileList = new ArrayList<>();
+        if(orders != null){
+            for(Order order : orders){
+                OrderProfile orderProfile = new OrderProfile();
+                int bookID = order.getBookID();
+                Book book = this.bookDao.getBookByID(bookID);
+                BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
+                User seller = this.userDao.getUserById(order.getSellerID());
+
+                orderProfile.setOrderID(order.getOrderID());
+                orderProfile.setBuyerID(buyerID);
+                orderProfile.setSellerID(order.getSellerID());
+                orderProfile.setBookID(bookID);
+                orderProfile.setOrderDate(order.getOrderDate());
+                orderProfile.setPayDate(order.getPayDate());
+                orderProfile.setBuyCredit(order.getBuyCredit());
+                orderProfile.setAddress(order.getAddress());
+                orderProfile.setFhDate(order.getFhDate());
+                orderProfile.setShDate(order.getShDate());
+                orderProfile.setTrackingNo(order.getTrackingNo());
+                orderProfile.setBuyerComment(order.getBuyerComment());
+                orderProfile.setSellerComment(order.getSellerComment());
+                orderProfile.setStatus(order.getStatus());
+                orderProfile.setOrderStatus(order.getStatus().toString());
+
+                orderProfile.setBookName(book.getBookName());
+                orderProfile.setIsbn((book.getIsbn()));
+                orderProfile.setAuthor(book.getAuthor());
+                orderProfile.setPress(book.getPress());
+                orderProfile.setCategory1(book.getCategory1());
+                orderProfile.setCategory2(book.getCategory2());
+                orderProfile.setImageID(book.getImageID());
+                orderProfile.setEmail(seller.getEmail());
+                orderProfileList.add(orderProfile);
+            }
+            Map result = new HashMap();
+            Collections.sort(orderProfileList, new Comparator<OrderProfile>() {
+                @Override
+                public int compare(OrderProfile o1, OrderProfile o2) {
+                    if(o1.getOrderID() > o2.getOrderID()){
+                        return -1;
+                    }
+                    if(o1.getOrderID() < o2.getOrderID()){
+                        return 1;
+                    }
+                    return 0;
+                }
+            });
+            result.put("orderProfileList", orderProfileList);
+            return result;
+        }
         return null;
     }
     
@@ -209,7 +256,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
                 order.setStatus(OrderStatus.NOTSHIPPED);
                 order.setPayDate(payDate);
                 this.orderDao.update(order);
-                book.setStatus(BookStatus.BORROWED);
+                book.setStatus(BookStatus.EXCHANGED);
                 this.bookDao.update(book);
             }
         }
@@ -221,7 +268,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
     
     @Override
-    public boolean cancelOrder(int orderID) {
+    public boolean cancelBuyOrder(int orderID) {
         if(!isLogined()) {
             return false;
         }
@@ -237,6 +284,29 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
         order.setStatus(OrderStatus.CANCELED);
         orderDao.update(order);
         return true;
+    }
+
+    @Override
+    public Map confirmBuyReceipt(int orderID){
+        Map returnMap = new HashMap();
+        if(!isLogined()) {
+            returnMap.put("success", false);
+            return returnMap;
+        }
+        User user = getLoginedUserInfo();
+        Order order = this.orderDao.getOrderByID(orderID);
+        if(order.getBuyerID() != user.getUserID()){
+            returnMap.put("success",false);
+            return returnMap;
+        }
+
+        Date shDate = new Date();
+        order.setShDate(shDate);
+        order.setStatus(OrderStatus.COMPLETED);
+        this.orderDao.update(order);
+        returnMap.put("success",true);
+        returnMap.put("shDate",shDate);
+        return returnMap;
     }
     
 }

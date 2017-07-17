@@ -11,5 +11,6 @@ public interface OrderService extends BaseService {
     public Map getOrderDetailByID(int orderID);
     public Map createBuyOrder(String fullAddress);
     public Map confirmBuyOrder(List<Integer> orderIDList);
-    public boolean cancelOrder(int orderID);
+    public boolean cancelBuyOrder(int orderID);
+    public Map confirmBuyReceipt(int orderID);
 }

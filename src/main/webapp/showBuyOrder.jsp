@@ -116,7 +116,23 @@
 <div id="tip"></div>
 <script type="text/javascript">
     $("#commit1").click(function(){
-        $("#orderInfo").submit();
+        var params = $("#orderInfo").serialize();
+        $.ajax({
+            url:'<%=path%>/orderAction/confirmBuyOrder',
+            type:'POST',
+            data:params,
+            success:function(msg){
+                if(msg.success){
+                    showTip('支付成功！','success');
+                    window.setTimeout("window.location='<%=path%>/orderAction/showMyOrder'",1500);
+                }else{
+                    showTip('发生错误！','danger');
+                }
+            },
+            error:function(xhr,status,error){
+                alert('status='+status+',error='+error);
+            }
+        })
     });
 
     $("#commit2").click(function(){
@@ -128,6 +144,7 @@
             success:function(msg){
                 if(msg.success){
                     showTip('支付成功！','success');
+                    window.setTimeout("window.location='<%=path%>/borrowAction/showMyBorrow'",1500);
                 }else{
                     showTip('发生错误！','danger');
                 }
