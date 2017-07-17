@@ -176,7 +176,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             borrowProfile.setComment1(borrowHistory.getComment1());
             borrowProfile.setComment2(borrowHistory.getComment2());
             borrowProfile.setEmail(user2.getEmail());
-            borrowHistoryBook.add(borrowProfile);
+            borrowBook.add(borrowProfile);
         }
         Map result = new HashMap();
         result.put("borrowBook", borrowBook);
@@ -214,7 +214,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
     }
     
     @Override
-    public Map borrowAllBookInBorrowCart(String fullAddress) {
+    public Map createBorrowOrder(String fullAddress) {
         /*
          * 用户创建订单，添加borrow到数据库，不验证/修改书的状态，不验证用户积分
          */
@@ -245,6 +245,11 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             newBorrow.setBorrowAddress(fullAddress);  // 买家收货地址
             newBorrow.setDelayCount(0);   // 延期次数：0
             newBorrow.setStatus(BorrowStatus.BUYER_NOTPAID);
+            newBorrow.setYhDate(new Date());  // 无意义
+            newBorrow.setBorrowAddress("");
+            newBorrow.setReturnAddress("");
+            newBorrow.setTrackingNo1("");
+            newBorrow.setTrackingNo2("");
             this.borrowDao.save(newBorrow);
             book.setStatus(BookStatus.BORROWED);
             this.bookDao.update(book);
@@ -346,6 +351,12 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         */
     }
 
+    @Override
+    public Boolean confirmBorrowOrder(List<Integer> borrowID) {
+        
+        return true;
+    }
+    
     @Override
     public Map returnBook(int borrowID,String trackingNo1) {
         Map returnMap = new HashMap();
