@@ -261,8 +261,8 @@
                                 <ul class="qty">
                                     <li><p>作者：<s:property value="author"/></p></li>
                                     <li><p>分类：<s:property value="category1"/>&nbsp;&nbsp;<s:property value="category2"/></p></li>
-                                    <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
-                                    <li><p>出借人：</p></li>
+                                    <li><p>借阅积分：<s:property value="borrowCredit"/></p></li>
+                                    <li><p>出借人：<s:property value="email"/></p></li>
                                 </ul>
                                 <div class="delivery">
                                     <s:if test="status=='NOTPAYED'">
@@ -343,7 +343,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                    </div>
+                    </div><hr>
                 </s:iterator>
 
                 <!-- 以下迭代显示已归还的图书 -->
