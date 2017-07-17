@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import common.constants.BookStatus;
+import common.constants.BorrowStatus;
 import dao.BookDao;
 import dao.BookReleaseDao;
 import dao.BorrowDao;
@@ -159,7 +160,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             borrowProfile.setComment1(borrowHistory.getComment1());
             borrowProfile.setComment2(borrowHistory.getComment2());
             borrowProfile.setEmail(user2.getEmail());
-            borrowBook.add(borrowProfile);
+            borrowHistoryBook.add(borrowProfile);
         }
         Map result = new HashMap();
         result.put("borrowBook", borrowBook);
@@ -277,7 +278,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
     }
 
     @Override
-    public Map returnBook(int borrowID) {
+    public Map returnBook(int borrowID,String trackingNo1) {
         Map returnMap = new HashMap();
         if(!isLogined()) {
             returnMap.put("success", false);
@@ -297,6 +298,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         }
         book.setStatus(BookStatus.IDLE);
         Date returnDate = new Date();
+        /*
         BorrowHistory newBorrowHistory = new BorrowHistory();
         newBorrowHistory.setBookID(bookID);
         newBorrowHistory.setBorrowDate(borrow.getBorrowDate());
@@ -308,6 +310,10 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         this.bookDao.update(book);
         this.borrowHistoryDao.save(newBorrowHistory);
         this.borrowDao.delete(borrow);
+        */  //买家还书后，添加还书日期和还书快递单号，改变借阅状态，等待卖家确认
+        borrow.setReturnDate(returnDate);
+        borrow.setTrackingNo1(trackingNo1);
+        borrow.setStatus(BorrowStatus.BUYER_RETURNED);
         returnMap.put("success", true);
         returnMap.put("returnDate", returnDate);
         return returnMap;

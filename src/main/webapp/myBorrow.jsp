@@ -98,7 +98,7 @@
             type:'POST',
             data:{
                 'borrowID':borrowID,
-                'trackingNO1':trackingNO1,
+                'trackingNo1':trackingNO1,
             },
             success:function(msg){
                 if (msg.success) {

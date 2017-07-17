@@ -22,6 +22,8 @@ public class BorrowAction extends ActionSupport {
 
     private int bookID;
     private Map params;
+    private int borrowID;
+    private String trackingNo1;
 
     /* ============================================================== */
     
@@ -55,7 +57,18 @@ public class BorrowAction extends ActionSupport {
     public void setParams(Map params) {
         this.params = params;
     }
-
+    public int getBorrowID() {
+        return borrowID;
+    }
+    public void setBorrowID(int borrowID) {
+        this.borrowID = borrowID;
+    }
+    public String getTrackingNo1() {
+        return trackingNo1;
+    }
+    public void setTrackingNo1(String trackingNo1) {
+        this.trackingNo1 = trackingNo1;
+    }
     /* ============================================================== */
     
     public String borrowCheckout() {        // 从购物车跳转到地址确认页面，不修改数据库
@@ -102,7 +115,7 @@ public class BorrowAction extends ActionSupport {
             params.put("yhdate",yhdate);
         }
         */
-        this.params = this.borrowService.delayBook(this.bookID);
+        this.params = this.borrowService.delayBook(this.borrowID);
         return "ajax";
     }
 
@@ -115,9 +128,10 @@ public class BorrowAction extends ActionSupport {
             params.put("returnDate",returnDate);
         }
         */
-        this.params = this.borrowService.returnBook(this.bookID);
+        this.params = this.borrowService.returnBook(this.borrowID,this.trackingNo1);
         return "ajax";
     }
+
 
 
 }
