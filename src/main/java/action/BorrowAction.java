@@ -3,6 +3,7 @@ package action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import model.Book;
+import model.BorrowProfile;
 import service.BorrowService;
 import service.CartService;
 import service.OrderService;
@@ -58,14 +59,15 @@ public class BorrowAction extends ActionSupport {
     /* ============================================================== */
     
     public String borrowCheckout() {        // 从购物车跳转到地址确认页面，不修改数据库
-        List cart = this.cartService.showBorrowCart();
-
+        Map borrowInfo = this.cartService.showBorrowCart();
+        List<Book> booksInOrder = (List<Book>)borrowInfo.get("booksInOrder");
+        Integer totalCredit = (Integer)borrowInfo.get("totalCredit");
         ActionContext.getContext().put("action","borrowCheckout");
-        ActionContext.getContext().put("booksInOrder",cart.isEmpty()?null:cart);
+        ActionContext.getContext().put("booksInOrder",booksInOrder.isEmpty()?null:booksInOrder);
+        ActionContext.getContext().put("totalCredit",totalCredit);
         Map result = this.userService.getAllDeliveryAddress();
         ActionContext.getContext().put("defaultAddrList", result.get("defaultAddrList"));
         ActionContext.getContext().put("addrList", result.get("addrList"));
-        //ActionContext.getContext().put("totalCredit",<从service层传来>）;
         return "borrowCheckout";
     }
     
@@ -73,7 +75,7 @@ public class BorrowAction extends ActionSupport {
         /*this.borrowService.borrowAllBookInBorrowCart();
          */
         //List<BorrowProfile> borrowProfileList = this.borrowService.<service的函数名>(this.address);
-        //ActionContext.getContext().put("buyOrBorrow","borrow");
+        ActionContext.getContext().put("buyOrBorrow","borrow");
         //ActionContext.getContext().put("totalCredit",<从service层传来>）;
         //ActionContext.getContext().put("borrowProfileList",borrowProfileList);
         return "createBorrowOrder";

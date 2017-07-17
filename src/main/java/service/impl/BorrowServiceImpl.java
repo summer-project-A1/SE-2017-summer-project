@@ -197,7 +197,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
     }
     
     @Override
-    public Map borrowAllBookInBorrowCart() {
+    public Map borrowAllBookInBorrowCart(String fullAddress) {
         Map returnMap = new HashMap();    // 返回值
         if(!isLogined()) {
             returnMap.put("result", false);
@@ -261,7 +261,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                 newBorrow.setBorrowDate(new Date());
                 newBorrow.setBorrowPrice(book.getBorrowCredit());
                 newBorrow.setYhDate(yhDate);
-                newBorrow.setBorrowAddress(user.getAddress());
+                newBorrow.setBorrowAddress(fullAddress);
                 newBorrow.setDelayCount(0);
                 this.borrowDao.save(newBorrow);
                 book.setStatus(BookStatus.BORROWED);
