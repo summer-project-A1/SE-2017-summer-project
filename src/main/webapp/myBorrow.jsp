@@ -34,9 +34,9 @@
         var payDateID = 'payDate'+borrowID;
         var payBtnID = 'payBtn'+borrowID;
         $.ajax({
-            url:'<%=path%>/borrowAction/payBorrow',
+            url:'<%=path%>/borrowAction/confirmBorrowOrder',
             type:'POST',
-            data:{'borrowID':borrowID},
+            data:{'borrowIDList':borrowID},
             success:function(msg){
                 if(msg.success){
                     var payDate = msg.payDate;
