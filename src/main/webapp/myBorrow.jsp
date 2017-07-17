@@ -384,7 +384,7 @@
                                     <li><p>作者：<s:property value="author"/></p></li>
                                     <li><p>分类：<s:property value="category1"/>&nbsp;&nbsp;<s:property value="category2"/></p></li>
                                     <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
-                                    <li><p>出借人：</p></li>
+                                    <li><p>出借人：<s:property value="email"/></p></li>
                                 </ul>
                                 <div class="delivery">
                                     <p id="orderDate<s:property value="borrowID"/>">下单日期：<s:property value="orderDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -396,7 +396,7 @@
                                     <p id="shDate<s:property value="borrowID"/>">完成日期：<s:property value="shDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                                     <p id="returnAddr<s:property value="borrowID"/>">归还地址：<s:property value="returnAddress"/></p><br>
 
-                                    <s:if test="bookComment==null">
+                                    <s:if test="bookComment==false">
                                         <a href="#" id="commentBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="commentBook(<s:property value="borrowID"/>)">图书评论</a>
                                     </s:if>
                                     <s:if test="comment1==null">

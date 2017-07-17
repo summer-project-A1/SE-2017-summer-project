@@ -9,18 +9,14 @@ import java.util.Map;
 
 import common.constants.BookStatus;
 import common.constants.BorrowStatus;
-import dao.BookDao;
-import dao.BookReleaseDao;
-import dao.BorrowDao;
-import dao.BorrowHistoryDao;
-import dao.ReserveDao;
-import dao.UserDao;
+import dao.*;
 import model.Book;
 import model.BookRelease;
 import model.Borrow;
 import model.BorrowHistory;
 import model.BorrowProfile;
 import model.User;
+import model.Comment;
 import service.BorrowService;
 
 public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService {
@@ -33,6 +29,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
     private BorrowDao borrowDao;
     private BorrowHistoryDao borrowHistoryDao;
     private ReserveDao reserveDao;
+    private CommentDao commentDao;
     
     /* ========================================================== */
 
@@ -100,6 +97,14 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         this.reserveDao = reserveDao;
     }
 
+    public CommentDao getCommentDao() {
+        return commentDao;
+    }
+
+    public void setCommentDao(CommentDao commentDao) {
+        this.commentDao = commentDao;
+    }
+
     /* ============================================================= */
     
     @Override
@@ -155,6 +160,9 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                 Book book = this.bookDao.getBookByID(bookID);
                 BookRelease bookRelease = bookReleaseDao.getReleaseBookByBookID(bookID);
                 User user2 = userDao.getUserById(bookRelease.getUserID());
+                Comment comment = this.commentDao.getCommentsByCommentID(borrowHistory.getBhID());
+                boolean bookComment=false;
+                if(comment != null){ bookComment=true;}
                 borrowProfile.setBookID(bookID);
                 borrowProfile.setBookName(book.getBookName());
                 borrowProfile.setIsbn(book.getIsbn());
@@ -180,7 +188,8 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                 borrowProfile.setComment1(borrowHistory.getComment1());
                 borrowProfile.setComment2(borrowHistory.getComment2());
                 borrowProfile.setEmail(user2.getEmail());
-                borrowBook.add(borrowProfile);
+                borrowProfile.setBookComment(bookComment);
+                borrowHistoryBook.add(borrowProfile);
             }
         }
         Map result = new HashMap();
@@ -435,5 +444,6 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         returnMap.put("returnAddress",borrow.getReturnAddress());
         return returnMap;
     }
-    
+
+
 }
