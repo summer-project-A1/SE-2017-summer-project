@@ -136,7 +136,8 @@ public class BookAction extends ActionSupport {
         if(this.firstPage == null) {
             this.firstPage = 0;
         }
-        List<Book> allBooks = this.bookService.showAllBooksByPage(this.part, this.bookNumPerPage);
+        //List<Book> allBooks = this.bookService.showAllBooksByPage(this.part, this.bookNumPerPage);
+        List<Book> allBooks = this.bookService.showAllBooksByPage(this.part, 9);
         List<Book> nextPage = this.bookService.showAllBooksByPage(this.part+1, this.bookNumPerPage);
         ActionContext.getContext().put("isLastPart",(nextPage.size()==0));
         ActionContext.getContext().put("allBooks",allBooks);
