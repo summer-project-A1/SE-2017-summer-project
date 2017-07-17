@@ -229,6 +229,11 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             newBorrow.setBorrowAddress(fullAddress);  // 买家收货地址
             newBorrow.setDelayCount(0);   // 延期次数：0
             newBorrow.setStatus(BorrowStatus.BUYER_NOTPAID);
+            newBorrow.setYhDate(new Date());  // 无意义
+            newBorrow.setBorrowAddress("");
+            newBorrow.setReturnAddress("");
+            newBorrow.setTrackingNo1("");
+            newBorrow.setTrackingNo2("");
             this.borrowDao.save(newBorrow);
             book.setStatus(BookStatus.BORROWED);
             this.bookDao.update(book);
