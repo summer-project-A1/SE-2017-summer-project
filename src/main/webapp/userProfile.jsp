@@ -181,7 +181,8 @@
                 contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
                 success: function(msg){
                     if (msg.success) {
-                        showTip('修改个人头像成功，请刷新', 'success');
+                        showTip('修改个人头像成功', 'success');
+                        window.setTimeout("window.location='<%=path%>/userAction/showUserProfile'",1500);
                     }
                     else {
                         showTip('修改个人头像失败', 'danger');
