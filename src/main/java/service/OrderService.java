@@ -15,5 +15,5 @@ public interface OrderService extends BaseService {
     public boolean cancelBuyOrder(int orderID);
     public Map confirmBuyReceipt(int orderID);
     
-    public List<Book> getSellBookList();
+    public List<OrderProfile> getSellBookList();
 }

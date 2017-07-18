@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import model.Book;
+import model.BorrowProfile;
 
 public interface BorrowService extends BaseService {
     public Map showMyBorrow();
@@ -15,6 +16,6 @@ public interface BorrowService extends BaseService {
     public Map delayBook(int borrowID);
     public Map confirmBorrowReceipt(int borrowID);
     
-    public List<Book> getLendBookList();
-    public List<Book> getLendBookHistoryList();
+    public List<BorrowProfile> getLendBookList();
+    public List<BorrowProfile> getLendBookHistoryList();
 }
