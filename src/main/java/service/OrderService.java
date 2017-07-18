@@ -15,6 +15,5 @@ public interface OrderService extends BaseService {
     public boolean cancelBuyOrder(int orderID);
     public Map confirmBuyReceipt(int orderID);
     
-    public List<Book> getSellBookList();
-    public Map deliverBuyOrder(int orderID,String trackingNo); //卖家发货,返回success,发货时间
+    public List<OrderProfile> getSellBookList();
 }

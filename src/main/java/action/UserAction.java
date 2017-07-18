@@ -165,9 +165,9 @@ public class UserAction extends ActionSupport {
 
 
     public String showSellerCenter(){
-        //ActionContext.getContext().put("lendBook",borrowService.getLendBookList());
-        //ActionContext.getContext().put("lendBookHistoryList",borrowService.getLendBookHistoryList());
-        //ActionContext.getContext().put("sellBookList",orderService.getSellBookList());
+        ActionContext.getContext().put("lendBook",borrowService.getLendBookList());
+        ActionContext.getContext().put("lendBookHistoryList",borrowService.getLendBookHistoryList());
+        ActionContext.getContext().put("sellBookList",orderService.getSellBookList());
         return "showSellerCenter";
     }
 
