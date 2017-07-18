@@ -299,7 +299,16 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             Book book = this.bookDao.getBookByID(bookID);
             BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
             totalCredit += borrow.getBorrowCredit();
-            if(book.getStatus().equals(BookStatus.IDLE) && book.getReserved()==0) {  // 书是空闲的并且没有被预约
+            
+            boolean valid = true;
+            if(!book.getStatus().equals(BookStatus.IDLE)) {   // 如果书是非空闲的，则拒绝
+                valid = false;
+            }
+            if(book.getReserved()>0 && user.getUserID()!=this.reserveDao.getFirstReserveByBookID(bookID).getUserID()) {  // 如果书籍有人预约，但当前预约排队首位的人不是自己，则拒绝
+                valid = false;
+            }
+            
+            if(valid) {  // 书是空闲的并且没有被预约，或者预约排队首位是自己
                 allIdleBook.add(book);
                 allIdleBookRelease.add(bookRelease);
                 allSuccessBorrow.add(borrow);

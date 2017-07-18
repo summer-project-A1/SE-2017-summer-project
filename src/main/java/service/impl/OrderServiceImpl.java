@@ -8,6 +8,7 @@ import common.constants.OrderStatus;
 import dao.BookDao;
 import dao.BookReleaseDao;
 import dao.OrderDao;
+import dao.ReserveDao;
 import dao.UserDao;
 import model.Book;
 import model.BookRelease;
@@ -23,6 +24,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
     private BookDao bookDao;
     private BookReleaseDao bookReleaseDao; 
     private OrderDao orderDao;
+    private ReserveDao reserveDao;
     
     /* ========================================================= */
     
@@ -56,10 +58,19 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
     public void setOrderDao(OrderDao orderDao) {
         this.orderDao = orderDao;
+    }    
+
+    public ReserveDao getReserveDao() {
+        return reserveDao;
     }
 
+    public void setReserveDao(ReserveDao reserveDao) {
+        this.reserveDao = reserveDao;
+    }
+
+
     /* ========================================================= */
-    
+
     @Override
     public Map showMyOrder() {
         User buyer = getLoginedUserInfo();
@@ -217,7 +228,16 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
             Book book = this.bookDao.getBookByID(bookID);
             BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
             totalCredit += order.getBuyCredit();    // 使用下单时的所需积分
-            if(book.getStatus().equals(BookStatus.IDLE) && book.getReserved()==0) {  // 书是空闲的并且没有被预约
+            
+            boolean valid = true;
+            if(!book.getStatus().equals(BookStatus.IDLE)) {   // 如果书是非空闲的，则拒绝
+                valid = false;
+            }
+            if(book.getReserved()>0 && user.getUserID()!=this.reserveDao.getFirstReserveByBookID(bookID).getUserID()) {  // 如果书籍有人预约，但当前预约排队首位的人不是自己，则拒绝
+                valid = false;
+            }
+            
+            if(valid) {  // 书是空闲的并且没有被预约，或者预约排队首位是自己
                 allIdleBook.add(book);
                 allIdleBookRelease.add(bookRelease);
                 allSuccessOrder.add(order);
