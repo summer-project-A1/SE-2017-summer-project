@@ -26,6 +26,8 @@
 
     
 
+
+    
 <script>
     function payBook(borrowID){
         var statusID = "status"+borrowID;
