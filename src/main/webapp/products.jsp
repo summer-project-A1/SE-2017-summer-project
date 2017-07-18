@@ -214,7 +214,7 @@
                             <span class="book-isbn">ISBN:<s:property value="isbn"/></span>
                             <div class="ofr">
                                 <p class="pric1">作者：<s:property value="author"/></p><br>
-                                <p class="pric1">分类：<s:property value="category"/></p><br>
+                                <p class="pric1">分类：<s:property value="category1"/>&nbsp;标签：<s:property value="category2"/></p><br>
                                 <p class="disc">当前状态：<s:if test="bookStatus==IDLE">空闲</s:if>
                                     <s:elseif test="bookStatus==BORROWED">正被借阅</s:elseif>
                                     <s:else>正被交换</s:else></p><br>

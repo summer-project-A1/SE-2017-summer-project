@@ -148,6 +148,7 @@ public class BookAction extends ActionSupport {
     }
 
     public String showBookRelease(){
+        ActionContext.getContext().put("category1List",this.bookService.showAllCategory1s());
         return "showBookRelease";
     }
 

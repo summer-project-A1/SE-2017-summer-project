@@ -4,7 +4,6 @@
 
 <html>
 <head>
-    <s:action name="header" executeResult="true" namespace="/"/>
 
     <title>How To Share</title>
 </head>
