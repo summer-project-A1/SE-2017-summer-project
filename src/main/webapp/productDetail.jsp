@@ -25,7 +25,6 @@
                 type:'POST',
                 data:{
                     'bookID': bookID,
-                    'amount': "1"
                 },
                 success: function (msg) {
                     if (msg.success) {
@@ -47,7 +46,6 @@
                 type:'POST',
                 data:{
                     'bookID': bookID,
-                    'amount': "1"
                 },
                 success: function (msg) {
                     if (msg.success) {
@@ -83,6 +81,29 @@
                 }
             });
         }
+
+        function reserveBook(bookID){
+            $.ajax({
+                url:'<%=path%>/reserveAction/reserveBook',
+                type:'POST',
+                data:{'bookID': bookID},
+                success: function(msg){
+                    if(msg.success.equals("success")){
+                        showTip('预约成功!','success');
+                    }
+                    else if(msg.success.equals("already")){
+                        showTip('您已经预约!',"warning");
+                    }
+                    else if(msg.success.equals("error")){
+                        showTip('发生错误!',"danger");
+                    }
+                },
+                error:function(xhr,status,error){
+                    alert('status='+status+',error='+error);
+                }
+            });
+        }
+
     </script>
 </head>
 <body>
@@ -125,8 +146,12 @@
                 </ul>
                 <ul class="size">
                     <h3>积分要求</h3>
-                    <li><span>购买积分：<s:property value="#bookProfile.buyCredit"/></span></li>
-                    <li><span>借阅积分：<s:property value="#bookProfile.borrowCredit"/></span></li>
+                    <s:if test="#bookProfile.canExchange==true">
+                        <li><span>购买积分：<s:property value="#bookProfile.buyCredit"/></span></li>
+                    </s:if>
+                    <s:if test="#bookProfile.canBorrow==true">
+                        <li><span>借阅积分：<s:property value="#bookProfile.borrowCredit"/></span></li>
+                    </s:if>
                     <div class="clearfix"></div><br>
                 </ul>
                 <s:if test="#bookProfile.bookStatus=='BORROWED' && #bookProfile.reserved==false">
@@ -139,13 +164,13 @@
                     <p>此书已被交换</p>
                 </s:elseif>
                 <s:elseif test="#bookProfile.canBorrow==true && #bookProfile.canExchange==true">
-                    <p>此书可以借阅，可以交换</p>
+                    <p>此书可以借阅，可以交换，可以购买</p>
                 </s:elseif>
                 <s:elseif test="#bookProfile.canBorrow==true && #bookProfile.canExchange==false">
                     <p>此书可以借阅</p>
                 </s:elseif>
                 <s:elseif test="#bookProfile.canBorrow==false && #bookProfile.canExchange==true">
-                    <p>此书可以交换</p>
+                    <p>此书可以交换，可以购买</p>
                 </s:elseif>
                 <s:elseif test="#bookProfile.canBorrow==false && #bookProfile.canExchange==false">
                     <p>此书是摆设</p>
@@ -154,7 +179,7 @@
                     <s:if test="#bookProfile.bookStatus=='BORROWED'">
                         <s:if test="#bookProfile.reserved==false">
                             <s:if test="#bookProfile.canBorrow==true">
-                                <a href="#" class="add-cart item_add">预约</a>
+                                <a href="#" class="add-cart item_add" onclick="reserveBook(<s:property value="#bookProfile.bookID"/>)">预约</a>
                             </s:if>
                         </s:if>
                     </s:if>

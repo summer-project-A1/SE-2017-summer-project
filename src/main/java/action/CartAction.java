@@ -19,7 +19,6 @@ public class CartAction extends ActionSupport{
     private BorrowService borrowService;
 
     private int bookID;
-    private int amount;
 
     private List cart;
     private Map params;
@@ -49,12 +48,6 @@ public class CartAction extends ActionSupport{
     }
     public void setBookID(int bookID) {
         this.bookID = bookID;
-    }
-    public int getAmount() {
-        return amount;
-    }
-    public void setAmount(int amount) {
-        this.amount = amount;
     }
     public List<Book> getCart() {
         return cart;

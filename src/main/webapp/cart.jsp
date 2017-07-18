@@ -88,8 +88,12 @@
                             <li><p>标签：<s:property value="category2"/> </p></li>
                         </ul>
                         <div class="delivery">
-                            <p>是否可交换：<s:property value="canExchange"/> </p>
+                            <s:if test="#buyOrBorrow=='buy'">
+                                <p>购买积分：<s:property value="buyCredit"/></p>
+                            </s:if>
+                            <s:if test="#buyOrBorrow=='borrow'">
                             <span>是否可借阅：<s:property value="canBorrow"/> </span>
+                            </s:if>
                             <div class="clearfix"></div>
                         </div>
                     </div>
