@@ -164,7 +164,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
             int bookID = (int)cartListItem.get("bookID");
             Book book = this.bookDao.getBookByID(bookID);
             BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
-            totalNeededCredit += book.getBorrowCredit();     
+            totalNeededCredit += book.getBuyCredit();     
             
             Order newOrder = new Order();
             newOrder.setBookID(book.getBookID());
@@ -188,7 +188,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
             newOrderProfile.setBuyCredit(book.getBuyCredit());
             orderProfileList.add(newOrderProfile);
         }
-        getHttpSession().remove("borrowCart");
+        getHttpSession().remove("buyCart");
         
         returnMap.put("orderProfileList", orderProfileList);
         returnMap.put("totalCredit", totalNeededCredit);
