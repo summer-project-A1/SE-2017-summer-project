@@ -456,6 +456,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         List<Borrow> borrowList = this.borrowDao.getBorrowByLendUserID(userID);
         if(borrowList != null) {
             for (Borrow borrow : borrowList) {
+                User buyer = this.userDao.getUserById(borrow.getUserID1());
                 Book book = this.bookDao.getBookByID(borrow.getBookID());
                 BorrowProfile borrowProfile = new BorrowProfile();
                 borrowProfile.setBorrowID(borrow.getBorrowID());
@@ -467,6 +468,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                 borrowProfile.setDelayCount(borrow.getDelayCount());
                 borrowProfile.setStatus(borrow.getStatus());
                 borrowProfile.setBorrowStatus(borrow.getStatus().toString());
+                borrowProfile.setBorrowAddress(borrow.getBorrowAddress());
                 borrowProfile.setReturnAddress(borrow.getReturnAddress());
                 borrowProfile.setTrackingNo1(borrow.getTrackingNo1());
                 borrowProfile.setOrderDate(borrow.getOrderDate());
@@ -483,6 +485,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                 borrowProfile.setCategory2(book.getCategory2());
                 borrowProfile.setImageID(book.getImageID());
                 borrowProfile.setEmail(user.getEmail());
+                borrowProfile.setBuyerEmail(buyer.getEmail());
                 borrowProfileList.add(borrowProfile);
             }
         }

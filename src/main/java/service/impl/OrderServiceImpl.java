@@ -320,6 +320,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
         List<Order> orderList = this.orderDao.getOrdersBySellerID(userID);
         if(orderList != null) {
             for (Order order : orderList) {
+                User buyer = this.userDao.getUserById(order.getBuyerID());
                 Book book = this.bookDao.getBookByID(order.getBookID());
                 OrderProfile orderProfile = new OrderProfile();
                 orderProfile.setOrderID(order.getOrderID());
@@ -346,9 +347,22 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
                 orderProfile.setCategory2(book.getCategory2());
                 orderProfile.setImageID(book.getImageID());
                 orderProfile.setEmail(user.getEmail());   // user is seller
+                orderProfile.setBuyerEmail(buyer.getEmail());  //buyer's email
                 orderProfileList.add(orderProfile);
             }
         }
+        Collections.sort(orderProfileList, new Comparator<OrderProfile>() {
+            @Override
+            public int compare(OrderProfile o1, OrderProfile o2) {
+                if(o1.getOrderID() > o2.getOrderID()){
+                    return -1;
+                }
+                if(o1.getOrderID() < o2.getOrderID()){
+                    return 1;
+                }
+                return 0;
+            }
+        });
         return orderProfileList;
     }
 
