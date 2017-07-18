@@ -161,7 +161,7 @@
                     <p>此书正被借阅，已被预约</p>
                 </s:elseif>
                 <s:elseif test="#bookProfile.bookStatus=='EXCHANGED'">
-                    <p>此书已被交换</p>
+                    <p>此书已被交换或购买</p>
                 </s:elseif>
                 <s:elseif test="#bookProfile.canBorrow==true && #bookProfile.canExchange==true">
                     <p>此书可以借阅，可以交换，可以购买</p>

@@ -194,6 +194,10 @@ public class UserAction extends ActionSupport {
     }
 
     public String updateUserProfile(){
+        if(this.userProfile.getCity()==null&&this.userProfile.getDistrict()==null){
+            userProfile.setCity(this.userProfile.getProvince());
+            userProfile.setDistrict(this.userProfile.getProvince());
+        }
         this.params = new HashMap();
         boolean result = this.userService.updateUserProfile(this.userProfile);
         params.put("success", result);
