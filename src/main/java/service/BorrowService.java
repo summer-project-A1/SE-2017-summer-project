@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import model.Book;
+
 public interface BorrowService extends BaseService {
     public Map showMyBorrow();
     public boolean borrowBook(int bookID);
@@ -12,4 +14,7 @@ public interface BorrowService extends BaseService {
     public Map returnBook(int borrowID,String trackingNo1);
     public Map delayBook(int borrowID);
     public Map confirmBorrowReceipt(int borrowID);
+    
+    public List<Book> getLendBookList();
+    public List<Book> getLendBookHistoryList();
 }

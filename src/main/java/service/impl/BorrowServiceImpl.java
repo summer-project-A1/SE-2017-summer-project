@@ -113,8 +113,8 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         User user1 = getLoginedUserInfo();
         int userID = user1.getUserID();
         //List<BorrowProfile> borrowBook = (List<BorrowProfile>)borrowDao.getBorrowByUserID(userID);
-        List<Borrow> borrows = this.borrowDao.getBorrowByUserID(userID);
-        List<BorrowHistory> borrowHistories = this.borrowHistoryDao.getBorrowHistoryByUserID(userID);
+        List<Borrow> borrows = this.borrowDao.getBorrowByBorrowUserID(userID);  // 用户借来书的记录
+        List<BorrowHistory> borrowHistories = this.borrowHistoryDao.getBorrowHistoryByBorrowUserID(userID);
         List<BorrowProfile> borrowBook = new ArrayList();
         List<BorrowProfile> borrowHistoryBook = new ArrayList();
         if(borrows != null) {
@@ -445,5 +445,27 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         return returnMap;
     }
 
+    @Override
+    public List<Book> getLendBookList() {
+        List<Book> bookList = new ArrayList<Book>();
+        int userID = this.getLoginedUserInfo().getUserID();
+        List<Borrow> borrowList = this.borrowDao.getBorrowByLendUserID(userID);
+        for(Borrow borrow : borrowList) {
+            Book book = this.bookDao.getBookByID(borrow.getBookID());
+            bookList.add(book);
+        }
+        return bookList;
+    }
+    @Override
+    public List<Book> getLendBookHistoryList() {
+        List<Book> bookList = new ArrayList<Book>();
+        int userID = this.getLoginedUserInfo().getUserID();
+        List<BorrowHistory> borrowHistoryList = this.borrowHistoryDao.getBorrowHistoryByLendUserID(userID);
+        for(BorrowHistory borrowHistory : borrowHistoryList) {
+            Book book = this.bookDao.getBookByID(borrowHistory.getBookID());
+            bookList.add(book);
+        }
+        return bookList;
+    }
 
 }

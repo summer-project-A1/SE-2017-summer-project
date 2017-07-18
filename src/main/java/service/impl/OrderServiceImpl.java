@@ -308,5 +308,17 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
         returnMap.put("shDate",shDate);
         return returnMap;
     }
-    
+
+    @Override
+    public List<Book> getSellBookList() {
+        List<Book> bookList = new ArrayList<Book>();
+        int userID = this.getLoginedUserInfo().getUserID();
+        List<Order> orderList = this.orderDao.getOrdersBySellerID(userID);
+        for(Order order : orderList) {
+            Book book = this.bookDao.getBookByID(order.getBookID());
+            bookList.add(book);
+        }
+        return bookList;
+    }
+
 }
