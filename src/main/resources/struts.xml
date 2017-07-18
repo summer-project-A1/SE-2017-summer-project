@@ -100,7 +100,7 @@
             <result name="createBuyOrder">/showBuyOrder.jsp</result>
             <result name="showMyOrder">/myOrder.jsp</result>
             <allowed-methods>
-              buyCheckout,createBuyOrder,confirmBuyOrder,cancelBuyOrder,showOrderById,showMyOrder,confirmBuyReceipt,deliverBuyOrder,showSellerCenter
+              buyCheckout,createBuyOrder,confirmBuyOrder,cancelBuyOrder,showOrderById,showMyOrder,confirmBuyReceipt,deliverBuyOrder
             </allowed-methods>
         </action>
     </package>

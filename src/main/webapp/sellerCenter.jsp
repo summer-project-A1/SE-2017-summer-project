@@ -315,55 +315,6 @@
                             </div>
                         </div>
                     </s:iterator>
-                    <div id="bookID1" class="cart-header">
-                        <div class="cart-sec simpleCart_shelfItem">
-                            <div class="cart-item cyc">
-                                <img src="<%=path%>/images/m5.png" class="img-responsive" alt="">
-                            </div>
-                            <div class="cart-item-info">
-                                <h4>
-                                    <a href="<%=path%>/">订单号:1580021000037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：未支付</a>
-                                </h4><br>
-                                <ul class="qty">
-                                    <li><p>书名：黄政的自传</p></li>
-                                    <li><p>下单时间：2017-6-10   20:42:48</p></li>
-                                    <li><p>总积分：1024</p></li>
-                                </ul>
-                                <div class="delivery">
-                                    <p>收货人：黄政&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                    <p>收货地址：东川路800号</p><br>
-                                    <a href="${showOrderLink}" id="payBtn" class="add-cart item_add">支付</a>
-                                    <a href="${cancelOrderLink}" id="cancelBtn" class="add-cart item_add">取消</a>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div><hr>
-                    <div id="bookID2" class="cart-header">
-                        <div class="cart-sec simpleCart_shelfItem">
-                            <div class="cart-item cyc">
-                                <img src="<%=path%>/images/m5.png" class="img-responsive" alt="">
-                            </div>
-                            <div class="cart-item-info">
-                                <h4>
-                                    <a href="<%=path%>/">订单号:1580021000037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：未发货</a>
-                                </h4><br>
-                                <ul class="qty">
-                                    <li><p>书名：黄政的自传</p></li>
-                                    <li><p>下单时间：2017-6-10   20:42:48</p></li>
-                                    <li><p>总积分：524</p></li>
-                                </ul>
-                                <div class="delivery">
-                                    <p>收货人：沈斯杰&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                    <p>收货地址：东川路800号</p><br>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div><hr>
-
                 </div>
                 <div id="lend-book-history-list">
                     <h4>已归还的图书</h4>
@@ -394,7 +345,7 @@
                                         <p id="yhdate<s:property value="borrowID"/>">应还日期：<s:property value="yhDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                         <p id="returnDate<s:property value="borrowID"/>">归还日期：<s:property value="returnDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                                         <p id="shDate<s:property value="borrowID"/>">完成日期：<s:property value="shDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                        <p id="borrowAddr<s:property value="borrowID"/>">卖家地址：<s:property value="borrowAddress"/></p><br>
+                                        <p id="borrowAddr<s:property value="borrowID"/>">买家地址：<s:property value="borrowAddress"/></p><br>
 
                                         <s:if test="comment2==null">
                                             <a href="#" id="creditRatingBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="creditRating(<s:property value="borrowID"/>)">信用评价</a>
