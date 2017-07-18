@@ -76,7 +76,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
         Map<String, Object> newCartListItem = new HashMap();
         newCartListItem.put("bookID", bookID);
         newCartListItem.put("bookName", book.getBookName());
-        newCartListItem.put("amount", 1);
+        newCartListItem.put("borrowCredit",book.getBorrowCredit());
         cartList.add(newCartListItem);
         return true;
     }
@@ -138,7 +138,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
         Map<String, Object> newCartListItem = new HashMap();
         newCartListItem.put("bookID", bookID);
         newCartListItem.put("bookName", book.getBookName());
-        newCartListItem.put("amount", 1);
+        newCartListItem.put("buyCredit",book.getBuyCredit());
         cartList.add(newCartListItem);
         return true;
     }
@@ -161,7 +161,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
             Book book = this.bookDao.getBookByID(bookID);
             if(book != null) {
                 booksInBuyCart.add(book);
-                totalCredit += book.getBorrowCredit();
+                totalCredit += book.getBuyCredit();
             }
         }
         result.put("booksInBuyCart", booksInBuyCart);
