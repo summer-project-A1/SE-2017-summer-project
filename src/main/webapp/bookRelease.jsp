@@ -27,7 +27,7 @@
     margin-right:20%;
 }
 .form-control-noNewline {
-    width:100px;
+    width:140px;
     display:inline;
 }
 .form-horizontal .form-group-auto {
@@ -69,17 +69,19 @@
         <div class="form-group form-group-auto">
             <label>类别</label><font color="#FF0000">*</font>&nbsp;
             <select id="cate" name="bookProfile.category1" class="form-control form-control-noNewline">
-                <option value="0">小说</option>
-                <option value="1">文学</option>
-                <option value="2">管理</option>
-                <option value="4">其他</option>
+                <s:iterator value="#category1List">
+                    <option value="<s:property value="category1Name"/>"><s:property value="category1Name"/></option>
+                </s:iterator>
             </select>&nbsp;
             <select id="category" name="bookProfile.category2" class="form-control form-control-noNewline">
-                <option value="00">言情</option>
-                <option value="01">玄幻</option>
-                <option value="02">武侠</option>
-                <option value="03">其他</option>
-            </select>
+                <s:iterator value="#category1List" begin="0" end="0">
+                <s:iterator value="category2List">
+                    <option value="<s:property value="category2Name"/>"><s:property value="category2Name"/></option>
+                </s:iterator>
+                </s:iterator>
+
+                </select>
+
         </div>
         <div class="form-group form-group-auto">
             <label>页数</label><font color="#FF0000">*</font>&nbsp;
@@ -164,20 +166,13 @@
         $("#category").empty();
         switch ($("#cate").val())
         {
-            case '0':$("#category").append($("<option>").val(00).text("言情"));
-                     $("#category").append($("<option>").val(01).text("玄幻"));
-                     $("#category").append($("<option>").val(00).text("武侠"));
-                     $("#category").append($("<option>").val(00).text("其他"));
-                     break;
-            case '1':$("#category").append($("<option>").val(10).text("影视文学"));
-                     $("#category").append($("<option>").val(11).text("散文随笔"));
-                     $("#category").append($("<option>").val(12).text("其他"));
-                     break;
-            case '2':$("#category").append($("<option>").val(20).text("管理学"));
-                     $("#category").append($("<option>").val(21).text("财务管理"));
-                     $("#category").append($("<option>").val(22).text("其他"));
-                     break;
-            default:$("#category").append($("<option>").val(40).text("其他"));
+            <s:iterator value="#category1List">
+            case '<s:property value="category1Name"/>':
+                <s:iterator value="category2List">
+                $("#category").append($("<option>").val("<s:property value='category2Name'/>").text("<s:property value='category2Name'/>"));
+            </s:iterator>
+                break;
+            </s:iterator>
         }
     });
     $("#cb1").click(function(){
