@@ -216,7 +216,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
             Integer bookID = order.getBookID();
             Book book = this.bookDao.getBookByID(bookID);
             BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
-            totalCredit += book.getBorrowCredit();
+            totalCredit += order.getBuyCredit();    // 使用下单时的所需积分
             if(book.getStatus().equals(BookStatus.IDLE) && book.getReserved()==0) {  // 书是空闲的并且没有被预约
                 allIdleBook.add(book);
                 allIdleBookRelease.add(bookRelease);
@@ -253,6 +253,9 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
                 Book book = allIdleBook.get(i);
                 BookRelease bookRelease = allIdleBookRelease.get(i);
                 Order order = allSuccessOrder.get(i);
+                User seller = this.userDao.getUserById(order.getSellerID());
+                seller.setCredit(seller.getCredit() + order.getBuyCredit());
+                this.userDao.update(seller);
                 order.setStatus(OrderStatus.NOTSHIPPED);
                 order.setPayDate(payDate);
                 this.orderDao.update(order);

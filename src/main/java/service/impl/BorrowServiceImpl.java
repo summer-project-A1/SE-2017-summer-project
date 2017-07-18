@@ -298,7 +298,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             Integer bookID = borrow.getBookID();
             Book book = this.bookDao.getBookByID(bookID);
             BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
-            totalCredit += book.getBorrowCredit();
+            totalCredit += borrow.getBorrowCredit();
             if(book.getStatus().equals(BookStatus.IDLE) && book.getReserved()==0) {  // 书是空闲的并且没有被预约
                 allIdleBook.add(book);
                 allIdleBookRelease.add(bookRelease);
@@ -335,6 +335,9 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                 Book book = allIdleBook.get(i);
                 BookRelease bookRelease = allIdleBookRelease.get(i);
                 Borrow borrow = allSuccessBorrow.get(i);
+                User lender = this.userDao.getUserById(borrow.getUserID2()); // 借出书的人（卖家）
+                lender.setCredit(lender.getCredit() + borrow.getBorrowCredit());
+                this.userDao.update(lender);
                 borrow.setStatus(BorrowStatus.SELLER_NOT_SHIPPED);
                 borrow.setPayDate(payDate);
                 this.borrowDao.update(borrow);
