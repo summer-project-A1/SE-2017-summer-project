@@ -211,7 +211,7 @@
     $(document).ready(function(){
 
 
-            $("#borrow-book-list").hide();
+            //$("#borrow-book-list").hide();
             $("#borrow-book-history-list").hide();
 
 
@@ -398,7 +398,7 @@
                                             <p id="shDate<s:property value="borrowID"/>" style="display: none">完成日期：<s:property value="shDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                             <p id="returnAddr<s:property value="borrowID"/>">归还地址：<s:property value="returnAddress"/></p><br>
 
-                                            <a href="#" id="returnBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="showReturnBook(<s:property value="borrowID"/>)">归还</a>
+                                            <a href="#" id="returnBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="showReturnBook(<s:property value="borrowID"/>)">归还</a>
                                             <form id="tracking<s:property value="borrowID"/>" style="display: none">
                                                 <input type="text" id="trackingNO<s:property value="borrowID"/>" name="trackingNo1" placeholder="请填写快递单号"/>
                                                 <a href="#" class="add-cart item_add" onclick="returnBook(<s:property value="borrowID"/>)">提交</a>

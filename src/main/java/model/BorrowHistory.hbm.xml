@@ -5,7 +5,7 @@
 <hibernate-mapping>
     <class name="model.BorrowHistory" table="borrowhistory">
         <id name="bhID" column="bh_id">
-            <generator class="native"/>
+            <generator class="assigned"/>
         </id>
         <property name="userID1" column="user_id1" />
         <property name="userID2" column="user_id2" />

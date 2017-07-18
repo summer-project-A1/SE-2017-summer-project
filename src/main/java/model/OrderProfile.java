@@ -14,6 +14,7 @@ public class OrderProfile extends Order
     private String category2;
     private String imageID;
     private String email;
+    private String buyerEmail;
     
     public OrderProfile() {
         
@@ -89,4 +90,11 @@ public class OrderProfile extends Order
 		this.email = email;
 	}
 
+	public String getBuyerEmail() {
+		return buyerEmail;
+	}
+
+	public void setBuyerEmail(String buyerEmail) {
+		this.buyerEmail = buyerEmail;
+	}
 }

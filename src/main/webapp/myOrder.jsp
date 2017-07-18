@@ -212,7 +212,7 @@
                                     <li><p>购买积分：<s:property value="buyCredit"/></p></li>
                                 </ul>
                                 <div class="delivery">
-                                    <p>收货人：<s:property value="email"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                    <p>卖家：<s:property value="email"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                     <p>收货地址：<s:property value="address"/></p><br>
                                     <s:if test="orderStatus=='NOTPAID'">
                                         <p id="payDate<s:property value="orderID"/>" style="display: none">付款时间：<s:property value="payDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
