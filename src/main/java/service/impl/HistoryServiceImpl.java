@@ -45,8 +45,8 @@ public class HistoryServiceImpl extends BaseServiceImpl implements HistoryServic
     @Override
     public Map getUserBorrowHistory(int userID) {
         Map result = new HashMap();
-        List<Borrow> userBorrow = this.borrowDao.getBorrowByUserID(userID);
-        List<BorrowHistory> userBorrowHistory = this.borrowHistoryDao.getBorrowHistoryByUserID(userID);
+        List<Borrow> userBorrow = this.borrowDao.getBorrowByBorrowUserID(userID);  // 用户借来书的记录
+        List<BorrowHistory> userBorrowHistory = this.borrowHistoryDao.getBorrowHistoryByBorrowUserID(userID);
         result.put("userBorrow", userBorrow);
         result.put("userBorrowHistory", userBorrowHistory);
         return result;

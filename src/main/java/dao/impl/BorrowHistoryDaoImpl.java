@@ -10,16 +10,6 @@ import model.BorrowHistory;
 public class BorrowHistoryDaoImpl extends BaseDaoImpl implements BorrowHistoryDao {
 
     @Override
-    public List<BorrowHistory> getBorrowHistoryByUserID(int userID) {
-        String hql = "from BorrowHistory where userID1=:userID";
-        Query query = getSession().createQuery(hql);
-        query.setParameter("userID", userID);
-        List<BorrowHistory> result = query.list();
-        if(result != null & result.size()>0) return result;
-        else return null;
-    }
-
-    @Override
     public BorrowHistory getBorrowHistoryByBorrowID(int borrowID){
         String hql = "from BorrowHistory where bhID=:borrowID";
         Query query = getSession().createQuery(hql);
@@ -30,5 +20,25 @@ public class BorrowHistoryDaoImpl extends BaseDaoImpl implements BorrowHistoryDa
         }
         else return null;
     }
-    
+ 
+    @Override
+    public List<BorrowHistory> getBorrowHistoryByBorrowUserID(int userID) {
+        String hql = "from BorrowHistory where userID1=:userID";
+        Query query = getSession().createQuery(hql);
+        query.setParameter("userID", userID);
+        List<BorrowHistory> result = query.list();
+        if(result != null & result.size()>0) return result;
+        else return null;
+    }
+
+    @Override
+    public List<BorrowHistory> getBorrowHistoryByLendUserID(int userID) {
+        String hql = "from BorrowHistory where userID2=:userID";
+        Query query = getSession().createQuery(hql);
+        query.setParameter("userID", userID);
+        List<BorrowHistory> result = query.list();
+        if(result != null & result.size()>0) return result;
+        else return null;
+    }
+       
 }

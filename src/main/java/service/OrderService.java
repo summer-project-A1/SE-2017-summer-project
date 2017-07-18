@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 import java.util.Map;
 
+import model.Book;
 import model.Order;
 import model.OrderProfile;
 
@@ -13,4 +14,6 @@ public interface OrderService extends BaseService {
     public Map confirmBuyOrder(List<Integer> orderIDList);
     public boolean cancelBuyOrder(int orderID);
     public Map confirmBuyReceipt(int orderID);
+    
+    public List<OrderProfile> getSellBookList();
 }

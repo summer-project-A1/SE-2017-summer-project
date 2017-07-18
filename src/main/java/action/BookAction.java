@@ -138,7 +138,7 @@ public class BookAction extends ActionSupport {
         }
         //List<Book> allBooks = this.bookService.showAllBooksByPage(this.part, this.bookNumPerPage);
         List<Book> allBooks = this.bookService.showAllBooksByPage(this.part, 9);
-        List<Book> nextPage = this.bookService.showAllBooksByPage(this.part+1, this.bookNumPerPage);
+        List<Book> nextPage = this.bookService.showAllBooksByPage(this.part+1, 9);
         ActionContext.getContext().put("isLastPart",(nextPage.size()==0));
         ActionContext.getContext().put("allBooks",allBooks);
         ActionContext.getContext().put("totalBookAmount",allBooks.size());//应从数据库获取allBooks的大小
