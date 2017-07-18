@@ -24,14 +24,13 @@
                 $("#gender").val('<s:property value="#userProfile.gender"/>');
 
             });
-            $(".tab1 .single-bottom").hide();
 
             $(".products .container form").hide();
             $("#update-userProfile-form").show();
 
 
-            $(".tab1 ul").click(function(){
-                $(".tab1 .single-bottom").slideToggle(300);
+            $("#current-tab ul").click(function(){
+                $("#current-tab .single-bottom").slideToggle(300);
             });
 
 
@@ -173,13 +172,16 @@
         }
 
         function updateUserPicture() {
+            var formData=new FormData($("#update-userPicture-form")[0]);
             $.ajax({
                 url: "<%=path%>/userAction/updateUserPicture",
                 type: "post",
-                data: $("#update-userPicture-form").serialize(),
+                data: formData,
+                processData: false,  // 告诉jQuery不要去处理发送的数据
+                contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
                 success: function(msg){
                     if (msg.success) {
-                        showTip('修改个人头像成功', 'success');
+                        showTip('修改个人头像成功，请刷新', 'success');
                     }
                     else {
                         showTip('修改个人头像失败', 'danger');
@@ -222,7 +224,7 @@
                 <div class="product_right">
                     <h3 class="m_2"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>操作选单</h3>
 
-                    <div class="tab1">
+                    <div id="current-tab" class="tab1">
                         <ul class="place">
                             <li class="sort"><a href="#">个人信息</a></li>
                             <li class="by"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></li>
@@ -319,7 +321,7 @@
                 <label>个人头像</label>
                 <img src="<%=path%>/imageAction/showImage?imageID=<s:property value='#userProfile.imageID'/>"  class="img-responsive" alt="">
                 <div class="form-group form-group-auto">
-                    <label>上传头像</label><input name="userPicture" type="file" class="file">
+                    <label>上传头像</label><input id="userPicture" name="userPicture" type="file" class="file">
                 </div>
             </div>
             <div class="clearfix"> </div>
