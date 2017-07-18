@@ -166,12 +166,4 @@ public class BorrowAction extends ActionSupport {
         return "ajax";
     }
 
-    public String showMyLend(){
-        List<BorrowProfile> lendBookList = this.borrowService.getLendBookList();
-        List<BorrowProfile> lendBookHistoryList = this.borrowService.getLendBookHistoryList();
-        ActionContext.getContext().put("lendBookList",lendBookList);
-        ActionContext.getContext().put("lendBookHistoryList",lendBookHistoryList);
-        return "showMyLend";
-    }
-
 }

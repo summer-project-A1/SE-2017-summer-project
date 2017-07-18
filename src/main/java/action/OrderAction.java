@@ -176,13 +176,4 @@ public class OrderAction extends ActionSupport {
         return "ajax";
     }
 
-    public String showSellerCenter(){
-        List<BorrowProfile> lendBookList = this.borrowService.getLendBookList();
-        List<BorrowProfile> lendBookHistoryList = this.borrowService.getLendBookHistoryList();
-        List<OrderProfile> sellBookList = this.orderService.getSellBookList();
-        ActionContext.getContext().put("lendBookList",lendBookList);
-        ActionContext.getContext().put("lendBookHistoryList",lendBookHistoryList);
-        ActionContext.getContext().put("sellBookList",sellBookList);
-        return "showSellerCenter";
-    }
 }
