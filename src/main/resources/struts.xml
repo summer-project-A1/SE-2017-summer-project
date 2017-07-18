@@ -100,7 +100,7 @@
             <result name="createBuyOrder">/showBuyOrder.jsp</result>
             <result name="showMyOrder">/myOrder.jsp</result>
             <allowed-methods>
-              buyCheckout,createBuyOrder,confirmBuyOrder,cancelBuyOrder,showOrderById,showMyOrder,confirmBuyReceipt
+              buyCheckout,createBuyOrder,confirmBuyOrder,cancelBuyOrder,showOrderById,showMyOrder,confirmBuyReceipt,deliverBuyOrder,showSellerCenter
             </allowed-methods>
         </action>
     </package>
@@ -172,6 +172,7 @@
             <result name="createBorrowOrder">/showBuyOrder.jsp</result>
             <allowed-methods>
                 borrowCheckout,createBorrowOrder,showMyBorrow,delayBook,returnBook,confirmBorrowOrder,confirmBorrowReceipt
+                ,deliverBorrowOrder,confirmReturnReceipt
             </allowed-methods>
         </action>
     </package>

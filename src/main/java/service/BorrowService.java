@@ -18,4 +18,6 @@ public interface BorrowService extends BaseService {
     
     public List<BorrowProfile> getLendBookList();
     public List<BorrowProfile> getLendBookHistoryList();
+    public Map deliveryBorrowOrder(int borrowID,String trackingNo2,String returnAddress);
+    public Map confirmReturnReceipt(int borrowID);
 }

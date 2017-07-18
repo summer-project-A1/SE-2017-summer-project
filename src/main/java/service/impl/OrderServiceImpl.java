@@ -315,34 +315,36 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
         User user = this.getLoginedUserInfo();
         int userID = user.getUserID();
         List<Order> orderList = this.orderDao.getOrdersBySellerID(userID);
-        for(Order order : orderList) {
-            Book book = this.bookDao.getBookByID(order.getBookID());
-            OrderProfile orderProfile = new OrderProfile();
-            orderProfile.setOrderID(order.getOrderID());
-            orderProfile.setBuyerID(order.getBuyerID());
-            orderProfile.setSellerID(order.getSellerID());
-            orderProfile.setBookID(book.getBookID());
-            orderProfile.setOrderDate(order.getOrderDate());
-            orderProfile.setPayDate(order.getPayDate());
-            orderProfile.setBuyCredit(order.getBuyCredit());
-            orderProfile.setAddress(order.getAddress());
-            orderProfile.setFhDate(order.getFhDate());
-            orderProfile.setShDate(order.getShDate());
-            orderProfile.setTrackingNo(order.getTrackingNo());
-            orderProfile.setBuyerComment(order.getBuyerComment());
-            orderProfile.setSellerComment(order.getSellerComment());
-            orderProfile.setStatus(order.getStatus());
-            orderProfile.setOrderStatus(order.getStatus().toString());
+        if(orderList != null) {
+            for (Order order : orderList) {
+                Book book = this.bookDao.getBookByID(order.getBookID());
+                OrderProfile orderProfile = new OrderProfile();
+                orderProfile.setOrderID(order.getOrderID());
+                orderProfile.setBuyerID(order.getBuyerID());
+                orderProfile.setSellerID(order.getSellerID());
+                orderProfile.setBookID(book.getBookID());
+                orderProfile.setOrderDate(order.getOrderDate());
+                orderProfile.setPayDate(order.getPayDate());
+                orderProfile.setBuyCredit(order.getBuyCredit());
+                orderProfile.setAddress(order.getAddress());
+                orderProfile.setFhDate(order.getFhDate());
+                orderProfile.setShDate(order.getShDate());
+                orderProfile.setTrackingNo(order.getTrackingNo());
+                orderProfile.setBuyerComment(order.getBuyerComment());
+                orderProfile.setSellerComment(order.getSellerComment());
+                orderProfile.setStatus(order.getStatus());
+                orderProfile.setOrderStatus(order.getStatus().toString());
 
-            orderProfile.setBookName(book.getBookName());
-            orderProfile.setIsbn((book.getIsbn()));
-            orderProfile.setAuthor(book.getAuthor());
-            orderProfile.setPress(book.getPress());
-            orderProfile.setCategory1(book.getCategory1());
-            orderProfile.setCategory2(book.getCategory2());
-            orderProfile.setImageID(book.getImageID());
-            orderProfile.setEmail(user.getEmail());   // user is seller
-            orderProfileList.add(orderProfile);
+                orderProfile.setBookName(book.getBookName());
+                orderProfile.setIsbn((book.getIsbn()));
+                orderProfile.setAuthor(book.getAuthor());
+                orderProfile.setPress(book.getPress());
+                orderProfile.setCategory1(book.getCategory1());
+                orderProfile.setCategory2(book.getCategory2());
+                orderProfile.setImageID(book.getImageID());
+                orderProfile.setEmail(user.getEmail());   // user is seller
+                orderProfileList.add(orderProfile);
+            }
         }
         return orderProfileList;
     }

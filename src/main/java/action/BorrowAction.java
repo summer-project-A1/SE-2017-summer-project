@@ -9,10 +9,7 @@ import service.CartService;
 import service.OrderService;
 import service.UserService;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BorrowAction extends ActionSupport {
 
@@ -24,8 +21,10 @@ public class BorrowAction extends ActionSupport {
     private Map params;
 
 	private int borrowID;
-    private String trackingNo1;
-    private String address;
+    private String trackingNo1; //买家还书快递单号
+    private String address;  //买家地址
+    private String trackingNo2;   //卖家发书快递单号
+    private String returnAddress; //买家地址
     private List<Integer> borrowIDList;
     
     /* ============================================================== */
@@ -84,6 +83,10 @@ public class BorrowAction extends ActionSupport {
     public void setTrackingNo1(String trackingNo1) {
         this.trackingNo1 = trackingNo1;
     }
+    public String getTrackingNo2(){return trackingNo2;}
+    public void setTrackingNo2(String trackingNo2){this.trackingNo2 = trackingNo2;}
+    public String getReturnAddress(){return returnAddress;}
+    public void setReturnAddress(String returnAddress){this.returnAddress = returnAddress;}
     
     /* ============================================================== */
     
@@ -151,6 +154,24 @@ public class BorrowAction extends ActionSupport {
     public String confirmBorrowReceipt(){
         this.params = this.borrowService.confirmBorrowReceipt(this.borrowID);
         return "ajax";
+    }
+
+    public String deliverBorrowOrder(){ //卖家发货,前台传borrowID，发货单号，还书地址,返回success和发货时间
+        this.params = this.borrowService.deliveryBorrowOrder(this.borrowID,this.trackingNo2,this.returnAddress);
+        return "ajax";
+    }
+
+    public String confirmReturnReceipt(){ //卖家收货，前台传borrowID,返回success和收货时间
+        this.params = this.borrowService.confirmReturnReceipt(this.borrowID);
+        return "ajax";
+    }
+
+    public String showMyLend(){
+        List<BorrowProfile> lendBookList = this.borrowService.getLendBookList();
+        List<BorrowProfile> lendBookHistoryList = this.borrowService.getLendBookHistoryList();
+        ActionContext.getContext().put("lendBookList",lendBookList);
+        ActionContext.getContext().put("lendBookHistoryList",lendBookHistoryList);
+        return "showMyLend";
     }
 
 }

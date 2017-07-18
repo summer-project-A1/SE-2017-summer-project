@@ -69,6 +69,61 @@
 
         });
 
+        function creditRating(borrowID){
+            var creditRatingFormID = "creditRatingForm" + borrowID;
+            $("#"+creditRatingFormID).show();
+        }
+
+        function submitRating(borrowID){
+            var creditRatingFormID = "creditRatingForm" + borrowID;
+            var creditRatingBtnID = "creditRatingBtn" + borrowID;
+            var params = $("#"+creditRatingFormID).serialize();
+            $.ajax({
+                url:'<%=path%>/commentAction/honestyRatingWhenBorrow',
+                type:'POST',
+                data:params,
+                success:function(msg){
+                    if(msg.success){
+                        showTip('信用评价成功！','success');
+                        $("#"+creditRatingBtnID).remove();
+                        $("#"+creditRatingFormID).remove();
+                    }
+                },
+                error:function(xhr,status,error){
+                    alert('status='+status+',error='+error);
+                }
+            });
+        }
+
+        function deliverBorrowBook(borrowID){
+            var borrowDeliveryID = "borrowDelivery"+borrowID;
+            var fhDateID = "fhDate"+borrowID;
+            var deliverBorrowBtn = "deliverBorrowBtn"+borrowID;
+            var statusID = "borrowStatus"+borrowID;
+            var params = $("#"+borrowDeliveryID);
+            $.ajax({
+                url:'<%=path%>/borrowAction/deliverBorrowOrder',
+                type:'POST',
+                data:params,
+                success:function(msg){
+                    if(msg.success){
+                        var fhDate = msg.fhDate;
+                        showTip('发货成功！','success');
+                        $("#"+statusID).html("当前状态：卖家已发货");
+                        $("#"+fhDateID).html("发货日期："+fhDate+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                        $("#"+fhDateID).show();
+                        $("#"+borrowDeliveryID).remove();
+                        $("#"+deliverBorrowBtn).remove();
+                    }else{
+                        showTip('发货失败！','danger');
+                    }
+                },
+                error:function(xhr,status,error){
+                    alert('status='+status+',error='+error);
+                }
+            });
+        }
+
     </script>
     <style>
         @media ( min-width :768px) {
@@ -159,33 +214,33 @@
                                     <h4>
                                         <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
                                             书名：<s:property value="bookName"/></a><br>
-                                        <s:if test="status=='NOTPAYED'">
-                                            <span id="status<s:property value="borrowID"/>">当前状态：买家未付款</span>
+                                        <s:if test="borrowStatus=='BUYER_NOTPAID'">
+                                            <span id="borrowStatus<s:property value="borrowID"/>">当前状态：买家未付款</span>
                                         </s:if>
-                                        <s:elseif test="status=='NOTSHIPPED'">
-                                            <span id="status<s:property value="borrowID"/>">当前状态：卖家未发货</span>
+                                        <s:elseif test="borrowStatus=='SELLER_NOT_SHIPPED'">
+                                            <span id="borrowStatus<s:property value="borrowID"/>">当前状态：卖家未发货</span>
                                         </s:elseif>
-                                        <s:elseif test="status=='SHIPPED'">
-                                            <span id="status<s:property value="borrowID"/>">当前状态：卖家已发货</span>
+                                        <s:elseif test="borrowStatus=='SELLER_SHIPPED'">
+                                            <span id="borrowStatus<s:property value="borrowID"/>">当前状态：卖家已发货</span>
                                         </s:elseif>
-                                        <s:elseif test="status=='NOTRETURNED'">
-                                            <span id="status<s:property value="borrowID"/>">当前状态：买家未归还</span>
+                                        <s:elseif test="borrowStatus=='BUYER_NOT_RETURNED'">
+                                            <span id="borrowStatus<s:property value="borrowID"/>">当前状态：买家未归还</span>
                                         </s:elseif>
-                                        <s:elseif test="status=='RETURNED'">
-                                            <span id="status<s:property value="borrowID"/>">当前状态：买家已归还，待卖家确认</span>
+                                        <s:elseif test="borrowStatus=='BUYER_RETURNED'">
+                                            <span id="borrowStatus<s:property value="borrowID"/>">当前状态：买家已归还，待卖家确认</span>
                                         </s:elseif>
-                                        <s:elseif test="status=='COMPLETED'">
-                                            <span id="status<s:property value="borrowID"/>">当前状态：借阅完成</span>
+                                        <s:elseif test="borrowStatus=='COMPLETED'">
+                                            <span id="borrowStatus<s:property value="borrowID"/>">当前状态：借阅完成</span>
                                         </s:elseif>
                                     </h4>
                                     <ul class="qty">
                                         <li><p>作者：<s:property value="author"/></p></li>
                                         <li><p>分类：<s:property value="category1"/>&nbsp;&nbsp;<s:property value="category2"/></p></li>
-                                        <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
-                                        <li><p>出借人：</p></li>
+                                        <li><p>借阅积分：<s:property value="borrowCredit"/></p></li>
+                                        <li><p>出借人：<s:property value="email"/></p></li>
                                     </ul>
                                     <div class="delivery">
-                                        <s:if test="status=='NOTPAYED'">
+                                        <s:if test="borrowStatus=='BUYER_NOTPAID'">
                                             <p id="orderDate<s:property value="borrowID"/>">下单日期：<s:property value="orderDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                             <p id="payDate<s:property value="borrowID"/>" style="display: none">付款日期：<s:property value="payDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                                             <p id="fhDate<s:property value="borrowID"/>" style="display: none">发货日期：<s:property value="fhDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -194,9 +249,8 @@
                                             <p id="returnDate<s:property value="borrowID"/>" style="display: none">归还日期：<s:property value="returnDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                                             <p id="shDate<s:property value="borrowID"/>" style="display: none">完成日期：<s:property value="shDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                             <p id="returnAddr<s:property value="borrowID"/>" style="display: none">归还地址：<s:property value="returnAddress"/></p><br>
-                                            <a href="#" id="payBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="payBook(<s:property value="borrowID"/>)">支付</a>
                                         </s:if>
-                                        <s:if test="status=='NOTSHIPPED'">
+                                        <s:if test="borrowStatus=='SELLER_NOT_SHIPPED'">
                                             <p id="orderDate<s:property value="borrowID"/>">下单日期：<s:property value="orderDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                             <p id="payDate<s:property value="borrowID"/>">付款日期：<s:property value="payDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                                             <p id="fhDate<s:property value="borrowID"/>" style="display: none">发货日期：<s:property value="fhDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -205,8 +259,14 @@
                                             <p id="returnDate<s:property value="borrowID"/>" style="display: none">归还日期：<s:property value="returnDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                                             <p id="shDate<s:property value="borrowID"/>" style="display: none">完成日期：<s:property value="shDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                             <p id="returnAddr<s:property value="borrowID"/>" style="display: none">归还地址：<s:property value="returnAddress"/></p><br>
+                                            <a href="#" id="deliverBorrowBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="deliverBorrowOrder(<s:property value="borrowID"/>)">发货</a>
+                                            <form id="borrowDelivery<s:property value="borrowID"/>" style="display: none">
+                                                <input type="text" id="trackingNO2<s:property value="borrowID"/>" name="trackingNo2" placeholder="请填写快递单号"/>
+                                                <input type="text" id="returnAddr<s:property value="borrowID"/>" name="returnAddress" placeholder="请填写归还地址"/>
+                                                <a href="#" class="add-cart item_add" onclick="deliverBorrowBook(<s:property value="borrowID"/>)">提交</a>
+                                            </form>
                                         </s:if>
-                                        <s:elseif test="status=='SHIPPED'">
+                                        <s:elseif test="borrowStatus=='SELLER_SHIPPED'">
                                             <p id="orderDate<s:property value="borrowID"/>">下单日期：<s:property value="orderDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                             <p id="payDate<s:property value="borrowID"/>">付款日期：<s:property value="payDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                                             <p id="fhDate<s:property value="borrowID"/>">发货日期：<s:property value="fhDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -215,10 +275,9 @@
                                             <p id="returnDate<s:property value="borrowID"/>" style="display: none">归还日期：<s:property value="returnDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                                             <p id="shDate<s:property value="borrowID"/>" style="display: none">完成日期：<s:property value="shDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                             <p id="returnAddr<s:property value="borrowID"/>" style="display: none">归还地址：<s:property value="returnAddress"/></p><br>
-                                            <a href="#" id="confirmBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="confirmReceipt(<s:property value="borrowID"/>)">确认收货</a>
                                         </s:elseif>
-                                        <s:elseif test="status=='NOTRETURNED'">
-                                            <s:if test="delayCount==null">
+                                        <s:elseif test="borrowStatus=='BUYER_NOT_RETURNED'">
+                                            <s:if test="delayCount==0">
                                                 <p id="orderDate<s:property value="borrowID"/>">下单日期：<s:property value="orderDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                                 <p id="payDate<s:property value="borrowID"/>">付款日期：<s:property value="payDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                                                 <p id="fhDate<s:property value="borrowID"/>">发货日期：<s:property value="fhDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -227,13 +286,6 @@
                                                 <p id="returnDate<s:property value="borrowID"/>" style="display: none">归还日期：<s:property value="returnDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                                                 <p id="shDate<s:property value="borrowID"/>" style="display: none">完成日期：<s:property value="shDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                                 <p id="returnAddr<s:property value="borrowID"/>">归还地址：<s:property value="returnAddress"/></p><br>
-
-                                                <a href="#" id="returnBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="showReturnBook(<s:property value="borrowID"/>)">归还</a>
-                                                <a href="#" id="delayBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="delayBook(<s:property value="borrowID"/>)">续借</a>
-                                                <form id="tracking<s:property value="borrowID"/>" style="display: none">
-                                                    <input type="text" id="trackingNO<s:property value="borrowID"/>" name="trackingNO1" placeholder="请填写快递单号"/>
-                                                    <a href="#" class="add-cart item_add" onclick="returnBook(<s:property value="borrowID"/>)">提交</a>
-                                                </form>
                                             </s:if>
                                             <s:elseif test="delayCount==1">
                                                 <p id="orderDate<s:property value="borrowID"/>">下单日期：<s:property value="orderDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -244,11 +296,9 @@
                                                 <p id="returnDate<s:property value="borrowID"/>" style="display: none">归还日期：<s:property value="returnDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                                                 <p id="shDate<s:property value="borrowID"/>" style="display: none">完成日期：<s:property value="shDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                                 <p id="returnAddr<s:property value="borrowID"/>">归还地址：<s:property value="returnAddress"/></p><br>
-
-                                                <a href="#" id="returnBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="returnBook(<s:property value="borrowID"/>)">归还</a>
                                             </s:elseif>
                                         </s:elseif>
-                                        <s:elseif test="status=='RETURNED'">
+                                        <s:elseif test="borrowStatus=='BUYER_RETURNED'">
                                             <p id="orderDate<s:property value="borrowID"/>">下单日期：<s:property value="orderDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                             <p id="payDate<s:property value="borrowID"/>">付款日期：<s:property value="payDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                                             <p id="fhDate<s:property value="borrowID"/>">发货日期：<s:property value="fhDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -257,6 +307,7 @@
                                             <p id="returnDate<s:property value="borrowID"/>">归还日期：<s:property value="returnDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                                             <p id="shDate<s:property value="borrowID"/>" style="display: none">完成日期：<s:property value="shDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                             <p id="returnAddr<s:property value="borrowID"/>">归还地址：<s:property value="returnAddress"/></p><br>
+                                            <a href="#" id="confirmReturnBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="confirmReturnReceipt(<s:property value="borrowID"/>)">确认收货</a>
                                         </s:elseif>
                                         <div class="clearfix"></div>
                                     </div>
@@ -333,8 +384,8 @@
                                     <ul class="qty">
                                         <li><p>作者：<s:property value="author"/></p></li>
                                         <li><p>分类：<s:property value="category1"/>&nbsp;&nbsp;<s:property value="category2"/></p></li>
-                                        <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
-                                        <li><p>出借人：</p></li>
+                                        <li><p>借阅积分：<s:property value="borrowCredit"/></p></li>
+                                        <li><p>借书人：<s:property value="buyerEmail"/></p></li>
                                     </ul>
                                     <div class="delivery">
                                         <p id="orderDate<s:property value="borrowID"/>">下单日期：<s:property value="orderDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -344,21 +395,12 @@
                                         <p id="yhdate<s:property value="borrowID"/>">应还日期：<s:property value="yhDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                         <p id="returnDate<s:property value="borrowID"/>">归还日期：<s:property value="returnDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                                         <p id="shDate<s:property value="borrowID"/>">完成日期：<s:property value="shDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                        <p id="returnAddr<s:property value="borrowID"/>">归还地址：<s:property value="returnAddress"/></p><br>
+                                        <p id="borrowAddr<s:property value="borrowID"/>">卖家地址：<s:property value="borrowAddress"/></p><br>
 
-                                        <s:if test="bookComment==null">
-                                            <a href="#" id="commentBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="commentBook(<s:property value="borrowID"/>)">图书评论</a>
-                                        </s:if>
-                                        <s:if test="comment1==null">
+                                        <s:if test="comment2==null">
                                             <a href="#" id="creditRatingBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="creditRating(<s:property value="borrowID"/>)">信用评价</a>
                                         </s:if>
-                                        <form id="commentForm<s:property value="borrowID"/>" style="display: none" action="<%=path%>/commentAction/commentBook" method="post">
-                                            <input type="hidden" id="bookID<s:property value="bookID"/>" name="bookID" value="<s:property value="bookID"/>"/>
-                                            <input type="hidden" id="borrowID<s:property value="borrowID"/>" name="borrowID" value="<s:property value="borrowID"/>"/>
-                                            <textarea id="comment<s:property value="borrowID"/>" name="comment" class="form-control" rows="3"></textarea>
-                                            <a href="#" class="add-cart item_add" onclick="submitComment(<s:property value="borrowID"/>)">提交</a>
-                                        </form>
-                                        <form id="creditRatingForm<s:property value="borrowID"/>" style="display: none" action="<%=path%>/commentAction/honestyRatingWhenBorrow">
+                                        <form id="creditRatingForm<s:property value="borrowID"/>" style="display: none">
                                             <input type="hidden" name="borrowID" value="<s:property value="borrowID"/>"/>
                                             <select name="creditRating" class="form-control form-control-noNewline">
                                                 <option value="-1">差评</option>
@@ -375,6 +417,7 @@
                             </div>
                         </div><hr>
                     </s:iterator>
+                    <!--
                     <div id="bookID3" class="cart-header">
                         <div class="cart-sec simpleCart_shelfItem">
                             <div class="cart-item cyc">
@@ -427,7 +470,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                    </div><hr>
+                    </div><hr> -->
                 </div>
                 <div id="sell-book-list">
                     <h4>已卖出的图书</h4>

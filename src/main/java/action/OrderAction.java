@@ -8,6 +8,7 @@ import java.util.Map;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import model.BorrowProfile;
 import service.BookService;
 import service.BorrowService;
 import service.CartService;
@@ -170,7 +171,18 @@ public class OrderAction extends ActionSupport {
         return "ajax";
     }
 
-    public String deliverBuyOrder(){
+    public String deliverBuyOrder(){ //卖家发货，参数是orderID和快递单号
         this.params = this.orderService.deliverBuyOrder(this.orderID,this.trackingNo);
+        return "ajax";
+    }
+
+    public String showSellerCenter(){
+        List<BorrowProfile> lendBookList = this.borrowService.getLendBookList();
+        List<BorrowProfile> lendBookHistoryList = this.borrowService.getLendBookHistoryList();
+        List<OrderProfile> sellBookList = this.orderService.getSellBookList();
+        ActionContext.getContext().put("lendBookList",lendBookList);
+        ActionContext.getContext().put("lendBookHistoryList",lendBookHistoryList);
+        ActionContext.getContext().put("sellBookList",sellBookList);
+        return "showSellerCenter";
     }
 }

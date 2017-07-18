@@ -433,7 +433,7 @@
                                 <ul class="qty">
                                     <li><p>作者：<s:property value="author"/></p></li>
                                     <li><p>分类：<s:property value="category1"/>&nbsp;&nbsp;<s:property value="category2"/></p></li>
-                                    <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
+                                    <li><p>借阅积分：<s:property value="borrowCredit"/></p></li>
                                     <li><p>出借人：<s:property value="email"/></p></li>
                                 </ul>
                                 <div class="delivery">
@@ -476,7 +476,7 @@
                     </div><hr>
                 </s:iterator>
 
-                <!-- 测试样式 -->
+                <!-- 测试样式
                 <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
                     <div class="cart-sec simpleCart_shelfItem">
                         <div class="cart-item cyc">
@@ -664,7 +664,7 @@
                         <div class="clearfix"></div>
                     </div>
                 </div><hr>
-
+-->
 
             </div>
         </div>
