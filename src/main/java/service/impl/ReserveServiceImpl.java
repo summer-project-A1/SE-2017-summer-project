@@ -14,7 +14,6 @@ public class ReserveServiceImpl extends BaseServiceImpl implements ReserveServic
     public ReserveService getReserveService() {
         return reserveService;
     }
-
     public void setReserveService(ReserveService reserveService) {
         this.reserveService = reserveService;
     }
