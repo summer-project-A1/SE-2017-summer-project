@@ -114,12 +114,12 @@
                         <table class="table table-bordered">
                             <tr>
                             <th field="bookName" width="20%">书名</th>
-                            <th field="amount" width="20%">数量</th>
+                            <th field="buyCredit" width="20%">购买积分</th>
                             </tr>
                             <s:iterator value="#session.buyCart" var="cartItem" status="st">
                                 <tr>
                                     <td><s:property value="#cartItem.bookName"/></td>
-                                    <td ><s:property value="#cartItem.amount"/></td>
+                                    <td ><s:property value="#cartItem.buyCredit"/></td>
                                 </tr>
                         </s:iterator>
                         </table>
@@ -139,12 +139,12 @@
                         <table class="table table-bordered">
                             <tr>
                                 <th field="bookName" width="20%">书名</th>
-                                <th field="amount" width="20%">数量</th>
+                                <th field="borrowCredit" width="20%">借阅积分</th>
                             </tr>
                             <s:iterator value="#session.borrowCart" var="cartItem" status="st">
                                 <tr>
                                     <td><s:property value="#cartItem.bookName"/></td>
-                                    <td><s:property value="#cartItem.amount"/></td>
+                                    <td><s:property value="#cartItem.borrowCredit"/></td>
                                 </tr>
                             </s:iterator>
                         </table>
