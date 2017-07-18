@@ -92,8 +92,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         newUser.setRole(UserRole.COMMON);
         newUser.setCredit(0);
         newUser.setProvince(registerInfo.getProvince());
-        newUser.setCity(registerInfo.getCity());
-        newUser.setDistrict(registerInfo.getDistrict());
+        newUser.setCity(registerInfo.getCity()!=null?registerInfo.getCity():"请选择");
+        newUser.setDistrict(registerInfo.getDistrict()!=null?registerInfo.getDistrict():"请选择");
         newUser.setAddress(registerInfo.getAddress());
         newUser.setImageID("");
         
@@ -152,8 +152,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         userProfile.setGender(newUserProfile.getGender());
         userProfile.setMobile(newUserProfile.getMobile());
         userProfile.setProvince(newUserProfile.getProvince());
-        userProfile.setCity(newUserProfile.getCity());
-        userProfile.setDistrict(newUserProfile.getDistrict());
+        userProfile.setCity(newUserProfile.getCity()!=null?newUserProfile.getCity():"请选择");
+        userProfile.setDistrict(newUserProfile.getDistrict()!=null?newUserProfile.getDistrict():"请选择");
         userProfile.setAddress(newUserProfile.getAddress());
         return this.userDao.updateUserProfile(userProfile);
     }

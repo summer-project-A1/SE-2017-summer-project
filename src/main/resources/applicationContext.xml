@@ -144,6 +144,9 @@
         <property name="userDao" ref="userDao" />
         <property name="orderDao" ref="orderDao" />
     </bean>
+    <bean id="reserveService" class="service.impl.reserveService">
+        <property name="reserveDao" ref="reserveDao" />
+    </bean>
     <bean id="commentService" class="service.impl.CommentServiceImpl"> 
         <property name="commentdao" ref="commentDao"/>
         <property name="userDao" ref="userDao"/>
