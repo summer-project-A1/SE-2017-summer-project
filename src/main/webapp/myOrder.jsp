@@ -279,6 +279,7 @@
 
 
                 <!-- 以下为静态展示 -->
+                <!--
                 <div id="bookID1" class="cart-header">
                     <div class="cart-sec simpleCart_shelfItem">
                         <div class="cart-item cyc">
@@ -403,9 +404,11 @@
                         <div class="clearfix"></div>
                     </div>
                 </div><hr>
+                -->
             </div>
         </div>
     </div>
 </div>
+<jsp:include page="footer.jsp"/>
 </body>
 </html>
