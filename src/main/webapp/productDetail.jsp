@@ -272,7 +272,7 @@
 
 
 <div id="tip"></div>
+<jsp:include page="footer.jsp"/>
 </body>
 </html>
 <!-- footer -->
-<jsp:include page="footer.jsp"/>
