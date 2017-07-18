@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <s:action name="header" executeResult="true" namespace="/"/>
     <title>Cart</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -27,13 +26,13 @@
                 var cmp = method;
                 var url = "";
                 if(cmp=="borrow"){
-                    url = 'cartAction/removeFromBorrowCart';
+                    url = '/cartAction/removeFromBorrowCart';
                 }
                 if(cmp=="buy"){
-                    url = 'cartAction/removeFromBuyCart';
+                    url = '/cartAction/removeFromBuyCart';
                 }
                 $.ajax({
-                    url: '+ url,
+                    url: '<%=path%>'+ url,
                     type:'POST',
                     data: {
                         'bookID' : bookID
