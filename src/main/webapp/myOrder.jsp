@@ -160,7 +160,7 @@
                     </div>
                     <div class="tab1">
                         <ul class="place">
-                            <li class="sort"><a href="#">我的交换</a></li>
+                            <li class="sort"><a href="#">我的购买</a></li>
                         </ul>
                         <div class="clearfix"> </div>
                     </div>

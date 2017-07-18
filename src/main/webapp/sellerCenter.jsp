@@ -29,15 +29,14 @@
     <script>
         $(document).ready(function(){
 
-            $(".tab1 .single-bottom").hide();
 
             $("#lend-book-list").hide();
             $("#lend-book-history-list").hide();
             $("#sell-book-list").hide();
 
 
-            $(".tab1 ul").click(function(){
-                $(".tab1 .single-bottom").slideToggle(300);
+            $("#current-tab ul").click(function(){
+                $("#current-tab .single-bottom").slideToggle(300);
             });
 
 
@@ -102,7 +101,7 @@
                         </ul>
                         <div class="clearfix"> </div>
                     </div>
-                    <div class="tab1">
+                    <div id="current-tab" class="tab1">
                         <ul class="place">
                             <li class="sort"><a href="#">卖家中心</a></li>
                             <li class="by"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></li>
