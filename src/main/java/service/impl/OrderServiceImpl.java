@@ -321,4 +321,27 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
         return bookList;
     }
 
+    @Override
+    public Map deliverBuyOrder(int orderID,String trackingNo){
+        Map returnMap = new HashMap();
+        if(!isLogined()) {
+            returnMap.put("success", false);
+            return returnMap;
+        }
+        User user = getLoginedUserInfo();
+        Order order = this.orderDao.getOrderByID(orderID);
+        if(order.getSellerID() != user.getUserID()){
+            returnMap.put("success",false);
+            return returnMap;
+        }
+        Date fhDate = new Date();
+        order.setFhDate(fhDate);
+        order.setTrackingNo(trackingNo);
+        order.setStatus(OrderStatus.SHIPPED);
+        this.orderDao.update(order);
+        returnMap.put("success",true);
+        returnMap.put("fhDate",fhDate);
+        return returnMap;
+    }
+
 }

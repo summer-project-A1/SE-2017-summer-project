@@ -29,6 +29,7 @@ public class OrderAction extends ActionSupport {
     
     private String buyOrBorrow;
     private Integer orderID;
+    private String trackingNo;
     
     private Map params; 
     
@@ -98,6 +99,8 @@ public class OrderAction extends ActionSupport {
     public void setOrderIDList(List<Integer> orderIDList) {
         this.orderIDList = orderIDList;
     }
+    public String getTrackingNo(){return trackingNo;}
+    public void setTrackingNo(String trackingNo){this.trackingNo = trackingNo;}
 
     /* ========================================================= */
     
@@ -165,5 +168,9 @@ public class OrderAction extends ActionSupport {
     public String confirmBuyReceipt(){
         this.params = this.orderService.confirmBuyReceipt(this.orderID);
         return "ajax";
+    }
+
+    public String deliverBuyOrder(){
+        this.params = this.orderService.deliverBuyOrder(this.orderID,this.trackingNo);
     }
 }
