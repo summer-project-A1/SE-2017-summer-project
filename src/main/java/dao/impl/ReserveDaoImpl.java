@@ -11,8 +11,10 @@ public class ReserveDaoImpl extends BaseDaoImpl implements ReserveDao {
 
     @Override
     public List<Reserve> getReservationByUserID(int userID) {
-        // TODO 自动生成的方法存根
-        return null;
+        String hql = "from Reserve as r where r.userID = :userID";
+        Query query = getSession().createQuery(hql);
+        List<Reserve> reserveList = query.list();
+        return reserveList;
     }
     
     @Override
