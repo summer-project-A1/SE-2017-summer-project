@@ -22,6 +22,20 @@
 
         }
     </style>
+    <style>
+        @media ( min-width :768px) {
+
+            .form-control-noNewline {
+                width: 100px;
+                display: inline;
+            }
+
+            .form-horizontal .form-group-auto {
+                margin-right: 0px;
+                margin-left: 0px;
+            }
+        }
+    </style>
 </head>
 <body>
 <!-- header -->
@@ -148,13 +162,19 @@
                     </div>
                     <div class="tab1">
                         <ul class="place">
+                            <li class="sort"><a href="<%=path%>/userAction/showSellerCenter">卖家中心</a></li>
+                        </ul>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="tab1">
+                        <ul class="place">
                             <li class="sort"><a href="#">我的发布</a></li>
                         </ul>
                         <div class="clearfix"> </div>
                     </div>
                     <div class="tab1">
                         <ul class="place">
-                            <li class="sort"><a href="#">我的借阅</a></li>
+                            <li class="sort"><a href="<%=path%>/borrowAction/showMyBorrow">我的借阅</a></li>
                         </ul>
                         <div class="clearfix"> </div>
                     </div>
@@ -274,135 +294,6 @@
 
                 </s:iterator>
 
-
-
-
-
-                <!-- 以下为静态展示 -->
-                <div id="bookID1" class="cart-header">
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="<%=path%>/images/m5.png" class="img-responsive" alt="">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>
-                                <a href="<%=path%>/">订单号:1580021000037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：未支付</a>
-                            </h4><br>
-                            <ul class="qty">
-                                <li><p>书名：黄政的自传</p></li>
-                                <li><p>下单时间：2017-6-10   20:42:48</p></li>
-                                <li><p>总积分：1024</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p>收货人：黄政&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p>收货地址：东川路800号</p><br>
-                                <a href="${showOrderLink}" id="payBtn" class="add-cart item_add">支付</a>
-                                <a href="${cancelOrderLink}" id="cancelBtn" class="add-cart item_add">取消</a>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div><hr>
-                <div id="bookID2" class="cart-header">
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="<%=path%>/images/m5.png" class="img-responsive" alt="">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>
-                                <a href="<%=path%>/">订单号:1580021000037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：未发货</a>
-                            </h4><br>
-                            <ul class="qty">
-                                <li><p>书名：黄政的自传</p></li>
-                                <li><p>下单时间：2017-6-10   20:42:48</p></li>
-                                <li><p>总积分：524</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p>收货人：沈斯杰&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p>收货地址：东川路800号</p><br>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div><hr>
-                <div id="bookID3" class="cart-header">
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="<%=path%>/images/m5.png" class="img-responsive" alt="">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>
-                                <a href="<%=path%>/">订单号:1580021000037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已发货</a>
-                            </h4><br>
-                            <ul class="qty">
-                                <li><p>书名：黄政的自传</p></li>
-                                <li><p>下单时间：2017-6-10   20:42:48</p></li>
-                                <li><p>总积分：10240</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p>收货人：高仓靖博&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p>收货地址：东川路800号</p><br>
-                                <p>付款时间：2017-6-10   20:42:48&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p>发货时间：2017-6-10   20:42:48</p><br>
-                                <a href="${confirmReceiptLink}" id="confirmBtn" class="add-cart item_add" onclick="">确认收货</a>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div><hr>
-                <div id="bookID4" class="cart-header">
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="<%=path%>/images/m5.png" class="img-responsive" alt="">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>
-                                <a href="<%=path%>/">订单号:1580021000037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已完成</a>
-                            </h4><br>
-                            <ul class="qty">
-                                <li><p>书名：黄政的自传</p></li>
-                                <li><p>下单时间：2017-6-10   20:42:48</p></li>
-                                <li><p>总积分：10240</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p>收货人：Bjarne&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p>收货地址：东川路800号</p><br>
-                                <p>付款时间：2017-6-10   20:42:48&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p>发货时间：2017-6-10   20:42:48</p><br>
-                                <p>收货时间：2017-6-10   20:42:48</p><br>
-                                <a href="#" id="commentBtn" class="add-cart item_add" onclick="">信用评价</a>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div><hr>
-                <div id="bookID4" class="cart-header">
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="<%=path%>/images/m5.png" class="img-responsive" alt="">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>
-                                <a href="<%=path%>/">订单号:1580021000037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已取消</a>
-                            </h4><br>
-                            <ul class="qty">
-                                <li><p>书名：黄政的自传</p></li>
-                                <li><p>下单时间：2017-6-10   20:42:48</p></li>
-                                <li><p>总积分：10240</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p>收货人：Bjarne&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p>收货地址：东川路800号</p><br>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div><hr>
             </div>
         </div>
     </div>

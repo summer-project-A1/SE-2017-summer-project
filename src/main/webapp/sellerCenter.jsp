@@ -140,6 +140,7 @@
 
         function deliverBuyBook(orderID){
             var buyDeliveryID = "buyDelivery"+orderID;
+            var deliverBuyBtnID = "deliverBuyBtn"+orderID;
             var fhDateID = "fhDate"+orderID;
             var statusID = "orderStatus"+orderID;
             $.ajax({
@@ -154,6 +155,7 @@
                         $("#"+fhDateID).html("发货时间："+fhDate);
                         $("#"+fhDateID).show();
                         $("#"+buyDeliveryID).remove();
+                        $("#"+deliverBuyBtnID).remove();
                     }else{
                         showTip('收货失败！','danger');
                     }
@@ -245,7 +247,7 @@
                     </div>
                     <div class="tab1">
                         <ul class="place">
-                            <li class="sort"><a href="#">我的借阅</a></li>
+                            <li class="sort"><a href="<%=path%>/borrowAction/showMyBorrow">我的借阅</a></li>
                         </ul>
                         <div class="clearfix"> </div>
                     </div>
@@ -257,7 +259,7 @@
                     </div>
                     <div class="tab1">
                         <ul class="place">
-                            <li class="sort"><a href="#">我的订单</a></li>
+                            <li class="sort"><a href="<%=path%>/orderAction/showMyOrder">我的订单</a></li>
                         </ul>
                         <div class="clearfix"> </div>
                     </div>
@@ -448,61 +450,8 @@
                             </div>
                         </div><hr>
                     </s:iterator>
-                    <!--
-                    <div id="bookID3" class="cart-header">
-                        <div class="cart-sec simpleCart_shelfItem">
-                            <div class="cart-item cyc">
-                                <img src="<%=path%>/images/m5.png" class="img-responsive" alt="">
-                            </div>
-                            <div class="cart-item-info">
-                                <h4>
-                                    <a href="<%=path%>/">订单号:1580021000037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已发货</a>
-                                </h4><br>
-                                <ul class="qty">
-                                    <li><p>书名：黄政的自传</p></li>
-                                    <li><p>下单时间：2017-6-10   20:42:48</p></li>
-                                    <li><p>总积分：10240</p></li>
-                                </ul>
-                                <div class="delivery">
-                                    <p>收货人：高仓靖博&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                    <p>收货地址：东川路800号</p><br>
-                                    <p>付款时间：2017-6-10   20:42:48&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                    <p>发货时间：2017-6-10   20:42:48</p><br>
-                                    <a href="${confirmReceiptLink}" id="confirmBtn" class="add-cart item_add" onclick="">确认收货</a>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div><hr>
-                    <div id="bookID4" class="cart-header">
-                        <div class="cart-sec simpleCart_shelfItem">
-                            <div class="cart-item cyc">
-                                <img src="<%=path%>/images/m5.png" class="img-responsive" alt="">
-                            </div>
-                            <div class="cart-item-info">
-                                <h4>
-                                    <a href="<%=path%>/">订单号:1580021000037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已完成</a>
-                                </h4><br>
-                                <ul class="qty">
-                                    <li><p>书名：黄政的自传</p></li>
-                                    <li><p>下单时间：2017-6-10   20:42:48</p></li>
-                                    <li><p>总积分：10240</p></li>
-                                </ul>
-                                <div class="delivery">
-                                    <p>收货人：Bjarne&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                    <p>收货地址：东川路800号</p><br>
-                                    <p>付款时间：2017-6-10   20:42:48&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                    <p>发货时间：2017-6-10   20:42:48</p><br>
-                                    <p>收货时间：2017-6-10   20:42:48</p><br>
-                                    <a href="#" id="commentBtn" class="add-cart item_add" onclick="">信用评价</a>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div><hr> -->
                 </div>
+
                 <div id="sell-book-list">
                     <h4>已卖出的图书</h4>
                     <!-- 以下迭代显示已卖出的图书 -->
@@ -551,7 +500,7 @@
                                             <p id="payDate<s:property value="orderID"/>">付款时间：<s:property value="payDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                             <p id="fhDate<s:property value="orderID"/>" style="display: none">发货时间：<s:property value="fhDate"/></p><br>
                                             <p id="shDate<s:property value="orderID"/>" style="display: none">收货时间：<s:property value="shDate"/></p><br>
-                                            <a id="deliverBuyBtn<s:property value="orderID"/>" href="#" class="add-cart item_add" onclick="deliverBuyOrder(<s:property value="orderID"/>)">确认收货</a>
+                                            <a id="deliverBuyBtn<s:property value="orderID"/>" href="#" class="add-cart item_add" onclick="deliverBuyOrder(<s:property value="orderID"/>)">发货</a>
                                             <form id="buyDelivery<s:property value="orderID"/>" style="display: none">
                                                 <input type="hidden" name="orderID" value="<s:property value="orderID"/>"/>
                                                 <input type="text" id="trackingNo<s:property value="orderID"/>" name="trackingNo" placeholder="请填写快递单号"/>
@@ -569,7 +518,7 @@
                                             <p id="fhDate<s:property value="orderID"/>">发货时间：<s:property value="fhDate"/></p><br>
                                             <p id="shDate<s:property value="orderID"/>">收货时间：<s:property value="shDate"/></p><br>
 
-                                            <s:if test="buyerComment==null">
+                                            <s:if test="sellerComment==null">
                                                 <a href="#" id="creditRatingBuyBtn<s:property value="orderID"/>" class="add-cart item_add" onclick="creditRatingBuy(<s:property value="orderID"/>)">信用评价</a>
                                                 <form id="creditRatingBuyForm<s:property value="orderID"/>"  style="display: none">
                                                     <input type="hidden" name="orderID" value="<s:property value="orderID"/>"/>
@@ -590,57 +539,6 @@
                         </div><hr>
 
                     </s:iterator>
-                    <div id="bookID4" class="cart-header">
-                        <div class="cart-sec simpleCart_shelfItem">
-                            <div class="cart-item cyc">
-                                <img src="<%=path%>/images/m5.png" class="img-responsive" alt="">
-                            </div>
-                            <div class="cart-item-info">
-                                <h4>
-                                    <a href="<%=path%>/">订单号:1580021000037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已完成</a>
-                                </h4><br>
-                                <ul class="qty">
-                                    <li><p>书名：黄政的自传</p></li>
-                                    <li><p>下单时间：2017-6-10   20:42:48</p></li>
-                                    <li><p>总积分：10240</p></li>
-                                </ul>
-                                <div class="delivery">
-                                    <p>收货人：Bjarne&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                    <p>收货地址：东川路800号</p><br>
-                                    <p>付款时间：2017-6-10   20:42:48&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                    <p>发货时间：2017-6-10   20:42:48</p><br>
-                                    <p>收货时间：2017-6-10   20:42:48</p><br>
-                                    <a href="#" id="commentBtn" class="add-cart item_add" onclick="">信用评价</a>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div><hr>
-                    <div id="bookID4" class="cart-header">
-                        <div class="cart-sec simpleCart_shelfItem">
-                            <div class="cart-item cyc">
-                                <img src="<%=path%>/images/m5.png" class="img-responsive" alt="">
-                            </div>
-                            <div class="cart-item-info">
-                                <h4>
-                                    <a href="<%=path%>/">订单号:1580021000037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：已取消</a>
-                                </h4><br>
-                                <ul class="qty">
-                                    <li><p>书名：黄政的自传</p></li>
-                                    <li><p>下单时间：2017-6-10   20:42:48</p></li>
-                                    <li><p>总积分：10240</p></li>
-                                </ul>
-                                <div class="delivery">
-                                    <p>收货人：Bjarne&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                    <p>收货地址：东川路800号</p><br>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div><hr>
-                </div>
 
             </div>
         </div>

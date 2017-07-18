@@ -351,6 +351,18 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
                 orderProfileList.add(orderProfile);
             }
         }
+        Collections.sort(orderProfileList, new Comparator<OrderProfile>() {
+            @Override
+            public int compare(OrderProfile o1, OrderProfile o2) {
+                if(o1.getOrderID() > o2.getOrderID()){
+                    return -1;
+                }
+                if(o1.getOrderID() < o2.getOrderID()){
+                    return 1;
+                }
+                return 0;
+            }
+        });
         return orderProfileList;
     }
 

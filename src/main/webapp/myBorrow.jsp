@@ -23,7 +23,20 @@
 
         }
     </style>
+    <style>
+        @media ( min-width :768px) {
 
+            .form-control-noNewline {
+                width: 100px;
+                display: inline;
+            }
+
+            .form-horizontal .form-group-auto {
+                margin-right: 0px;
+                margin-left: 0px;
+            }
+        }
+    </style>
 
     
 </head>
@@ -257,6 +270,12 @@
                     </div>
                     <div class="tab1">
                         <ul class="place">
+                            <li class="sort"><a href="<%=path%>/userAction/showSellerCenter">卖家中心</a></li>
+                        </ul>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="tab1">
+                        <ul class="place">
                             <li class="sort"><a href="#">我的发布</a></li>
                         </ul>
                         <div class="clearfix"> </div>
@@ -274,7 +293,7 @@
                     </div>
                     <div class="tab1">
                         <ul class="place">
-                            <li class="sort"><a href="#">我的购买</a></li>
+                            <li class="sort"><a href="<%=path%>/orderAction/showMyOrder">我的购买</a></li>
                         </ul>
                         <div class="clearfix"> </div>
                     </div>
@@ -442,7 +461,7 @@
                                     <ul class="qty">
                                         <li><p>作者：<s:property value="author"/></p></li>
                                         <li><p>分类：<s:property value="category1"/>&nbsp;&nbsp;<s:property value="category2"/></p></li>
-                                        <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
+                                        <li><p>借阅积分：<s:property value="borrowCredit"/></p></li>
                                         <li><p>出借人：<s:property value="email"/></p></li>
                                     </ul>
                                     <div class="delivery">
@@ -487,198 +506,6 @@
 
 
                 </div>
-
-                <!-- 测试样式 -->
-                <!--
-                <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>
-                                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
-                                    书名：<s:property value="bookName"/></a><br>
-                                <span>ISBN:<s:property value="isbn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：买家未支付</span>
-                            </h4>
-                            <ul class="qty">
-                                <li><p>作者：<s:property value="author"/></p></li>
-                                <li><p>分类：<s:property value="category1"/></p></li>
-                                <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
-                                <li><p>出借人：</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p id="yhdate<s:property value="bookID"/>">下单日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <a href="#" id="returnBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="returnBook(<s:property value="bookID"/>)">支付</a>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div><hr>
-
-                <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>
-                                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
-                                    书名：<s:property value="bookName"/></a><br>
-                                <span>ISBN:<s:property value="isbn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：卖家未发货</span>
-                            </h4>
-                            <ul class="qty">
-                                <li><p>作者：<s:property value="author"/></p></li>
-                                <li><p>分类：<s:property value="category1"/></p></li>
-                                <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
-                                <li><p>出借人：</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p id="yhdate<s:property value="bookID"/>">下单日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">付款日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div><hr>
-
-                <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>
-                                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
-                                    书名：<s:property value="bookName"/></a><br>
-                                <span>ISBN:<s:property value="isbn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：卖家已发货</span>
-                            </h4>
-                            <ul class="qty">
-                                <li><p>作者：<s:property value="author"/></p></li>
-                                <li><p>分类：<s:property value="category1"/></p></li>
-                                <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
-                                <li><p>出借人：</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p id="yhdate<s:property value="bookID"/>">下单日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">付款日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>">发货日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>" style="display: none">收货日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>" style="display: none">应还日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>" style="display: none">归还日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>" style="display: none">完成日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="returnAddr<s:property value="borrowID"/>" style="display: none">归还地址：东川路800号</p><br>
-                                <a href="#" id="returnBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="returnBook(<s:property value="bookID"/>)">确认收货</a>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div><hr>
-
-                <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>
-                                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
-                                    书名：<s:property value="bookName"/></a><br>
-                                <span>ISBN:<s:property value="isbn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：买家未归还</span>
-                            </h4>
-                            <ul class="qty">
-                                <li><p>作者：<s:property value="author"/></p></li>
-                                <li><p>分类：<s:property value="category1"/></p></li>
-                                <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
-                                <li><p>出借人：</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p id="yhdate<s:property value="bookID"/>">下单日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">付款日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>">发货日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">收货日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>">应还日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <a href="#" id="returnBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="returnBook(<s:property value="bookID"/>)">归还</a>
-                                <a href="#" id="delayBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="delayBook(<s:property value="bookID"/>)">续借</a>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div><hr>
-
-                <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>
-                                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
-                                    书名：<s:property value="bookName"/></a><br>
-                                <span>ISBN:<s:property value="isbn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：买家已归还,待卖家确认</span>
-                            </h4>
-                            <ul class="qty">
-                                <li><p>作者：<s:property value="author"/></p></li>
-                                <li><p>分类：<s:property value="category1"/></p></li>
-                                <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
-                                <li><p>出借人：</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p id="yhdate<s:property value="bookID"/>">下单日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">付款日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>">发货日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">收货日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>">应还日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">归还日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>" style="display: none">完成日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="returnAddr<s:property value="borrowID"/>">归还地址：东川路800号</p><br>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div><hr>
-
-                <div id="borrowBook<s:property value="bookID"/>" class="cart-header">
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>
-                                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
-                                    书名：<s:property value="bookName"/></a><br>
-                                <span>ISBN:<s:property value="isbn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态：借阅已完成</span>
-                            </h4>
-                            <ul class="qty">
-                                <li><p>作者：<s:property value="author"/></p></li>
-                                <li><p>分类：<s:property value="category1"/></p></li>
-                                <li><p>借阅积分：<s:property value="borrowPrice"/></p></li>
-                                <li><p>出借人：</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p id="yhdate<s:property value="bookID"/>">下单日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">付款日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>">发货日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">收货日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>">应还日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="yhdate<s:property value="bookID"/>">归还日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
-                                <p id="yhdate<s:property value="bookID"/>">完成日期：2017-07-17 20：00：000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p id="returnAddr<s:property value="borrowID"/>">归还地址：东川路800号</p><br>
-                                <a href="#" id="returnBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="returnBook(<s:property value="bookID"/>)">图书评论</a>
-                                <a href="#" id="delayBtn<s:property value="bookID"/>" class="add-cart item_add" onclick="delayBook(<s:property value="bookID"/>)">信用评价</a>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div><hr>
-                -->
-
             </div>
         </div>
     </div>
