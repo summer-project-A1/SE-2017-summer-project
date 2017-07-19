@@ -13,6 +13,11 @@
         <property name="yhDate" column="yhdate" type="timestamp" />
         <property name="borrowPrice" column="borrow_price" />
         <property name="delayCount" column="delay_count" />
+        <property name="status" column="status">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">common.constants.BorrowStatus</param>
+            </type>
+        </property>
         <property name="borrowAddress" column="borrow_address" />
         <property name="returnAddress" column="return_address" />
         <property name="trackingNo1" column="trackingNo1" />

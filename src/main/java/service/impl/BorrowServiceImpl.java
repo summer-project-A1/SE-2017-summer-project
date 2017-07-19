@@ -616,6 +616,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         borrowHistory.setShDate(borrow.getShDate());
         borrowHistory.setComment1(borrow.getComment1());
         borrowHistory.setComment2(borrow.getComment2());
+        borrowHistory.setStatus(borrow.getStatus());
 
         this.borrowHistoryDao.save(borrowHistory);
         this.borrowDao.delete(borrow);
