@@ -2,6 +2,8 @@ package model;
 
 import java.util.Date;
 
+import common.constants.BorrowStatus;
+
 public class BorrowHistory {                // 保存已被借出但尚未还回的借书记录
     private int bhID;
     private int userID1;
@@ -10,6 +12,8 @@ public class BorrowHistory {                // 保存已被借出但尚未还回
     private Date yhDate;         // 应还时间
     private int borrowPrice;         // 借书花费的积分
     private int delayCount;     // 延期次数（目前设定最多1次）
+    private BorrowStatus status;   // 借书信息的状态
+    private String borrowStatus;   // 借书信息的状态（字符串）
     private String borrowAddress;
     private String returnAddress;
     private String trackingNo1;
@@ -68,8 +72,19 @@ public class BorrowHistory {                // 保存已被借出但尚未还回
 	public void setDelayCount(int delayCount) {
 		this.delayCount = delayCount;
 	}
-	
-	public String getBorrowAddress() {
+	public BorrowStatus getStatus() {
+        return status;
+    }
+    public void setStatus(BorrowStatus status) {
+        this.status = status;
+    }
+    public String getBorrowStatus() {
+        return borrowStatus;
+    }
+    public void setBorrowStatus(String borrowStatus) {
+        this.borrowStatus = borrowStatus;
+    }
+    public String getBorrowAddress() {
 		return borrowAddress;
 	}
 	public void setBorrowAddress(String borrowAddress) {

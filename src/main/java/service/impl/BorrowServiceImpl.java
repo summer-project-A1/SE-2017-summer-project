@@ -189,8 +189,8 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                 borrowProfile.setComment2(borrowHistory.getComment2());
                 borrowProfile.setEmail(user2.getEmail());
                 borrowProfile.setBookComment(bookComment);
-                //borrowProfile.setStatus(borrowHistory.getStatus());
-                //borrowProfile.setBorrowStatus(borrowHistory.getStatus().toString());
+                borrowProfile.setStatus(borrowHistory.getStatus());
+                borrowProfile.setBorrowStatus(borrowHistory.getStatus().toString());
                 borrowHistoryBook.add(borrowProfile);
             }
         }
@@ -616,6 +616,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         borrowHistory.setShDate(borrow.getShDate());
         borrowHistory.setComment1(borrow.getComment1());
         borrowHistory.setComment2(borrow.getComment2());
+        borrowHistory.setStatus(borrow.getStatus());
 
         this.borrowHistoryDao.save(borrowHistory);
         this.borrowDao.delete(borrow);
@@ -664,7 +665,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         borrowHistory.setShDate(borrow.getShDate());
         borrowHistory.setComment1(borrow.getComment1());
         borrowHistory.setComment2(borrow.getComment2());
-        //borrowHistory.setStatus(borrow.getStatus()); 日后解封
+        borrowHistory.setStatus(borrow.getStatus());
 
         this.borrowHistoryDao.save(borrowHistory);
         this.borrowDao.delete(borrow);
