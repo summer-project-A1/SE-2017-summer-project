@@ -118,7 +118,7 @@
                     success: function (msg) {
                         if(msg.success){
                             showTip('注册成功!', 'success');
-                            window.location.href='<%=path%>/index';
+                            window.setTimeout("window.location='<%=path%>/index'",1500);
                         }
                         else{
                             //var msg = response.message;

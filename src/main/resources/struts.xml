@@ -26,10 +26,15 @@
                 <param name="actionName">index</param>
                 <param name="namespace">/</param>
             </result>
+            <result name="activateSuccess" type="redirectAction">
+                <param name="actionName">index</param>
+                <param name="namespace">/</param>
+            </result>
+            <result name="activateFail">/howToShare.jsp</result>
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
-            <allowed-methods>signin,logout,login,register,checkEmailAvailable
+            <allowed-methods>signin,logout,login,register,checkEmailAvailable,activate
             </allowed-methods>
         </action>
     </package>

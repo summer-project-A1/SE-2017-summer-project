@@ -1,5 +1,7 @@
 package common.utils;
 
+import com.sun.tools.doclets.internal.toolkit.Content;
+
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -10,6 +12,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
+import javax.swing.text.AbstractDocument;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Properties;
@@ -58,6 +61,8 @@ public class SendEmail {
      */
     public void send(String sendHtml,String receiveUser) {
         try {
+
+
             // 发件人
             InternetAddress from = new InternetAddress(SEND_USER);
             message.setFrom(from);
@@ -67,12 +72,16 @@ public class SendEmail {
             // 邮件标题
 
             String mail_subject = "注册验证";
-            message.setSubject(MimeUtility.encodeText(mail_subject,MimeUtility.mimeCharset("UTF-8"), null));
+
             message.setSentDate(new Date()); // 设置邮件发送日期
 
+            String subject = MimeUtility.decodeText(mail_subject);
+            message.setSubject(subject);
+
             String content = sendHtml;
+            String CorrectContent = new String(content.getBytes(),"utf-8");
             // 邮件内容,也可以使纯文本"text/plain"
-            message.setContent(content, "text/html;charset=UTF-8");
+            message.setContent(CorrectContent, "text/html;charset=utf-8");
             message.saveChanges();
             Transport transport = s.getTransport("smtp");
             // smtp验证，就是你用来发邮件的邮箱用户名密码
@@ -86,7 +95,7 @@ public class SendEmail {
             e.printStackTrace();
         } catch (MessagingException e) {
             e.printStackTrace();
-        }catch (UnsupportedEncodingException e){
+        } catch (UnsupportedEncodingException e){
             e.printStackTrace();
         }
     }

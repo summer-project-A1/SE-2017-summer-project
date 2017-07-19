@@ -46,8 +46,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 User userinfo = getUserDao().getUserByEmail(email);
                 if(userinfo != null) {
                     if(PasswordUtil.checkPassword(plainPassword, userinfo.getPassword())) {
-                        setLoginedUserInfo(userinfo);
-                        logined = true;
+                        if(userinfo.getStatus() == UserStatus.ACTIVATED) {
+                            setLoginedUserInfo(userinfo);
+                            logined = true;
+                        }
                     }
                 }
             }
@@ -109,11 +111,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
         //发送验证邮件
         StringBuffer sb=new StringBuffer("点击下面链接激活账号，24小时生效，否则重新注册账号，链接只能使用一次，请尽快激活！</br>");
-        sb.append("<a href=\"http://localhost:8080/bookshare/authAction/activate?email=");
+        sb.append("<a href=\"http://localhost:8080/bookshare/authAction/activate.action?email=");
         sb.append(email);
         sb.append("&activeCode=");
         sb.append(newUser.getActiveCode());
-        sb.append("\">http://localhost:8080/bookshare/authAction/activate?email=");
+        sb.append("\">http://localhost:8080/bookshare/authAction/activate.action?email=");
         sb.append(email);
         sb.append("&activeCode=");
         sb.append(newUser.getActiveCode());
@@ -121,7 +123,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
         SendEmail sendEmail = new SendEmail();
         sendEmail.send(sb.toString(),email);
-        System.out.println("发送邮件");
         //setLoginedUserInfo(newUser);
         return true;
     }
@@ -252,5 +253,27 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         int userID = this.getLoginedUserInfo().getUserID();
         this.userDao.removeDeliveryAddress(userID, fullAddressID);
         return true;
+    }
+
+    @Override
+    public boolean activateUser(String email,String activeCode){
+        User user = this.userDao.getUserByEmail(email);
+        if(user == null){
+            return false;
+        }
+        if(user.getStatus() != UserStatus.UNACTIVATED){
+            return false;
+        }
+        Date currentTime = new Date();
+        if(currentTime.after(user.getDue())){
+            return false;
+        }
+        if(activeCode.equals(user.getActiveCode())){
+            user.setStatus(UserStatus.ACTIVATED);
+            this.userDao.update(user);
+            setLoginedUserInfo(user);
+            return true;
+        }
+        return false;
     }
 }
