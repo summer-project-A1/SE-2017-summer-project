@@ -112,11 +112,13 @@
             </select>
         </div>
         <div class="form-group form-group-auto">
-            <label>购买所需积分</label><font color="#FF0000">*</font>&nbsp;
-            <input name="bookProfile.buyCredit" type="number" step="1" min="0" class="form-control form-control-noNewline">&nbsp;&nbsp;&nbsp;
             <label>是否可交换</label><font color="#FF0000">*</font>&nbsp;
-            <input type="radio" name="bookProfile.canExchange" value="1"><label>是</label>&nbsp;
-            <input type="radio" name="bookProfile.canExchange" value="0"><label>否</label>
+            <input id="ce1" type="radio" name="bookProfile.canExchange" value="1"><label>是</label>&nbsp;
+            <input id="ce0" type="radio" name="bookProfile.canExchange" value="0"><label>否</label>&nbsp;&nbsp;&nbsp;
+            <div id="exchangeCredit" style="display: none">
+                <label>购买所需积分</label><font color="#FF0000">*</font>&nbsp;
+                <input name="bookProfile.buyCredit" type="number" step="1" min="0" class="form-control form-control-noNewline">&nbsp;&nbsp;&nbsp;
+            </div>
         </div>
         <div class="form-group form-group-auto">
             <label>是否可借阅</label><font color="#FF0000">*</font>&nbsp;
@@ -184,7 +186,7 @@
     $("#ce1").click(function(){
         $("#exchangeCredit").show();
     });
-    $("#ce2").click(function(){
+    $("#ce0").click(function(){
         $("#exchangeCredit").hide();
     });
     $("#commit").click(function(){
