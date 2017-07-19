@@ -192,10 +192,16 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         return bookList;
     }
 
+    @Override
     public Book showBook(int bookID) {
         Book book = this.bookDao.getBookByID(bookID);
         book.setBookStatus(book.getStatus().toString());
         return book;
+    }
+    
+    @Override
+    public List<Book> getRecommendBookList() {
+        return this.bookDao.getRecommendBook();
     }
     
     @Override

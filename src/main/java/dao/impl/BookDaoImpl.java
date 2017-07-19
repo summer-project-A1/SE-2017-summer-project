@@ -221,6 +221,29 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
     }
 
     @Override
+    public List<Book> getRecommendBook() {
+        // 查找推荐书籍：被借阅次数最多的10本书
+        String hql1 = "select b.bookID from Book as b, BorrowHistoy as bh where b.bookID=bh.bookID group by b.bookID order by count(*) desc";
+        Query query1 = getSession().createQuery(hql1);
+        query1.setFirstResult(0);
+        query1.setMaxResults(10);
+        List<Integer> bookIDList1 = query1.list();
+        if(bookIDList1.size() < 10) {
+            String hql2 = "select b.bookID from Book as b, BookRelease as br where b.bookID=br.bookID and not exists (from BorrowHistory as bh where bh.bookID=b.bookID) order by br.releaseTime desc";
+            Query query2 = getSession().createQuery(hql1);
+            query2.setFirstResult(0);
+            query2.setMaxResults(10-bookIDList1.size());
+            List<Integer> bookIDList2 = query2.list();
+            bookIDList1.addAll(bookIDList2);
+        }
+        List<Book> bookList = new ArrayList<Book>();
+        for(Integer bookID : bookIDList1) {
+            bookList.add(this.getBookByID(bookID));
+        }
+        return bookList;
+    }
+    
+    @Override
     public Map getBookProfileMapInMongo(Book book) {
         DBCollection collection = getMongoDb().getCollection("book_profile");
         DBObject query=new BasicDBObject("_id", new ObjectId(book.getProfileID()));
