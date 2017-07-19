@@ -24,7 +24,12 @@ public class BookAction extends ActionSupport {
      */
     private Integer part;
     private Integer firstPage;
+    /*
+        筛选使用的变量
+     */
 
+    private String year;
+    private String status;
     private String category1Name;
     private String category2Name;
 
@@ -126,7 +131,21 @@ public class BookAction extends ActionSupport {
     public void setCategory2Name(String category2Name) {
         this.category2Name = category2Name;
     }
-    
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
     /* ============================================================== */
 
     public String showAllBooks() {
@@ -135,6 +154,18 @@ public class BookAction extends ActionSupport {
         }
         if(this.firstPage == null) {
             this.firstPage = 0;
+        }
+        if(this.year==null){
+            this.year="";
+        }
+        if(this.status==null){
+            this.status="";
+        }
+        if(this.category1Name==null){
+            this.category1Name="";
+        }
+        if(this.category2Name==null){
+            this.category2Name="";
         }
         //List<Book> allBooks = this.bookService.showAllBooksByPage(this.part, this.bookNumPerPage);
         List<Book> allBooks = this.bookService.showAllBooksByPage(this.part, 9);
@@ -202,6 +233,8 @@ public class BookAction extends ActionSupport {
         ActionContext.getContext().put("categoryNameOfBooks",category2Name);
         return "showBooks";
     }
+
+
 }
 
 
