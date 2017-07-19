@@ -95,18 +95,30 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         newUser.setAddress(registerInfo.getAddress());
         newUser.setImageID("");
 
-        newUser.setStatus(UserStatus.UNACTIVATED);
-        newUser.setActiveCode(MD5Util.encoderByMd5(email));
+        newUser.setStatus(UserStatus.UNACTIVATED);  //设置未激活
+        newUser.setActiveCode(MD5Util.encoderByMd5(email)); //设置激活码
         Date currentDate = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
         calendar.add(Calendar.DATE, 1);
         Date due = calendar.getTime();
-        newUser.setDue(due);
+        newUser.setDue(due);  //设置激活due
         
         this.userDao.save(newUser);
-        
-        setLoginedUserInfo(newUser);
+
+        StringBuffer sb=new StringBuffer("点击下面链接激活账号，24小时生效，否则重新注册账号，链接只能使用一次，请尽快激活！</br>");
+        sb.append("<a href=\"http://localhost:8080/bookshare/authAction/activate?email=");
+        sb.append(email);
+        sb.append("&activeCode=");
+        sb.append(newUser.getActiveCode());
+        sb.append("\">http://localhost:8080/bookshare/authAction/activate?email=");
+        sb.append(email);
+        sb.append("&activeCode=");
+        sb.append(newUser.getActiveCode());
+        sb.append("</a>");
+
+
+        //setLoginedUserInfo(newUser);
         return true;
     }
 
