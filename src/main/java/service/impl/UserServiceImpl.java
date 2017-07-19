@@ -9,6 +9,7 @@ import common.constants.UserRole;
 import common.constants.UserStatus;
 import common.utils.MD5Util;
 import common.utils.PasswordUtil;
+import common.utils.SendEmail;
 import dao.ImageDao;
 import dao.UserDao;
 import model.FullAddress;
@@ -106,6 +107,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         
         this.userDao.save(newUser);
 
+        //发送验证邮件
         StringBuffer sb=new StringBuffer("点击下面链接激活账号，24小时生效，否则重新注册账号，链接只能使用一次，请尽快激活！</br>");
         sb.append("<a href=\"http://localhost:8080/bookshare/authAction/activate?email=");
         sb.append(email);
@@ -117,7 +119,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         sb.append(newUser.getActiveCode());
         sb.append("</a>");
 
-
+        SendEmail sendEmail = new SendEmail();
+        sendEmail.send(sb.toString(),email);
+        System.out.println("发送邮件");
         //setLoginedUserInfo(newUser);
         return true;
     }

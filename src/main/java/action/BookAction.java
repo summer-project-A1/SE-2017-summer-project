@@ -148,7 +148,7 @@ public class BookAction extends ActionSupport {
         this.status = status;
     }
     /* ============================================================== */
-
+    /*
     public String showAllBooks() {    // 查找满足筛选条件的图书，分页展示
         this.bookNumPerPage = 9;
         if(this.part == null) {
@@ -180,7 +180,7 @@ public class BookAction extends ActionSupport {
         ActionContext.getContext().put("firstPage", this.firstPage);
         ActionContext.getContext().put("category1List",this.bookService.showAllCategory1s());
         return "showBooks";
-    }
+    }*/
 
     public String showBookRelease(){
         ActionContext.getContext().put("category1List",this.bookService.showAllCategory1s());
