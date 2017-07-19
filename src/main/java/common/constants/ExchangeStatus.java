@@ -1,5 +1,10 @@
 package common.constants;
 
-public enum ExchangeStatus {
-
+public enum ExchangeStatus
+{
+	WAITING,
+	AGREED,
+	REJECTED,
+	CANCELED,
+	COMPLETED,
 }

@@ -11,6 +11,11 @@
         <property name="userID2" column="user2_id" />
         <property name="wantedID" column="wanted_id" />
         <property name="hadID" column="had_id" />
+        <property name="status" column="status">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">common.constants.ExchangeStatus</param>
+            </type>
+        </property>
         <property name="applyDate" column="apply_date" type="timestamp" />
         <property name="responseDate" column="response_date" type="timestamp" />
         <property name="fh_date1" column="fh_date1" type="timestamp" />
