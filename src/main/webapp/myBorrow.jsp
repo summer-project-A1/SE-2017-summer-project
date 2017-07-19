@@ -384,7 +384,7 @@
                                         <p id="shDate<s:property value="borrowID"/>" style="display: none">完成日期：<s:property value="shDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                         <p id="returnAddr<s:property value="borrowID"/>" style="display: none">归还地址：<s:property value="returnAddress"/></p><br>
                                         <a href="#" id="payBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="payBook(<s:property value="borrowID"/>)">支付</a>
-                                        <!-- <a href="#" id="cancelBorrowBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="cancelBorrow(<s:property value="borrowID"/>)">取消</a> -->
+                                        <a href="#" id="cancelBorrowBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="cancelBorrow(<s:property value="borrowID"/>)">取消</a>
                                     </s:if>
                                     <s:if test="borrowStatus=='SELLER_NOT_SHIPPED'">
                                         <p id="orderDate<s:property value="borrowID"/>">下单日期：<s:property value="orderDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -482,7 +482,7 @@
                                         <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
                                             书名：<s:property value="bookName"/></a><br>
                                         <s:if test="borrowStatus=='CANCELED'">
-                                            <spane>当前状态：已取消</spane>
+                                            <span>当前状态：已取消</span>
                                         </s:if>
                                         <s:elseif test="borrowStatus=='COMPLETED'">
                                             <span>当前状态：借阅已完成</span>
@@ -507,7 +507,7 @@
                                         <p id="returnDate<s:property value="borrowID"/>">归还日期：<s:property value="returnDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                                         <p id="shDate<s:property value="borrowID"/>">完成日期：<s:property value="shDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                                         <p id="returnAddr<s:property value="borrowID"/>">归还地址：<s:property value="returnAddress"/></p><br>
-                                        </s:elseif>
+
 
                                         <s:if test="bookComment==false">
                                             <a href="#" id="commentBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="commentBook(<s:property value="borrowID"/>)">图书评论</a>
@@ -532,6 +532,7 @@
                                             <div id="comment_status2"></div>
                                         </form>
                                         <div class="clearfix"></div>
+                                        </s:elseif>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>

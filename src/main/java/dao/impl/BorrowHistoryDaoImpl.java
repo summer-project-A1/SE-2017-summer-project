@@ -11,7 +11,7 @@ public class BorrowHistoryDaoImpl extends BaseDaoImpl implements BorrowHistoryDa
 
     @Override
     public BorrowHistory getBorrowHistoryByBorrowID(int borrowID){
-        String hql = "from BorrowHistory where bhID=:borrowID";
+        String hql = "from BorrowHistory where bhID=:borrowID order by orderDate desc";
         Query query = getSession().createQuery(hql);
         query.setParameter("borrowID",borrowID);
         List<BorrowHistory> list = query.list();
@@ -23,7 +23,7 @@ public class BorrowHistoryDaoImpl extends BaseDaoImpl implements BorrowHistoryDa
  
     @Override
     public List<BorrowHistory> getBorrowHistoryByBorrowUserID(int userID) {
-        String hql = "from BorrowHistory where userID1=:userID";
+        String hql = "from BorrowHistory where userID1=:userID order by orderDate desc";
         Query query = getSession().createQuery(hql);
         query.setParameter("userID", userID);
         List<BorrowHistory> result = query.list();
@@ -33,7 +33,7 @@ public class BorrowHistoryDaoImpl extends BaseDaoImpl implements BorrowHistoryDa
 
     @Override
     public List<BorrowHistory> getBorrowHistoryByLendUserID(int userID) {
-        String hql = "from BorrowHistory where userID2=:userID";
+        String hql = "from BorrowHistory where userID2=:userID order by orderDate desc";
         Query query = getSession().createQuery(hql);
         query.setParameter("userID", userID);
         List<BorrowHistory> result = query.list();

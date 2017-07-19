@@ -172,7 +172,7 @@
             <result name="createBorrowOrder">/showBuyOrder.jsp</result>
             <allowed-methods>
                 borrowCheckout,createBorrowOrder,showMyBorrow,delayBook,returnBook,confirmBorrowOrder,confirmBorrowReceipt
-                ,deliverBorrowOrder,confirmReturnReceipt
+                ,deliverBorrowOrder,confirmReturnReceipt,cancelBorrowOrder
             </allowed-methods>
         </action>
     </package>
