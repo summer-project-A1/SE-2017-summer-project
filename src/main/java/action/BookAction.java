@@ -25,11 +25,9 @@ public class BookAction extends ActionSupport {
     private Integer part;
     private Integer firstPage;
 
-    // 图书查找的条件
     private String category1Name;
     private String category2Name;
-    private Integer year;
-    private String status;
+
 
     private int userID;
     private int bookID;
@@ -129,25 +127,9 @@ public class BookAction extends ActionSupport {
         this.category2Name = category2Name;
     }
     
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    
     /* ============================================================== */
 
-    public String showAllBooks() {    // 查找满足筛选条件的图书，分页展示
+    public String showAllBooks() {
         if(this.part == null) {
             this.part = 1;
         }
@@ -158,6 +140,7 @@ public class BookAction extends ActionSupport {
         List<Book> allBooks = this.bookService.showAllBooksByPage(this.part, 9);
         List<Book> nextPage = this.bookService.showAllBooksByPage(this.part+1, 9);
         ActionContext.getContext().put("isLastPart",(nextPage.size()==0));
+        ActionContext.getContext().put("part", this.part);
         ActionContext.getContext().put("allBooks",allBooks);
         ActionContext.getContext().put("totalBookAmount",allBooks.size());//应从数据库获取allBooks的大小
         ActionContext.getContext().put("firstPage", this.firstPage);
