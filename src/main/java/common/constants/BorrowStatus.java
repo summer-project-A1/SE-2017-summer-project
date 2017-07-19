@@ -10,11 +10,13 @@ public enum BorrowStatus {
      * 买家确认收货:买家未归还
      * 买家归还:待卖家确认
      * 卖家确认:已完成
+     * 买家取消:已取消
      */
     BUYER_NOTPAID,
     SELLER_NOT_SHIPPED,
     SELLER_SHIPPED,
     BUYER_NOT_RETURNED,
     BUYER_RETURNED,
-    COMPLETED;
+    COMPLETED,
+    CANCELED;
 }

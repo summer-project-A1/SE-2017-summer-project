@@ -166,4 +166,16 @@ public class BorrowAction extends ActionSupport {
         return "ajax";
     }
 
+    public String cancelBorrowOrder(){  //预留取消借阅，日后解封
+        Map returnMap = new HashMap();
+        if(this.borrowService.cancelBorrowOrder(this.borrowID)){
+            returnMap.put("success",true);
+        }
+        else{
+            returnMap.put("success",false);
+        }
+        setParams(returnMap);
+        return "ajax";
+    }
+
 }

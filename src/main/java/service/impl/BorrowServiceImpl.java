@@ -189,6 +189,8 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                 borrowProfile.setComment2(borrowHistory.getComment2());
                 borrowProfile.setEmail(user2.getEmail());
                 borrowProfile.setBookComment(bookComment);
+                //borrowProfile.setStatus(borrowHistory.getStatus());
+                //borrowProfile.setBorrowStatus(borrowHistory.getStatus().toString());
                 borrowHistoryBook.add(borrowProfile);
             }
         }
@@ -540,6 +542,8 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                 borrowProfile.setEmail(user.getEmail());
                 borrowProfile.setBuyerEmail(buyer.getEmail());
                 borrowProfile.setBookComment(false);
+                //borrowProfile.setStatus(borrowHistory.getStatus());
+                //borrowProfile.setBorrowStatus(borrowHistory.getStatus().toString());
                 borrowProfileList.add(borrowProfile);
             }
         }
@@ -619,6 +623,53 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         returnMap.put("success",true);
         returnMap.put("shDate",shDate);
         return returnMap;
+    }
+
+    @Override
+    public boolean cancelBorrowOrder(int borrowID){
+        if(!isLogined()) {
+            return false;
+        }
+        User user = getLoginedUserInfo();
+        Borrow borrow = this.borrowDao.getBorrowByID(borrowID);
+        if(borrow == null){
+            return false;
+        }
+        if(borrow.getUserID1() != user.getUserID()){
+            return false;
+        }
+        if(borrow.getStatus() != BorrowStatus.BUYER_NOTPAID){
+            return false;
+        }
+        borrow.setStatus(BorrowStatus.CANCELED);
+        this.borrowDao.update(borrow);
+
+        BorrowHistory borrowHistory = new BorrowHistory();
+        borrowHistory.setBhID(borrow.getBorrowID());
+        borrowHistory.setUserID1(borrow.getUserID1());
+        borrowHistory.setUserID2(borrow.getUserID2());
+        borrowHistory.setBookID(borrow.getBookID());
+        borrowHistory.setYhDate(borrow.getYhDate());
+        borrowHistory.setBorrowPrice(borrow.getBorrowCredit());
+        borrowHistory.setDelayCount(borrow.getDelayCount());
+        borrowHistory.setBorrowAddress(borrow.getBorrowAddress());
+        borrowHistory.setReturnAddress(borrow.getReturnAddress());
+        borrowHistory.setTrackingNo1(borrow.getTrackingNo1());
+        borrowHistory.setTrackingNo2(borrow.getTrackingNo2());
+        borrowHistory.setOrderDate(borrow.getOrderDate());
+        borrowHistory.setPayDate(borrow.getPayDate());
+        borrowHistory.setFhDate(borrow.getFhDate());
+        borrowHistory.setBorrowDate(borrow.getBorrowDate());
+        borrowHistory.setReturnDate(borrow.getReturnDate());
+        borrowHistory.setShDate(borrow.getShDate());
+        borrowHistory.setComment1(borrow.getComment1());
+        borrowHistory.setComment2(borrow.getComment2());
+        //borrowHistory.setStatus(borrow.getStatus()); 日后解封
+
+        this.borrowHistoryDao.save(borrowHistory);
+        this.borrowDao.delete(borrow);
+
+        return true;
     }
 
 }

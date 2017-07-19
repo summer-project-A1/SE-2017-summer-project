@@ -70,6 +70,30 @@
         });
     }
 
+    function cancelBorrow(borrowID){
+        var statusID = "status"+borrowID;
+        var payBtnID = "payBtn"+borrowID;
+        var cancelBtnID = "cancelBorrowBtn"+borrowID;
+        $.ajax({
+            url:'<%=path%>/borrowAction/cancelBorrowOrder',
+            type:'POST',
+            data:{'borrowID':borrowID},
+            success:function(msg){
+                if(msg.success){
+                    showTip('取消成功！','success');
+                    $("#"+statusID).html("当前状态：已取消");
+                    $("#"+payBtnID).remove();
+                    $("#"+cancelBtnID).remove();
+                }else {
+                    showTip('发生错误！', 'danger');
+                }
+            },
+            error:function(xhr,status,error){
+                alert('status='+status+',error='+error);
+            }
+        });
+    }
+
     function confirmReceipt(borrowID){
         var confirmBtnID = "confirmBtn"+borrowID;
         var statusID = "status"+borrowID;
@@ -360,6 +384,7 @@
                                         <p id="shDate<s:property value="borrowID"/>" style="display: none">完成日期：<s:property value="shDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                         <p id="returnAddr<s:property value="borrowID"/>" style="display: none">归还地址：<s:property value="returnAddress"/></p><br>
                                         <a href="#" id="payBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="payBook(<s:property value="borrowID"/>)">支付</a>
+                                        <!-- <a href="#" id="cancelBorrowBtn<s:property value="borrowID"/>" class="add-cart item_add" onclick="cancelBorrow(<s:property value="borrowID"/>)">取消</a> -->
                                     </s:if>
                                     <s:if test="borrowStatus=='SELLER_NOT_SHIPPED'">
                                         <p id="orderDate<s:property value="borrowID"/>">下单日期：<s:property value="orderDate"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>

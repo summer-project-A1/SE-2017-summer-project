@@ -17,6 +17,7 @@ public interface BorrowService extends BaseService {
     public Map returnBook(int borrowID,String trackingNo1);
     public Map delayBook(int borrowID);
     public Map confirmBorrowReceipt(int borrowID);
+    public boolean cancelBorrowOrder(int borrowID);
     
     public List<BorrowProfile> getLendBookList();
     public List<BorrowProfile> getLendBookHistoryList();

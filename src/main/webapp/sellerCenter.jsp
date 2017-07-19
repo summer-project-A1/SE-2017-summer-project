@@ -78,6 +78,27 @@
             $("#"+creditRatingBuyFormID).show();
         }
 
+        function submitRatingBorrow(borrowID){
+            var creditRatingBorrowFormID = "creditRatingBorrowForm" + borrowID;
+            var creditRatingBorrowBtnID = "creditRatingBorrowBtn" + borrowID;
+            var params = $("#"+creditRatingBorrowFormID).serialize();
+            $.ajax({
+                url:'<%=path%>/commentAction/honestyRatingWhenBorrow',
+                type:'POST',
+                data:params,
+                success:function(msg){
+                    if(msg.success){
+                        showTip('信用评价成功！','success');
+                        $("#"+creditRatingBorrowBtnID).remove();
+                        $("#"+creditRatingBorrowFormID).remove();
+                    }
+                },
+                error:function(xhr,status,error){
+                    alert('status='+status+',error='+error);
+                }
+            });
+        }
+
         function submitRatingBuy(orderID){
             var creditRatingBuyFormID = "creditRatingBuyForm" + orderID;
             var creditRatingBuyBtnID = "creditRatingBuyBtn" + orderID;
