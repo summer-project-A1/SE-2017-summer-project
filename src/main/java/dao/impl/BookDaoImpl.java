@@ -45,8 +45,8 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
     public int getAllBooksCount() {
         String hql = "select count(*) from Book";
         Query query = getSession().createQuery(hql);
-        int result = (int)query.uniqueResult();
-        return result;
+        Long result = (Long)query.uniqueResult();
+        return (int)(long)result;
     }
     
     @Override
@@ -108,7 +108,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
     }
     
     @Override
-    public List<Book> searchByCondition(Map condition) {
+    public List<Book> searchByCondition(Map condition, Integer part, Integer pageSize) {
         String hqlTables = " from Book as b ";
         String hqlConditions = " where 1=1 ";
         String hql = " select b ";
@@ -144,9 +144,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
         System.out.println(hql);
         Query query = getSession().createQuery(hql);
         query.setParameters(args.toArray(), types.toArray(new Type[0]));
-        if(condition.containsKey("part") && condition.containsKey("pageSize")) {
-            Integer part = (Integer)condition.get("part");
-            Integer pageSize = (Integer)condition.get("pageSize");
+        if(part != null && pageSize != null) {
             query.setFirstResult((part-1)*pageSize); 
             query.setMaxResults(pageSize); 
         }

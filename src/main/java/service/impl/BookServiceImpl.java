@@ -127,6 +127,12 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     }
 
     @Override
+    public Boolean isLastPart(int part, int pageSize) {  // 数据库分页取数据，判断当前页是否是最后一部分数据
+        int totalCount = this.bookDao.getAllBooksCount();
+        return part*pageSize >= totalCount;
+    }
+    
+    @Override
     public List<Book> showAllBooksByPage(int part,int pageSize) {
         List<Book> bookList = this.bookDao.getAllBooksByPage(part, pageSize);
         for(Book book : bookList) {
@@ -160,6 +166,7 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         conditions.put("pageSize", pageSize);
         if(category1NameString != null && !category1NameString.equals("")) {
             conditions.put("category1", category1NameString);
+            System.out.println(category1NameString);
         }
         if(category2NameString != null && !category2NameString.equals("")) {
             conditions.put("category2", category2NameString);
@@ -178,7 +185,7 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
             }
         }
         
-        List<Book> bookList = this.bookDao.searchByCondition(conditions);
+        List<Book> bookList = this.bookDao.searchByCondition(conditions, part, pageSize);
         for(Book book : bookList) {
             book.setBookStatus(book.getStatus().toString());
         }
@@ -262,17 +269,19 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     @Override
     public List<Book> showBooksByConditions(Integer part, Integer pageSize, String category1Name, String category2Name) {
         Map conditions = new HashMap();
+        /*
         if(part != null && pageSize != null) {
             conditions.put("part", part);
             conditions.put("pageSize", pageSize);
         }
+        */
         if(category1Name != null) {
             conditions.put("category1Name", category1Name);
         }
         if(category2Name != null) {
             conditions.put("category2Name", category2Name);
         }
-        List<Book> result = this.bookDao.searchByCondition(conditions);
+        List<Book> result = this.bookDao.searchByCondition(conditions, part, pageSize);
         return result;
     }
 }
