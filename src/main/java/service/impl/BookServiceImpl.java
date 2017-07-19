@@ -155,8 +155,11 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     
     @Override
     public List<Book> searchBook(Map condition) {
-        // TODO 自动生成的方法存根
-        return null;
+        List<Book> bookList = this.bookDao.searchByCondition(condition);
+        for(Book book : bookList) {
+            book.setBookStatus(book.getStatus().toString());
+        }
+        return bookList;
     }
 
     public Book showBook(int bookID) {
