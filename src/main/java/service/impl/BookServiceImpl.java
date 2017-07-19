@@ -154,8 +154,31 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     }
     
     @Override
-    public List<Book> searchBook(Map condition) {
-        List<Book> bookList = this.bookDao.searchByCondition(condition);
+    public List<Book> searchBook(Integer part, Integer pageSize, String category1NameString, String category2NameString, String yearString, String statusString) {
+        Map conditions = new HashMap();
+        conditions.put("part", part);
+        conditions.put("pageSize", pageSize);
+        if(category1NameString != null && !category1NameString.equals("")) {
+            conditions.put("category1", category1NameString);
+        }
+        if(category2NameString != null && !category2NameString.equals("")) {
+            conditions.put("category2", category2NameString);
+        }
+        if(yearString != null && !yearString.equals("")) {
+            conditions.put("publishYear", Integer.valueOf(yearString));
+        }
+        if(statusString != null && !statusString.equals("")) {
+            if(statusString.equals("canBorrow")) {
+                conditions.put("canBorrow", 1);
+                conditions.put("canExchange", 0);
+            }
+            else if(statusString.equals("canExchange")) {
+                conditions.put("canBorrow", 0);
+                conditions.put("canExchange", 1);
+            }
+        }
+        
+        List<Book> bookList = this.bookDao.searchByCondition(conditions);
         for(Book book : bookList) {
             book.setBookStatus(book.getStatus().toString());
         }
