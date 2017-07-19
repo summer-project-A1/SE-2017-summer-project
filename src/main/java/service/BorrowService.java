@@ -9,7 +9,9 @@ import model.BorrowProfile;
 
 public interface BorrowService extends BaseService {
     public Map showMyBorrow();
+    /*
     public boolean borrowBook(int bookID);
+    */
     public Map createBorrowOrder(String fullAddress);
     public Map confirmBorrowOrder(List<Integer> borrowIDList);
     public Map returnBook(int borrowID,String trackingNo1);

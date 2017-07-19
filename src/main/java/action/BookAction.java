@@ -25,9 +25,11 @@ public class BookAction extends ActionSupport {
     private Integer part;
     private Integer firstPage;
 
+    // 图书查找的条件
     private String category1Name;
     private String category2Name;
-
+    private Integer year;
+    private String status;
 
     private int userID;
     private int bookID;
@@ -127,9 +129,25 @@ public class BookAction extends ActionSupport {
         this.category2Name = category2Name;
     }
     
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     /* ============================================================== */
 
-    public String showAllBooks() {
+    public String showAllBooks() {    // 查找满足筛选条件的图书，分页展示
         if(this.part == null) {
             this.part = 1;
         }
