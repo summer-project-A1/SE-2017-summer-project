@@ -128,17 +128,29 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
 
     @Override
     public List<Book> showAllBooksByPage(int part,int pageSize) {
-        return this.bookDao.getAllBooksByPage(part, pageSize);
+        List<Book> bookList = this.bookDao.getAllBooksByPage(part, pageSize);
+        for(Book book : bookList) {
+            book.setBookStatus(book.getStatus().toString());
+        }
+        return bookList;
     }
 
     @Override
     public List<Book> showUserBooks(int userID) {
-        return this.bookDao.getBooksByUserID(userID);
+        List<Book> bookList = this.bookDao.getBooksByUserID(userID);
+        for(Book book : bookList) {
+            book.setBookStatus(book.getStatus().toString());
+        }
+        return bookList;
     }
 
     @Override
     public List<Book> searchByTextByPage(String searchText,int part,int pageSize) {
-        return this.bookDao.searchByTextByPage(searchText,part,pageSize);
+        List<Book> bookList = this.bookDao.searchByTextByPage(searchText,part,pageSize);
+        for(Book book : bookList) {
+            book.setBookStatus(book.getStatus().toString());
+        }
+        return bookList;
     }
     
     @Override
@@ -148,7 +160,9 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     }
 
     public Book showBook(int bookID) {
-        return this.bookDao.getBookByID(bookID);
+        Book book = this.bookDao.getBookByID(bookID);
+        book.setBookStatus(book.getStatus().toString());
+        return book;
     }
     
     @Override
@@ -195,12 +209,20 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     
     @Override
     public List<Book> showBooksByCategory1NameByPage(String category1Name, int part, int pageSize) {
-        return this.bookDao.getBooksByCategory1NameByPage(category1Name, part, pageSize);
+        List<Book> bookList = this.bookDao.getBooksByCategory1NameByPage(category1Name, part, pageSize);
+        for(Book book : bookList) {
+            book.setBookStatus(book.getStatus().toString());
+        }
+        return bookList;
     }
     
     @Override
     public List<Book> showBooksByCategory2NameByPage(String category2Name, int part, int pageSize) {
-        return this.bookDao.getBooksByCategory2NameByPage(category2Name, part, pageSize);
+        List<Book> bookList = this.bookDao.getBooksByCategory2NameByPage(category2Name, part, pageSize);
+        for(Book book : bookList) {
+            book.setBookStatus(book.getStatus().toString());
+        }
+        return bookList;
     }
     
     @Override

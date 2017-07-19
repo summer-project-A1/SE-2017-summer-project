@@ -198,6 +198,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         return result;
     }
     
+    /*
     @Override
     public boolean borrowBook(int bookID) {
         Book book = this.bookDao.getBookByID(bookID);
@@ -226,6 +227,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         this.bookDao.update(book);
         return true;
     }
+    */
     
     @Override
     public Map createBorrowOrder(String fullAddress) {

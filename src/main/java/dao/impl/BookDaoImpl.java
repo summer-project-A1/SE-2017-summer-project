@@ -135,10 +135,21 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
             args.add(condition.get("canExchange"));
             types.add(new IntegerType());
         }
+        if(condition.containsKey("publishYear")) {
+            hqlConditions += " and b.publishYear=? ";
+            args.add(condition.get("publishYear"));
+            types.add(new IntegerType());
+        }
         hql = hql + hqlTables + hqlConditions;
         System.out.println(hql);
         Query query = getSession().createQuery(hql);
         query.setParameters(args.toArray(), types.toArray(new Type[0]));
+        if(condition.containsKey("part") && condition.containsKey("pageSize")) {
+            Integer part = (Integer)condition.get("part");
+            Integer pageSize = (Integer)condition.get("pageSize");
+            query.setFirstResult((part-1)*pageSize); 
+            query.setMaxResults(pageSize); 
+        }
         List<Book> books = query.list();
         return books;
         /*
