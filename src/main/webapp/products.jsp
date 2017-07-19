@@ -217,7 +217,7 @@
                                 <p class="pric1">分类：<s:property value="category1"/>&nbsp;标签：<s:property value="category2"/></p><br>
                                 <p class="disc">当前状态：<s:if test="bookStatus==IDLE">空闲</s:if>
                                     <s:elseif test="bookStatus==BORROWED">正被借阅</s:elseif>
-                                    <s:else>正被交换</s:else></p><br>
+                                    <s:else>已被交换或购买</s:else></p><br>
                                 <p class="disc">预约状态：<s:if test="reserved==0">未被预约</s:if><s:else>已被预约</s:else></p>
                             </div>
                             <div class="clearfix"> </div>
