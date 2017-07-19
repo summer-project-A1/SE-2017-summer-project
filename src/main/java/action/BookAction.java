@@ -1,9 +1,7 @@
 package action;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -172,36 +170,9 @@ public class BookAction extends ActionSupport {
             this.category2Name="";
         }
 
-        Map conditions = new HashMap();
-        conditions.put("part", this.part);
-        conditions.put("pageSize", this.bookNumPerPage);
-        if(category1Name != null) {
-            conditions.put("category1", this.category1Name);
-        }
-        if(category2Name != null) {
-            conditions.put("category2", this.category2Name);
-        }
-        if(year != null) {
-            conditions.put("publishYear", this.year);
-        }
-        if(status != null) {
-            if(status.equals("canBorrow")) {
-                conditions.put("canBorrow", 1);
-                conditions.put("canExchange", 0);
-            }
-            else if(status.equals("canExchange")) {
-                conditions.put("canBorrow", 0);
-                conditions.put("canExchange", 1);
-            }
-        }
-        List<Book> allBooks = this.bookService.searchBook(conditions);
-        conditions.put("part", (Integer)conditions.get("part")+1);
-        List<Book> nextPage = this.bookService.searchBook(conditions);
-        /*
-        //List<Book> allBooks = this.bookService.showAllBooksByPage(this.part, this.bookNumPerPage);
-        List<Book> allBooks = this.bookService.showAllBooksByPage(this.part, this.bookNumPerPage);
-        List<Book> nextPage = this.bookService.showAllBooksByPage(this.part+1, this.bookNumPerPage);
-        */
+
+        List<Book> allBooks = this.bookService.searchBook(part,bookNumPerPage,category1Name,category2Name,year,status);
+        List<Book> nextPage = this.bookService.searchBook(part+1,bookNumPerPage,category1Name,category2Name,year,status);
         ActionContext.getContext().put("isLastPart",(nextPage.size()==0));
         ActionContext.getContext().put("part", this.part);
         ActionContext.getContext().put("allBooks",allBooks);
