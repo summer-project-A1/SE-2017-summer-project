@@ -352,7 +352,9 @@
                                 <p class="disc">当前状态：<s:if test="bookStatus=='IDLE'">空闲</s:if>
                                     <s:elseif test="bookStatus=='BORROWED'">正被借阅</s:elseif>
                                     <s:else>已被交换或购买</s:else></p><br>
-                                <p class="disc">预约状态：<s:if test="reserved==0">未被预约</s:if><s:else>已被预约</s:else></p>
+                                <s:if test="#bookStatus=='IDLE'">
+                                    <p class="disc">预约人数：<s:property value="reserved"/></p>
+                                </s:if>
                             </div>
                             <div class="clearfix"> </div>
                         </div>
