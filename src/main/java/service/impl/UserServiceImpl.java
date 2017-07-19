@@ -1,14 +1,12 @@
 package service.impl;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.opensymphony.xwork2.ActionContext;
 
 import common.constants.UserRole;
+import common.constants.UserStatus;
 import common.utils.MD5Util;
 import common.utils.PasswordUtil;
 import dao.ImageDao;
@@ -96,6 +94,15 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         newUser.setDistrict(registerInfo.getDistrict()!=null?registerInfo.getDistrict():"请选择");
         newUser.setAddress(registerInfo.getAddress());
         newUser.setImageID("");
+
+        newUser.setStatus(UserStatus.UNACTIVATED);
+        newUser.setActiveCode(MD5Util.encoderByMd5(email));
+        Date currentDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        calendar.add(Calendar.DATE, 1);
+        Date due = calendar.getTime();
+        newUser.setDue(due);
         
         this.userDao.save(newUser);
         

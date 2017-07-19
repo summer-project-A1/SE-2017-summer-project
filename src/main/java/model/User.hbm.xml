@@ -23,5 +23,12 @@
         <property name="address" column="address" />
         <property name="profileID" column="profile_id" />
         <property name="imageID" column="image_id" />
+        <property name="status" column="status">
+                <type name="org.hibernate.type.EnumType">
+                        <param name="enumClass">common.constants.UserStatus</param>
+                </type>
+        </property>
+        <property name="activeCode" column="activeCode"/>
+        <property name="due" column="due"/>
 	</class>
 </hibernate-mapping>
