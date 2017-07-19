@@ -542,8 +542,8 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                 borrowProfile.setEmail(user.getEmail());
                 borrowProfile.setBuyerEmail(buyer.getEmail());
                 borrowProfile.setBookComment(false);
-                //borrowProfile.setStatus(borrowHistory.getStatus());
-                //borrowProfile.setBorrowStatus(borrowHistory.getStatus().toString());
+                borrowProfile.setStatus(borrowHistory.getStatus());
+                borrowProfile.setBorrowStatus(borrowHistory.getStatus().toString());
                 borrowProfileList.add(borrowProfile);
             }
         }

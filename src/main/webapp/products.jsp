@@ -24,25 +24,67 @@
 
 <script type="text/javascript" id="sourcecode">
 
+    $.urlParam = function(name){
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null)
+            return unescape(r[2]);
+        return null; //返回参数值
+    }
+    /*
+    //替换指定传入参数的值,paramName为参数,replaceWith为新值
+    $.replaceParamVal = function(oUrl,paramName,replaceWith) {
+        var re=eval('/('+ paramName+'=)([^&]*)/gi');
+        var nUrl = oUrl.replace(re,paramName+'='+replaceWith);
+        //this.location = nUrl;
+        return nUrl;
+    }
+    */
+    /*
+     * url 目标url
+     * arg 需要替换的参数名称
+     * arg_val 替换后的参数的值
+     * return url 参数替换后的url
+     */
+    $.changeURLArg=function (url,arg,arg_val){
+        var pattern=arg+'=([^&]*)';
+        var replaceText=arg+'='+arg_val;
+        if(url.match(pattern)){
+            var tmp='/('+ arg+'=)([^&]*)/gi';
+            tmp=url.replace(eval(tmp),replaceText);
+            return tmp;
+        }else{
+            if(url.match('[\?]')){
+                return url+replaceText+'&';
+            }else{
+                return url+'?'+replaceText+'&';
+            }
+        }
+    }
+
+    $.deleteUrlArg=function(url,arg){
+        var pattern=arg+'=([^&]*)';
+        var replaceText="";
+        if(url.match(pattern)){
+            var tmp='/('+ arg+'=)([^&]*&)/gi';
+            url=url.replace(eval(tmp),replaceText);
+        }
+        return url;
+    }
+
     var amountPerPage;
     var totalBookAmount;
     var pageCount;
     var currPage;
     var isLastBlock =<s:property value="#isLastPart"/>;
 
-    $.urlParam = function(name){
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-        if (r != null)
-            return unescape(r[2]);
-        return 0; //返回参数值
-    }
+
     // showAllBooks?part=2
-    var currBlock= parseInt($.urlParam('part')); //2
+    var currBlock= parseInt("<s:property value='#part'/>");
     if(currBlock==0){
         currBlock=1;
     }
-    var firstPage = parseInt($.urlParam('firstPage'));
+    var firstPage = parseInt("<s:property value='#firstPage'/>");
     if(firstPage==0){
         firstPage=1;
     }
@@ -163,7 +205,98 @@
         $(".tab1 .single-bottom").hide();
     });
 
-    //每页显示数量选框js脚本
+    //筛选js脚本
+    var url;
+    var showCategory1='<s:property value="category1Name"/>';
+    var showCategory2='<s:property value="category2Name"/>';
+    var showStatus='<s:property value="status"/>';
+    var showYear='<s:property value="year"/>';
+    $(document).ready(function(){
+        url=this.location.href.toString();
+        console.log("url: "+url);
+        if(showCategory1!=""){
+            $('#select-info').append(" 分类："+showCategory1);
+
+        }
+        if(showCategory2!=""){
+            $('#select-info').append(" 分类："+showCategory2);
+
+        }
+        if(showStatus!=""){
+            $('#select-info').append(" 状态："+showStatus);
+
+        }if(showYear!=""){
+            $('#select-info').append(" 年份："+showYear);
+
+        }
+
+        $('#select-status :checkbox[type="checkbox"]').each(function(){
+            $(this).click(function(){
+                if($(this).attr('checked')){
+                    $(':checkbox[type="checkbox"]').removeAttr('checked');
+                    $(this).attr('checked','checked');
+                }
+            });
+        });
+
+        $.sendSelectInfo=function(url){
+            window.location.href=url;
+        }
+
+
+    });
+
+
+    function selectCategory1(category1Name){
+        if(category1Name==""){
+            console.log("url: "+url);
+            return;
+        }
+        url=$.deleteUrlArg(url,"category2Name");
+        url=$.changeURLArg(url,'category1Name',category1Name);
+        console.log("url: "+url);
+        url=encodeURI(url);
+        $.sendSelectInfo(url);
+        return;
+    }
+
+    function selectCategory2(category2Name){
+        if(category2Name==""){
+            console.log("url: "+url);
+            return;
+        }
+        url=$.deleteUrlArg(url,"category1Name");
+        url=$.changeURLArg(url,'category2Name',category2Name);
+        console.log("url: "+url);
+        url=encodeURI(url);
+        $.sendSelectInfo(url);
+        return;
+    }
+
+    function selectYear(year){
+        if(year==""){
+            console.log("url: "+url);
+            return;
+        }
+        url=$.changeURLArg(url,'year',year);
+        console.log("url: "+url);
+        url=encodeURI(url);
+        $.sendSelectInfo(url);
+        return;
+    }
+
+    function selectStatus(status){
+        if(status==""){
+            console.log("url: "+url);
+            return;
+        }
+        url=$.changeURLArg(url,'status',status);
+        console.log("url: "+url);
+        url=encodeURI(url);
+        $.sendSelectInfo(url);
+        return;
+    }
+
 
 </script>
 
@@ -175,6 +308,7 @@
     <div class="container">
 
         <h2>图书浏览</h2>
+        <h3 id="selete-info"></h3>
 
         <div class="col-md-9 product-model-sec">
             <div class="clearfix"> </div>
@@ -233,13 +367,19 @@
             <section  class="sky-form">
                 <div class="product_right">
                     <h4 class="m_2"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>图书类型</h4>
+                        <div id="cate-default" class="tab1">
+                            <ul class="place">
+                                <li onclick="selectCategory1('');selectCategory2('')" class="sort">全部</li>
+                            </ul>
+                            <div class="clearfix"> </div>
+                        </div>
                     <s:iterator value="#category1List"  status="st1">
-                        <div  id="cate<s:property value="#st1.index"/>" class="tab1">
+                        <div  id="cate-<s:property value="#st1.index"/>" class="tab1">
                             <script>
                                 $(document).ready(function () {
-                                    $("#cate<s:property value='#st1.index'/> ul").click(function(){
+                                    $("#cate-<s:property value='#st1.index'/> ul").click(function(){
                                         $(".tab1 .single-bottom").hide();
-                                        $("#cate<s:property value='#st1.index'/> .single-bottom").slideToggle(300);
+                                        $("#cate-<s:property value='#st1.index'/> .single-bottom").slideToggle(300);
 
                                     });
                                 });
@@ -251,9 +391,9 @@
                             </ul>
                             <div class="clearfix"> </div>
                             <div class="single-bottom">
-                                <a onclick=""><p><s:property value="category1Name"/></p></a>
+                                <a href="#" onclick="selectCategory1('<s:property value="category1Name"/>')"><p><s:property value="category1Name"/></p></a>
                                 <s:iterator value="category2List" status="st2">
-                                    <a onclick=""><p><s:property value="category2Name"/></p></a>
+                                    <a href="#" onclick="selectCategory2('<s:property value="category2Name"/>')"><p><s:property value="category2Name"/></p></a>
                                 </s:iterator>
                             </div>
 
@@ -265,10 +405,10 @@
                 <h4><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>图书状态</h4>
                 <div class="row row1 scroll-pane">
 
-                    <div class="col col-4">
-                        <label class="checkbox"><input type="checkbox" name="checkbox" onclick=""><i></i>可交换</label>
-                        <label class="checkbox"><input type="checkbox" name="checkbox" onclick=""><i></i>可积分借阅</label>
-                        <label class="checkbox"><input type="checkbox" name="checkbox" onclick=""><i></i>可预约</label>
+                    <div id="select-status" class="col col-4">
+                        <label id="status-default" class="checkbox"><input type="checkbox" name="checkbox" onclick="selectStatus('')"><i></i>全部</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox" onclick="selectStatus('canExchange')"><i></i>可交换或积分购买</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox" onclick="selectStatus('canBorrow')"><i></i>可积分借阅</label>
                     </div>
                 </div>
             </section>
@@ -276,11 +416,18 @@
                 <h4><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>图书年份</h4>
                 <div class="row row1 scroll-pane">
 
-                    <div class="col col-4">
-                        <a class="add-cart item_add" onclick="">2017</a>
-                        <a class="add-cart item_add" onclick="">2016</a><br>
-                        <a class="add-cart item_add" onclick="">2015</a>
-                        <a class="add-cart item_add" onclick="">2014</a><br>
+                    <div id="select-year" class="col col-4">
+                        <a id="year-default" class="add-cart item_add" onclick="selectYear('')">全部</a>
+                        <a class="add-cart item_add" onclick="selectYear('2017')">2017</a><br>
+                        <a class="add-cart item_add" onclick="selectYear('2016')">2016</a>
+                        <a class="add-cart item_add" onclick="selectYear('2015')">2015</a><br>
+                        <a class="add-cart item_add" onclick="selectYear('2014')">2014</a>
+                        <a class="add-cart item_add" onclick="selectYear('2013')">2013</a><br>
+                        <a class="add-cart item_add" onclick="selectYear('2012')">2012</a>
+                        <a class="add-cart item_add" onclick="selectYear('2011')">2011</a><br>
+                        <a class="add-cart item_add" onclick="selectYear('2010')">2010</a>
+                        <a class="add-cart item_add" onclick="selectYear('2009')">2009</a><br>
+                        <a class="add-cart item_add" onclick="selectYear('2008')">2008</a>
                     </div>
                 </div>
             </section>
