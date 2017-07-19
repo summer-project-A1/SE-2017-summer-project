@@ -1,9 +1,7 @@
 package action;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -27,12 +25,15 @@ public class BookAction extends ActionSupport {
      */
     private Integer part;
     private Integer firstPage;
+    /*
+        筛选使用的变量
+     */
 
-    // 图书查找的条件
+    private String year;
+    private String status;
     private String category1Name;
     private String category2Name;
-    private Integer year;
-    private String status;  // "canBorrow"：用户设定能借但不能交换的书 ；"canExchange"：用户设定能换/买但不能借的书； null：不考虑用户如何设定
+
 
     private int userID;
     private int bookID;
@@ -131,12 +132,11 @@ public class BookAction extends ActionSupport {
     public void setCategory2Name(String category2Name) {
         this.category2Name = category2Name;
     }
-    
-    public Integer getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(Integer year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
@@ -147,7 +147,6 @@ public class BookAction extends ActionSupport {
     public void setStatus(String status) {
         this.status = status;
     }
-    
     /* ============================================================== */
 
     public String showAllBooks() {    // 查找满足筛选条件的图书，分页展示
@@ -158,37 +157,22 @@ public class BookAction extends ActionSupport {
         if(this.firstPage == null) {
             this.firstPage = 0;
         }
-        
-        Map conditions = new HashMap();
-        conditions.put("part", this.part);
-        conditions.put("pageSize", this.bookNumPerPage);
-        if(category1Name != null) {
-            conditions.put("category1", this.category1Name);
+        if(this.year==null){
+            this.year="";
         }
-        if(category2Name != null) {
-            conditions.put("category2", this.category2Name);
+        if(this.status==null){
+            this.status="";
         }
-        if(year != null) {
-            conditions.put("publishYear", this.year);
+        if(this.category1Name==null){
+            this.category1Name="";
         }
-        if(status != null) {
-            if(status.equals("canBorrow")) {
-                conditions.put("canBorrow", 1);
-                conditions.put("canExchange", 0);
-            }
-            else if(status.equals("canExchange")) {
-                conditions.put("canBorrow", 0);
-                conditions.put("canExchange", 1);
-            }
+        if(this.category2Name==null){
+            this.category2Name="";
         }
-        List<Book> allBooks = this.bookService.searchBook(conditions);
-        conditions.put("part", (Integer)conditions.get("part")+1);
-        List<Book> nextPage = this.bookService.searchBook(conditions);
-        /*
-        //List<Book> allBooks = this.bookService.showAllBooksByPage(this.part, this.bookNumPerPage);
-        List<Book> allBooks = this.bookService.showAllBooksByPage(this.part, this.bookNumPerPage);
-        List<Book> nextPage = this.bookService.showAllBooksByPage(this.part+1, this.bookNumPerPage);
-        */
+
+
+        List<Book> allBooks = this.bookService.searchBook(part,bookNumPerPage,category1Name,category2Name,year,status);
+        List<Book> nextPage = this.bookService.searchBook(part+1,bookNumPerPage,category1Name,category2Name,year,status);
         ActionContext.getContext().put("isLastPart",(nextPage.size()==0));
         ActionContext.getContext().put("part", this.part);
         ActionContext.getContext().put("allBooks",allBooks);
@@ -252,6 +236,8 @@ public class BookAction extends ActionSupport {
         ActionContext.getContext().put("categoryNameOfBooks",category2Name);
         return "showBooks";
     }
+
+
 }
 
 
