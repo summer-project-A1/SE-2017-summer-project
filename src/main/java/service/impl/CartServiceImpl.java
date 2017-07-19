@@ -26,9 +26,11 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
     /* ====================================================== */
     
     @Override
-    public List showBorrowCart() {
+    public Map showBorrowCart() {
         List<Map<String, Object>> cartList;
-        List resultList = new ArrayList();
+        Map result = new HashMap();
+        List booksInBorrowCart = new ArrayList();
+        Integer totalCredit = 0;
         if(getHttpSession().containsKey("borrowCart")) {
             cartList = (List<Map<String, Object>>)getHttpSession().get("borrowCart");
         }
@@ -40,10 +42,13 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
             int bookID = (int)cartListItem.get("bookID");
             Book book = this.bookDao.getBookByID(bookID);
             if(book != null) {
-                resultList.add(book);
+                booksInBorrowCart.add(book);
+                totalCredit += book.getBorrowCredit();
             }
         }
-        return resultList;
+        result.put("booksInBorrowCart", booksInBorrowCart);
+        result.put("totalCredit", totalCredit);
+        return result;
     }
 
     @Override
@@ -71,7 +76,7 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
         Map<String, Object> newCartListItem = new HashMap();
         newCartListItem.put("bookID", bookID);
         newCartListItem.put("bookName", book.getBookName());
-        newCartListItem.put("amount", 1);
+        newCartListItem.put("borrowCredit",book.getBorrowCredit());
         cartList.add(newCartListItem);
         return true;
     }
@@ -133,15 +138,17 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
         Map<String, Object> newCartListItem = new HashMap();
         newCartListItem.put("bookID", bookID);
         newCartListItem.put("bookName", book.getBookName());
-        newCartListItem.put("amount", 1);
+        newCartListItem.put("buyCredit",book.getBuyCredit());
         cartList.add(newCartListItem);
         return true;
     }
 
     @Override
-    public List showBuyCart() {
+    public Map showBuyCart() {
         List<Map<String, Object>> cartList;
-        List resultList = new ArrayList();
+        Map result = new HashMap();
+        List booksInBuyCart = new ArrayList();
+        Integer totalCredit = 0;
         if(getHttpSession().containsKey("buyCart")) {
             cartList = (List<Map<String, Object>>)getHttpSession().get("buyCart");
         }
@@ -153,10 +160,13 @@ public class CartServiceImpl extends BaseServiceImpl implements CartService {
             int bookID = (int)cartListItem.get("bookID");
             Book book = this.bookDao.getBookByID(bookID);
             if(book != null) {
-                resultList.add(book);
+                booksInBuyCart.add(book);
+                totalCredit += book.getBuyCredit();
             }
         }
-        return resultList;
+        result.put("booksInBuyCart", booksInBuyCart);
+        result.put("totalCredit", totalCredit);
+        return result;
     }
 
     @Override

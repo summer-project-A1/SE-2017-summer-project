@@ -210,4 +210,21 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         }
         return AllBookCategory.getAllBookCategory();
     }
+    
+    @Override
+    public List<Book> showBooksByConditions(Integer part, Integer pageSize, String category1Name, String category2Name) {
+        Map conditions = new HashMap();
+        if(part != null && pageSize != null) {
+            conditions.put("part", part);
+            conditions.put("pageSize", pageSize);
+        }
+        if(category1Name != null) {
+            conditions.put("category1Name", category1Name);
+        }
+        if(category2Name != null) {
+            conditions.put("category2Name", category2Name);
+        }
+        List<Book> result = this.bookDao.searchByCondition(conditions);
+        return result;
+    }
 }

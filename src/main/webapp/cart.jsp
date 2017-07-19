@@ -26,13 +26,13 @@
                 var cmp = method;
                 var url = "";
                 if(cmp=="borrow"){
-                    url = 'cartAction/removeFromBorrowCart';
+                    url = '/cartAction/removeFromBorrowCart';
                 }
                 if(cmp=="buy"){
-                    url = 'cartAction/removeFromBuyCart';
+                    url = '/cartAction/removeFromBuyCart';
                 }
                 $.ajax({
-                    url: base_url+ url,
+                    url: '<%=path%>'+ url,
                     type:'POST',
                     data: {
                         'bookID' : bookID
@@ -84,11 +84,16 @@
                         </h3>
                         <ul class="qty">
                             <li><p>作者：<s:property value="author"/> </p></li>
-                            <li><p>分类：<s:property value="category"/> </p></li>
+                            <li><p>分类：<s:property value="category1"/> </p></li>
+                            <li><p>标签：<s:property value="category2"/> </p></li>
                         </ul>
                         <div class="delivery">
-                            <p>是否可交换：<s:property value="canExchange"/> </p>
+                            <s:if test="#buyOrBorrow=='buy'">
+                                <p>购买积分：<s:property value="buyCredit"/></p>
+                            </s:if>
+                            <s:if test="#buyOrBorrow=='borrow'">
                             <span>是否可借阅：<s:property value="canBorrow"/> </span>
+                            </s:if>
                             <div class="clearfix"></div>
                         </div>
                     </div>

@@ -4,12 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script type="text/javascript" src="<%=path%>/js/jquery.cityselect.js"></script>
+    <script src="<%=path%>/js/jquery.cityselect.js"></script>
+    <script src="<%=path%>/js/fileinput.js"></script>
+    <script src="<%=path%>/js/fileinput.min.js"></script>
     <title>User Profile</title>
-    <script type="text/javascript">
-
-    </script>
-
     <script>
         $(document).ready(function(){
             $(function() {
@@ -26,14 +24,13 @@
                 $("#gender").val('<s:property value="#userProfile.gender"/>');
 
             });
-            $(".tab1 .single-bottom").hide();
 
             $(".products .container form").hide();
             $("#update-userProfile-form").show();
 
 
-            $(".tab1 ul").click(function(){
-                $(".tab1 .single-bottom").slideToggle(300);
+            $("#current-tab ul").click(function(){
+                $("#current-tab .single-bottom").slideToggle(300);
             });
 
 
@@ -52,10 +49,10 @@
             });
 
 
-
-            $("#update-image").click(function(){
+            $("#update-userPicture").click(function(){
                 $(".products .container form").hide();
-                $("#update-image-form").show();
+                $("#update-userPicture-form").show();
+
             });
 
 
@@ -174,6 +171,29 @@
 
         }
 
+        function updateUserPicture() {
+            var formData=new FormData($("#update-userPicture-form")[0]);
+            $.ajax({
+                url: "<%=path%>/userAction/updateUserPicture",
+                type: "post",
+                data: formData,
+                processData: false,  // 告诉jQuery不要去处理发送的数据
+                contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
+                success: function(msg){
+                    if (msg.success) {
+                        showTip('修改个人头像成功', 'success');
+                        window.setTimeout("window.location='<%=path%>/userAction/showUserProfile'",1500);
+                    }
+                    else {
+                        showTip('修改个人头像失败', 'danger');
+                    }
+                },
+                error:function(xhr,status,error){
+                    alert('status='+status+',error='+error);
+                }
+            });
+        }
+
     </script>
     <style>
         @media ( min-width :768px) {
@@ -205,7 +225,7 @@
                 <div class="product_right">
                     <h3 class="m_2"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>操作选单</h3>
 
-                    <div class="tab1">
+                    <div id="current-tab" class="tab1">
                         <ul class="place">
                             <li class="sort"><a href="#">个人信息</a></li>
                             <li class="by"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></li>
@@ -214,7 +234,7 @@
                         <div class="single-bottom">
                             <a id="update-userProfile" href="#"><p>修改个人信息</p></a>
                             <a id="update-password" href="#"><p>修改密码</p></a>
-                            <a id="update-image" href="#"><p>修改头像</p></a>
+                            <a id="update-userPicture" href="#"><p>修改头像</p></a>
                         </div>
                     </div>
                     <div class="tab1">
@@ -237,7 +257,7 @@
                     </div>
                     <div class="tab1">
                         <ul class="place">
-                            <li class="sort"><a href="#">我的订单</a></li>
+                            <li class="sort"><a href="#">我的购买</a></li>
                         </ul>
                         <div class="clearfix"> </div>
                     </div>
@@ -295,6 +315,18 @@
             </div>
             <div class="clearfix"> </div>
             <a href="#" class="add-cart item_add" onclick="updateUserProfile()">修改个人信息</a>
+        </form>
+        <form id="update-userPicture-form" enctype="multipart/form-data" role="form" class="form-horizontal" accept-charset="UTF-8">
+            <h3>修改个人头像</h3>
+            <div class="form-group form-group-auto">
+                <label>个人头像</label>
+                <img src="<%=path%>/imageAction/showImage?imageID=<s:property value='#userProfile.imageID'/>"  class="img-responsive" alt="">
+                <div class="form-group form-group-auto">
+                    <label>上传头像</label><input id="userPicture" name="userPicture" type="file" class="file">
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+            <a href="#" class="add-cart item_add" onclick="updateUserPicture()">修改个人头像</a>
         </form>
         </div>
     </div>

@@ -20,8 +20,8 @@ public class BorrowHistory {                // 保存已被借出但尚未还回
     private Date borrowDate;   //买家确认收货时间，即借书时间
     private Date returnDate;   //买家还书时间
     private Date shDate;  //卖家收货时间
-    private int comment1;
-    private int comment2;
+    private Integer comment1;
+    private Integer comment2;
     
     /* =============================================================== */
     
@@ -115,16 +115,16 @@ public class BorrowHistory {                // 保存已被借出但尚未还回
 	public Date getReturnDate() {
 		return returnDate;
 	}
-	public int getComment1() {
+	public Integer getComment1() {
 		return comment1;
 	}
-	public void setComment1(int comment1) {
+	public void setComment1(Integer comment1) {
 		this.comment1 = comment1;
 	}
-	public int getComment2() {
+	public Integer getComment2() {
 		return comment2;
 	}
-	public void setComment2(int comment2) {
+	public void setComment2(Integer comment2) {
 		this.comment2 = comment2;
 	}
 	public void setReturnDate(Date returnDate) {

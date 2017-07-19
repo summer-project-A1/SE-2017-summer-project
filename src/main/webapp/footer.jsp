@@ -7,11 +7,7 @@
             + request.getServerName() + ":" + request.getServerPort()
             + path + "/";
 %>
-<html>
-<head>
-    <title>Footer</title>
-</head>
-<body>
+
 
 
 <!--subscribe-->
@@ -59,13 +55,9 @@
         <div class="clearfix"></div>
     </div>
 </div>
-</div>
 <!--//footer-->
 <div class="footer-bottom">
     <div class="container">
         <p>Copyright &copy; 2017.Book Sharing Platform All rights reserved.</p>
     </div>
 </div>
-
-</body>
-</html>

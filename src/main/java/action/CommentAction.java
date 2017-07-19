@@ -88,13 +88,21 @@ public class CommentAction extends ActionSupport {
     }
 
     public String honestyRatingWhenBorrow(){
+        params = new HashMap();
+        System.out.println(this.creditRating);
+        System.out.println(getCreditRating());
         this.commentService.honestyRatingInBorrow(this.borrowID,this.creditRating);
-        return "honestyRatingWhenBorrow";
+        params.put("success",true);
+        return "ajax";
+        //return "honestyRatingWhenBorrow";
     }
 
     public String honestyRatingWhenBuy(){
+        params = new HashMap();
         this.commentService.honestyRatingInBuy(this.orderID,this.creditRating);
-        return "honestyRatingWhenBuy";
+        params.put("success",true);
+        return "ajax";
+        //return "honestyRatingWhenBuy";
     }
 
 }

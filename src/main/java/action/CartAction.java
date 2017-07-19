@@ -19,7 +19,6 @@ public class CartAction extends ActionSupport{
     private BorrowService borrowService;
 
     private int bookID;
-    private int amount;
 
     private List cart;
     private Map params;
@@ -50,12 +49,6 @@ public class CartAction extends ActionSupport{
     public void setBookID(int bookID) {
         this.bookID = bookID;
     }
-    public int getAmount() {
-        return amount;
-    }
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
     public List<Book> getCart() {
         return cart;
     }
@@ -83,7 +76,8 @@ public class CartAction extends ActionSupport{
         return "ajax";
     }
     public String showBuyCart() {
-        this.cart = this.cartService.showBuyCart();
+        Map orderInfo = this.cartService.showBuyCart();
+        this.cart = (List<Book>)orderInfo.get("booksInBuyCart");
         ActionContext.getContext().put("buyOrBorrow","buy");
         ActionContext.getContext().put("booksInCart",cart.isEmpty()?null:cart);
         return "cart";
@@ -118,7 +112,8 @@ public class CartAction extends ActionSupport{
         return "ajax";
     }
     public String showBorrowCart() {
-        this.cart = this.cartService.showBorrowCart();
+        Map borrowInfo = this.cartService.showBorrowCart();
+        this.cart = (List<Book>)borrowInfo.get("booksInBorrowCart");
         ActionContext.getContext().put("buyOrBorrow","borrow");
         ActionContext.getContext().put("booksInCart",cart.isEmpty()?null:cart);
         return "cart";

@@ -1,5 +1,6 @@
 package service;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ public interface UserService extends BaseService {
     public UserProfile showUserProfile();
     public boolean updatePassword(String oldPlainPassword, String newPlainPassword);
     public boolean updateUserProfile(UserProfile newUserProfile);
+    public boolean updateUserPicture(File userPicture);
     
     public Map addDeliveryAddress(FullAddress fullAddress);
     public Map getAllDeliveryAddress();

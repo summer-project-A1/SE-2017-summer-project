@@ -53,10 +53,11 @@
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
+            <result name="showSellerCenter">/sellerCenter.jsp</result>
             <result name="showUserProfile">/userProfile.jsp</result>
             <result name="getAllAddress">/checkout.jsp</result>
             <allowed-methods>
-                showUserProfile,updatePassword,getAllAddress,addAddress,setDefaultAddress,deleteAddress,updateUserProfile
+                showSellerCenter,showUserProfile,updatePassword,getAllAddress,addAddress,setDefaultAddress,deleteAddress,updateUserProfile,updateUserPicture
             </allowed-methods>
         </action>
     </package>
@@ -96,9 +97,10 @@
                 <param name="root">params</param>
             </result>
             <result name="buyCheckout">/checkout.jsp</result>
-            <result name="showOrder">/showBuyOrder.jsp</result>
+            <result name="createBuyOrder">/showBuyOrder.jsp</result>
+            <result name="showMyOrder">/myOrder.jsp</result>
             <allowed-methods>
-              buyCheckout,createBuyOrder,confirmBuyOrder,cancelBuyOrder,showOrderById
+              buyCheckout,createBuyOrder,confirmBuyOrder,cancelBuyOrder,showOrderById,showMyOrder,confirmBuyReceipt,deliverBuyOrder
             </allowed-methods>
         </action>
     </package>
@@ -169,10 +171,37 @@
             <result name="borrowCheckout">/checkout.jsp</result>
             <result name="createBorrowOrder">/showBuyOrder.jsp</result>
             <allowed-methods>
-                borrowCheckout,createBorrowOrder,showMyBorrow,delayBook,returnBook
+                borrowCheckout,createBorrowOrder,showMyBorrow,delayBook,returnBook,confirmBorrowOrder,confirmBorrowReceipt
+                ,deliverBorrowOrder,confirmReturnReceipt
             </allowed-methods>
         </action>
     </package>
+
+    <package name="reserveAction" extends="struts-default,json-default" namespace="/reserveAction">
+        <interceptors>
+            <interceptor name="isLogin" class="action.interceptor.IsLoginInterceptor"/>
+            <interceptor-stack name="loginAuthCheck">
+                <interceptor-ref name="isLogin"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="loginAuthCheck"/>
+
+        <global-results>
+            <result name="login" type="redirect">/signin.jsp</result>
+        </global-results>
+        <action name="*" class="action.ReserveAction" method="{1}">
+            <result name="ajax" type="json">
+                <param name="root">params</param>
+            </result>
+            <allowed-methods>
+                reserveBook,cancelReservation
+            </allowed-methods>
+        </action>
+    </package>
+
+
 
     <package name="commentAction" extends="struts-default,json-default" namespace="/commentAction">
         <interceptors>

@@ -7,17 +7,12 @@
             + request.getServerName() + ":" + request.getServerPort()
             + path + "/";
 %>
-<!DOCTYPE html>
 
-<html>
-<head>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="" />
 
-</head>
-<body>
 <div class="header">
     <div class="container">
         <nav class="navbar navbar-default" role="navigation">
@@ -49,39 +44,6 @@
                                         </ul>
                                     </div>
                                 </s:iterator>
-                                <!--
-
-                                <div class="col-sm-3">
-                                    <h4>文学</h4>
-                                    <ul class="multi-column-dropdown">
-                                        <li><a class="list" href="products.html">影视文学</a></li>
-                                        <li><a class="list" href="products.html">散文随笔</a></li>
-                                        <li><a class="list" href="products.html">诗歌词曲</a></li>
-                                        <li><a class="list" href="products.html">纪实文学</a></li>
-                                        <li><a class="list" href="products.html">民间文学</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-3">
-                                    <h4>管理</h4>
-                                    <ul class="multi-column-dropdown">
-                                        <li><a class="list" href="products.html">管理学</a></li>
-                                        <li><a class="list" href="products.html">财务管理</a></li>
-                                        <li><a class="list" href="products.html">企业管理</a></li>
-                                        <li><a class="list" href="products.html">人力资源管理</a></li>
-                                        <li><a class="list" href="products.html">工商管理</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-3">
-                                    <h4>教辅</h4>
-                                    <ul class="multi-column-dropdown">
-                                        <li><a class="list" href="products.html">小学</a></li>
-                                        <li><a class="list" href="products.html">初中</a></li>
-                                        <li><a class="list" href="products.html">中考</a></li>
-                                        <li><a class="list" href="products.html">高考</a></li>
-                                        <li><a class="list" href="products.html">成人教育</a></li>
-                                    </ul>
-                                </div>
-                                -->
                             </div>
                         </ul>
                     </li>
@@ -128,10 +90,11 @@
                 </s:if>
                 <s:else>
                             <label>欢迎您！<s:property value="#session.userInfo.email"/></label><br>
+                            <label><a href="<%=path%>/userAction/showSellerCenter">卖家中心</a></label><br>
                             <label><a href="myrelease.jsp">我的发布</a></label><br>
                             <label><a href="<%=path%>/borrowAction/showMyBorrow">我的借阅</a></label><br>
                             <label><a href="myexchange.jsp">我的交换</a></label><br>
-                            <label><a href="myorder.jsp">我的订单</a></label><br>
+                            <label><a href="<%=path%>/orderAction/showMyOrder">我的购买</a></label><br>
                             <label><a href="myreservation">我的预约</a></label><br>
                             <label><a href="<%=path%>/authAction/logout">退出登录</a></label><br>
                         </form>
@@ -151,12 +114,12 @@
                         <table class="table table-bordered">
                             <tr>
                             <th field="bookName" width="20%">书名</th>
-                            <th field="amount" width="20%">数量</th>
+                            <th field="buyCredit" width="20%">购买积分</th>
                             </tr>
                             <s:iterator value="#session.buyCart" var="cartItem" status="st">
                                 <tr>
                                     <td><s:property value="#cartItem.bookName"/></td>
-                                    <td ><s:property value="#cartItem.amount"/></td>
+                                    <td ><s:property value="#cartItem.buyCredit"/></td>
                                 </tr>
                         </s:iterator>
                         </table>
@@ -176,12 +139,12 @@
                         <table class="table table-bordered">
                             <tr>
                                 <th field="bookName" width="20%">书名</th>
-                                <th field="amount" width="20%">数量</th>
+                                <th field="borrowCredit" width="20%">借阅积分</th>
                             </tr>
                             <s:iterator value="#session.borrowCart" var="cartItem" status="st">
                                 <tr>
                                     <td><s:property value="#cartItem.bookName"/></td>
-                                    <td><s:property value="#cartItem.amount"/></td>
+                                    <td><s:property value="#cartItem.borrowCredit"/></td>
                                 </tr>
                             </s:iterator>
                         </table>
@@ -194,9 +157,6 @@
             <div class="clearfix"> </div>
         </div>
         <div class="clearfix"> </div>
-    </div>
 </div>
-</body>
-</html>
 
 

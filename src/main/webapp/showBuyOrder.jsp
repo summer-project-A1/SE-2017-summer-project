@@ -28,46 +28,46 @@
     <div class="container">
         <h2>订单确认</h2>
         <s:if test="#buyOrBorrow=='buy'">
-        <s:iterator value="#orderProfileList" status="st">
-        <div id="<s:property value="orderID"/>" class="cart-header">
-            <div class="close-icon" onclick="deleteBook(<s:property value="bookID"/>)"> </div>
-            <div class="cart-sec simpleCart_shelfItem">
-                <div class="cart-item cyc">
-                    <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
-                </div>
-                <div class="cart-item-info">
-                    <h3>
-                        <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">书名：<s:property value="bookName"/></a><br>
-                        <span>ISBN: <s:property value="isbn"/> </span>
-                    </h3>
-                    <ul class="qty">
-                        <li><p>作者：<s:property value="author"/> </p></li>
-                        <li><p>分类：<s:property value="category1"/></p></li>
-                        <li><p>分类：<s:property value="category2"/></p></li>
-                    </ul>
-                    <div class="delivery">
-                            <p>所需积分：<s:property value="buyCredit"/></p>
+            <s:iterator value="#orderProfileList" status="st">
+                <div id="<s:property value="orderID"/>" class="cart-header">
+                    <div class="close-icon" onclick="deleteBook(<s:property value="bookID"/>)"> </div>
+                    <div class="cart-sec simpleCart_shelfItem">
+                        <div class="cart-item cyc">
+                            <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
+                        </div>
+                        <div class="cart-item-info">
+                            <h3>
+                                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">书名：<s:property value="bookName"/></a><br>
+                                <span>ISBN: <s:property value="isbn"/> </span>
+                            </h3>
+                            <ul class="qty">
+                                <li><p>作者：<s:property value="author"/> </p></li>
+                                <li><p>分类：<s:property value="category1"/></p></li>
+                                <li><p>分类：<s:property value="category2"/></p></li>
+                            </ul>
+                            <div class="delivery">
+                                <p>所需积分：<s:property value="buyCredit"/></p>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
                         <div class="clearfix"></div>
                     </div>
                 </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-    </s:iterator>
-    <form id="orderInfo" style="display:none" action="<%=path%>/orderAction/confirmBuyOrder" method="post">
-    	<s:iterator value="#orderProfileList" status="st">
-        	<input name="orderIDList" type="hidden" value="<s:property value="orderID"/>">
-        </s:iterator>
-    </form>
+            </s:iterator>
+            <form id="orderInfo" style="display:none" action="<%=path%>/orderAction/confirmBuyOrder" method="post">
+                <s:iterator value="#orderProfileList" status="st">
+                    <input name="orderIDList" type="hidden" value="<s:property value="orderID"/>">
+                </s:iterator>
+            </form>
             <div id="showAddress" class="address">
                 <h3>收货地址</h3>
                 <label id="orderAddrLabel"><s:property value="address"/></label><br>
             </div>
-    <div id="confirm">
-        <label>合计:</label>
-        <label id="totalCredit1"><s:property value="#totalCredit"/></label><br>
-        <a id="commit1" href="#" class="add-cart item_add">确认订单并付款</a>
-    </div>
+            <div id="confirm">
+                <label>合计:</label>
+                <label id="totalCredit1"><s:property value="#totalCredit"/></label><br>
+                <a id="commit1" href="#" class="add-cart item_add">确认订单并付款</a>
+            </div>
         </s:if>
         <s:elseif test="#buyOrBorrow=='borrow'">
             <s:iterator value="#borrowProfileList" status="st">
@@ -113,14 +113,48 @@
         </s:elseif>
     </div>
 </div>
+<div id="tip"></div>
 <script type="text/javascript">
     $("#commit1").click(function(){
-        $("#orderInfo").submit();
+        var params = $("#orderInfo").serialize();
+        $.ajax({
+            url:'<%=path%>/orderAction/confirmBuyOrder',
+            type:'POST',
+            data:params,
+            success:function(msg){
+                if(msg.success){
+                    showTip('支付成功！','success');
+                    window.setTimeout("window.location='<%=path%>/orderAction/showMyOrder'",1500);
+                }else{
+                    showTip('发生错误！','danger');
+                }
+            },
+            error:function(xhr,status,error){
+                alert('status='+status+',error='+error);
+            }
+        })
     });
 
     $("#commit2").click(function(){
-        $("#borrowInfo").submit();
+        var params = $("#borrowInfo").serialize();
+        $.ajax({
+            url:'<%=path%>/borrowAction/confirmBorrowOrder',
+            type:'POST',
+            data:params,
+            success:function(msg){
+                if(msg.success){
+                    showTip('支付成功！','success');
+                    window.setTimeout("window.location='<%=path%>/borrowAction/showMyBorrow'",1500);
+                }else{
+                    showTip('发生错误！','danger');
+                }
+            },
+            error:function(xhr,status,error){
+                alert('status='+status+',error='+error);
+            }
+        })
     })
 </script>
+<jsp:include page="footer.jsp"/>
 </body>
 </html>

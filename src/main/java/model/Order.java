@@ -10,33 +10,36 @@ public class Order {               // 使用积分下单购买书
     private int bookID;
     private Date orderDate;
     private Date payDate;
-    private int price;
+    private int buyCredit;
     private OrderStatus status;
-    private String address;
+    private String orderStatus;
+    private String address;        // 买家的收货地址
     private Date fhDate;
     private Date shDate;
 	private String trackingNo;
-	private int buyerComment;
-	private int sellerComment;
+	private Integer buyerComment;    // 买家对卖家的信用评价打分
+	private Integer sellerComment;
     
     /* ================================================= */
 	
-	
+	public Order() {
+	    
+	}
+
+    public Order(int buyerID, int sellerID, int bookID, Date orderDate, int buyCredit, OrderStatus status, String address) {
+        super();
+        this.buyerID = buyerID;
+        this.sellerID = sellerID;
+        this.bookID = bookID;
+        this.orderDate = orderDate;
+        this.buyCredit = buyCredit;
+        this.status = status;
+        this.address = address;
+    }
     
 	public int getOrderID() {
 		return orderID;
 	}
-	public Order(int buyerID, int sellerID, int bookID, Date orderDate, int price, OrderStatus status, String address) {
-		super();
-		this.buyerID = buyerID;
-		this.sellerID = sellerID;
-		this.bookID = bookID;
-		this.orderDate = orderDate;
-		this.price = price;
-		this.status = status;
-		this.address = address;
-	}
-	
 	public void setOrderID(int orderID) {
 		this.orderID = orderID;
 	}
@@ -58,19 +61,25 @@ public class Order {               // 使用积分下单购买书
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
-	public int getPrice() {
-		return price;
-	}
-	public void setPrice(int price) {
-		this.price = price;
-	}
-	public OrderStatus getStatus() {
+	public int getBuyCredit() {
+        return buyCredit;
+    }
+    public void setBuyCredit(int buyCredit) {
+        this.buyCredit = buyCredit;
+    }
+    public OrderStatus getStatus() {
 		return status;
 	}
 	public void setStatus(OrderStatus status) {
 		this.status = status;
 	}
-	public String getAddress() {
+	public String getOrderStatus() {
+        return orderStatus;
+    }
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+    public String getAddress() {
 		return address;
 	}
 	public void setAddress(String address) {
@@ -116,16 +125,16 @@ public class Order {               // 使用积分下单购买书
 		this.bookID = bookID;
 	}
     
-	public int getBuyerComment() {
+	public Integer getBuyerComment() {
 		return buyerComment;
 	}
-	public void setBuyerComment(int buyerComment) {
+	public void setBuyerComment(Integer buyerComment) {
 		this.buyerComment = buyerComment;
 	}
-	public int getSellerComment() {
+	public Integer getSellerComment() {
 		return sellerComment;
 	}
-	public void setSellerComment(int sellerComment) {
+	public void setSellerComment(Integer sellerComment) {
 		this.sellerComment = sellerComment;
 	}
 }

@@ -3,6 +3,8 @@
 <%@include file="global.jsp"%>
 <html>
 <head>
+    <s:action name="header" executeResult="true" namespace="/"/>
+
     <title><s:property value="#title"/></title>
 
     <!-- Custom Theme files -->
@@ -12,7 +14,6 @@
 </head>
 <body>
 <!-- header -->
-<s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 <div class="banner">
     <div class="container">
         <h2 class="hdng">图书<span>分享</span>交流平台</h2>
@@ -28,10 +29,10 @@
     <div class="container">
         <div class="gallery-grids">
             <div class="col-md-8 gallery-grid glry-one">
-                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="#recommendBook.bookID"/>"><img src="images/g1.jpg" class="img-responsive" alt=""/>
+                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="#recommendBook1.bookID"/>"><img src="images/g1.jpg" class="img-responsive" alt=""/>
                     <div class="gallery-info">
                         <p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> view</p>
-                        <a class="shop" href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="#recommendBook.bookID"/>">SHOP NOW</a>
+                        <a class="shop" href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="#recommendBook1.bookID"/>">SHOP NOW</a>
                         <div class="clearfix"> </div>
                     </div>
                 </a>
@@ -53,10 +54,10 @@
                 </div>
             </div>
             <div class="col-md-4 gallery-grid glry-two">
-                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="#recommendBook.bookID"/>"><img src="images/g2.jpg" class="img-responsive" alt=""/>
+                <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="#recommendBook2.bookID"/>"><img src="images/g2.jpg" class="img-responsive" alt=""/>
                     <div class="gallery-info galrr-info-two">
                         <p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> view</p>
-                        <a class="shop" href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="#recommendBook.bookID"/>">SHOP NOW</a>
+                        <a class="shop" href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="#recommendBook2.bookID"/>">SHOP NOW</a>
                         <div class="clearfix"> </div>
                     </div>
                 </a>

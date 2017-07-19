@@ -4,6 +4,7 @@ import java.util.List;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import model.Book;
 import model.Category1;
 import service.BookService;
 
@@ -19,11 +20,13 @@ public class IndexAction extends ActionSupport {
         this.bookService = bookService;
     }
     public String index() {
-        ActionContext.getContext().put("title","ͼ�������ƽ̨");
+        ActionContext.getContext().put("title","图书分享交流平台");
+        //List<Book> recommendBookList = this.bookService.getRecommendBookList();
+        //ActionContext.getContext().put("recommendBook1",recommendBookList[0]);
+        //ActionContext.getContext().put("recommendBook2",recommendBookList[1]);
         return "showIndex";
     }
     public String header(){
-        List<Category1> c1 = this.bookService.showAllCategory1s();
         ActionContext.getContext().put("category1List",bookService.showAllCategory1s());
         return"showHeader";
     }
