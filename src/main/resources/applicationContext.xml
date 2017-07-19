@@ -201,4 +201,7 @@
     <bean id="commentAction" class="action.CommentAction">
         <property name="commentService" ref="commentService" />
     </bean>
+    <bean id="reserveAction" class="action.ReserveAction">
+        <property name="reserveService" ref="reserveService" />
+    </bean>
 </beans>

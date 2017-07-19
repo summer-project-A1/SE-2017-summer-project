@@ -10,6 +10,16 @@ import model.Reserve;
 public class ReserveDaoImpl extends BaseDaoImpl implements ReserveDao {
 
     @Override
+    public Boolean isReserved(int userID, int bookID) {   // Reserve表中存在的记录都是现存的预约记录；预约过程处理后从Reserve表中删除
+        String hql = "select count(*) from Reserve as r where r.userID = :userID and r.bookID = :bookID";
+        Query query = getSession().createQuery(hql);
+        query.setParameter("userID", userID);
+        query.setParameter("bookID", bookID);
+        Integer count = (Integer)query.uniqueResult();
+        return (count > 0);
+    }
+    
+    @Override
     public Reserve getReserveByID(int reserveID) {
         String hql = "from Reserve as r where r.reserveID = :reserveID";
         Query query = getSession().createQuery(hql);

@@ -33,9 +33,14 @@ public class ReserveServiceImpl extends BaseServiceImpl implements ReserveServic
     /* ============================================================ */
 
     @Override
-    public Boolean reserveBook(int bookID) {  // 预约书
+    public String reserveBook(int bookID) {  // 预约书
         User user = this.getLoginedUserInfo();
         int userID = user.getUserID();
+        
+        if(this.reserveDao.isReserved(userID, bookID)) {
+            return "already";
+        }
+        
         Book book = this.bookDao.getBookByID(bookID);
         book.setReserved(book.getReserved()+1);
         this.bookDao.update(book);
@@ -44,7 +49,7 @@ public class ReserveServiceImpl extends BaseServiceImpl implements ReserveServic
         newReserve.setUserID(userID);
         newReserve.setDue(new Date());
         this.reserveDao.save(newReserve);
-        return true;
+        return "success";
     }
 
     @Override
