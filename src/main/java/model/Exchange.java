@@ -13,8 +13,8 @@ public class Exchange {             // 准备交换但尚未被发布者确认�
     private ExchangeStatus status;
     private Date applyDate;   //申请人申请时间
     private Date responseDate;  //被申请人回应时间
-    private String address1;
-    private String address2;
+    private String address1;    // 申请人收货地址
+    private String address2;    // 被申请人收货地址
     private Date fh_date1;    //申请人发货时间
     private Date fh_date2;    //被申请人发货时间
     private String trackingNo1;    //申请人发货时快递单号
