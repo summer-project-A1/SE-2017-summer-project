@@ -255,6 +255,7 @@ public class BookAction extends ActionSupport {
 
     public String getInfoByIsbn(){
         this.params = this.bookService.getInfoByIsbn(this.isbn);
+        return "ajax";
     }
 
 
