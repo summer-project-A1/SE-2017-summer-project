@@ -141,12 +141,12 @@ CREATE TABLE `Exchange` (
   `status` int(4) NOT NULL,
   `apply_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 申请人的申请时间
   `response_date` timestamp NULL DEFAULT NULL, -- 被申请人的回应时间
-  `address1`   varchar(100) DEFAULT NULL,
-  `address2`   varchar(100) DEFAULT NULL,
+  `address1`   varchar(100) DEFAULT NULL,  -- 申请人收货地址
+  `address2`   varchar(100) DEFAULT NULL,  -- 申请人发货地址
   `fh_date1`   timestamp NULL DEFAULT NULL,  -- 申请人发货时间
   `fh_date2`   timestamp NULL DEFAULT NULL,  -- 被申请人发货时间
-  `trackingNo1` varchar(30) DEFAULT NULL,
-  `trackingNo2` varchar(30) DEFAULT NULL,
+  `trackingNo1` varchar(30) DEFAULT NULL,  -- 申请人发货的快递单号
+  `trackingNo2` varchar(30) DEFAULT NULL,  -- 被申请人发货的快递单号
   `sh_date1`   timestamp NULL DEFAULT NULL,  -- 申请人收货时间
   `sh_date2`   timestamp NULL DEFAULT NULL,  -- 被申请者收货时间
   `comment1`   int(4) DEFAULT NULL,  -- 申请人对被申请者的信用评价
