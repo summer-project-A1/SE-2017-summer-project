@@ -7,7 +7,7 @@ import model.Exchange;
 
 public class ExchangeDaoImpl extends BaseDaoImpl implements ExchangeDao
 {
-
+	@Override
 	public Exchange getExchangeByID(int id) {
 		
 		return null;

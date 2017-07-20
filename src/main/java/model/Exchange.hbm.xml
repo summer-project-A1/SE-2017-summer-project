@@ -22,7 +22,7 @@
         <property name="fh_date2" column="fh_date2" type="timestamp" />
         <property name="sh_date1" column="sh_date1" type="timestamp" />
         <property name="sh_date2" column="sh_date2" type="timestamp" />
-        <property name="comment1" column="comment1"></property>
-        <property name="comment2" column="comment2"></property>
+        <property name="comment1" column="comment1"/>
+        <property name="comment2" column="comment2"/>
     </class>
 </hibernate-mapping>
