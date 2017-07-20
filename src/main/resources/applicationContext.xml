@@ -103,6 +103,7 @@
     <bean id="commentDao" class="dao.impl.CommentDaoImpl" parent="baseDao"/>
     <bean id="imageDao" class="dao.impl.ImageDaoImpl" parent="baseDao"/>
     <bean id="exchangeDao" class="dao.impl.ExchangeDaoImpl" parent="baseDao"/>
+    <bean id="exchangeHistoryDao" class="dao.impl.ExchangeHistoryDaoImpl" parent="baseDao"/>
 
     <!-- ============================================================= -->
 
