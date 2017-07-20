@@ -15,7 +15,7 @@ public class ReserveDaoImpl extends BaseDaoImpl implements ReserveDao {
         Query query = getSession().createQuery(hql);
         query.setParameter("userID", userID);
         query.setParameter("bookID", bookID);
-        Integer count = (Integer)query.uniqueResult();
+        Long count = (Long)query.uniqueResult();
         return (count > 0);
     }
     

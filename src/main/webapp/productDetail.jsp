@@ -88,13 +88,13 @@
                 type:'POST',
                 data:{'bookID': bookID},
                 success: function(msg){
-                    if(msg.success.equals("success")){
+                    if(msg.success=="success"){
                         showTip('预约成功!','success');
                     }
-                    else if(msg.success.equals("already")){
+                    else if(msg.success=="already"){
                         showTip('您已经预约!',"warning");
                     }
-                    else if(msg.success.equals("error")){
+                    else if(msg.success=="error"){
                         showTip('发生错误!',"danger");
                     }
                 },
@@ -154,12 +154,13 @@
                     </s:if>
                     <div class="clearfix"></div><br>
                 </ul>
-                <s:if test="#bookProfile.bookStatus=='BORROWED' && #bookProfile.reserved==false">
-                    <p>此书正被借阅，可以预约</p>
+                <s:if test="#bookProfile.bookStatus=='BORROWED'">
+                    <p>此书正被借阅，可以预约，当前预约人数<s:property value="#bookProfile.reserved"/>人</p>
                 </s:if>
+                <!--
                 <s:elseif test="#bookProfile.bookStatus=='BORROWED' && #bookProfile.reserved==true">
                     <p>此书正被借阅，已被预约</p>
-                </s:elseif>
+                </s:elseif> -->
                 <s:elseif test="#bookProfile.bookStatus=='EXCHANGED'">
                     <p>此书已被交换或购买</p>
                 </s:elseif>
@@ -177,10 +178,8 @@
                 </s:elseif>
                 <div class="btn_form">
                     <s:if test="#bookProfile.bookStatus=='BORROWED'">
-                        <s:if test="#bookProfile.reserved==false">
-                            <s:if test="#bookProfile.canBorrow==true">
-                                <a href="#" class="add-cart item_add" onclick="reserveBook(<s:property value="#bookProfile.bookID"/>)">预约</a>
-                            </s:if>
+                        <s:if test="#bookProfile.canBorrow==true">
+                            <a href="#" class="add-cart item_add" onclick="reserveBook(<s:property value="#bookProfile.bookID"/>)">预约</a>
                         </s:if>
                     </s:if>
                     <s:elseif test="#bookProfile.bookStatus=='EXCHANGED'">
