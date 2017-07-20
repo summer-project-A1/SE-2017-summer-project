@@ -134,6 +134,7 @@
                                 <div class="delivery">
                                     <p>拥有者：<s:property value="ownerEmail"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                     <p>当前排队人数：<s:property value="reserveAmt"/>人</p><br>
+                                    <p>预约截止时间：<s:property value="due"/></p>
                                     <a href="#" class="add-cart item_add" onclick="cancelReservation(<s:property value="reserveID"/>)">取消预约</a>
                                     <div class="clearfix"></div>
                                 </div>
