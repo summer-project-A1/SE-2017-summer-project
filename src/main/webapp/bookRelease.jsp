@@ -44,16 +44,16 @@
     <form id="form" action="<%=path%>/bookAction/uploadBook" method=post enctype="multipart/form-data" role="form" class="form-horizontal" accept-charset="UTF-8">
         <h3 style="text-align: center;">发布图书</h3>
         <div class="form-group form-group-auto">
-            <label>书名</label><font color="#FF0000">*</font><input name="bookProfile.bookName" type="text" class="form-control">
+            <label>书名</label><font color="#FF0000">*</font><input id="bookName" name="bookProfile.bookName" type="text" class="form-control">
         </div>
         <div class="form-group form-group-auto">
-            <label>作者</label><font color="#FF0000">*</font><input name="bookProfile.author" type="text" class="form-control">
+            <label>作者</label><font color="#FF0000">*</font><input id="author" name="bookProfile.author" type="text" class="form-control">
         </div>
         <div class="form-group form-group-auto">
-            <label>ISBN</label><font color="#FF0000">*</font><input name="bookProfile.isbn" type="text" class="form-control">
+            <label>ISBN</label><font color="#FF0000">*</font><input id="isbn" name="bookProfile.isbn" type="text" class="form-control">
         </div>
         <div class="form-group form-group-auto">
-            <label>出版社</label><font color="#FF0000">*</font><input name=bookProfile.press type="text" class="form-control">
+            <label>出版社</label><font color="#FF0000">*</font><input id="press" name=bookProfile.press type="text" class="form-control">
         </div>
         <div class="form-group form-group-auto">
             <label>出版时间</label><font color="#FF0000">*</font>&nbsp;
@@ -130,7 +130,7 @@
             </div>
         </div>
         <div class="form-group form-group-auto">
-            <label>简介</label><font color="#FF0000">*</font><textarea id="bookProfile.introduction" name="bookProfile.intro" class="form-control" rows="3"></textarea>
+            <label>简介</label><font color="#FF0000">*</font><textarea id="intro" name="bookProfile.intro" class="form-control" rows="3"></textarea>
         </div>
         <div class="form-group form-group-auto">
             <label>图书封面</label><font color="#FF0000">*</font><input name="bookProfile.coverPicture" type="file" class="file">
@@ -176,6 +176,22 @@
                 break;
             </s:iterator>
         }
+    });
+    $("#isbn").focus();
+    $("#isbn").blur(function(){
+       var isbn = $("#isbn").val();
+       if(isbn.length == 13){
+           $.ajax({
+               url:'<%=path%>/bookAction/getInfoByIsbn',
+               type:'POST',
+               data:{'isbn':isbn},
+               success:function(msg){
+                   if(msg.success){
+
+                   }
+               },
+           });
+       }
     });
     $("#cb1").click(function(){
         $("#borrowCredit").show();

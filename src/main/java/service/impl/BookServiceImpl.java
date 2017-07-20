@@ -275,4 +275,10 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         List<Book> result = this.bookDao.searchByCondition(conditions);
         return result;
     }
+
+    @Override
+    public Map getInfoByIsbn(String isbn){
+        Map returnMap = new HashMap();
+        
+    }
 }

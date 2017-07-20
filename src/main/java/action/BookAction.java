@@ -2,10 +2,12 @@ package action;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import com.oracle.tools.packager.mac.MacAppBundler;
 import model.Book;
 import model.BookProfile;
 import model.Category1;
@@ -40,6 +42,9 @@ public class BookAction extends ActionSupport {
     private String bookName;
     private BookProfile bookProfile;
 	private List<CommentProfile> commentProfileList;
+
+	private Map params;
+	private String isbn;
 
     public BookAction() {
     }
@@ -147,6 +152,17 @@ public class BookAction extends ActionSupport {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public Map getParams() {
+        return params;
+    }
+
+    public void setParams(Map params) {
+        this.params = params;
+    }
+
+    public String getIsbn(){return isbn;}
+    public void setIsbn(String isbn){this.isbn = isbn;}
     /* ============================================================== */
     /*
     public String showAllBooks() {    // 查找满足筛选条件的图书，分页展示
@@ -235,6 +251,10 @@ public class BookAction extends ActionSupport {
         ActionContext.getContext().put("firstPage", this.firstPage);
         ActionContext.getContext().put("categoryNameOfBooks",category2Name);
         return "showBooks";
+    }
+
+    public String getInfoByIsbn(){
+        this.params = this.bookService.getInfoByIsbn(this.isbn);
     }
 
 
