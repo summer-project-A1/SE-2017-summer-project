@@ -17,6 +17,7 @@ import model.BorrowHistory;
 import model.BorrowProfile;
 import model.User;
 import model.Comment;
+import model.Reserve;
 import service.BorrowService;
 
 public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService {
@@ -234,7 +235,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
     @Override
     public Map createBorrowOrder(String fullAddress) {
         /*
-         * 用户创建订单，添加borrow到数据库，不验证/修改书的状态，不验证用户积分
+         * 用户创建订单，添加borrow到数据库，不验证/修改书的状态，不验证用户积分；用户不能借阅自己的书
          */
         Map returnMap = new HashMap();    // 返回值
         User user = this.getLoginedUserInfo();
@@ -248,39 +249,64 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             cartList = new ArrayList<Map<String, Object>>();
         }
         
+        // 判断各种条件，只要有一个不满足，这一批订单全部拒绝添加
+        boolean success = true;
         for(Map<String, Object> cartListItem : cartList) {
             int bookID = (int)cartListItem.get("bookID");
             Book book = this.bookDao.getBookByID(bookID);
-            BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
-            totalNeededCredit += book.getBorrowCredit();     
-            
-            Borrow newBorrow = new Borrow();
-            newBorrow.setBookID(book.getBookID());
-            newBorrow.setUserID1(user.getUserID());  // 借书人，买家
-            newBorrow.setUserID2(bookRelease.getUserID());  // 被借人，卖家
-            newBorrow.setOrderDate(new Date());
-            newBorrow.setBorrowCredit(book.getBorrowCredit());
-            newBorrow.setBorrowAddress(fullAddress);  // 买家收货地址
-            newBorrow.setDelayCount(0);   // 延期次数：0
-            newBorrow.setStatus(BorrowStatus.BUYER_NOTPAID);
-            this.borrowDao.save(newBorrow);
-            
-            BorrowProfile newBorrowProfile = new BorrowProfile();
-            newBorrowProfile.setBorrowID(newBorrow.getBorrowID());
-            newBorrowProfile.setBookID(newBorrow.getBookID());
-            newBorrowProfile.setImageID(book.getImageID());
-            newBorrowProfile.setIsbn(book.getIsbn());
-            newBorrowProfile.setBorrowStatus(newBorrow.getStatus().toString());
-            newBorrowProfile.setAuthor(book.getAuthor());
-            newBorrowProfile.setCategory1(book.getCategory1());
-            newBorrowProfile.setCategory2(book.getCategory2());
-            newBorrowProfile.setBorrowCredit(book.getBorrowCredit());
-            borrowProfileList.add(newBorrowProfile);
+            BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(book.getBookID());
+            if(user.getUserID() == bookRelease.getUserID()) {
+                success = false;  // 禁止用户借阅自己的图书
+                break;
+            }
+
+            if(book.getReserved()>0) {  // 如果书籍有人预约
+                Reserve firstReserve = this.reserveDao.getFirstReserveByBookID(bookID);
+                Integer firstReserveUserID = firstReserve.getUserID();
+                if(user.getUserID()!=firstReserveUserID) {  // 如果当前预约排队首位的人不是自己，则拒绝
+                    success = false;
+                    break;
+                }
+                // 如果预约排队首位是自己，则在用户付款后再删除预约记录并修改书的预约人数记录
+            }
         }
-        getHttpSession().remove("borrowCart");
         
-        returnMap.put("borrowProfileList", borrowProfileList);
-        returnMap.put("totalCredit", totalNeededCredit);
+        if(success) {
+            for(Map<String, Object> cartListItem : cartList) {
+                int bookID = (int)cartListItem.get("bookID");
+                Book book = this.bookDao.getBookByID(bookID);
+                BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
+                totalNeededCredit += book.getBorrowCredit();     
+                
+                Borrow newBorrow = new Borrow();
+                newBorrow.setBookID(book.getBookID());
+                newBorrow.setUserID1(user.getUserID());  // 借书人，买家
+                newBorrow.setUserID2(bookRelease.getUserID());  // 被借人，卖家
+                newBorrow.setOrderDate(new Date());
+                newBorrow.setBorrowCredit(book.getBorrowCredit());
+                newBorrow.setBorrowAddress(fullAddress);  // 买家收货地址
+                newBorrow.setDelayCount(0);   // 延期次数：0
+                newBorrow.setStatus(BorrowStatus.BUYER_NOTPAID);
+                this.borrowDao.save(newBorrow);
+                
+                BorrowProfile newBorrowProfile = new BorrowProfile();
+                newBorrowProfile.setBorrowID(newBorrow.getBorrowID());
+                newBorrowProfile.setBookID(newBorrow.getBookID());
+                newBorrowProfile.setImageID(book.getImageID());
+                newBorrowProfile.setIsbn(book.getIsbn());
+                newBorrowProfile.setBorrowStatus(newBorrow.getStatus().toString());
+                newBorrowProfile.setAuthor(book.getAuthor());
+                newBorrowProfile.setCategory1(book.getCategory1());
+                newBorrowProfile.setCategory2(book.getCategory2());
+                newBorrowProfile.setBorrowCredit(book.getBorrowCredit());
+                borrowProfileList.add(newBorrowProfile);
+            }
+            getHttpSession().remove("borrowCart");
+            
+            returnMap.put("borrowProfileList", borrowProfileList);
+            returnMap.put("totalCredit", totalNeededCredit);
+        }
+        returnMap.put("success", success);
         return returnMap;
     }
 
@@ -308,11 +334,11 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
             if(!book.getStatus().equals(BookStatus.IDLE)) {   // 如果书是非空闲的，则拒绝
                 valid = false;
             }
-            if(book.getReserved()>0 && user.getUserID()!=this.reserveDao.getFirstReserveByBookID(bookID).getUserID()) {  // 如果书籍有人预约，但当前预约排队首位的人不是自己，则拒绝
-                valid = false;
-            }
             
-            if(valid) {  // 书是空闲的并且没有被预约，或者预约排队首位是自己
+            // 被预约的书只能被当前第一个预约的用户借阅/购买/交换，其他用户只能继续排队预约
+            // 这个验证已在createBorrowOrder过程中完成，在这里不进行预约的验证
+            
+            if(valid) {  // 书是空闲
                 allIdleBook.add(book);
                 allIdleBookRelease.add(bookRelease);
                 allSuccessBorrow.add(borrow);
@@ -348,6 +374,14 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                 Book book = allIdleBook.get(i);
                 BookRelease bookRelease = allIdleBookRelease.get(i);
                 Borrow borrow = allSuccessBorrow.get(i);
+                if(book.getReserved()>0) {  // 如果书籍有人预约
+                    Reserve firstReserve = this.reserveDao.getFirstReserveByBookID(book.getBookID());
+                    Integer firstReserveUserID = firstReserve.getUserID();
+                    if(user.getUserID()==firstReserveUserID) {  // 如果当前预约排队首位的人是自己（一定满足，因为预约排队不是首位的人不能添加订单），则删除预约记录，修改书的预约人数记录
+                        book.setReserved(book.getReserved()-1);
+                        this.reserveDao.delete(firstReserve);
+                    }
+                }
                 User lender = this.userDao.getUserById(borrow.getUserID2()); // 借出书的人（卖家）
                 lender.setCredit(lender.getCredit() + borrow.getBorrowCredit());
                 this.userDao.update(lender);
