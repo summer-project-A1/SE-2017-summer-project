@@ -199,8 +199,9 @@
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
+            <result name="showMyReservation">/myReservation.jsp</result>
             <allowed-methods>
-                reserveBook,cancelReservation
+                reserveBook,cancelReservation,showMyReservation
             </allowed-methods>
         </action>
     </package>
