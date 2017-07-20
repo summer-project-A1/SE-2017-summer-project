@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.sun.deploy.net.HttpUtils;
 import common.cache.AllBookCategory;
 import common.constants.BookStatus;
 import dao.BookDao;
@@ -279,6 +280,6 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     @Override
     public Map getInfoByIsbn(String isbn){
         Map returnMap = new HashMap();
-        
+        HttpWeb request = (HttpWebRequest)WebRequest.Create(url);
     }
 }
