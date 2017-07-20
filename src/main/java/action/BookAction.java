@@ -1,6 +1,7 @@
 package action;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -191,7 +192,14 @@ public class BookAction extends ActionSupport {
         List<Book> nextPage = this.bookService.searchBook(part+1,bookNumPerPage,category1Name,category2Name,year,status);
         ActionContext.getContext().put("isLastPart",(nextPage.size()==0));
         ActionContext.getContext().put("part", this.part);
+        ActionContext.getContext().put("category1Name", this.category1Name);
+        ActionContext.getContext().put("category2Name", this.category2Name);
+        ActionContext.getContext().put("status", this.status);
+        ActionContext.getContext().put("year", this.year);
         ActionContext.getContext().put("allBooks",allBooks);
+        System.out.println("all books Num:"+allBooks.size());
+        System.out.println("cate1: "+category1Name );
+        System.out.println("cate2: "+category2Name );
         ActionContext.getContext().put("totalBookAmount",allBooks.size());//应从数据库获取allBooks的大小
         ActionContext.getContext().put("firstPage", this.firstPage);
         ActionContext.getContext().put("category1List",this.bookService.showAllCategory1s());
@@ -251,6 +259,27 @@ public class BookAction extends ActionSupport {
         ActionContext.getContext().put("firstPage", this.firstPage);
         ActionContext.getContext().put("categoryNameOfBooks",category2Name);
         return "showBooks";
+    }
+    public String showRecommendBooks() {
+        List<Book> bookList = this.bookService.getRecommendBookList();
+        List<Book> recommendBookList = new ArrayList<Book>();
+        if(bookList.size() >= 1) {
+            ActionContext.getContext().put("recommendBook1", bookList.get(0));
+        }
+        else {
+            ActionContext.getContext().put("recommendBook1", "");
+        }
+        if(bookList.size() >= 2) {
+            ActionContext.getContext().put("recommendBook2", bookList.get(1));
+        }
+        else {
+            ActionContext.getContext().put("recommendBook2", "");
+        }
+        for(int i=2; i<bookList.size() && i<10; i++) {
+            recommendBookList.add(bookList.get(i));
+        }
+        ActionContext.getContext().put("recommendBookList", recommendBookList);
+        return "showRecommendBooks";
     }
 
     public String getInfoByIsbn(){
