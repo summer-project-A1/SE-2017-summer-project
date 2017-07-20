@@ -191,7 +191,7 @@
                             <a href="#" class="add-cart item_add" onclick="addToBorrowCart(<s:property value="#bookProfile.bookID"/>)">借阅</a>
                         </s:if>
                         <s:if test="#bookProfile.canExchange==true">
-                            <a href="#" class="add-cart item_add">交换</a>
+                            <a href="<%=path%>/exchangeAction/prepareExchange?wantedBookID=<s:property value="#bookProfile.bookID"/>" class="add-cart item_add">交换</a>
                             <a href="#" class="add-cart item_add" onclick="addToBuyCart(<s:property value="#bookProfile.bookID"/>)">购买</a>
                         </s:if>
                     </s:else>

@@ -72,11 +72,11 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 
 	/*==================================================================*/
 	@Override
-	public Map prepareExchange(int bookID)
+	public Map prepareExchange(int wantedBookID)
 	{
 		Map map = new HashMap();
 		User user = this.getLoginedUserInfo();
-		Book wantedBook = bookDao.getBookByID(bookID);
+		Book wantedBook = bookDao.getBookByID(wantedBookID);
 		map.put("wantedBook", wantedBook);
 		List<Book> userReleasedBookList = bookReleaseDao.getReleaseBookByUserID(user.getUserID());
 		map.put("userReleasedBookList", userReleasedBookList);
@@ -84,11 +84,11 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 	}
 
 	@Override
-	public Boolean applyExchange(int bookID, int hadID, String address)
+	public Boolean applyExchange(int wantedBookID, int hadBookID, String address)
 	{
 		User user1 = this.getLoginedUserInfo();
-		Book wanted = bookDao.getBookByID(bookID);
-		Book had = bookDao.getBookByID(hadID);
+		Book wanted = bookDao.getBookByID(wantedBookID);
+		Book had = bookDao.getBookByID(hadBookID);
 		if (wanted.getStatus() != BookStatus.IDLE)
 			return false;
 		if (had.getStatus() != BookStatus.IDLE)
@@ -98,7 +98,7 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		int userID1 = user1.getUserID();
 		int userID2 = user2.getUserID();
 		Date date = new Date();
-		Exchange exchange = new Exchange(userID1,userID2,bookID,hadID,ExchangeStatus.WAITING,date,address);
+		Exchange exchange = new Exchange(userID1,userID2,wantedBookID,hadBookID,ExchangeStatus.WAITING,date,address);
 		exchangeDao.save(exchange);
 		wanted.setStatus(BookStatus.EXCHANGED);
 		had.setStatus(BookStatus.EXCHANGED);

@@ -205,4 +205,8 @@
     <bean id="reserveAction" class="action.ReserveAction">
         <property name="reserveService" ref="reserveService" />
     </bean>
+    <bean id="exchangeAction" class="action.ExchangeAction">
+        <property name="exchangeService" ref="exchangeService" />
+        <property name="userService" ref="userService"/>
+    </bean>
 </beans>
