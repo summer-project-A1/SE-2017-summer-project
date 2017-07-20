@@ -24,6 +24,34 @@
 
 <script type="text/javascript" id="sourcecode">
 
+
+    //左侧分类栏js脚本
+    $(document).ready(function(){
+        $(".tab1 .single-bottom").hide();
+    });
+
+    //筛选js脚本
+    var url;
+    $(document).ready(function(){
+        url=decodeURI(this.location.href.toString());
+        console.log("url: "+url);
+
+        $('#select-status :checkbox[type="checkbox"]').each(function(){
+            $(this).click(function(){
+                if($(this).attr('checked')){
+                    $(':checkbox[type="checkbox"]').removeAttr('checked');
+                    $(this).attr('checked','checked');
+                }
+            });
+        });
+
+        $.sendSelectInfo=function(url){
+            window.location.href=url;
+        }
+
+
+    });
+
     $.urlParam = function(name){
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
         var r = window.location.search.substr(1).match(reg);  //匹配目标参数
@@ -117,7 +145,9 @@
         var lastPage= '<s:property value="#firstPage"/>';
         var succPage= firstPage+pageCount;
         if(lastPage>0&&prevBlock>0){
-            $('#pagination-digg').append("<li class='previous'><a href='?part="+prevBlock+"&firstPage="+lastPage+"'>&laquo;上一部分 </a></li>");
+            url=$.changeURLArg(url,'part',prevBlock);
+            url=$.changeURLArg(url,'firstPage',lastPage);
+            $('#pagination-digg').append("<li class='previous'><a href='"+url+"'>&laquo;上一部分 </a></li>");
 
         }
         else{
@@ -139,7 +169,9 @@
             }
         }
         if(!isLastBlock){
-            $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+lastPage+"'>下一部分&raquo;</a></li>");
+            url=$.changeURLArg(url,'part',succBlock);
+            url=$.changeURLArg(url,'firstPage',lastPage);
+            $('#pagination-digg').append("<li class='next'><a href='"+url+"'>下一部分&raquo;</a></li>");
 
         }
 
@@ -157,7 +189,9 @@
             $('#pagination-digg').empty();
 
             if(lastPage>0&&prevBlock>0){
-                $('#pagination-digg').append("<li class='previous'><a href='?part="+prevBlock+"&firstPage="+lastPage+"'>&laquo;上一部分</a></li>");
+                url=$.changeURLArg(url,'part',prevBlock);
+                url=$.changeURLArg(url,'firstPage',lastPage);
+                $('#pagination-digg').append("<li class='previous'><a href='"+url+"'>&laquo;上一部分 </a></li>");
 
             }
             else{
@@ -184,7 +218,9 @@
                 }
             }
             if(!isLastBlock){
-                $('#pagination-digg').append("<li class='next'><a href='?part="+succBlock+"&firstPage="+lastPage+"'>下一部分 &raquo;</a></li>");
+                url=$.changeURLArg(url,'part',succBlock);
+                url=$.changeURLArg(url,'firstPage',lastPage);
+                $('#pagination-digg').append("<li class='next'><a href='"+url+"'>下一部分&raquo;</a></li>");
             }
 
         });
@@ -200,32 +236,7 @@
 
 
 
-    //左侧分类栏js脚本
-    $(document).ready(function(){
-        $(".tab1 .single-bottom").hide();
-    });
 
-    //筛选js脚本
-    var url;
-    $(document).ready(function(){
-        url=decodeURI(this.location.href.toString());
-        console.log("url: "+url);
-
-        $('#select-status :checkbox[type="checkbox"]').each(function(){
-            $(this).click(function(){
-                if($(this).attr('checked')){
-                    $(':checkbox[type="checkbox"]').removeAttr('checked');
-                    $(this).attr('checked','checked');
-                }
-            });
-        });
-
-        $.sendSelectInfo=function(url){
-            window.location.href=url;
-        }
-
-
-    });
 
 
     function selectCategory1(category1Name){
