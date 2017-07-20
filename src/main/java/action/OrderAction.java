@@ -130,6 +130,10 @@ public class OrderAction extends ActionSupport {
          * service层返回一个List<OrderProfile>和totalCredit
          */
         Map result = this.orderService.createBuyOrder(this.address);
+        Boolean success = (Boolean)result.get("success");
+        if(!success) {
+            return "fail";
+        }
         List<OrderProfile> orderProfileList = (List<OrderProfile>)result.get("orderProfileList");
         Integer totalCredit = (Integer)result.get("totalCredit");
         ActionContext.getContext().put("buyOrBorrow","buy");

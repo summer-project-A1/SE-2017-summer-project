@@ -17,6 +17,7 @@ import model.BorrowProfile;
 import model.Order;
 import model.User;
 import model.OrderProfile;
+import model.Reserve;
 import service.OrderService;
 
 public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
@@ -159,38 +160,63 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
             cartList = new ArrayList<Map<String, Object>>();
         }
         
+        // 判断各种条件，只要有一个不满足，这一批订单全部拒绝添加
+        boolean success = true;
         for(Map<String, Object> cartListItem : cartList) {
             int bookID = (int)cartListItem.get("bookID");
             Book book = this.bookDao.getBookByID(bookID);
-            BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
-            totalNeededCredit += book.getBuyCredit();     
-            
-            Order newOrder = new Order();
-            newOrder.setBookID(book.getBookID());
-            newOrder.setBuyerID(user.getUserID());  // 买家
-            newOrder.setSellerID(bookRelease.getUserID());  // 卖家
-            newOrder.setOrderDate(new Date());
-            newOrder.setBuyCredit(book.getBuyCredit());
-            newOrder.setAddress(fullAddress);  // 买家收货地址
-            newOrder.setStatus(OrderStatus.NOTPAID);
-            this.orderDao.save(newOrder);
-            
-            OrderProfile newOrderProfile = new OrderProfile();
-            newOrderProfile.setOrderID(newOrder.getOrderID());
-            newOrderProfile.setBookID(newOrder.getBookID());
-            newOrderProfile.setImageID(book.getImageID());
-            newOrderProfile.setIsbn(book.getIsbn());
-            newOrderProfile.setOrderStatus(newOrder.getStatus().toString());
-            newOrderProfile.setAuthor(book.getAuthor());
-            newOrderProfile.setCategory1(book.getCategory1());
-            newOrderProfile.setCategory2(book.getCategory2());
-            newOrderProfile.setBuyCredit(book.getBuyCredit());
-            orderProfileList.add(newOrderProfile);
+            BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(book.getBookID());
+            if(user.getUserID() == bookRelease.getUserID()) {
+                success = false;  // 禁止用户购买自己的图书
+                break;
+            }
+
+            if(book.getReserved()>0) {  // 如果书籍有人预约
+                Reserve firstReserve = this.reserveDao.getFirstReserveByBookID(bookID);
+                Integer firstReserveUserID = firstReserve.getUserID();
+                if(user.getUserID()!=firstReserveUserID) {  // 如果当前预约排队首位的人不是自己，则拒绝
+                    success = false;
+                    break;
+                }
+                // 如果预约排队首位是自己，则在用户付款后再删除预约记录并修改书的预约人数记录
+            }
         }
-        getHttpSession().remove("buyCart");
-        
-        returnMap.put("orderProfileList", orderProfileList);
-        returnMap.put("totalCredit", totalNeededCredit);
+
+        if(success) {
+            for(Map<String, Object> cartListItem : cartList) {
+                int bookID = (int)cartListItem.get("bookID");
+                Book book = this.bookDao.getBookByID(bookID);
+                BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
+                totalNeededCredit += book.getBuyCredit();     
+                
+                Order newOrder = new Order();
+                newOrder.setBookID(book.getBookID());
+                newOrder.setBuyerID(user.getUserID());  // 买家
+                newOrder.setSellerID(bookRelease.getUserID());  // 卖家
+                newOrder.setOrderDate(new Date());
+                newOrder.setBuyCredit(book.getBuyCredit());
+                newOrder.setAddress(fullAddress);  // 买家收货地址
+                newOrder.setStatus(OrderStatus.NOTPAID);
+                this.orderDao.save(newOrder);
+                
+                OrderProfile newOrderProfile = new OrderProfile();
+                newOrderProfile.setOrderID(newOrder.getOrderID());
+                newOrderProfile.setBookID(newOrder.getBookID());
+                newOrderProfile.setImageID(book.getImageID());
+                newOrderProfile.setIsbn(book.getIsbn());
+                newOrderProfile.setOrderStatus(newOrder.getStatus().toString());
+                newOrderProfile.setAuthor(book.getAuthor());
+                newOrderProfile.setCategory1(book.getCategory1());
+                newOrderProfile.setCategory2(book.getCategory2());
+                newOrderProfile.setBuyCredit(book.getBuyCredit());
+                orderProfileList.add(newOrderProfile);
+            }
+            getHttpSession().remove("buyCart");
+            
+            returnMap.put("orderProfileList", orderProfileList);
+            returnMap.put("totalCredit", totalNeededCredit);
+        }
+        returnMap.put("success", success);
         return returnMap;
     }
 
@@ -262,6 +288,14 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
                 BookRelease bookRelease = allIdleBookRelease.get(i);
                 Order order = allSuccessOrder.get(i);
                 User seller = this.userDao.getUserById(order.getSellerID());
+                if(book.getReserved()>0) {  // 如果书籍有人预约
+                    Reserve firstReserve = this.reserveDao.getFirstReserveByBookID(book.getBookID());
+                    Integer firstReserveUserID = firstReserve.getUserID();
+                    if(user.getUserID()==firstReserveUserID) {  // 如果当前预约排队首位的人是自己（一定满足，因为预约排队不是首位的人不能添加订单），则删除预约记录，修改书的预约人数记录
+                        book.setReserved(book.getReserved()-1);
+                        this.reserveDao.delete(firstReserve);
+                    }
+                }
                 seller.setCredit(seller.getCredit() + order.getBuyCredit());
                 this.userDao.update(seller);
                 order.setStatus(OrderStatus.NOTSHIPPED);

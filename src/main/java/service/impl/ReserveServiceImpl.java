@@ -57,8 +57,13 @@ public class ReserveServiceImpl extends BaseServiceImpl implements ReserveServic
         if(this.reserveDao.isReserved(userID, bookID)) {
             return "already";
         }
-        
+
         Book book = this.bookDao.getBookByID(bookID);
+        BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
+        User Owner = this.userDao.getUserById(bookRelease.getUserID());
+        if(Owner.getUserID() == userID){
+            return "error";
+        }
         book.setReserved(book.getReserved()+1);
         this.bookDao.update(book);
         Reserve newReserve = new Reserve();
