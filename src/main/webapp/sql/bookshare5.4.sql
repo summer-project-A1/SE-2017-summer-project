@@ -1,6 +1,10 @@
 /*
  * 2017/7/19
- * BorrowHistory表添加status属性
+ * Exchange和ExchangeHistory表添加以下四个属性
+ * `address1`   varchar(100) DEFAULT NULL,  -- 申请人收货地址
+ * `address2`   varchar(100) DEFAULT NULL,  -- 申请人发货地址
+ * `trackingNo1` varchar(30) DEFAULT NULL,  -- 申请人发货的快递单号
+ * `trackingNo2` varchar(30) DEFAULT NULL,  -- 被申请人发货的快递单号
  */
 
  USE bookshare;
