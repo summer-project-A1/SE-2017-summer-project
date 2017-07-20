@@ -123,7 +123,7 @@
                                 </tr>
                         </s:iterator>
                         </table>
-                        <p><a href="<%=path%>/orderAction/emptyBuyCart" class="simpleCart_empty">清空购物车</a></p>
+                        <p><a href="<%=path%>/cartAction/emptyBuyCart" class="simpleCart_empty">清空购物车</a></p>
                     </s:else>
                     <div class="clearfix"> </div>
                 </div>
@@ -148,7 +148,7 @@
                                 </tr>
                             </s:iterator>
                         </table>
-                        <p><a href="<%=path%>/orderAction/emptyBorrowCart" class="simpleCart_empty">清空购物车</a></p>
+                        <p><a href="<%=path%>/cartAction/emptyBorrowCart" class="simpleCart_empty">清空购物车</a></p>
                     </s:else>
                     <div class="clearfix"> </div>
                 </div>

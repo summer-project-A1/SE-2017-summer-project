@@ -50,9 +50,7 @@ public class ReserveAction extends ActionSupport{
     public String reserveBook() {
         params = new HashMap();
         //return value: "success","already","error"
-        params.put("result",this.reserveService.reserveBook(bookID));
-        params.put("success","success");
-
+        params.put("success",this.reserveService.reserveBook(bookID));
         return "ajax";
     }
 
