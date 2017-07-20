@@ -46,6 +46,8 @@
                 <value>model/Comment.hbm.xml</value>
                 <value>model/Category1.hbm.xml</value>
                 <value>model/Category2.hbm.xml</value>
+                <value>model/Exchange.hbm.xml</value>
+                <value>model/ExchangeHistory.hbm.xml</value>
 			</list>
 		</property>
 		<!-- Hibernate SessionFactory -->
@@ -90,26 +92,18 @@
         <property name="sessionFactory" ref="sessionFactory"/>
         <property name="mongoTemplate" ref="mongoTemplate" />
     </bean>
-    <bean id="userDao" class="dao.impl.UserDaoImpl" parent="baseDao">
-    </bean>
-    <bean id="bookDao" class="dao.impl.BookDaoImpl" parent="baseDao">
-    </bean>
-    <bean id="categoryDao" class="dao.impl.CategoryDaoImpl" parent="baseDao">
-    </bean>
-    <bean id="bookReleaseDao" class="dao.impl.BookReleaseDaoImpl" parent="baseDao">
-    </bean>
-    <bean id="borrowDao" class="dao.impl.BorrowDaoImpl" parent="baseDao">
-    </bean>
-    <bean id="borrowHistoryDao" class="dao.impl.BorrowHistoryDaoImpl" parent="baseDao">
-    </bean>
-    <bean id="reserveDao" class="dao.impl.ReserveDaoImpl" parent="baseDao">
-    </bean>
-    <bean id="orderDao" class="dao.impl.OrderDaoImpl" parent="baseDao">
-    </bean>
-    <bean id="commentDao" class="dao.impl.CommentDaoImpl" parent="baseDao"> 
-    </bean> 
-    <bean id="imageDao" class="dao.impl.ImageDaoImpl" parent="baseDao">
-    </bean>
+    <bean id="userDao" class="dao.impl.UserDaoImpl" parent="baseDao"/>
+    <bean id="bookDao" class="dao.impl.BookDaoImpl" parent="baseDao"/>
+    <bean id="categoryDao" class="dao.impl.CategoryDaoImpl" parent="baseDao"/>
+    <bean id="bookReleaseDao" class="dao.impl.BookReleaseDaoImpl" parent="baseDao"/>
+    <bean id="borrowDao" class="dao.impl.BorrowDaoImpl" parent="baseDao"/>
+    <bean id="borrowHistoryDao" class="dao.impl.BorrowHistoryDaoImpl" parent="baseDao"/>
+    <bean id="reserveDao" class="dao.impl.ReserveDaoImpl" parent="baseDao"/>
+    <bean id="orderDao" class="dao.impl.OrderDaoImpl" parent="baseDao"/>
+    <bean id="commentDao" class="dao.impl.CommentDaoImpl" parent="baseDao"/>
+    <bean id="imageDao" class="dao.impl.ImageDaoImpl" parent="baseDao"/>
+    <bean id="exchangeDao" class="dao.impl.ExchangeDaoImpl" parent="baseDao"/>
+    <bean id="exchangeHistoryDao" class="dao.impl.ExchangeHistoryDaoImpl" parent="baseDao"/>
 
     <!-- ============================================================= -->
 
@@ -161,6 +155,13 @@
     </bean>
     <bean id="imageService" class="service.impl.ImageServiceImpl">
         <property name="imageDao" ref="imageDao" />
+    </bean>
+    <bean id="exchangeService" class="service.impl.ExchangeServiceImpl">
+        <property name="userDao" ref="userDao" />
+        <property name="bookDao" ref="bookDao" />
+        <property name="bookReleaseDao" ref="bookReleaseDao" />
+        <property name="exchangeDao" ref="exchangeDao" />
+        <property name="exchangeHistoryDao" ref="exchangeHistoryDao" />
     </bean>
     
     <!-- ============================================================= -->

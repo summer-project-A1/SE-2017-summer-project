@@ -29,22 +29,65 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 	private BookReleaseDao bookReleaseDao;
 	private ExchangeDao exchangeDao;
 	private ExchangeHistoryDao exchangeHistoryDao;
-	
-	public Map prepareExchange(int wantedID)
+	/*=========================================================*/
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
+	public UserDao getUserDao(){
+		return this.userDao;
+	}
+
+	public void setBookDao(BookDao bookDao) {
+		this.bookDao = bookDao;
+	}
+
+	public BookDao getBookDao(){
+		return this.bookDao;
+	}
+
+	public void setBookReleaseDao(BookReleaseDao bookReleaseDao) {
+		this.bookReleaseDao = bookReleaseDao;
+	}
+
+	public BookReleaseDao getBookReleaseDao(){
+		return this.bookReleaseDao;
+	}
+
+	public void setExchangeDao(ExchangeDao exchangeDao) {
+		this.exchangeDao = exchangeDao;
+	}
+
+
+	public ExchangeDao getExchangeDao(){
+		return this.exchangeDao;
+	}
+
+	public void setExchangeHistoryDao(ExchangeHistoryDao exchangeHistoryDao) {
+		this.exchangeHistoryDao = exchangeHistoryDao;
+	}
+
+	public ExchangeHistoryDao getExchangeHistoryDao(){
+		return this.exchangeHistoryDao;
+	}
+
+	/*==================================================================*/
+	@Override
+	public Map prepareExchange(int bookID)
 	{
 		Map map = new HashMap();
 		User user = this.getLoginedUserInfo();
-		Book book = bookDao.getBookByID(wantedID);
-		map.put("wanted", book);
-		List<Book> had = bookReleaseDao.getReleaseBookByUserID(user.getUserID());
-		map.put("had", had);
+		Book wantedBook = bookDao.getBookByID(bookID);
+		map.put("wantedBook", wantedBook);
+		List<Book> userReleasedBookList = bookReleaseDao.getReleaseBookByUserID(user.getUserID());
+		map.put("userReleasedBookList", userReleasedBookList);
 		return map;
 	}
-	
-	public Boolean applyExchange(int wantedID, int hadID, String address)
+
+	@Override
+	public Boolean applyExchange(int bookID, int hadID, String address)
 	{
 		User user1 = this.getLoginedUserInfo();
-		Book wanted = bookDao.getBookByID(wantedID);
+		Book wanted = bookDao.getBookByID(bookID);
 		Book had = bookDao.getBookByID(hadID);
 		if (wanted.getStatus() != BookStatus.IDLE)
 			return false;
@@ -55,7 +98,7 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		int userID1 = user1.getUserID();
 		int userID2 = user2.getUserID();
 		Date date = new Date();
-		Exchange exchange = new Exchange(userID1,userID2,wantedID,hadID,ExchangeStatus.WAITING,date,address);
+		Exchange exchange = new Exchange(userID1,userID2,bookID,hadID,ExchangeStatus.WAITING,date,address);
 		exchangeDao.save(exchange);
 		wanted.setStatus(BookStatus.EXCHANGED);
 		had.setStatus(BookStatus.EXCHANGED);
@@ -63,7 +106,8 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		bookDao.update(had);
 		return true;
 	}
-	
+
+	@Override
 	public Boolean cancelExchange(int exchangeID)
 	{
 		Exchange exchange = exchangeDao.getExchangeByID(exchangeID);
@@ -85,7 +129,8 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		exchangeDao.delete(exchange);
 		return true;
 	}
-	
+
+	@Override
 	public Boolean agreeExchange(int exchangeID,String address)
 	{
 		Exchange exchange = exchangeDao.getExchangeByID(exchangeID);
@@ -96,7 +141,8 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		exchangeDao.update(exchange);
 		return true;
 	}
-	
+
+	@Override
 	public Boolean rejectExchange(int exchangeID)
 	{
 		Exchange exchange = exchangeDao.getExchangeByID(exchangeID);
@@ -118,7 +164,8 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		exchangeDao.delete(exchange);
 		return true;
 	}
-	
+
+	@Override
 	public Boolean fh1(int exchangeID,String trackingNo)
 	{
 		Exchange exchange = exchangeDao.getExchangeByID(exchangeID);
@@ -130,7 +177,8 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		exchangeDao.update(exchange);
 		return true;
 	}
-	
+
+	@Override
 	public Boolean fh2(int exchangeID,String trackingNo)
 	{
 		Exchange exchange = exchangeDao.getExchangeByID(exchangeID);
@@ -142,7 +190,8 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		exchangeDao.update(exchange);
 		return true;
 	}
-	
+
+	@Override
 	public Boolean sh1(int exchangeID)
 	{
 		Exchange exchange = exchangeDao.getExchangeByID(exchangeID);
@@ -153,7 +202,8 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		exchangeDao.update(exchange);
 		return true;
 	}
-	
+
+	@Override
 	public Boolean sh2(int exchangeID)
 	{
 		Exchange exchange = exchangeDao.getExchangeByID(exchangeID);
@@ -164,7 +214,8 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		exchangeDao.update(exchange);
 		return true;
 	}
-	
+
+	@Override
 	public Boolean comment1(int exchangeID, int comment)
 	{
 		Exchange exchange = exchangeDao.getExchangeByID(exchangeID);
@@ -185,7 +236,8 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		}
 		return true;
 	}
-	
+
+	@Override
 	public Boolean comment2(int exchangeID, int comment)
 	{
 		Exchange exchange = exchangeDao.getExchangeByID(exchangeID);
@@ -206,4 +258,6 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		}
 		return true;
 	}
+
+
 }

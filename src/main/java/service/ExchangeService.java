@@ -4,8 +4,8 @@ import java.util.Map;
 
 public interface ExchangeService extends BaseService
 {
-	public Map prepareExchange(int wantedID);
-    public Boolean applyExchange(int wantedID, int hadID, String address);
+	public Map prepareExchange(int bookID);
+    public Boolean applyExchange(int bookID, int hadID, String address);
     public Boolean cancelExchange(int exchangeID);
     public Boolean agreeExchange(int exchangeID,String address);
     public Boolean rejectExchange(int exchangeID);
