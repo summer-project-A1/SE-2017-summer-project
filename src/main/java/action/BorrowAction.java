@@ -105,6 +105,10 @@ public class BorrowAction extends ActionSupport {
     
     public String createBorrowOrder() {     // 用户创建订单，添加到数据库，跳转到付款页面（不修改书的状态）
         Map result = this.borrowService.createBorrowOrder(this.address);
+        Boolean success = (Boolean)result.get("success");
+        if(!success) {
+            return "fail";
+        }
         List<BorrowProfile> borrowProfileList = (List<BorrowProfile>)result.get("borrowProfileList");
         Integer totalCredit = (Integer)result.get("totalCredit");
         ActionContext.getContext().put("buyOrBorrow","borrow");
