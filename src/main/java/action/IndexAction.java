@@ -21,9 +21,10 @@ public class IndexAction extends ActionSupport {
     }
     public String index() {
         ActionContext.getContext().put("title","图书分享交流平台");
-        //List<Book> recommendBookList = this.bookService.getRecommendBookList();
-        //ActionContext.getContext().put("recommendBook1",recommendBookList[0]);
-        //ActionContext.getContext().put("recommendBook2",recommendBookList[1]);
+        List<Book> recommendBookList = this.bookService.getRecommendBookList();
+        ActionContext.getContext().put("recommendBookList",recommendBookList);
+        ActionContext.getContext().put("recommendBook1", recommendBookList.get(0));
+        ActionContext.getContext().put("recommendBook2",recommendBookList.get(0));
         return "showIndex";
     }
     public String header(){
