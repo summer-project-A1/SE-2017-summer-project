@@ -69,7 +69,6 @@ public class ReserveServiceImpl extends BaseServiceImpl implements ReserveServic
         Reserve newReserve = new Reserve();
         newReserve.setBookID(bookID);
         newReserve.setUserID(userID);
-        newReserve.setDue(new Date());
         this.reserveDao.save(newReserve);
         return "success";
     }

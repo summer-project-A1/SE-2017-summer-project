@@ -127,6 +127,7 @@
     <bean id="borrowService" class="service.impl.BorrowServiceImpl">
         <property name="borrowDay" value="20" />
         <property name="delayDay" value="10" />
+        <property name="reserveDay" value="20" />
         <property name="bookDao" ref="bookDao" />
         <property name="bookReleaseDao" ref="bookReleaseDao" />
         <property name="userDao" ref="userDao" />
@@ -139,6 +140,7 @@
         <property name="bookDao" ref="bookDao" />
     </bean>
     <bean id="orderService" class="service.impl.OrderServiceImpl">
+        <property name="reserveDay" value="20" />
         <property name="bookDao" ref="bookDao" />
         <property name="bookReleaseDao" ref="bookReleaseDao" />
         <property name="userDao" ref="userDao" />

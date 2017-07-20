@@ -23,6 +23,7 @@ import service.BorrowService;
 public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService {
     private int borrowDay;     // 单次借阅时间，由spring注入
     private int delayDay;      // 单次续借时间，由spring注入
+    private int reserveDay;    // 单次预约时间，由spring注入
     
     private BookDao bookDao;
     private BookReleaseDao bookReleaseDao;
@@ -36,6 +37,14 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
 
     public int getBorrowDay() {
         return borrowDay;
+    }
+
+    public int getReserveDay() {
+        return reserveDay;
+    }
+
+    public void setReserveDay(int reserveDay) {
+        this.reserveDay = reserveDay;
     }
 
     public void setBorrowDay(int borrowDay) {
@@ -381,6 +390,13 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                         book.setReserved(book.getReserved()-1);
                         this.reserveDao.delete(firstReserve);
                     }
+                    // 为下一个预约者设定预约过期时间（当前时间向后加this.reserveDay天）
+                    Reserve newFirstReserve = this.reserveDao.getFirstReserveByBookID(book.getBookID());
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.add(Calendar.DATE, this.reserveDay);
+                    Date due = calendar.getTime();
+                    newFirstReserve.setDue(due);
+                    this.reserveDao.update(newFirstReserve);
                 }
                 User lender = this.userDao.getUserById(borrow.getUserID2()); // 借出书的人（卖家）
                 lender.setCredit(lender.getCredit() + borrow.getBorrowCredit());
