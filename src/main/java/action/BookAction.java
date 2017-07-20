@@ -1,6 +1,7 @@
 package action;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -243,7 +244,27 @@ public class BookAction extends ActionSupport {
         ActionContext.getContext().put("categoryNameOfBooks",category2Name);
         return "showBooks";
     }
-
+    public String showRecommendBooks() {
+        List<Book> bookList = this.bookService.getRecommendBookList();
+        List<Book> recommendBookList = new ArrayList<Book>();
+        if(bookList.size() >= 1) {
+            ActionContext.getContext().put("recommendBook1", bookList.get(0));
+        }
+        else {
+            ActionContext.getContext().put("recommendBook1", "");
+        }
+        if(bookList.size() >= 2) {
+            ActionContext.getContext().put("recommendBook2", bookList.get(1));
+        }
+        else {
+            ActionContext.getContext().put("recommendBook2", "");
+        }
+        for(int i=2; i<bookList.size() && i<10; i++) {
+            recommendBookList.add(bookList.get(i));
+        }
+        ActionContext.getContext().put("recommendBookList", recommendBookList);
+        return "showRecommendBooks";
+    }
 
 }
 
