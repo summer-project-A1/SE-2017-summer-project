@@ -37,9 +37,9 @@
                                     <div class="col-sm-3">
                                         <h4><s:property value="category1Name"/></h4>
                                         <ul class="multi-column-dropdown">
-                                            <li><a class="list" href="<%=path%>/bookAction/showBooksByCategory1Name?category1Name=<s:property value="category1Name"/>"><s:property value="category1Name"/></a></li>
+                                            <li><a class="list" href="<%=path%>/bookAction/showAllBooks?category1Name=<s:property value="category1Name"/>&"><s:property value="category1Name"/></a></li>
                                             <s:iterator value="category2List">
-                                                <li><a class="list" href="<%=path%>/bookAction/showBooksByCategory2Name?category2Name=<s:property value="category2Name"/>"><s:property value="category2Name"/></a></li>
+                                                <li><a class="list" href="<%=path%>/bookAction/showAllBooks?category2Name=<s:property value="category2Name"/>&"><s:property value="category2Name"/></a></li>
                                             </s:iterator>
                                         </ul>
                                     </div>

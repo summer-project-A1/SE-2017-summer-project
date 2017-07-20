@@ -207,28 +207,9 @@
 
     //筛选js脚本
     var url;
-    var showCategory1='<s:property value="category1Name"/>';
-    var showCategory2='<s:property value="category2Name"/>';
-    var showStatus='<s:property value="status"/>';
-    var showYear='<s:property value="year"/>';
     $(document).ready(function(){
-        url=this.location.href.toString();
+        url=decodeURI(this.location.href.toString());
         console.log("url: "+url);
-        if(showCategory1!=""){
-            $('#select-info').append(" 分类："+showCategory1);
-
-        }
-        if(showCategory2!=""){
-            $('#select-info').append(" 分类："+showCategory2);
-
-        }
-        if(showStatus!=""){
-            $('#select-info').append(" 状态："+showStatus);
-
-        }if(showYear!=""){
-            $('#select-info').append(" 年份："+showYear);
-
-        }
 
         $('#select-status :checkbox[type="checkbox"]').each(function(){
             $(this).click(function(){
@@ -249,7 +230,11 @@
 
     function selectCategory1(category1Name){
         if(category1Name==""){
+            url=$.deleteUrlArg(url,"category1Name");
+            url=$.deleteUrlArg(url,"category2Name");
             console.log("url: "+url);
+            url=encodeURI(url);
+            $.sendSelectInfo(url);
             return;
         }
         url=$.deleteUrlArg(url,"category2Name");
@@ -262,6 +247,10 @@
 
     function selectCategory2(category2Name){
         if(category2Name==""){
+            url=$.deleteUrlArg(url,"category1Name");
+            url=$.deleteUrlArg(url,"category2Name");
+            url=encodeURI(url);
+            $.sendSelectInfo(url);
             console.log("url: "+url);
             return;
         }
@@ -275,7 +264,10 @@
 
     function selectYear(year){
         if(year==""){
+            url=$.deleteUrlArg(url,"year");
             console.log("url: "+url);
+            url=encodeURI(url);
+            $.sendSelectInfo(url);
             return;
         }
         url=$.changeURLArg(url,'year',year);
@@ -287,7 +279,10 @@
 
     function selectStatus(status){
         if(status==""){
+            url=$.deleteUrlArg(url,"status");
             console.log("url: "+url);
+            url=encodeURI(url);
+            $.sendSelectInfo(url);
             return;
         }
         url=$.changeURLArg(url,'status',status);
@@ -308,7 +303,20 @@
     <div class="container">
 
         <h2>图书浏览</h2>
-        <h3 id="selete-info"></h3>
+        <h3 align="center" id="selete-info">
+            <s:if test="#category1Name!=''">
+                分类：<s:property value="#category1Name"/>
+            </s:if>
+            <s:if test="#category2Name!=''">
+                标签：<s:property value="#category2Name"/>
+            </s:if>
+            <s:if test="#status!=''">
+                状态：<s:property value="#status"/>
+            </s:if>
+            <s:if test="#year!=''">
+                年份：<s:property value="#year"/>
+            </s:if>
+        </h3>
 
         <div class="col-md-9 product-model-sec">
             <div class="clearfix"> </div>
