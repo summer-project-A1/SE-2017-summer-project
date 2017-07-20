@@ -89,7 +89,7 @@
                var toAddLabel = "addrLabel"+oldDefaultAddrID;
                var toAddLink = "setDefaultAddr"+oldDefaultAddrID;
 
-               if(oldDefaultAddr != null && oldDefaultAddr != null){
+               if(oldDefaultAddr != null && oldDefaultAddrID != null){
                    var htmlstr1 = '<div id="'+oldDefaultAddrID+'"><input type="radio" id="address'+oldDefaultAddrID+'" name="address" value="'+oldDefaultAddr+'"/>'
                    +'<label id="addrLabel'+oldDefaultAddrID+'" for="address'+oldDefaultAddrID+'">'+oldDefaultAddr+'</label><a href="#" id="setDefaultAddr'+oldDefaultAddrID+'" onclick="setDefaultAddr(\''+oldDefaultAddrID+'\')">设为默认地址&nbsp;&nbsp;&nbsp;&nbsp;</a>' +
                        '<a href="#" id="deleteAddr'+oldDefaultAddrID+'" onclick="deleteAddress(\''+oldDefaultAddrID+'\')">删除地址</a></div>';
@@ -98,6 +98,9 @@
                    $("#defaultAddrLabel").html(newDefaultAddr);
                    $("#"+newDefaultAddrID).remove();
                    $("#addrForm").append(htmlstr1);
+                   if($("#"+oldDefaultAddrID).attr("id")==oldDefaultAddrID){
+                       $("#"+oldDefaultAddrID).attr({id:newDefaultAddrID});
+                   }
                }else{
                    showTip('更换默认地址成功','success');
                    var htmlstr3 = '<div id="'+newDefaultAddrID+'">'+'<input type="radio" id="defaultAddr" name="address" value="'+newDefaultAddr+'"/><label id="defaultAddrLabel" for="defaultAddr">'+newDefaultAddr+'</label><label>&nbsp;&nbsp;&nbsp;&nbsp;默认地址</label></div>';
@@ -226,7 +229,7 @@
 
                 <s:iterator value="#defaultAddrList" status="st">
                     <div id="<s:property value="fullAddressID"/>">
-                <input type="radio" id="defaultAddr" name="address" value="<s:property value="fullAddressString"/>"/>
+                <input type="radio" id="defaultAddr" name="address" value="<s:property value="fullAddressString"/>" checked/>
                 <label id="defaultAddrLabel" for="defaultAddr"><s:property value="fullAddressString"/></label><label >&nbsp;&nbsp;&nbsp;&nbsp;默认地址</label><br>
                     </div>
                 </s:iterator>
