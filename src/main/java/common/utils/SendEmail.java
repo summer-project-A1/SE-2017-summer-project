@@ -1,6 +1,6 @@
 package common.utils;
 
-import com.sun.tools.doclets.internal.toolkit.Content;
+
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -12,7 +12,6 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
-import javax.swing.text.AbstractDocument;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Properties;

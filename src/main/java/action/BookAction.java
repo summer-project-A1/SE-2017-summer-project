@@ -1,6 +1,5 @@
 package action;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +7,6 @@ import java.util.Map;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import com.oracle.tools.packager.mac.MacAppBundler;
 import model.Book;
 import model.BookProfile;
 import model.Category1;

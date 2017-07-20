@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.sun.glass.ui.SystemClipboard;
 import common.cache.AllBookCategory;
 import common.constants.BookStatus;
 import dao.BookDao;
@@ -19,9 +18,7 @@ import model.Book;
 import model.BookProfile;
 import model.BookRelease;
 import model.Category1;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.apache.commons.httpclient.HttpClient;
 import org.apache.http.*;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
