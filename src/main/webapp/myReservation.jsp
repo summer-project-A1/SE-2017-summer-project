@@ -61,7 +61,6 @@
             <section class="sky-form">
                 <div class="product_right">
                     <h3 class="m_2"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>操作选单</h3>
-
                     <div class="tab1">
                         <ul class="place">
                             <li class="sort"><a href="#">个人信息</a></li>
@@ -76,7 +75,7 @@
                     </div>
                     <div class="tab1">
                         <ul class="place">
-                            <li class="sort"><a href="#">我的发布</a></li>
+                            <li class="sort"><a href="<%=path%>/bookAction/showUserReleasedBooks">我的发布</a></li>
                         </ul>
                         <div class="clearfix"> </div>
                     </div>
@@ -88,13 +87,20 @@
                     </div>
                     <div class="tab1">
                         <ul class="place">
-                            <li class="sort"><a href="#">我的购买</a></li>
+                            <li class="sort"><a href="<%=path%>/exchangeAction/showMyExchange">我的交换</a></li>
                         </ul>
                         <div class="clearfix"> </div>
                     </div>
                     <div class="tab1">
                         <ul class="place">
-                            <li class="sort"><a href="#">我的订单</a></li>
+                            <li class="sort"><a href="<%=path%>/orderAction/showMyOrder">我的购买</a></li>
+                        </ul>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                    <div class="tab1">
+                        <ul class="place">
+                            <li class="sort"><a href="<%=path%>/reserveAction/showMyReservation">我的预约</a></li>
                         </ul>
                         <div class="clearfix"> </div>
                     </div>
