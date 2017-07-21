@@ -163,7 +163,7 @@
 
     <script src="<%=path%>/js/fileinput.js"></script>
     <script src="<%=path%>/js/fileinput.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/js/locales/zh.min.js"></script>
+    <script src="<%=path%>/js/zh.min.js"></script>
     <script>
     $("#cate").change(function(){
         $("#category").empty();
