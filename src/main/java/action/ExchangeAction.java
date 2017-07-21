@@ -87,8 +87,8 @@ public class ExchangeAction extends ActionSupport{
 
         ActionContext.getContext().put("initiativeExchange",initiativeExchange);
         ActionContext.getContext().put("initiativeExchangeHistory",initiativeExchangeHistory);
-        ActionContext.getContext().put("initiativeExchangeHistory",initiativeExchangeHistory);
-        ActionContext.getContext().put("initiativeExchangeHistory",initiativeExchangeHistory);
+        ActionContext.getContext().put("passiveExchange",passiveExchange);
+        ActionContext.getContext().put("passiveExchangeHistory",passiveExchangeHistory);
         return "showMyExchange";
     }
 
