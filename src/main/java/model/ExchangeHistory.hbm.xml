@@ -11,13 +11,22 @@
         <property name="userID2" column="user2_id" />
         <property name="wantedID" column="wanted_id" />
         <property name="hadID" column="had_id" />
+        <property name="status" column="status">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">common.constants.ExchangeStatus</param>
+            </type>
+        </property>
         <property name="applyDate" column="apply_date" type="timestamp" />
         <property name="responseDate" column="response_date" type="timestamp" />
-        <property name="fh_date1" column="fh_date1" type="timestamp" />
-        <property name="fh_date2" column="fh_date2" type="timestamp" />
-        <property name="sh_date1" column="sh_date1" type="timestamp" />
-        <property name="sh_date2" column="sh_date2" type="timestamp" />
-        <property name="comment1" column="comment1"></property>
-        <property name="comment2" column="comment2"></property>
+        <property name="address1" column="address1" />
+        <property name="address2" column="address2" />
+        <property name="fhDate1" column="fh_date1" type="timestamp" />
+        <property name="fhDate2" column="fh_date2" type="timestamp" />
+        <property name="trackingNo1" column="trackingNo1" />
+        <property name="trackingNo2" column="trackingNo2" />
+        <property name="shDate1" column="sh_date1" type="timestamp" />
+        <property name="shDate2" column="sh_date2" type="timestamp" />
+        <property name="comment1" column="comment1"/>
+        <property name="comment2" column="comment2"/>
     </class>
 </hibernate-mapping>
