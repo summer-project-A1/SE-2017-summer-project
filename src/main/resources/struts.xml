@@ -101,7 +101,7 @@
                 <param name="root">params</param>
             </result>
             <result name="buyCheckout">/checkout.jsp</result>
-            <result name="createBuyOrder">/showBuyOrBuyOrder.jsp</result>
+            <result name="createBuyOrder">/showBuyOrBorrowOrder.jsp</result>
             <result name="showMyOrder">/myOrder.jsp</result>
             <allowed-methods>
               buyCheckout,createBuyOrder,confirmBuyOrder,cancelBuyOrder,showOrderById,showMyOrder,confirmBuyReceipt,deliverBuyOrder
@@ -173,7 +173,7 @@
                 <param name="root">params</param>
             </result>
             <result name="borrowCheckout">/checkout.jsp</result>
-            <result name="createBorrowOrder">/showBuyOrBuyOrder.jsp</result>
+            <result name="createBorrowOrder">/showBuyOrBorrowOrder.jsp</result>
             <allowed-methods>
                 borrowCheckout,createBorrowOrder,showMyBorrow,delayBook,returnBook,confirmBorrowOrder,confirmBorrowReceipt
                 ,deliverBorrowOrder,confirmReturnReceipt,cancelBorrowOrder
