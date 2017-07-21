@@ -20,6 +20,7 @@ public class AuthAction extends ActionSupport{
     private String email;
     private String password;
     private String confirmpassword;
+    private String activeCode;
 
 
     /* =========================================================== */
@@ -71,6 +72,14 @@ public class AuthAction extends ActionSupport{
         this.params = params;
     }
 
+    public String getActiveCode() {
+        return activeCode;
+    }
+
+    public void setActiveCode(String activeCode) {
+        this.activeCode = activeCode;
+    }
+
     /* =========================================================== */
 
     public String checkEmailAvailable() {
@@ -119,5 +128,13 @@ public class AuthAction extends ActionSupport{
         this.userService.logout();
         return "logout";
     }
+
+    public String activate(){
+        if(this.userService.activateUser(this.email,this.activeCode)){
+            return "activateSuccess";
+        }
+        return "activateFail";
+    }
+
 
 }

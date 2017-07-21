@@ -1,16 +1,15 @@
 package service.impl;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.opensymphony.xwork2.ActionContext;
 
 import common.constants.UserRole;
+import common.constants.UserStatus;
 import common.utils.MD5Util;
 import common.utils.PasswordUtil;
+import common.utils.SendEmail;
 import dao.ImageDao;
 import dao.UserDao;
 import model.FullAddress;
@@ -47,8 +46,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 User userinfo = getUserDao().getUserByEmail(email);
                 if(userinfo != null) {
                     if(PasswordUtil.checkPassword(plainPassword, userinfo.getPassword())) {
-                        setLoginedUserInfo(userinfo);
-                        logined = true;
+                        if(userinfo.getStatus() == UserStatus.ACTIVATED) {
+                            setLoginedUserInfo(userinfo);
+                            logined = true;
+                        }
                     }
                 }
             }
@@ -96,10 +97,33 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         newUser.setDistrict(registerInfo.getDistrict()!=null?registerInfo.getDistrict():"请选择");
         newUser.setAddress(registerInfo.getAddress());
         newUser.setImageID("");
+
+        newUser.setStatus(UserStatus.UNACTIVATED);  //设置未激活
+        newUser.setActiveCode(MD5Util.encoderByMd5(email)); //设置激活码
+        Date currentDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        calendar.add(Calendar.DATE, 1);
+        Date due = calendar.getTime();
+        newUser.setDue(due);  //设置激活due
         
         this.userDao.save(newUser);
-        
-        setLoginedUserInfo(newUser);
+
+        //发送验证邮件
+        StringBuffer sb=new StringBuffer("点击下面链接激活账号，24小时生效，否则重新注册账号，链接只能使用一次，请尽快激活！</br>");
+        sb.append("<a href=\"http://localhost:8080/bookshare/authAction/activate.action?email=");
+        sb.append(email);
+        sb.append("&activeCode=");
+        sb.append(newUser.getActiveCode());
+        sb.append("\">http://localhost:8080/bookshare/authAction/activate.action?email=");
+        sb.append(email);
+        sb.append("&activeCode=");
+        sb.append(newUser.getActiveCode());
+        sb.append("</a>");
+
+        SendEmail sendEmail = new SendEmail();
+        sendEmail.send(sb.toString(),email);
+        //setLoginedUserInfo(newUser);
         return true;
     }
 
@@ -229,5 +253,27 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         int userID = this.getLoginedUserInfo().getUserID();
         this.userDao.removeDeliveryAddress(userID, fullAddressID);
         return true;
+    }
+
+    @Override
+    public boolean activateUser(String email,String activeCode){
+        User user = this.userDao.getUserByEmail(email);
+        if(user == null){
+            return false;
+        }
+        if(user.getStatus() != UserStatus.UNACTIVATED){
+            return false;
+        }
+        Date currentTime = new Date();
+        if(currentTime.after(user.getDue())){
+            return false;
+        }
+        if(activeCode.equals(user.getActiveCode())){
+            user.setStatus(UserStatus.ACTIVATED);
+            this.userDao.update(user);
+            setLoginedUserInfo(user);
+            return true;
+        }
+        return false;
     }
 }

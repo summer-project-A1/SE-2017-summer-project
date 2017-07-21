@@ -30,10 +30,15 @@
                 <param name="actionName">index</param>
                 <param name="namespace">/</param>
             </result>
+            <result name="activateSuccess" type="redirectAction">
+                <param name="actionName">index</param>
+                <param name="namespace">/</param>
+            </result>
+            <result name="activateFail">/howToShare.jsp</result>
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
-            <allowed-methods>signin,logout,login,register,checkEmailAvailable
+            <allowed-methods>signin,logout,login,register,checkEmailAvailable,activate
             </allowed-methods>
         </action>
     </package>
@@ -131,8 +136,11 @@
         <action name="*" class="action.BookAction" method="{1}">
             <result name="showBooks">/products.jsp</result>
             <result name="showBookProfile">/productDetail.jsp</result>
+            <result name="ajax" type="json">
+                <param name="root">params</param>
+            </result>
             <allowed-methods>
-                showAllBooks,showBooksByCategory1Name,showBooksByCategory2Name,showUserReleasedBooks,showBookProfile
+                showAllBooks,showBooksByCategory1Name,showBooksByCategory2Name,showUserReleasedBooks,showBookProfile,getInfoByIsbn
             </allowed-methods>
         </action>
     </package>
