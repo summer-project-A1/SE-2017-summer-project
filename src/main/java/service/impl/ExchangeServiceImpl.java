@@ -266,31 +266,31 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 	    User user = this.getLoginedUserInfo();
 	    Integer userID = user.getUserID();
 	    
-	    List<Exchange> initiativeExchange = this.exchangeDao.getExchangeByUserID1(userID);  // 主动发起的交换申请
-	    List<ExchangeHistory> initiativeExchangeHistory = this.exchangeHistoryDao.getExchangeHistoryByUserID1(userID); 
+	    List<Exchange> activeExchange = this.exchangeDao.getExchangeByUserID1(userID);  // 主动发起的交换申请
+	    List<ExchangeHistory> activeExchangeHistory = this.exchangeHistoryDao.getExchangeHistoryByUserID1(userID); 
 	    List<Exchange> passiveExchange = this.exchangeDao.getExchangeByUserID2(userID);  // 收到的交换申请
         List<ExchangeHistory> passiveExchangeHistory = this.exchangeHistoryDao.getExchangeHistoryByUserID2(userID);
         
-        List<ExchangeProfile> initiativeExchangeProfile = new ArrayList<ExchangeProfile>();
-        List<ExchangeProfile> initiativeExchangeHistoryProfile = new ArrayList<ExchangeProfile>();
+        List<ExchangeProfile> activeExchangeProfile = new ArrayList<ExchangeProfile>();
+        List<ExchangeProfile> activeExchangeHistoryProfile = new ArrayList<ExchangeProfile>();
         List<ExchangeProfile> passiveExchangeProfile = new ArrayList<ExchangeProfile>();
         List<ExchangeProfile> passiveExchangeHistoryProfile = new ArrayList<ExchangeProfile>();
         
-        for(Exchange exchange : initiativeExchange) {
+        for(Exchange exchange : activeExchange) {
             Integer wantedBookID = exchange.getWantedBookID();
             Integer hadBookID = exchange.getHadBookID();
             Book wantedBook = this.bookDao.getBookByID(wantedBookID);
             Book hadBook = this.bookDao.getBookByID(hadBookID);
             ExchangeProfile exchangeProfile = new ExchangeProfile(exchange,wantedBook,hadBook);
-            initiativeExchangeProfile.add(exchangeProfile);
+            activeExchangeProfile.add(exchangeProfile);
         }
-        for(ExchangeHistory exchangeHistory : initiativeExchangeHistory) {
+        for(ExchangeHistory exchangeHistory : activeExchangeHistory) {
             Integer wantedBookID = exchangeHistory.getWantedBookID();
             Integer hadBookID = exchangeHistory.getHadBookID();
             Book wantedBook = this.bookDao.getBookByID(wantedBookID);
             Book hadBook = this.bookDao.getBookByID(hadBookID);
             ExchangeProfile exchangeProfile = new ExchangeProfile(exchangeHistory,wantedBook,hadBook);
-            initiativeExchangeHistoryProfile.add(exchangeProfile);
+            activeExchangeHistoryProfile.add(exchangeProfile);
         }
         for(Exchange exchange : passiveExchange) {
             Integer wantedBookID = exchange.getWantedBookID();
@@ -310,8 +310,8 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
         }
         
 	    Map<String, List<ExchangeProfile>> returnMap = new HashMap<String, List<ExchangeProfile>>();
-	    returnMap.put("initiativeExchange", initiativeExchangeProfile);
-	    returnMap.put("initiativeExchangeHistory", initiativeExchangeHistoryProfile);
+	    returnMap.put("activeExchange", activeExchangeProfile);
+	    returnMap.put("activeExchangeHistory", activeExchangeHistoryProfile);
 	    returnMap.put("passiveExchange", passiveExchangeProfile);
 	    returnMap.put("passiveExchangeHistory", passiveExchangeHistoryProfile);
 	    return returnMap;

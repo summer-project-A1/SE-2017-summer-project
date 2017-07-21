@@ -80,13 +80,13 @@ public class ExchangeAction extends ActionSupport{
 
     public String showMyExchange(){
         Map result = this.exchangeService.showMyExchange();
-        List<ExchangeProfile> initiativeExchange = (List<ExchangeProfile>) result.get("initiativeExchange");
-        List<ExchangeProfile> initiativeExchangeHistory = (List<ExchangeProfile>) result.get("initiativeExchangeHistory");
+        List<ExchangeProfile> activeExchange = (List<ExchangeProfile>) result.get("activeExchange");
+        List<ExchangeProfile> activeExchangeHistory = (List<ExchangeProfile>) result.get("activeExchangeHistory");
         List<ExchangeProfile> passiveExchange = (List<ExchangeProfile>) result.get("passiveExchange");
         List<ExchangeProfile> passiveExchangeHistory = (List<ExchangeProfile>) result.get("passiveExchangeHistory");
 
-        ActionContext.getContext().put("initiativeExchange",initiativeExchange);
-        ActionContext.getContext().put("initiativeExchangeHistory",initiativeExchangeHistory);
+        ActionContext.getContext().put("activeExchange",activeExchange);
+        ActionContext.getContext().put("activeExchangeHistory",activeExchangeHistory);
         ActionContext.getContext().put("passiveExchange",passiveExchange);
         ActionContext.getContext().put("passiveExchangeHistory",passiveExchangeHistory);
         return "showMyExchange";
