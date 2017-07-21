@@ -15,4 +15,6 @@ public interface ExchangeService extends BaseService
     public Boolean sh2(int exchangeID);
     public Boolean comment1(int exchangeID, int comment);
     public Boolean comment2(int exchangeID, int comment);
+    
+    public Map showMyExchange();
 }

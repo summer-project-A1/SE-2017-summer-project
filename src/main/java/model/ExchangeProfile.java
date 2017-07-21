@@ -40,25 +40,46 @@ public class ExchangeProfile {
         this.userID2 = exchange.getUserID2();
         this.wantedBookID = exchange.getWantedBookID();
         this.wantedBook = wantedBook;
-        this.hadBookID = exchange.
-        this.hadBook;
-        this.status;
-        this.exchangeStatus;
-        this.applyDate;   //申请人申请时间
-        this.responseDate;  //被申请人回应时间
-        this.address1;    // 申请人收货地址
-        this.address2;    // 被申请人收货地址
-        this.fhDate1;    //申请人发货时间
-        this.fhDate2;    //被申请人发货时间
-        this.trackingNo1;    //申请人发货时快递单号
-        this.trackingNo2;   //被申请者发货时快递单号 
-        this.shDate1;    //申请人收货时间
-        this.shDate2;    //被申请者收货时间
-        this.comment1;     //申请人对被申请者的信用评价
-        this.comment2;     //被申请人对申请人的信用评价
+        this.hadBookID = exchange.getHadBookID();
+        this.hadBook = hadBook;
+        this.status = exchange.getStatus();
+        this.exchangeStatus = exchange.getStatus().toString();
+        this.applyDate = exchange.getApplyDate();
+        this.responseDate = exchange.getResponseDate();
+        this.address1 = exchange.getAddress1();
+        this.address2 = exchange.getAddress2();
+        this.fhDate1 = exchange.getFhDate1();
+        this.fhDate2 = exchange.getFhDate2();
+        this.trackingNo1 = exchange.getTrackingNo1();
+        this.trackingNo2 = exchange.getTrackingNo2();
+        this.shDate1 = exchange.getShDate1();
+        this.shDate2 = exchange.getShDate2();
+        this.comment1 = exchange.getComment1();
+        this.comment2 = exchange.getComment2();
     }
-    public ExchangeProfile(ExchangeHistory exchangeHistory, Book book) {
-        
+    public ExchangeProfile(ExchangeHistory exchangeHistory, Book wantedBook, Book hadBook) {
+        //this.exchangeID;
+        this.ehID = exchangeHistory.getEhID();
+        this.userID1 = exchangeHistory.getUserID1();
+        this.userID2 = exchangeHistory.getUserID2();
+        this.wantedBookID = exchangeHistory.getWantedBookID();
+        this.wantedBook = wantedBook;
+        this.hadBookID = exchangeHistory.getHadBookID();
+        this.hadBook = hadBook;
+        this.status = exchangeHistory.getStatus();
+        this.exchangeStatus = exchangeHistory.getStatus().toString();
+        this.applyDate = exchangeHistory.getApplyDate();
+        this.responseDate = exchangeHistory.getResponseDate();
+        this.address1 = exchangeHistory.getAddress1();
+        this.address2 = exchangeHistory.getAddress2();
+        this.fhDate1 = exchangeHistory.getFhDate1();
+        this.fhDate2 = exchangeHistory.getFhDate2();
+        this.trackingNo1 = exchangeHistory.getTrackingNo1();
+        this.trackingNo2 = exchangeHistory.getTrackingNo2();
+        this.shDate1 = exchangeHistory.getShDate1();
+        this.shDate2 = exchangeHistory.getShDate2();
+        this.comment1 = exchangeHistory.getComment1();
+        this.comment2 = exchangeHistory.getComment2();
     }
 
     /* ========================================================= */
