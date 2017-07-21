@@ -227,7 +227,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
         String hql1 = "select b.bookID from Book as b, BorrowHistory as bh where b.bookID=bh.bookID group by b.bookID order by count(*) desc";
         Query query1 = getSession().createQuery(hql1);
         query1.setFirstResult(0);
-        query1.setMaxResults(10);
+        query1.setMaxResults(totalCount);
         List<Integer> bookIDList1 = query1.list();
         System.out.println("bookIDList1");
         System.out.println(bookIDList1.size());
