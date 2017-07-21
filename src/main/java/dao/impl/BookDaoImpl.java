@@ -222,7 +222,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 
     @Override
     public List<Book> getRecommendBook() {
-        // 查找推荐书籍：被借阅次数最多的10本书
+        // 查找推荐书籍：被借阅次数最多的8本书
         String hql1 = "select b.bookID from Book as b, BorrowHistory as bh where b.bookID=bh.bookID group by b.bookID order by count(*) desc";
         Query query1 = getSession().createQuery(hql1);
         query1.setFirstResult(0);
@@ -230,7 +230,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
         List<Integer> bookIDList1 = query1.list();
         System.out.println("bookIDList1");
         System.out.println(bookIDList1.size());
-        if(bookIDList1.size() < 10) {
+        if(bookIDList1.size() < 8) { ///////// 
             String hql2 = "select b.bookID from Book as b, BookRelease as br where b.bookID=br.bookID and not exists (from BorrowHistory as bh where bh.bookID=b.bookID) order by br.releaseTime desc";
             Query query2 = getSession().createQuery(hql2);
             query2.setFirstResult(0);

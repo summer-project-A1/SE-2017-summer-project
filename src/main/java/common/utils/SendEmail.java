@@ -78,9 +78,10 @@ public class SendEmail {
             message.setSubject(subject);
 
             String content = sendHtml;
-            String CorrectContent = new String(content.getBytes(),"utf-8");
+            //String CorrectContent = new String(content.getBytes(),"utf-8");  // 这一行可能导致乱码
             // 邮件内容,也可以使纯文本"text/plain"
-            message.setContent(CorrectContent, "text/html;charset=utf-8");
+            //message.setContent(CorrectContent, "text/html;charset=utf-8");
+            message.setContent(content, "text/html;charset=utf-8");
             message.saveChanges();
             Transport transport = s.getTransport("smtp");
             // smtp验证，就是你用来发邮件的邮箱用户名密码

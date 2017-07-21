@@ -258,6 +258,7 @@ public class BookAction extends ActionSupport {
         ActionContext.getContext().put("categoryNameOfBooks",category2Name);
         return "showBooks";
     }
+    /*
     public String showRecommendBooks() {
         List<Book> bookList = this.bookService.getRecommendBookList();
         List<Book> recommendBookList = new ArrayList<Book>();
@@ -279,6 +280,7 @@ public class BookAction extends ActionSupport {
         ActionContext.getContext().put("recommendBookList", recommendBookList);
         return "showRecommendBooks";
     }
+    */
 
     public String getInfoByIsbn(){
         this.params = this.bookService.getInfoByIsbn(this.isbn);
