@@ -23,10 +23,6 @@ public class IndexAction extends ActionSupport {
         ActionContext.getContext().put("title","图书分享交流平台");
         List<Book> recommendBookList = this.bookService.getRecommendBookList();
         ActionContext.getContext().put("recommendBookList",recommendBookList);
-        if(!recommendBookList.isEmpty()) {
-            ActionContext.getContext().put("recommendBook1", recommendBookList.get(0));
-            ActionContext.getContext().put("recommendBook2",recommendBookList.get(0));
-        }
         return "showIndex";
     }
     public String header(){
