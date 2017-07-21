@@ -390,13 +390,6 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
                         book.setReserved(book.getReserved()-1);
                         this.reserveDao.delete(firstReserve);
                     }
-                    // 为下一个预约者设定预约过期时间（当前时间向后加this.reserveDay天）
-                    Reserve newFirstReserve = this.reserveDao.getFirstReserveByBookID(book.getBookID());
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.add(Calendar.DATE, this.reserveDay);
-                    Date due = calendar.getTime();
-                    newFirstReserve.setDue(due);
-                    this.reserveDao.update(newFirstReserve);
                 }
                 User lender = this.userDao.getUserById(borrow.getUserID2()); // 借出书的人（卖家）
                 lender.setCredit(lender.getCredit() + borrow.getBorrowCredit());
@@ -504,6 +497,17 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         borrow.setYhDate(YhDate);   //应还时间
         borrow.setStatus(BorrowStatus.BUYER_NOT_RETURNED);
         this.borrowDao.update(borrow);
+        int bookID = borrow.getBookID();
+        Book book = this.bookDao.getBookByID(bookID);
+        if(book.getReserved()>0) {  // 如果书籍有人预约
+            // 为下一个预约者设定预约过期时间（当前时间向后加this.reserveDay天）
+            Reserve newFirstReserve = this.reserveDao.getFirstReserveByBookID(book.getBookID());
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.add(Calendar.DATE, this.reserveDay);
+            Date due = calendar2.getTime();
+            newFirstReserve.setDue(due);
+            this.reserveDao.update(newFirstReserve);
+        }
         returnMap.put("success",true);
         returnMap.put("yhDate",YhDate);
         returnMap.put("borrowDate",borrowDate);
