@@ -133,13 +133,13 @@
             <label>简介</label><font color="#FF0000">*</font><textarea id="intro" name="bookProfile.intro" class="form-control" rows="3"></textarea>
         </div>
         <div class="form-group form-group-auto">
-            <label>图书封面</label><font color="#FF0000">*</font><input name="bookProfile.coverPicture" type="file" class="file">
+            <label>图书封面</label><font color="#FF0000">*</font><input name="bookProfile.coverPicture" type="file" accept=image>
         </div>
         <div class="form-group form-group-auto">
-            <label>其他图片（一）</label><font color="#FF0000">*</font><input name="bookProfile.otherPicture"  type="file" class="file">
+            <label>其他图片（一）</label><font color="#FF0000">*</font><input name="bookProfile.otherPicture"  type="file" accept="image" class="file">
         </div>
         <div class="form-group form-group-auto">
-            <label>其他图片（二）</label><font color="#FF0000">*</font><input name="bookProfile.otherPicture"  type="file" class="file">
+            <label>其他图片（二）</label><font color="#FF0000">*</font><input name="bookProfile.otherPicture"  type="file" accept=image class="file">
         </div>
 
         <div class="form-group form-group-auto">
@@ -163,6 +163,7 @@
 
     <script src="<%=path%>/js/fileinput.js"></script>
     <script src="<%=path%>/js/fileinput.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.5/js/locales/zh.min.js"></script>
     <script>
     $("#cate").change(function(){
         $("#category").empty();
@@ -214,12 +215,24 @@
     $("#ce0").click(function(){
         $("#exchangeCredit").hide();
     });
+    $("input[name='bookProfile.coverPicture']").fileinput({
+    	showUpload : false,
+    	allowedFileTypes : ['jpg','jpeg','png','gif'],
+    	browseLabel : "浏览",
+    	language : 'zh'
+    });
+    $("input[name='bookProfile.otherPicture']").fileinput({
+    	showUpload : false,
+    	allowedFileTypes : ['jpg','jpeg','png','gif'],
+    	browseLabel : "浏览",
+    	language : 'zh'
+    });
     $("#commit").click(function(){
         var obj=$('#bookinfo').find('#warning');
         if($("input[name='bookProflie.coverPicture']").val()=="")
             {obj.innerText="图书封面必须上传";return;}
         if($("input[name='bookProflie.otherPicture']").val()=="")
-        {obj.innerText="必须上传";return;}
+        	{obj.innerText="必须上传";return;}
         if($("input[name='bookProflie.bookName']").val()=="")
             {obj.innerText="图书名称必须填写";return;}
         if($("input[name='bookProflie.author']").val()=="")
@@ -237,14 +250,14 @@
             {obj.innerText="图书版次信息不全";return;}
         if($("input[name='bookProflie.spage']").val()=="")
             {obj.innerText="图书页数必须填写";return;}
-        if($("input[name='bookProflie.buyCredit']").val()=="")
-            {obj.innerText="图书页数必须填写";return;}
-        if($("input[name='bookProflie.canBorrow']").val()=="")
+        if($("input[name='bookProflie.canExchange']:checked").val()=='')
+        	{obj.innerText="请确认是否可交换";return;}
+        if($("input[name='bookProflie.canExchange']:checked").val()=='1'&&$("input[name='bookProfile.buyCredit']").val()=='')
+        	{obj.innerText="请输入购买所需积分";return;}
+        if($("input[name='bookProflie.canBorrow']:checked").val()=="")
             {obj.innerText="请确认是否可借阅";return;}
-        if($("input[name='bookProflie.canBorrow']").val()=='1'&&$("input[name='bookProflie.borrowCredit']").val()=='')
+        if($("input[name='bookProflie.canBorrow']:checked").val()=='1'&&$("input[name='bookProflie.borrowCredit']").val()=='')
             {obj.innerText="请输入借阅所需积分";return;}
-        if($("input[name='bookProflie.canExchange']").val()=='')
-            {obj.innerText="请确认是否可交换";return;}
         if($("#introduction").val()=='')
             {obj.innerText="请输入简介";return;}
         obj.innerText="提交中...";
