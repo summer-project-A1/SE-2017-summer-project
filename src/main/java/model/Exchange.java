@@ -5,22 +5,22 @@ import java.util.Date;
 import common.constants.ExchangeStatus;
 
 public class Exchange {             // 准备交换但尚未被发布者确认的图书交换记录
-    private int exchangeID;
-    private int userID1;     //申请交换人的id
-    private int userID2;     //被申请人的id
-    private int wantedID;           // 希望交换得到的书
-    private int hadID;              // 交换发起者拥有的书
+    private Integer exchangeID;
+    private Integer userID1;     //申请交换人的id
+    private Integer userID2;     //被申请人的id
+    private Integer wantedBookID;           // 希望交换得到的书
+    private Integer hadBookID;              // 交换发起者拥有的书
     private ExchangeStatus status;
     private Date applyDate;   //申请人申请时间
     private Date responseDate;  //被申请人回应时间
     private String address1;    // 申请人收货地址
     private String address2;    // 被申请人收货地址
-    private Date fh_date1;    //申请人发货时间
-    private Date fh_date2;    //被申请人发货时间
+    private Date fhDate1;    //申请人发货时间
+    private Date fhDate2;    //被申请人发货时间
     private String trackingNo1;    //申请人发货时快递单号
     private String trackingNo2;   //被申请者发货时快递单号 
-    private Date sh_date1;    //申请人收货时间
-    private Date sh_date2;    //被申请者收货时间
+    private Date shDate1;    //申请人收货时间
+    private Date shDate2;    //被申请者收货时间
     private Integer comment1;     //申请人对被申请者的信用评价
     private Integer comment2;     //被申请人对申请人的信用评价
     
@@ -29,43 +29,43 @@ public class Exchange {             // 准备交换但尚未被发布者确认�
 		super();
 		this.userID1 = userID1;
 		this.userID2 = userID2;
-		this.wantedID = wantedID;
-		this.hadID = hadID;
+		this.wantedBookID = wantedID;
+		this.hadBookID = hadID;
 		this.status = status;
 		this.applyDate = date;
 		this.address1 = address1;
 	}
     
-	public int getExchangeID() {
+	public Integer getExchangeID() {
 		return exchangeID;
 	}
 	
 	public void setExchangeID(int exchangeID) {
 		this.exchangeID = exchangeID;
 	}
-	public int getUserID1() {
+	public Integer getUserID1() {
 		return userID1;
 	}
-	public void setUserID1(int userID1) {
+	public void setUserID1(Integer userID1) {
 		this.userID1 = userID1;
 	}
-	public int getUserID2() {
+	public Integer getUserID2() {
 		return userID2;
 	}
-	public void setUserID2(int userID2) {
+	public void setUserID2(Integer userID2) {
 		this.userID2 = userID2;
 	}
-	public int getWantedID() {
-		return wantedID;
+	public Integer getWantedBookID() {
+		return wantedBookID;
 	}
-	public void setWantedID(int wantedID) {
-		this.wantedID = wantedID;
+	public void setWantedBookID(Integer wantedBookID) {
+		this.wantedBookID = wantedBookID;
 	}
-	public int getHadID() {
-		return hadID;
+	public Integer getHadBookID() {
+		return hadBookID;
 	}
-	public void setHadID(int hadID) {
-		this.hadID = hadID;
+	public void setHadBookID(Integer hadBookID) {
+		this.hadBookID = hadBookID;
 	}
 	public ExchangeStatus getStatus() {
 		return status;
@@ -81,29 +81,29 @@ public class Exchange {             // 准备交换但尚未被发布者确认�
 	public void setApplyDate(Date applyDate) {
 		this.applyDate = applyDate;
 	}
-	public Date getFh_date1() {
-		return fh_date1;
+	public Date getFhDate1() {
+		return fhDate1;
 	}
-	public void setFh_date1(Date fh_date1) {
-		this.fh_date1 = fh_date1;
+	public void setFhDate1(Date fhDate1) {
+		this.fhDate1 = fhDate1;
 	}
-	public Date getFh_date2() {
-		return fh_date2;
+	public Date getFhDate2() {
+		return fhDate2;
 	}
-	public void setFh_date2(Date fh_date2) {
-		this.fh_date2 = fh_date2;
+	public void setFhDate2(Date fhDate2) {
+		this.fhDate2 = fhDate2;
 	}
-	public Date getSh_date1() {
-		return sh_date1;
+	public Date getShDate1() {
+		return shDate1;
 	}
-	public void setSh_date1(Date sh_date1) {
-		this.sh_date1 = sh_date1;
+	public void setShDate1(Date shDate1) {
+		this.shDate1 = shDate1;
 	}
-	public Date getSh_date2() {
-		return sh_date2;
+	public Date getShDate2() {
+		return shDate2;
 	}
-	public void setSh_date2(Date sh_date2) {
-		this.sh_date2 = sh_date2;
+	public void setShDate2(Date shDate2) {
+		this.shDate2 = shDate2;
 	}
 	public Integer getComment1() {
 		return comment1;

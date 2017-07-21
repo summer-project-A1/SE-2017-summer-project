@@ -1,6 +1,9 @@
 package model;
 
 import common.constants.UserRole;
+import common.constants.UserStatus;
+
+import java.util.Date;
 
 public class User {
     private int userID;
@@ -16,6 +19,9 @@ public class User {
     private String address;
     private String profileID;         // 用户的详细信息在monggodb中的id
     private String imageID;           // 用户的头像在monggodb中的图片
+    private UserStatus status;
+    private String activeCode;
+    private Date due;
     
     /* ======================================= */
     
@@ -97,5 +103,28 @@ public class User {
     public void setImageID(String imageID) {
         this.imageID = imageID;
     }
-    
+
+    public String getActiveCode() {
+        return activeCode;
+    }
+
+    public void setActiveCode(String activeCode) {
+        this.activeCode = activeCode;
+    }
+
+    public Date getDue() {
+        return due;
+    }
+
+    public void setDue(Date due) {
+        this.due = due;
+    }
+
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
 }

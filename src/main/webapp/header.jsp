@@ -95,7 +95,7 @@
                             <label><a href="<%=path%>/borrowAction/showMyBorrow">我的借阅</a></label><br>
                             <label><a href="myexchange.jsp">我的交换</a></label><br>
                             <label><a href="<%=path%>/orderAction/showMyOrder">我的购买</a></label><br>
-                            <label><a href="myreservation">我的预约</a></label><br>
+                            <label><a href="<%=path%>/reserveAction/showMyReservation">我的预约</a></label><br>
                             <label><a href="<%=path%>/authAction/logout">退出登录</a></label><br>
                         </form>
                     </div>

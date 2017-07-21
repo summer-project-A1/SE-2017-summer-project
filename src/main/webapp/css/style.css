@@ -60,6 +60,7 @@ nav.navbar.navbar-default {
     float: left;
     width: 82%;
 }
+
 /*--navigation--*/
 .navbar-default .navbar-nav > li > a {
     color: #fff;
@@ -3512,4 +3513,10 @@ ul.qty li p {
         width: 97%;
         bottom: 17%;
     }
+}
+
+/*缩略图样式*/
+.img-thumbnail {
+    height: 180px;
+    border: none;
 }

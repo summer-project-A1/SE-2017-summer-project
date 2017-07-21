@@ -30,10 +30,15 @@
                 <param name="actionName">index</param>
                 <param name="namespace">/</param>
             </result>
+            <result name="activateSuccess" type="redirectAction">
+                <param name="actionName">index</param>
+                <param name="namespace">/</param>
+            </result>
+            <result name="activateFail">/howToShare.jsp</result>
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
-            <allowed-methods>signin,logout,login,register,checkEmailAvailable
+            <allowed-methods>signin,logout,login,register,checkEmailAvailable,activate
             </allowed-methods>
         </action>
     </package>
@@ -131,8 +136,11 @@
         <action name="*" class="action.BookAction" method="{1}">
             <result name="showBooks">/products.jsp</result>
             <result name="showBookProfile">/productDetail.jsp</result>
+            <result name="ajax" type="json">
+                <param name="root">params</param>
+            </result>
             <allowed-methods>
-                showAllBooks,showBooksByCategory1Name,showBooksByCategory2Name,showUserReleasedBooks,showBookProfile
+                showAllBooks,showBooksByCategory1Name,showBooksByCategory2Name,showUserReleasedBooks,showBookProfile,getInfoByIsbn
             </allowed-methods>
         </action>
     </package>
@@ -199,35 +207,9 @@
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
+            <result name="showMyReservation">/myReservation.jsp</result>
             <allowed-methods>
-                reserveBook,cancelReservation
-            </allowed-methods>
-        </action>
-    </package>
-
-
-    <package name="exchangeAction" extends="struts-default,json-default" namespace="/exchangeAction">
-        <interceptors>
-            <interceptor name="isLogin" class="action.interceptor.IsLoginInterceptor"/>
-            <interceptor-stack name="loginAuthCheck">
-                <interceptor-ref name="isLogin"/>
-                <interceptor-ref name="defaultStack"/>
-            </interceptor-stack>
-        </interceptors>
-
-        <default-interceptor-ref name="loginAuthCheck"/>
-
-        <global-results>
-            <result name="login" type="redirect">/signin.jsp</result>
-        </global-results>
-        <action name="*" class="action.ExchangeAction" method="{1}">
-            <result name="showExchangeApply">/exchangeApply.jsp</result>
-            <result name="ajax" type="json">
-                <param name="root">params</param>
-            </result>
-            <result name="showMyExchange">/myExchange.jsp</result>
-            <allowed-methods>
-                prepareExchange,createExchangeOrder,showMyExchange
+                reserveBook,cancelReservation,showMyReservation
             </allowed-methods>
         </action>
     </package>

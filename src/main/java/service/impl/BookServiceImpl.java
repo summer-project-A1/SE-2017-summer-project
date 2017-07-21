@@ -18,6 +18,11 @@ import model.Book;
 import model.BookProfile;
 import model.BookRelease;
 import model.Category1;
+import net.sf.json.JSONObject;
+import org.apache.http.*;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import service.BookService;
 
 public class BookServiceImpl extends BaseServiceImpl implements BookService {
@@ -289,5 +294,41 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         }
         List<Book> result = this.bookDao.searchByCondition(conditions, part, pageSize);
         return result;
+    }
+
+    @Override
+    public Map getInfoByIsbn(String isbn){
+        String url = "https://api.douban.com/v2/book/isbn/"+isbn;
+        Map returnMap = new HashMap();
+        String result = "{}";
+        DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
+        try {
+            HttpGet httpGet = new HttpGet(url);
+            HttpResponse response = defaultHttpClient.execute(httpGet);
+            HttpEntity httpEntity = response.getEntity();
+            result = EntityUtils.toString(httpEntity);
+            JSONObject json = JSONObject.fromObject(result);
+
+            String[] fieldList = {"author","publisher","title","summary","pages"};
+            String[] resultList = {"","","","",""};
+            for(int i=0;i < fieldList.length;i++){
+                String parse = json.get(fieldList[i]).toString();
+                parse = parse.replace("[","");
+                parse = parse.replace("]","");
+                parse = parse.replace("//",",");
+                parse = parse.replaceAll("\"","");
+                resultList[i] = parse;
+                //System.out.println(resultList[i]);
+                returnMap.put(fieldList[i],resultList[i]);
+            }
+            returnMap.put("success",true);
+            return returnMap;
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally{
+            defaultHttpClient.getConnectionManager().shutdown();
+        }
+        returnMap.put("success",false);
+        return returnMap;
     }
 }

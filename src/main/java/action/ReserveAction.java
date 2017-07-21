@@ -1,10 +1,13 @@
 package action;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import model.ReservationProfile;
 import service.ReserveService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,6 +20,7 @@ public class ReserveAction extends ActionSupport{
     private Map params;
 
     private int bookID;
+    private int reserveID;
 
 
     /* =========================================================== */
@@ -45,6 +49,14 @@ public class ReserveAction extends ActionSupport{
         this.bookID = bookID;
     }
 
+    public int getReserveID() {
+        return reserveID;
+    }
+
+    public void setReserveID(int reserveID) {
+        this.reserveID = reserveID;
+    }
+
     /* =========================================================== */
 
     public String reserveBook() {
@@ -55,14 +67,18 @@ public class ReserveAction extends ActionSupport{
     }
 
     public String cancelReservation() {
-        this.params = new HashMap();
         params = new HashMap();
         //return value: true, false
-        params.put("result",this.reserveService.cancelReservation(bookID));
-        params.put("success", true);
-
+        params.put("success",this.reserveService.cancelReservation(this.reserveID));
         return "ajax";
     }
+
+    public String showMyReservation(){
+        List<ReservationProfile> reservationProfileList = this.reserveService.showReservation();
+        ActionContext.getContext().put("reservationList",reservationProfileList);
+        return "showMyReservation";
+    }
+
 
 
 }

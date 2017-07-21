@@ -21,6 +21,8 @@ import model.Reserve;
 import service.OrderService;
 
 public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
+    private int reserveDay;
+    
     private UserDao userDao;
     private BookDao bookDao;
     private BookReleaseDao bookReleaseDao; 
@@ -29,6 +31,14 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
     
     /* ========================================================= */
     
+    public int getReserveDay() {
+        return reserveDay;
+    }
+
+    public void setReserveDay(int reserveDay) {
+        this.reserveDay = reserveDay;
+    }
+
     public UserDao getUserDao() {
         return userDao;
     }
@@ -295,6 +305,13 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
                         book.setReserved(book.getReserved()-1);
                         this.reserveDao.delete(firstReserve);
                     }
+                    // 为下一个预约者设定预约过期时间（当前时间向后加this.reserveDay天）
+                    Reserve newFirstReserve = this.reserveDao.getFirstReserveByBookID(book.getBookID());
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.add(Calendar.DATE, this.reserveDay);
+                    Date due = calendar.getTime();
+                    newFirstReserve.setDue(due);
+                    this.reserveDao.update(newFirstReserve);
                 }
                 seller.setCredit(seller.getCredit() + order.getBuyCredit());
                 this.userDao.update(seller);

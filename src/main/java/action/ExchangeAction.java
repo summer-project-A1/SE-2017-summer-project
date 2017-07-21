@@ -2,10 +2,13 @@ package action;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+
+import model.ExchangeProfile;
 import service.ExchangeService;
 import service.UserService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,7 +19,7 @@ public class ExchangeAction extends ActionSupport{
     private UserService userService;
     private int wantedBookID;
     private int hadBookID;
-    private String address;  //ÉêÇë½»»»ÕßµØÖ·
+    private String address;  //ï¿½ï¿½ï¿½ë½»ï¿½ï¿½ï¿½ßµï¿½Ö·
     private Map params;
 
 
@@ -76,13 +79,16 @@ public class ExchangeAction extends ActionSupport{
     }
 
     public String showMyExchange(){
-        /*
-        this.params = this.borrowService.showMyBorrow();
-        List borrowBook = (List)params.get("borrowBook");
-        List borrowHistoryBook = (List)params.get("borrowHistoryBook");
-        ActionContext.getContext().put("borrowBook",borrowBook);
-        ActionContext.getContext().put("borrowHistoryBook",borrowHistoryBook);
-        */
+        Map result = this.exchangeService.showMyExchange();
+        List<ExchangeProfile> initiativeExchange = (List<ExchangeProfile>) result.get("initiativeExchange");
+        List<ExchangeProfile> initiativeExchangeHistory = (List<ExchangeProfile>) result.get("initiativeExchangeHistory");
+        List<ExchangeProfile> passiveExchange = (List<ExchangeProfile>) result.get("passiveExchange");
+        List<ExchangeProfile> passiveExchangeHistory = (List<ExchangeProfile>) result.get("passiveExchangeHistory");
+
+        ActionContext.getContext().put("initiativeExchange",initiativeExchange);
+        ActionContext.getContext().put("initiativeExchangeHistory",initiativeExchangeHistory);
+        ActionContext.getContext().put("passiveExchange",passiveExchange);
+        ActionContext.getContext().put("passiveExchangeHistory",passiveExchangeHistory);
         return "showMyExchange";
     }
 
