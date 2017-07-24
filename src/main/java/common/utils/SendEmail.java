@@ -58,7 +58,7 @@ public class SendEmail {
      * @param receiveUser
      *            收件人地址
      */
-    public void send(String sendHtml,String receiveUser) {
+    public void send(String sendHtml,String emailSubject,String receiveUser) {
         try {
 
 
@@ -70,7 +70,7 @@ public class SendEmail {
             message.setRecipient(Message.RecipientType.TO, to);
             // 邮件标题
 
-            String mail_subject = "注册验证";
+            String mail_subject = emailSubject;
 
             message.setSentDate(new Date()); // 设置邮件发送日期
 
