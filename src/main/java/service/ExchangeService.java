@@ -1,6 +1,20 @@
 package service;
 
-public interface ExchangeService extends BaseService {
-    public Boolean applyExchange(int userID, int bookID);
-    public Boolean confirmExchange(int exchangeID);
+import java.util.Map;
+
+public interface ExchangeService extends BaseService
+{
+	public Map prepareExchange(int bookID);
+    public Boolean applyExchange(int bookID, int hadID, String address);
+    public Boolean cancelExchange(int exchangeID);
+    public Boolean agreeExchange(int exchangeID,String address);
+    public Boolean rejectExchange(int exchangeID);
+    public Boolean fh1(int exchangeID,String trackingNo);
+    public Boolean fh2(int exchangeID,String trackingNo);
+    public Boolean sh1(int exchangeID);
+    public Boolean sh2(int exchangeID);
+    public Boolean comment1(int exchangeID, int comment);
+    public Boolean comment2(int exchangeID, int comment);
+    
+    public Map showMyExchange();
 }

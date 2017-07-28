@@ -52,9 +52,7 @@
     }
 
 }
-
-
-</style>
+    </style>
 
 </head>
 <body>
@@ -195,12 +193,15 @@
                 </div>
                 <div class="cart-item-info">
                     <h3>
-                        <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">书名：<s:property value="bookName"/></a><br>
+                        <a href="<%=path%>/bookAction/showBookProfile?bookID=<s:property value="bookID"/>">
+                            书名：<s:property value="bookName"/></a><br>
                         <span>ISBN: <s:property value="isbn"/> </span>
                     </h3>
                     <ul class="qty">
                         <li><p>作者：<s:property value="author"/> </p></li>
                         <li><p>分类：<s:property value="category1"/></p></li>
+                        <li><p>标签：<s:property value="category2"/></p></li>
+
                     </ul>
                     <div class="delivery">
                     	<s:if test="#action=='borrowCheckout'">
