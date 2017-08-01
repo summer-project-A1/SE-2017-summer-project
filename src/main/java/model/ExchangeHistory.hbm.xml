@@ -9,8 +9,8 @@
         </id>
         <property name="userID1" column="user1_id" />
         <property name="userID2" column="user2_id" />
-        <property name="wantedID" column="wanted_id" />
-        <property name="hadID" column="had_id" />
+        <property name="wantedBookID" column="wanted_id" />
+        <property name="hadBookID" column="had_id" />
         <property name="status" column="status">
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">common.constants.ExchangeStatus</param>
