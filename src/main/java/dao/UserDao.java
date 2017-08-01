@@ -16,7 +16,10 @@ public interface UserDao extends BaseDao {
     public Map getUserProfileMapInMongo(int userID);
     public String saveUserProfileInMongo(Map userProfile);
     public boolean updateUserProfileInMongo(User user, Map userProfile);
+    public boolean deleteUserProfileInMongo(String profileID);
+    public boolean deleteUser(User user);
     public List<User> getAllUsers();
+    public List<User> getAllTimeoutUnactiveUser();
     
     public FullAddress getDeliveryAddressByID(int userID, String fullAddressID);
     public FullAddress getDefaultDeliveryAddress(int userID);
