@@ -278,13 +278,20 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         return false;
     }
 
+    /* ============================================================ */
+    
     @Override
     public void deleteAllTimeoutUnactiveUser() {
         // 删除所有超时未激活的用户，固定时间执行一次
         List<User> users = this.userDao.getAllTimeoutUnactiveUser();
         if(users != null) {
             for(User user : users) {
-                this.userDao.deleteUser(user);
+                try {
+                    this.userDao.deleteUser(user);
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
