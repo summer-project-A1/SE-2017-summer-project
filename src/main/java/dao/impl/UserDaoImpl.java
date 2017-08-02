@@ -10,8 +10,11 @@ import org.bson.types.ObjectId;
 import org.hibernate.query.Query;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import com.mongodb.gridfs.GridFS;
+import com.mongodb.gridfs.GridFSDBFile;
 
 import common.constants.UserStatus;
 import model.FullAddress;
@@ -174,18 +177,31 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     
     @Override
     public boolean deleteUser(User user) {
-        // 需要删除mongodb中的user_profile、delivery_address，再删除mysql中的信息
+        // 需要删除mongodb中的user_profile、delivery_address、image，再删除mysql中的信息
         if(user == null) {
             return false;
         }
         
         DBCollection profileCollection = getMongoDb().getCollection("user_profile");
-        DBObject profileQuery=new BasicDBObject("_id", new ObjectId(user.getProfileID()));
-        profileCollection.remove(profileQuery);
+        if(user.getProfileID() != null && !user.getProfileID().equals("")) {
+            DBObject profileQuery=new BasicDBObject("_id", new ObjectId(user.getProfileID()));
+            profileCollection.remove(profileQuery);
+        }
         
         DBCollection addressCollection = getMongoDb().getCollection("delivery_address");
         DBObject addressQuery=new BasicDBObject("userID", user.getUserID());
         addressCollection.remove(addressQuery);
+        
+        DB db = this.getMongoDb();
+        GridFS gridFS = new GridFS(db);
+        if(user.getImageID() != null && !user.getImageID().equals("")) {
+            DBObject query=new BasicDBObject("_id", new ObjectId(user.getImageID()));
+            GridFSDBFile gridFSDBFile = gridFS.findOne(query);
+            if(gridFSDBFile != null) {
+                gridFS.remove(gridFSDBFile);
+                return true;
+            }
+        }
         
         this.delete(user);
         

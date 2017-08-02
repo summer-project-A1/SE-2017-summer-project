@@ -68,8 +68,13 @@ public class ImageDaoImpl extends BaseDaoImpl implements ImageDao {
         GridFS gridFS = new GridFS(db);
         DBObject query=new BasicDBObject("_id", new ObjectId(id));
         GridFSDBFile gridFSDBFile = gridFS.findOne(query);
-        gridFS.remove(gridFSDBFile);
-        return true;
+        if(gridFSDBFile != null) {
+            gridFS.remove(gridFSDBFile);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     
 }
