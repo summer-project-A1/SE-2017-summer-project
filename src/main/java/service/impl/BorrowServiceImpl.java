@@ -9,6 +9,7 @@ import java.util.Map;
 
 import common.constants.BookStatus;
 import common.constants.BorrowStatus;
+import common.utils.SendEmail;
 import dao.*;
 import model.Book;
 import model.BookRelease;
@@ -497,17 +498,7 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         borrow.setYhDate(YhDate);   //应还时间
         borrow.setStatus(BorrowStatus.BUYER_NOT_RETURNED);
         this.borrowDao.update(borrow);
-        int bookID = borrow.getBookID();
-        Book book = this.bookDao.getBookByID(bookID);
-        if(book.getReserved()>0) {  // 如果书籍有人预约
-            // 为下一个预约者设定预约过期时间（当前时间向后加this.reserveDay天）
-            Reserve newFirstReserve = this.reserveDao.getFirstReserveByBookID(book.getBookID());
-            Calendar calendar2 = Calendar.getInstance();
-            calendar2.add(Calendar.DATE, this.reserveDay);
-            Date due = calendar2.getTime();
-            newFirstReserve.setDue(due);
-            this.reserveDao.update(newFirstReserve);
-        }
+
         returnMap.put("success",true);
         returnMap.put("yhDate",YhDate);
         returnMap.put("borrowDate",borrowDate);
@@ -623,6 +614,13 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         borrow.setFhDate(fhDate);
         borrow.setStatus(BorrowStatus.SELLER_SHIPPED);
         this.borrowDao.update(borrow);
+
+        User buyer = this.userDao.getUserById(borrow.getUserID1());
+        Book book = this.bookDao.getBookByID(borrow.getBookID());
+        SendEmail sendEmail = new SendEmail();
+        String emailContent = "您借阅的图书:"+book.getBookName()+"已发货，发货时间："+borrow.getFhDate();
+        String emailSubject = "发货通知";
+        sendEmail.send(emailContent,emailSubject,buyer.getEmail());
         returnMap.put("success",true);
         returnMap.put("fhDate",fhDate);
         return returnMap;
@@ -649,6 +647,22 @@ public class BorrowServiceImpl extends BaseServiceImpl implements BorrowService 
         Book book = this.bookDao.getBookByID(borrow.getBookID());
         book.setStatus(BookStatus.IDLE);    //卖家收货后，修改图书信息为空闲
         this.bookDao.update(book);
+
+        if(book.getReserved()>0) {  // 如果书籍有人预约
+            // 为下一个预约者设定预约过期时间（当前时间向后加this.reserveDay天）
+            Reserve newFirstReserve = this.reserveDao.getFirstReserveByBookID(book.getBookID());
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.add(Calendar.DATE, this.reserveDay);
+            Date due = calendar2.getTime();
+            newFirstReserve.setDue(due);
+            this.reserveDao.update(newFirstReserve);
+            User reserveUser = this.userDao.getUserById(newFirstReserve.getUserID());
+            SendEmail sendEmail = new SendEmail();
+            String emailContent = "您预约的图书:"+book.getBookName()+"已到货，请速去借阅，若超过"+due+"将取消预约！";
+            String emailSubject = "到货通知";
+            sendEmail.send(emailContent,emailSubject,reserveUser.getEmail());
+
+        }
 
         BorrowHistory borrowHistory = new BorrowHistory();
         borrowHistory.setBhID(borrow.getBorrowID());

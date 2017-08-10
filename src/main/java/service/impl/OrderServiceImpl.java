@@ -5,6 +5,7 @@ import java.util.*;
 import common.constants.BookStatus;
 import common.constants.BorrowStatus;
 import common.constants.OrderStatus;
+import common.utils.SendEmail;
 import dao.BookDao;
 import dao.BookReleaseDao;
 import dao.OrderDao;
@@ -432,6 +433,13 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
         order.setTrackingNo(trackingNo);
         order.setStatus(OrderStatus.SHIPPED);
         this.orderDao.update(order);
+
+        User buyer = this.userDao.getUserById(order.getBuyerID());
+        Book book = this.bookDao.getBookByID(order.getBookID());
+        SendEmail sendEmail = new SendEmail();
+        String emailContent = "您购买的图书:"+book.getBookName()+"已发货，发货时间："+order.getFhDate();
+        String emailSubject = "发货通知";
+        sendEmail.send(emailContent,emailSubject,buyer.getEmail());
         returnMap.put("success",true);
         returnMap.put("fhDate",fhDate);
         return returnMap;

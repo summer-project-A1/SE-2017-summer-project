@@ -99,13 +99,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         newUser.setImageID("");
 
         newUser.setStatus(UserStatus.UNACTIVATED);  //设置未激活
-        newUser.setActiveCode(MD5Util.encoderByMd5(email)); //设置激活码
         Date currentDate = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
         calendar.add(Calendar.DATE, 1);
         Date due = calendar.getTime();
         newUser.setDue(due);  //设置激活due
+        newUser.setActiveCode(MD5Util.encoderByMd5(email+currentDate)); //设置激活码
+
         
         this.userDao.save(newUser);
 
@@ -122,7 +123,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         sb.append("</a>");
 
         SendEmail sendEmail = new SendEmail();
-        sendEmail.send(sb.toString(),email);
+        sendEmail.send(sb.toString(),"注册验证",email);
         //setLoginedUserInfo(newUser);
         return true;
     }

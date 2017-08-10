@@ -165,10 +165,10 @@
                     <p>此书已被交换或购买</p>
                 </s:elseif>
                 <s:elseif test="#bookProfile.canBorrow==true && #bookProfile.canExchange==true">
-                    <p>此书可以借阅，可以交换，可以购买</p>
+                    <p>此书可以借阅，可以交换，可以购买，当前预约人数<s:property value="#bookProfile.reserved"/>人</p>
                 </s:elseif>
                 <s:elseif test="#bookProfile.canBorrow==true && #bookProfile.canExchange==false">
-                    <p>此书可以借阅</p>
+                    <p>此书可以借阅，当前预约人数<s:property value="#bookProfile.reserved"/>人</p>
                 </s:elseif>
                 <s:elseif test="#bookProfile.canBorrow==false && #bookProfile.canExchange==true">
                     <p>此书可以交换，可以购买</p>
