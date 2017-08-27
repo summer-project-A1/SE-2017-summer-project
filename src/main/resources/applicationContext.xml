@@ -166,6 +166,10 @@
     <bean id="imageService" class="service.impl.ImageServiceImpl">
         <property name="imageDao" ref="imageDao" />
     </bean>
+    <bean id="adminService" class="service.impl.AdminServiceImlp">
+        <property name="userDao" ref="userDao"/>
+        <property name="defaultPassword" value="000000"/>
+    </bean>
     
     <!-- ============================================================= -->
     
@@ -207,5 +211,8 @@
     </bean>
     <bean id="reserveAction" class="action.ReserveAction">
         <property name="reserveService" ref="reserveService" />
+    </bean>
+    <bean id="adminAction" class="action.AdminAction">
+        <property name="adminService" ref="adminService"/>
     </bean>
 </beans>
