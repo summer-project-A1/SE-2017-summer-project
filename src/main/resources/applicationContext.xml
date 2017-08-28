@@ -167,7 +167,7 @@
         <property name="exchangeDao" ref="exchangeDao" />
         <property name="exchangeHistoryDao" ref="exchangeHistoryDao" />
     </bean>
-    <bean id="adminService" class="service.impl.AdminServiceImlp">
+    <bean id="adminService" class="service.impl.AdminServiceImpl">
         <property name="userDao" ref="userDao"/>
         <property name="defaultPassword" value="000000"/>
     </bean>

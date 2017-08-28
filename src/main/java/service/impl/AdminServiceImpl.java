@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AdminServiceImlp extends BaseServiceImpl implements AdminService {
+public class AdminServiceImpl extends BaseServiceImpl implements AdminService {
     private UserDao userDao;
     private String defaultPassword;
 
