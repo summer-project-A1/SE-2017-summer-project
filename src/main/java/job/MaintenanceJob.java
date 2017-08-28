@@ -26,6 +26,7 @@ public class MaintenanceJob extends QuartzJobBean {
         } catch (SchedulerException e) {     
             e.printStackTrace();
         }
+        //userService.deleteAllTimeoutUnactiveUser();
         userService.checkEmailAvailable("email");  
         System.out.println();
     }
