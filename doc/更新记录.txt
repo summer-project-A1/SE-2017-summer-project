@@ -1,0 +1,26 @@
+2017/8/5 by hz 合并交换部分，添加定时任务框架
+
+pom.xml：导入quartz相关的包，其artifactId为：
+    -- spring-context-support
+    -- quartz
+    -- quartz-jobs(此包可能不是必须)
+    
+applicationContext.xml：
+    --添加quartz相关配置
+
+src/main/java/job包：
+    --定时任务相关的类
+
+临时去掉bookRelease.jsp中对上传文件的验证（$().fileinput{}中的allowedFileTypes属性）（上传图片始终提示类型不正确）
+
+UserDao.java和UserDaoImpl.java:
+    --添加函数 public List<User> getAllTimeoutUnactiveUser(); 获得所有超时未激活的用户
+    --添加函数public boolean deleteUserProfileInMongo(String profileID);删除mongodb中的userProfile
+    --添加函数public boolean deleteUser(User user);删除 完整 的用户信息（mysql中的基本信息；mongodb中的user_profile；mongodb中的delivery_address）
+    
+UserService.java和UserServiceImpl.java：添加定时任务相关的函数
+    --添加函数public void deleteAllTimeoutUnactiveUser();删除所有超时未激活的用户
+    --添加函数public void deleteTimeoutUnactiveUser(Integer userID);如果该userID用户超时未激活，则删除之
+
+    
+================================================================================

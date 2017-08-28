@@ -213,4 +213,38 @@
         <property name="exchangeService" ref="exchangeService" />
         <property name="userService" ref="userService"/>
     </bean>
+    
+    <!-- ========================================================== -->
+    
+    <!-- quartz job -->
+    <bean id="maintenanceJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">    
+        <property name="jobClass" value="job.MaintenanceJob"></property>
+        <property name="durability" value="true" />  
+    </bean>
+    <!-- ======================== 调度触发器 ======================== -->  
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail" ref="maintenanceJobDetail"></property>  
+        <property name="cronExpression" value="0/5 * * * * ?"></property>  
+    </bean>
+    <!-- ======================== 调度工厂 ======================== -->  
+    <bean id="springJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="schedulerContextAsMap">      
+            <map>      
+                <!-- spring 管理的service需要放到这里，才能够注入成功 -->      
+                <description>schedulerContextAsMap</description>      
+                <entry key="userService" value-ref="userService"/>     
+            </map>      
+        </property>
+        <property name="jobDetails">  
+            <list>  
+                <ref bean="maintenanceJobDetail" />
+            </list>  
+        </property>
+        <property name="triggers">  
+            <list>  
+                <ref bean="cronTrigger"/>  
+            </list>  
+        </property>  
+    </bean>    
+    
 </beans>

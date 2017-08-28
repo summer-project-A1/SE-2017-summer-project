@@ -216,23 +216,23 @@
         $("#exchangeCredit").hide();
     });
     $("input[name='bookProfile.coverPicture']").fileinput({
-    	showUpload : false,
-    	allowedFileTypes : ['jpg','jpeg','png','gif'],
-    	browseLabel : "浏览",
-    	language : 'zh'
+        showUpload : false,
+        //allowedFileTypes : ['jpg','jpeg','png','gif'],
+        browseLabel : "浏览",
+        language : 'zh'
     });
     $("input[name='bookProfile.otherPicture']").fileinput({
-    	showUpload : false,
-    	allowedFileTypes : ['jpg','jpeg','png','gif'],
-    	browseLabel : "浏览",
-    	language : 'zh'
+        showUpload : false,
+        //allowedFileTypes : ['jpg','jpeg','png','gif'],
+        browseLabel : "浏览",
+        language : 'zh'
     });
     $("#commit").click(function(){
         var obj=$('#bookinfo').find('#warning');
         if($("input[name='bookProflie.coverPicture']").val()=="")
             {obj.innerText="图书封面必须上传";return;}
         if($("input[name='bookProflie.otherPicture']").val()=="")
-        	{obj.innerText="必须上传";return;}
+            {obj.innerText="必须上传";return;}
         if($("input[name='bookProflie.bookName']").val()=="")
             {obj.innerText="图书名称必须填写";return;}
         if($("input[name='bookProflie.author']").val()=="")
@@ -251,9 +251,9 @@
         if($("input[name='bookProflie.spage']").val()=="")
             {obj.innerText="图书页数必须填写";return;}
         if($("input[name='bookProflie.canExchange']:checked").val()=='')
-        	{obj.innerText="请确认是否可交换";return;}
+            {obj.innerText="请确认是否可交换";return;}
         if($("input[name='bookProflie.canExchange']:checked").val()=='1'&&$("input[name='bookProfile.buyCredit']").val()=='')
-        	{obj.innerText="请输入购买所需积分";return;}
+            {obj.innerText="请输入购买所需积分";return;}
         if($("input[name='bookProflie.canBorrow']:checked").val()=="")
             {obj.innerText="请确认是否可借阅";return;}
         if($("input[name='bookProflie.canBorrow']:checked").val()=='1'&&$("input[name='bookProflie.borrowCredit']").val()=='')
@@ -267,3 +267,4 @@
     <jsp:include page="footer.jsp"/>
 </body>
 </html>
+
