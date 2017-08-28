@@ -167,6 +167,10 @@
         <property name="exchangeDao" ref="exchangeDao" />
         <property name="exchangeHistoryDao" ref="exchangeHistoryDao" />
     </bean>
+    <bean id="adminService" class="service.impl.AdminServiceImlp">
+        <property name="userDao" ref="userDao"/>
+        <property name="defaultPassword" value="000000"/>
+    </bean>
     
     <!-- ============================================================= -->
     
@@ -213,6 +217,9 @@
         <property name="exchangeService" ref="exchangeService" />
         <property name="userService" ref="userService"/>
     </bean>
+    <bean id="adminAction" class="action.AdminAction">
+        <property name="adminService" ref="adminService"/>
+    </bean>
     
     <!-- ========================================================== -->
     
@@ -226,11 +233,11 @@
         <property name="jobDetail" ref="maintenanceJobDetail"></property>  
         <property name="cronExpression" value="0/5 * * * * ?"></property>  
     </bean>
-    <!-- ======================== 调度工厂 ======================== -->  
+    <!-- ======================== 调度工厂 ======================== -->
+<!--   
     <bean id="springJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="schedulerContextAsMap">      
-            <map>      
-                <!-- spring 管理的service需要放到这里，才能够注入成功 -->      
+            <map>  
                 <description>schedulerContextAsMap</description>      
                 <entry key="userService" value-ref="userService"/>     
             </map>      
@@ -245,6 +252,7 @@
                 <ref bean="cronTrigger"/>  
             </list>  
         </property>  
-    </bean>    
+    </bean>
+-->
     
 </beans>

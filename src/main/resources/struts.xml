@@ -251,4 +251,28 @@
             </allowed-methods>
         </action>
     </package>
+
+    <package name="adminAction" extends="struts-default,json-default" namespace="/adminAction">
+        <action name="*" class="action.AdminAction" method="{1}">
+            <result name="showAllUserList">/adminUser.jsp</result>
+            <result name="deleteUser" type="redirectAction">
+                <param name="namespace">/adminAction</param>
+                <param name="actionName">showAllUserList</param>
+            </result>
+            <result name="resetPassword" type="redirectAction">
+                <param name="namespace">/adminAction</param>
+                <param name="actionName">showAllUserList</param>
+            </result>
+            <result name="addUser" type="redirectAction">
+                <param name="namespace">/adminAction</param>
+                <param name="actionName">showAllUserList</param>
+            </result>
+            <result name="ajax" type="json">
+                <param name="root">params</param>
+            </result>
+            <allowed-methods>
+                showAllUserList,deleteUser,resetPassword,addUser
+            </allowed-methods>
+        </action>
+    </package>
 </struts>

@@ -64,9 +64,16 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         userProfile.setCity(user.getCity());
         userProfile.setDistrict(user.getDistrict());
         userProfile.setAddress(user.getAddress());
-        userProfile.setName((String)userProfileInMongo.get("name"));
-        userProfile.setGender((String)userProfileInMongo.get("gender"));
-        userProfile.setMobile((String)userProfileInMongo.get("mobile"));
+        if(userProfileInMongo != null) {
+            userProfile.setName((String)userProfileInMongo.get("name"));
+            userProfile.setGender((String)userProfileInMongo.get("gender"));
+            userProfile.setMobile((String)userProfileInMongo.get("mobile"));
+        }
+        else {
+            userProfile.setName("");
+            userProfile.setGender("");
+            userProfile.setMobile("");
+        }
         List<FullAddress> deliveryAddress = new ArrayList<FullAddress>();
         List<Map> deliveryAddressListMap = (List<Map>)userProfileInMongo.get("deliveryAddress");
         if(deliveryAddressListMap != null) {
@@ -137,7 +144,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             
         DBObject query=new BasicDBObject("_id", new ObjectId(oldUser.getProfileID()));
         DBObject obj = collection.findOne(query);
-        userProfileInMongo = (obj!=null) ? (Map)obj : null;
+        userProfileInMongo = (obj!=null) ? (Map)obj : new HashMap();
             
         // 用户在mongodb中的属性
         userProfileInMongo.put("name", newUserProfile.getName());
