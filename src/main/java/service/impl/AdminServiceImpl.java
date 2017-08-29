@@ -38,7 +38,7 @@ public class AdminServiceImpl extends BaseServiceImpl implements AdminService {
     @Override
     public boolean deleteUser(int userID){
         User user = this.userDao.getUserById(userID);
-        return this.userDao.delete(user);
+        return this.userDao.deleteUser(user);
     }
 
     @Override
