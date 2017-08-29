@@ -1,6 +1,8 @@
-2017/8/29 by hz 合并交换部分（未测试），添加定时任务框架，合并管理员部分（ljw分支）
+2017/8/29 by hz
 
-pom.xml：导入quartz相关的包，其artifactId为：
+合并交换功能（未测试），添加定时任务框架（细节尚未实现），合并管理员功能（ljw分支）
+
+pom.xml：导入quartz相关的包用以实现定时任务，其artifactId为：
     -- spring-context-support
     -- quartz
     -- quartz-jobs(此包可能不是必须)
