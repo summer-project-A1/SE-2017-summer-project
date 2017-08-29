@@ -1,12 +1,4 @@
-2017/8/28 by hz 合并交换部分，添加定时任务框架，合并管理员部分（ljw分支）
-
-合并自ljw分支：
-    -- AdminService.java、AdminServiceImpl.java、AdminAction.java：简易的管理员功能（增删用户，改密码）
-    -- applicationContext.xml和struts.xml：相关配置
-调整：
-    -- 修复命名错误（AdminServiceImlp.java --> AdminServiceImpl.java）
-    -- deleteUser方法与dao层整合
-
+2017/8/29 by hz 合并交换部分（未测试），添加定时任务框架，合并管理员部分（ljw分支）
 
 pom.xml：导入quartz相关的包，其artifactId为：
     -- spring-context-support
@@ -31,5 +23,16 @@ UserService.java和UserServiceImpl.java：添加定时任务相关的函数
     --添加函数public void deleteAllTimeoutUnactiveUser();删除所有超时未激活的用户
     --添加函数public void deleteTimeoutUnactiveUser(Integer userID);如果该userID用户超时未激活，则删除之
 
+header.jsp:
+    --修复因图书分类链接包含中文导致的问题
+
+合并ljw分支：
+    -- AdminService.java、AdminServiceImpl.java、AdminAction.java：简易的管理员功能（增删用户，改密码）
+    -- applicationContext.xml和struts.xml：相关配置
+ 调整：
+    -- 修复命名错误（AdminServiceImlp.java --> AdminServiceImpl.java）
+    -- AdminServiceImpl.java的deleteUser方法使用UserDao的deleteUser方法而不是delete方法（deleteUser方法同时删除用户在mysql和mongodb中的信息）
+    
+    
     
 ================================================================================
