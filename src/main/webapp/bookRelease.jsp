@@ -44,36 +44,36 @@
     <form id="form" action="<%=path%>/bookAction/uploadBook" method=post enctype="multipart/form-data" role="form" class="form-horizontal" accept-charset="UTF-8">
         <h3 style="text-align: center;">发布图书</h3>
         <div class="form-group form-group-auto">
-            <label>书名</label><font color="#FF0000">*</font><input id="bookName" name="bookProfile.bookName" type="text" class="form-control">
+            <label>书名</label><font color="#FF0000">*</font><input id="bookName" name="bookProfile.bookName" type="text" class="form-control" required="required">
         </div>
         <div class="form-group form-group-auto">
-            <label>作者</label><font color="#FF0000">*</font><input id="author" name="bookProfile.author" type="text" class="form-control">
+            <label>作者</label><font color="#FF0000">*</font><input id="author" name="bookProfile.author" type="text" class="form-control" required="required">
         </div>
         <div class="form-group form-group-auto">
-            <label>ISBN</label><font color="#FF0000">*</font>(输入isbn号可自动获取部分图书信息)<input id="isbn" name="bookProfile.isbn" type="text" class="form-control">
+            <label>ISBN</label><font color="#FF0000">*</font>(输入isbn号可自动获取部分图书信息)<input id="isbn" name="bookProfile.isbn" type="text" class="form-control" required="required">
         </div>
         <div class="form-group form-group-auto">
-            <label>出版社</label><font color="#FF0000">*</font><input id="press" name=bookProfile.press type="text" class="form-control">
+            <label>出版社</label><font color="#FF0000">*</font><input id="press" name=bookProfile.press type="text" class="form-control" required="required">
         </div>
         <div class="form-group form-group-auto">
             <label>出版时间</label><font color="#FF0000">*</font>&nbsp;
-            <input name="bookProfile.publishYear" type="text" class="form-control form-control-noNewline">&nbsp;<label>年</label>&nbsp;
-            <input name="bookProfile.publishMonth" type="text" class="form-control form-control-noNewline">&nbsp;<label>月</label>
+            <input name="bookProfile.publishYear" type="text" class="form-control form-control-noNewline" required="required">&nbsp;<label>年</label>&nbsp;
+            <input name="bookProfile.publishMonth" type="text" class="form-control form-control-noNewline" required="required">&nbsp;<label>月</label>
         </div>
         <div class="form-group form-group-auto">
             <label>版次</label><font color="#FF0000">*</font>&nbsp;
-            <input name="bookProfile.editionYear" type="text" class="form-control form-control-noNewline">&nbsp;<label>年</label>&nbsp;
-            <input name="bookProfile.editionMonth" type="text" class="form-control form-control-noNewline">&nbsp;<label>月</label>&nbsp;
-            <label>第</label>&nbsp;<input name="bookProfile.editionVersion" type="text" class="form-control form-control-noNewline">&nbsp;<label>版</label>
+            <input name="bookProfile.editionYear" type="text" class="form-control form-control-noNewline" required="required">&nbsp;<label>年</label>&nbsp;
+            <input name="bookProfile.editionMonth" type="text" class="form-control form-control-noNewline" required="required">&nbsp;<label>月</label>&nbsp;
+            <label>第</label>&nbsp;<input name="bookProfile.editionVersion" type="text" class="form-control form-control-noNewline" required="required">&nbsp;<label>版</label>
         </div>
         <div class="form-group form-group-auto">
             <label>类别</label><font color="#FF0000">*</font>&nbsp;
-            <select id="cate" name="bookProfile.category1" class="form-control form-control-noNewline">
+            <select id="cate" name="bookProfile.category1" class="form-control form-control-noNewline" required="required">
                 <s:iterator value="#category1List">
                     <option value="<s:property value="category1Name"/>"><s:property value="category1Name"/></option>
                 </s:iterator>
             </select>&nbsp;
-            <select id="category" name="bookProfile.category2" class="form-control form-control-noNewline">
+            <select id="category" name="bookProfile.category2" class="form-control form-control-noNewline" required="required">
                 <s:iterator value="#category1List" begin="0" end="0">
                 <s:iterator value="category2List">
                     <option value="<s:property value="category2Name"/>"><s:property value="category2Name"/></option>
@@ -85,15 +85,15 @@
         </div>
         <div class="form-group form-group-auto">
             <label>页数</label><font color="#FF0000">*</font>&nbsp;
-            <input id="pages" name="bookProfile.page" type="number" step="50" min="0" class="form-control form-control-noNewline">&nbsp;&nbsp;&nbsp;
+            <input id="pages" name="bookProfile.page" type="number" step="50" min="0" class="form-control form-control-noNewline" required="required">&nbsp;&nbsp;&nbsp;
             <label>装帧</label><font color="#FF0000">*</font>&nbsp;
-            <select name="bookProfile.bookBinding" class="form-control form-control-noNewline">
+            <select name="bookProfile.bookBinding" class="form-control form-control-noNewline" required="required">
                 <option value="0">线装</option>
                 <option value="1">平装</option>
                 <option value="2">精装</option>
             </select>&nbsp;&nbsp;&nbsp;
             <label>开本</label><font color="#FF0000">*</font>&nbsp;
-            <select name="bookProfile.bookFormat" class="form-control form-control-noNewline">
+            <select name="bookProfile.bookFormat" class="form-control form-control-noNewline" required="required">
                 <option value="0">正度</option>
                 <option value="1">对开</option>
                 <option value="2">4开</option>
@@ -102,7 +102,7 @@
                 <option value="5">32开</option>
             </select>&nbsp;&nbsp;&nbsp;
             <label>成色</label><font color="#FF0000">*</font>&nbsp;
-            <select name="bookProfile.bookQuality" class="form-control form-control-noNewline">
+            <select name="bookProfile.bookQuality" class="form-control form-control-noNewline" required="required">
                 <option value="10">全新</option>
                 <option value="9">9成新</option>
                 <option value="7">7成新</option>

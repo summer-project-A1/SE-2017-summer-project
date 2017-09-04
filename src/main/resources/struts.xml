@@ -126,13 +126,14 @@
             <interceptor-ref name="isLogin"/>
             <interceptor-ref name="defaultStack"/>
         </action>
+        <!--
         <action name="uploadBook" class="action.BookAction" method="uploadBook">
             <result name="showBooks" type="redirectAction">
                 <param name="actionName">showAllBooks</param>
             </result>
             <interceptor-ref name="isLogin"/>
             <interceptor-ref name="defaultStack"/>
-        </action>
+        </action> -->
         <action name="*" class="action.BookAction" method="{1}">
             <result name="showBooks">/products.jsp</result>
             <result name="showBookProfile">/productDetail.jsp</result>
@@ -140,7 +141,7 @@
                 <param name="root">params</param>
             </result>
             <allowed-methods>
-                showAllBooks,showBooksByCategory1Name,showBooksByCategory2Name,showUserReleasedBooks,showBookProfile,getInfoByIsbn
+                showAllBooks,showBooksByCategory1Name,showBooksByCategory2Name,showUserReleasedBooks,showBookProfile,getInfoByIsbn,uploadBook
             </allowed-methods>
         </action>
     </package>
