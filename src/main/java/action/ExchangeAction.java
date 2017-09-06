@@ -65,10 +65,12 @@ public class ExchangeAction extends ActionSupport{
     }
     /*======================================================*/
     public String prepareExchange(){
-        ActionContext.getContext().put("wantedBook",exchangeService.prepareExchange(wantedBookID).get("wantedBook"));
-        ActionContext.getContext().put("userReleasedBookList",exchangeService.prepareExchange(wantedBookID).get("userReleasedBookList"));
-        ActionContext.getContext().put("defaultAddrList", userService.getAllDeliveryAddress().get("defaultAddrList"));
-        ActionContext.getContext().put("addrList", userService.getAllDeliveryAddress().get("addrList"));
+        Map prepareExchangeInfo = this.exchangeService.prepareExchange(this.wantedBookID);
+        Map deliveryAddressInfo = this.userService.getAllDeliveryAddress();
+        ActionContext.getContext().put("wantedBook",prepareExchangeInfo.get("wantedBook"));
+        ActionContext.getContext().put("userReleasedBookList",prepareExchangeInfo.get("userReleasedBookList"));
+        ActionContext.getContext().put("defaultAddrList", deliveryAddressInfo.get("defaultAddrList"));
+        ActionContext.getContext().put("addrList", deliveryAddressInfo.get("addrList"));
         return "showExchangeApply";
     }
 

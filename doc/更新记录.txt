@@ -38,3 +38,20 @@ header.jsp:
     
     
 ================================================================================
+
+
+
+2017/9/5 by hz
+
+尝试完善交换功能；修补部分bug
+
+struts.xml:
+    --添加exchangeAction部分
+
+myExchage.jsp:
+
+header.jsp:
+    --修复页面右上角登陆后的“我的交换”链接
+
+ExchangeAction.java:
+    --避免同一个sevice函数调用多次（在prepareExchange函数中）
