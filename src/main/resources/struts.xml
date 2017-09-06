@@ -302,11 +302,29 @@
             <result name="cancelExchange" type="redirectAction">
                 <param name="actionName">showMyExchange</param>
             </result>
+            <result name="fh2" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
+            <result name="sh2" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
+            <result name="fh1" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
+            <result name="sh1" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
+            <result name="comment1" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
+            <result name="comment2" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
             <allowed-methods>
-                prepareExchange,showMyExchange,createExchangeOrder,rejectExchange,agreeExchange,cancelExchange
+                prepareExchange,showMyExchange,createExchangeOrder,rejectExchange,agreeExchange,cancelExchange,fh2,sh2,fh1,sh1,comment1,comment2
             </allowed-methods>
         </action>
     </package>

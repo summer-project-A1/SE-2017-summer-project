@@ -23,6 +23,10 @@ public class ExchangeAction extends ActionSupport{
     private Map params;
     private int exchangeID;
     private String address2;
+    private String trackingNo1;
+    private String trackingNo2;
+    private int comment1;
+    private int comment2;
 
     /*======================================================*/
     public void setExchangeService(ExchangeService exchangeService){
@@ -71,6 +75,37 @@ public class ExchangeAction extends ActionSupport{
     }
     public void setAddress2(String address2) {
         this.address2 = address2;
+    }
+    public String getTrackingNo1() {
+        return trackingNo1;
+    }
+
+    public void setTrackingNo1(String trackingNo1) {
+        this.trackingNo1 = trackingNo1;
+    }
+
+    public String getTrackingNo2() {
+        return trackingNo2;
+    }
+
+    public void setTrackingNo2(String trackingNo2) {
+        this.trackingNo2 = trackingNo2;
+    }
+
+    public int getComment1() {
+        return comment1;
+    }
+
+    public void setComment1(int comment1) {
+        this.comment1 = comment1;
+    }
+
+    public int getComment2() {
+        return comment2;
+    }
+
+    public void setComment2(int comment2) {
+        this.comment2 = comment2;
     }
     /*======================================================*/
     public String prepareExchange(){
@@ -122,6 +157,51 @@ public class ExchangeAction extends ActionSupport{
         }
         return null;
     }
+
+    public String fh2(){
+        if(this.exchangeService.fh2(exchangeID,trackingNo2)){
+            return "fh2";
+        }
+        return null;
+    }
+
+    public String sh2(){
+        if(this.exchangeService.sh2(exchangeID)){
+            return "sh2";
+        }
+        return null;
+    }
+
+    public String fh1(){
+        if(this.exchangeService.fh1(exchangeID,trackingNo1)){
+            return "fh1";
+        }
+        return null;
+    }
+
+    public String sh1(){
+        if(this.exchangeService.sh1(exchangeID)){
+            return "sh1";
+        }
+        return null;
+    }
+
+    public String comment1(){
+        if(this.exchangeService.comment1(exchangeID,comment1)){
+            return "comment1";
+        }
+        return null;
+    }
+
+    public String comment2(){
+        if(this.exchangeService.comment2(exchangeID,comment2)){
+            return "comment2";
+        }
+        return null;
+    }
+
+
+
 
 
 }
