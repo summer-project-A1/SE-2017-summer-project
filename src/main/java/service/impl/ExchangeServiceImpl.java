@@ -81,6 +81,7 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		Book wantedBook = bookDao.getBookByID(wantedBookID);
 		map.put("wantedBook", wantedBook);
 		List<Book> userReleasedBookList = bookReleaseDao.getReleaseBookByUserID(user.getUserID());
+		//System.out.println(userReleasedBookList.size()+"???");
 		map.put("userReleasedBookList", userReleasedBookList);
 		return map;
 	}
@@ -127,6 +128,7 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		bookDao.update(had);
 		ExchangeHistory exchangeHistory = new ExchangeHistory(exchange);
 		exchangeHistory.setStatus(ExchangeStatus.CANCELED);
+		exchangeHistory.setResponseDate(new Date());
 		exchangeHistoryDao.save(exchangeHistory);
 		exchangeDao.delete(exchange);
 		return true;
@@ -139,6 +141,7 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		if(exchange.getStatus() != ExchangeStatus.WAITING)
 			return false;
 		exchange.setStatus(ExchangeStatus.AGREED);
+		exchange.setResponseDate(new Date());
 		exchange.setAddress2(address);
 		exchangeDao.update(exchange);
 		return true;

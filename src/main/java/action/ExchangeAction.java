@@ -21,7 +21,8 @@ public class ExchangeAction extends ActionSupport{
     private int hadBookID;
     private String address;  //���뽻���ߵ�ַ
     private Map params;
-
+    private int exchangeID;
+    private String address2;
 
     /*======================================================*/
     public void setExchangeService(ExchangeService exchangeService){
@@ -63,6 +64,14 @@ public class ExchangeAction extends ActionSupport{
     public void setAddress(String address) {
         this.address = address;
     }
+    public int getExchangeID(){return this.exchangeID;}
+    public void setExchangeID(int exchangeID){this.exchangeID = exchangeID;}
+    public String getAddress2() {
+        return address2;
+    }
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
     /*======================================================*/
     public String prepareExchange(){
         Map prepareExchangeInfo = this.exchangeService.prepareExchange(this.wantedBookID);
@@ -86,6 +95,7 @@ public class ExchangeAction extends ActionSupport{
         List<ExchangeProfile> activeExchangeHistory = (List<ExchangeProfile>) result.get("activeExchangeHistory");
         List<ExchangeProfile> passiveExchange = (List<ExchangeProfile>) result.get("passiveExchange");
         List<ExchangeProfile> passiveExchangeHistory = (List<ExchangeProfile>) result.get("passiveExchangeHistory");
+        System.out.println(passiveExchange.size()+"^&*");
 
         ActionContext.getContext().put("activeExchange",activeExchange);
         ActionContext.getContext().put("activeExchangeHistory",activeExchangeHistory);
@@ -94,6 +104,26 @@ public class ExchangeAction extends ActionSupport{
         return "showMyExchange";
     }
 
+    public String rejectExchange(){
+        if(this.exchangeService.rejectExchange(exchangeID)){
+            return "rejectExchange";
+        }
+        return null;
+    }
+
+    public String agreeExchange(){
+        if(this.exchangeService.agreeExchange(exchangeID,address2)){
+            return "agreeExchange";
+        }
+        return null;
+    }
+
+    public String cancelExchange(){
+        if(this.exchangeService.cancelExchange(exchangeID)){
+            return "cancelExchange";
+        }
+        return null;
+    }
 
 
 }

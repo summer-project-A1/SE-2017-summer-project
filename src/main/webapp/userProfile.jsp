@@ -116,7 +116,7 @@
 
             $("#update_confirmNewPassword").blur(function(){
             var confirmpassword = $("#update_confirmNewPassword").val();
-            var password = $("#update_confirmNewPassword").val();
+            var password = $("#update_newPassword").val();
             if(confirmpassword != password){
                 $("#available_status3").html("<span style='color:red'>两次密码不一致</span>");
             }else{
@@ -132,22 +132,30 @@
 
 
         function updatePassword() {
-            $.ajax({
-                url: "<%=path%>/userAction/updatePassword",
-                type: "post",
-                data: $("#update-password-form").serialize(),
-                success: function(msg){
-                    if (msg.success) {
-                        showTip('修改密码成功', 'success');
+            var confirmpassword = $("#update_confirmNewPassword").val();
+            var password = $("#update_newPassword").val();
+            if(password.length < 6 || password.length > 12 || confirmpassword != password){
+                showTip('修改密码失败','danger');
+            }
+            else {
+                $.ajax({
+                    url: "<%=path%>/userAction/updatePassword",
+                    type: "post",
+                    data: $("#update-password-form").serialize(),
+                    success: function (msg) {
+                        if (msg.success) {
+                            showTip('修改密码成功,请重新登录', 'success');
+                            window.setTimeout("window.location='<%=path%>/authAction/logout'",1500);
+                        }
+                        else {
+                            showTip('修改密码失败', 'danger');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('status=' + status + ',error=' + error);
                     }
-                    else {
-                        showTip('修改密码失败', 'danger');
-                    }
-                },
-                error:function(xhr,status,error){
-                    alert('status='+status+',error='+error);
-                }
-            });
+                });
+            }
 
         }
 

@@ -25,7 +25,10 @@ public class ExchangeHistory {         // 准备交换并且已经被发布者�
     private Integer comment2;
     
     /* =================================================== */
-    
+    public ExchangeHistory(){
+
+	}
+
     public ExchangeHistory (Exchange exchange)
     {
     	this.ehID = exchange.getExchangeID();
@@ -114,16 +117,16 @@ public class ExchangeHistory {         // 准备交换并且已经被发布者�
 	public void setShDate2(Date shDate2) {
 		this.shDate2 = shDate2;
 	}
-	public int getComment1() {
+	public Integer getComment1() {
 		return comment1;
 	}
-	public void setComment1(int comment1) {
+	public void setComment1(Integer comment1) {
 		this.comment1 = comment1;
 	}
-	public int getComment2() {
+	public Integer getComment2() {
 		return comment2;
 	}
-	public void setComment2(int comment2) {
+	public void setComment2(Integer comment2) {
 		this.comment2 = comment2;
 	}
 	/**

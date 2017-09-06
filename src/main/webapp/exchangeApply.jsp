@@ -182,13 +182,13 @@
     function confirmApply()
     {
         $.ajax({
-            url: "<%=path%>/authAction/register",
+            url: "<%=path%>/exchangeAction/createExchangeOrder",
             type: "POST",
             data:{'wantedBookID': wantedBookID,'hadBookID':hadBookID,"address":address},
             success: function (msg) {
                 if(msg.success){
                     showTip('申请成功！','success');
-                    window.setTimeout("window.location='<%=path%>/ExchangeAction/showMyExchange'",1500);
+                    window.setTimeout("window.location='<%=path%>/exchangeAction/showMyExchange'",1500);
                 }else{
                     showTip('发生错误！','danger');
                 }
@@ -238,7 +238,7 @@
         <h4 id="show-had-book"></h4>
 		<div style="width:400px;height:400px;overflow-y:scroll;">
 			<s:iterator value="#userReleasedBookList"  status="st">
-				<div id="product<s:property value="#st.index"/>" class="product-grid" style="display: none;">
+				<div id="product<s:property value="#st.index"/>" class="product-grid">
 					<a id="<s:property value="bookID"/>" onclick="select(<s:property value='bookID'/>,<s:property value='bookName'/>)">
 						<div class="more-product"><span></span></div>
 						<div class="product-img b-link-stripe b-animate-go  thickbox">
