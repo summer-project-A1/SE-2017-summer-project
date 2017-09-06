@@ -201,16 +201,19 @@
         <default-interceptor-ref name="loginAuthCheck"/>
 
         <global-results>
-                <result name="login" type="redirect">/signin.jsp</result>
+            <result name="login" type="redirect">/signin.jsp</result>
         </global-results>
         <action name="*" class="action.ExchangeAction" method="{1}">
+            <result name="showExchangeApply">/exchangeApply.jsp</result>
             <result name="showMyExchange">/myExchange.jsp</result>
+            <result name="redirectToShowMyExchange" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
-            <result name="showExchangeApply">/exchangeApply.jsp</result>
             <allowed-methods>
-                prepareExchange,createExchangeOrder,showMyExchange
+                prepareExchange,showMyExchange,createExchangeOrder,rejectExchange,agreeExchange,cancelExchange,fh1,fh2,sh1,sh2
             </allowed-methods>
         </action>
     </package>
@@ -273,7 +276,7 @@
                <param name="root">params</param>
             </result>
             <allowed-methods>
-                commentBook,deleteComment,honestyRatingWhenBorrow,honestyRatingWhenBuy
+                commentBook,deleteComment,honestyRatingWhenBorrow,honestyRatingWhenBuy,honestyRatingWhenExchange,honestyRatingWhenExchangeHistory
             </allowed-methods>
         </action>
     </package>

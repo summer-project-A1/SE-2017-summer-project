@@ -40,6 +40,7 @@
         $("#"+formID).submit();
     }
 
+    /*
     function showComment1(exchange){
         var formID = "comment1Form"+exchange;
         $("#"+formID).show();
@@ -59,7 +60,35 @@
         var formID = "comment2Form"+exchange;
         $("#"+formID).submit();
     }
+    */
 
+    function submitRating(role,type,id){
+        // role: "comment2" "comment1"
+        // type: "Exchange" "ExchangeHistory"
+        // id: exchangeID ehID
+        var creditRatingFormID = "creditRatingForm-" + role + "-" + type + id;
+            // for example: creditRatingForm-comment2-ExchangeHistory<s:property value="ehID"/> 
+        var creditRatingBtnID = "creditRatingBtn-" + role + "-" + type + id;
+            // for example: creditRatingBtn-comment2-ExchangeHistory<s:property value="ehID"/>
+        var params = $("#"+creditRatingFormID).serialize();
+        var actionUrl = '<%=path%>/commentAction/honestyRatingWhen'+type;
+        $.ajax({
+            url:actionUrl,
+            type:'POST',
+            data:params,
+            success:function(msg){
+                if(msg.success){
+                    showTip('信用评价成功！','success');
+                    $("#"+creditRatingBtnID).remove();
+                    $("#"+creditRatingFormID).remove();
+                }
+            },
+            error:function(xhr,status,error){
+                alert('status='+status+',error='+error);
+            }
+        });
+    }
+    
     $(document).ready(function(){
 
 
@@ -212,6 +241,8 @@
                                     <p>申请时间：<s:property value="applyDate"/></p><br>
                                     <s:if test="exchangeStatus=='AGREED'">
                                         <p>对方发货时间：<s:property value="fhDate1"/></p><br>
+                                        <p>对方发货物流单号：<s:property value="trackingNo1"/></p><br>
+                                        <p>对方收货地址：<s:property value="address1"/></p><br>
                                         <p>对方收货时间：<s:property value="shDate1"/></p><br>
                                     </s:if>
                                     <s:if test="exchangeStatus=='WAITING'">
@@ -238,15 +269,15 @@
                                         </form>
                                     </s:elseif>
                                     <s:if test="comment2==null">
-                                        <a href="#" class="add-cart item_add" onclick="showComment2(<s:property value="exchangeID"/>)">信用评价</a>
-                                        <form id="comment2Form<s:property value="exchangeID"/>" style="display: none" action="<%=path%>/exchangeAction/comment2" method="post">
+                                        <a id="creditRatingBtn-comment2-Exchange<s:property value="exchangeID"/>" href="#" class="add-cart item_add" onclick="$('#creditRatingForm-comment2-Exchange<s:property value="exchangeID"/>').show()">信用评价</a>
+                                        <form id="creditRatingForm-comment2-Exchange<s:property value="exchangeID"/>" style="display: none" action="<%=path%>/commentAction/honestyRatingWhenExchange" method="post">
                                             <input type="hidden" name="exchangeID" value="<s:property value="exchangeID"/>"/>
-                                            <select name="comment2" class="form-control form-control-noNewline">
+                                            <select name="creditRating" class="form-control form-control-noNewline">
                                                 <option value="-1">差评</option>
                                                 <option value="0">中评</option>
                                                 <option value="1">好评</option>
                                             </select>
-                                            <a href="#" class="add-cart item_add" onclick="comment2(<s:property value="exchangeID"/>)">提交</a>
+                                            <a href="#" class="add-cart item_add" onclick="submitRating('comment2','Exchange',<s:property value="exchangeID"/>)">提交</a>
                                         </form>
                                     </s:if>
                                 </div>
@@ -258,7 +289,7 @@
 
                     <!-- 向我申请的历史 -->
                     <s:iterator value="#passiveExchangeHistory" status="st">
-                        <div id="<s:property value="exchangeID"/>" class="cart-header">
+                        <div id="<s:property value="ehID"/>" class="cart-header">
                             <div class="cart-sec simpleCart_shelfItem">
                                 <div class="cart-item cyc">
                                     <img src="<%=path%>/imageAction/showImage?imageID=<s:property value="wantedBook.imageID"/>" class="img-responsive" alt="">
@@ -286,7 +317,7 @@
                                             换出的书：<s:property value="wantedBook.bookName"/></a></p></li>
                                     </ul>
                                     <div class="delivery">
-                                        <s:if test="exchangeStatus=='AGREED'">
+                                        <s:if test="exchangeStatus=='AGREED'||exchangeStatus=='COMPLETED'">
                                             <p>回复时间：<s:property value="responseDate"/></p><br>
                                             <p>我发货时间：<s:property value="fhDate2"/></p><br>
                                             <p>我收货时间：<s:property value="shDate2"/></p><br>
@@ -309,9 +340,23 @@
                                     </ul>
                                     <div class="delivery">
                                         <p>申请时间：<s:property value="applyDate"/></p><br>
-                                        <s:if test="exchangeStatus=='AGREED'">
+                                        <s:if test="exchangeStatus=='AGREED'||exchangeStatus=='COMPLETED'">
                                             <p>对方发货时间：<s:property value="fhDate1"/></p><br>
+                                            <p>对方发货物流单号：<s:property value="trackingNo1"/></p><br>
+                                            <p>对方收货地址：<s:property value="address1"/></p><br>
                                             <p>对方收货时间：<s:property value="shDate1"/></p><br>
+                                        </s:if>
+                                        <s:if test="comment2==null">
+                                            <a id="creditRatingBtn-comment2-ExchangeHistory<s:property value="ehID"/>" href="#" class="add-cart item_add" onclick="$('#creditRatingForm-comment2-ExchangeHistory<s:property value="ehID"/>').show()">信用评价</a>
+                                            <form id="creditRatingForm-comment2-ExchangeHistory<s:property value="ehID"/>" style="display: none" action="<%=path%>/commentAction/honestyRatingWhenExchangeHistory" method="post">
+                                                <input type="hidden" name="ehID" value="<s:property value="ehID"/>"/>
+                                                <select name="creditRating" class="form-control form-control-noNewline">
+                                                    <option value="-1">差评</option>
+                                                    <option value="0">中评</option>
+                                                    <option value="1">好评</option>
+                                                </select>
+                                                <a href="#" class="add-cart item_add" onclick="submitRating('comment2','ExchangeHistory',<s:property value="ehID"/>)">提交</a>
+                                            </form>
                                         </s:if>
                                     </div>
                                 </div>
@@ -374,6 +419,8 @@
                                         <s:if test="exchangeStatus=='AGREED'">
                                             <p>回复时间：<s:property value="responseDate"/></p><br>
                                             <p>对方发货时间：<s:property value="fhDate2"/></p><br>
+                                            <p>对方发货物流单号：<s:property value="trackingNo2"/></p><br>
+                                            <p>对方收货地址：<s:property value="address2"/></p><br>
                                             <p>对方收货时间：<s:property value="shDate2"/></p><br>
                                         </s:if>
                                         <s:elseif test="exchangeStatus=='REJECTED'">
@@ -396,15 +443,15 @@
                                             </form>
                                         </s:elseif>
                                         <s:if test="comment1==null">
-                                            <a href="#" class="add-cart item_add" onclick="showComment1(<s:property value="exchangeID"/>)">信用评价</a>
-                                            <form id="comment1Form<s:property value="exchangeID"/>" style="display: none" action="<%=path%>/exchangeAction/comment1" method="post">
+                                            <a id="creditRatingBtn-comment1-Exchange<s:property value="exchangeID"/>" href="#" class="add-cart item_add" onclick="$('#creditRatingForm-comment1-Exchange<s:property value="exchangeID"/>').show()">信用评价</a>
+                                            <form id="creditRatingForm-comment1-Exchange<s:property value="exchangeID"/>" style="display: none" action="<%=path%>/commentAction/honestyRatingWhenExchange" method="post">
                                                 <input type="hidden" name="exchangeID" value="<s:property value="exchangeID"/>"/>
-                                                <select name="comment1" class="form-control form-control-noNewline">
+                                                <select name="creditRating" class="form-control form-control-noNewline">
                                                     <option value="-1">差评</option>
                                                     <option value="0">中评</option>
                                                     <option value="1">好评</option>
                                                 </select>
-                                                <a href="#" class="add-cart item_add" onclick="comment1(<s:property value="exchangeID"/>)">提交</a>
+                                                <a href="#" class="add-cart item_add" onclick="submitRating('comment1','Exchange',<s:property value="exchangeID"/>)">提交</a>
                                             </form>
                                         </s:if>
                                     </div>
@@ -445,7 +492,7 @@
                                     </ul>
                                     <div class="delivery">
                                         <p>申请时间：<s:property value="applyDate"/></p><br>
-                                        <s:if test="exchangeStatus=='AGREED'">
+                                        <s:if test="exchangeStatus=='AGREED'||exchangeStatus=='COMPLETED'">
                                             <p>我发货时间：<s:property value="fhDate1"/></p><br>
                                             <p>我收货时间：<s:property value="shDate1"/></p><br>
                                         </s:if>
@@ -463,14 +510,28 @@
                                             换入的书：<s:property value="wantedBook.bookName"/></a></p></li>
                                     </ul>
                                     <div class="delivery">
-                                        <s:if test="exchangeStatus=='AGREED'">
+                                        <s:if test="exchangeStatus=='AGREED'||exchangeStatus=='COMPLETED'">
                                             <p>回复时间：<s:property value="responseDate"/></p><br>
                                             <p>对方发货时间：<s:property value="fhDate2"/></p><br>
+                                            <p>对方发货物流单号：<s:property value="trackingNo2"/></p><br>
+                                            <p>对方收货地址：<s:property value="address2"/></p><br>
                                             <p>对方收货时间：<s:property value="shDate2"/></p><br>
                                         </s:if>
                                         <s:elseif test="exchangeStatus=='REJECTED'">
                                             <p>回复时间：<s:property value="responseDate"/></p><br>
                                         </s:elseif>
+                                        <s:if test="comment1==null">
+                                            <a id="creditRatingBtn-comment1-ExchangeHistory<s:property value="ehID"/>" href="#" class="add-cart item_add" onclick="$('#creditRatingForm-comment1-ExchangeHistory<s:property value="ehID"/>').show()">信用评价</a>
+                                            <form id="creditRatingForm-comment1-ExchangeHistory<s:property value="ehID"/>" style="display: none" action="<%=path%>/commentAction/honestyRatingWhenExchangeHistory" method="post">
+                                                <input type="hidden" name="ehID" value="<s:property value="ehID"/>"/>
+                                                <select name="creditRating" class="form-control form-control-noNewline">
+                                                    <option value="-1">差评</option>
+                                                    <option value="0">中评</option>
+                                                    <option value="1">好评</option>
+                                                </select>
+                                                <a href="#" class="add-cart item_add" onclick="submitRating('comment1','ExchangeHistory',<s:property value="ehID"/>)">提交</a>
+                                            </form>
+                                        </s:if>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>

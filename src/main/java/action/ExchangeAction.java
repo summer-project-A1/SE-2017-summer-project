@@ -141,53 +141,54 @@ public class ExchangeAction extends ActionSupport{
 
     public String rejectExchange(){
         if(this.exchangeService.rejectExchange(exchangeID)){
-            return "rejectExchange";
+            return "redirectToShowMyExchange";
         }
         return null;
     }
 
     public String agreeExchange(){
         if(this.exchangeService.agreeExchange(exchangeID,address2)){
-            return "agreeExchange";
+            return "redirectToShowMyExchange";
         }
         return null;
     }
 
     public String cancelExchange(){
         if(this.exchangeService.cancelExchange(exchangeID)){
-            return "cancelExchange";
+            return "redirectToShowMyExchange";
         }
         return null;
     }
 
     public String fh2(){
         if(this.exchangeService.fh2(exchangeID,trackingNo2)){
-            return "fh2";
+            return "redirectToShowMyExchange";
         }
         return null;
     }
 
     public String sh2(){
         if(this.exchangeService.sh2(exchangeID)){
-            return "sh2";
+            return "redirectToShowMyExchange";
         }
         return null;
     }
 
     public String fh1(){
         if(this.exchangeService.fh1(exchangeID,trackingNo1)){
-            return "fh1";
+            return "redirectToShowMyExchange";
         }
         return null;
     }
 
     public String sh1(){
         if(this.exchangeService.sh1(exchangeID)){
-            return "sh1";
+            return "redirectToShowMyExchange";
         }
         return null;
     }
 
+    /*
     public String comment1(){
         if(this.exchangeService.comment1(exchangeID,comment1)){
             return "comment1";
@@ -201,6 +202,7 @@ public class ExchangeAction extends ActionSupport{
         }
         return null;
     }
+    */
 
 
 
