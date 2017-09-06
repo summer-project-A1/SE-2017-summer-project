@@ -238,8 +238,8 @@
         <h4 id="show-had-book"></h4>
 		<div style="width:400px;height:400px;overflow-y:scroll;">
 			<s:iterator value="#userReleasedBookList"  status="st">
-				<div id="product<s:property value="#st.index"/>" class="product-grid">
-					<a id="<s:property value="bookID"/>" onclick="select(<s:property value='bookID'/>,<s:property value='bookName'/>)">
+				<div id="product<s:property value="#st.index"/>" class="product-grid" onclick="select(<s:property value='bookID'/>,$('#product<s:property value="#st.index"/>-info-bookName').html())">
+					<a id="<s:property value="bookID"/>">
 						<div class="more-product"><span></span></div>
 						<div class="product-img b-link-stripe b-animate-go  thickbox">
 							<img src="<%=path%>/imageAction/showImage?imageID=<s:property value="imageID"/>" class="img-responsive" alt="">
@@ -252,7 +252,7 @@
 					</a>
 					<div class="product-info simpleCart_shelfItem">
 						<div class="product-info-cust prt_name">
-							<h4><s:property value="bookName"/></h4>
+							<h4 id="product<s:property value="#st.index"/>-info-bookName"><s:property value="bookName"/></h4>
 							<span class="book-isbn">ISBN:<s:property value="isbn"/></span>
 							<div class="ofr">
 								<p class="pric1">作者：<s:property value="author"/></p><br>
