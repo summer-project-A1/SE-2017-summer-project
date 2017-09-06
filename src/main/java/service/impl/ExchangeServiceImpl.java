@@ -204,7 +204,15 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 			return false;
 		Date date = new Date();
 		exchange.setShDate1(date);
-		exchangeDao.update(exchange);
+		if (exchange.getShDate2() == null)
+            exchangeDao.update(exchange);
+        else
+        {
+            ExchangeHistory exchangeHistory = new ExchangeHistory(exchange);
+            exchangeHistory.setStatus(ExchangeStatus.COMPLETED);
+            exchangeHistoryDao.save(exchangeHistory);
+            exchangeDao.delete(exchange);
+        }
 		return true;
 	}
 
@@ -216,10 +224,19 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 			return false;
 		Date date = new Date();
 		exchange.setShDate2(date);
-		exchangeDao.update(exchange);
+		if (exchange.getShDate1() == null)
+            exchangeDao.update(exchange);
+        else
+        {
+            ExchangeHistory exchangeHistory = new ExchangeHistory(exchange);
+            exchangeHistory.setStatus(ExchangeStatus.COMPLETED);
+            exchangeHistoryDao.save(exchangeHistory);
+            exchangeDao.delete(exchange);
+        }
 		return true;
 	}
 
+	/*
 	@Override
 	public Boolean comment1(int exchangeID, int comment)
 	{
@@ -263,6 +280,7 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		}
 		return true;
 	}
+	*/
 
 	@Override
 	public Map showMyExchange() {
