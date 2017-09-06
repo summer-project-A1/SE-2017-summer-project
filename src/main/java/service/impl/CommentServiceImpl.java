@@ -6,6 +6,7 @@ import dao.UserDao;
 import model.*;
 import service.CommentService;
 import dao.CommentDao;
+import dao.ExchangeHistoryDao;
 
 import java.util.*;
 
@@ -13,6 +14,7 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
     private CommentDao commentdao;
     private UserDao userDao;
     private BorrowHistoryDao borrowHistoryDao;
+    private ExchangeHistoryDao exchangeHistoryDao;
     private OrderDao orderDao;
 
     public CommentDao getCommentdao() {
@@ -37,6 +39,14 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
 
     public void setBorrowHistoryDao(BorrowHistoryDao borrowHistoryDao) {
         this.borrowHistoryDao = borrowHistoryDao;
+    }
+
+    public ExchangeHistoryDao getExchangeHistoryDao() {
+        return exchangeHistoryDao;
+    }
+
+    public void setExchangeHistoryDao(ExchangeHistoryDao exchangeHistoryDao) {
+        this.exchangeHistoryDao = exchangeHistoryDao;
     }
 
     public OrderDao getOrderDao() {
@@ -133,7 +143,7 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
             ratingID = sellerID; //买家评论卖家
             order.setBuyerComment(creditRating);
         }else{
-            ratingID = sellerID;
+            ratingID = buyerID;
             order.setSellerComment(creditRating);
         }
         User ratingUser = this.userDao.getUserById(ratingID);
@@ -143,6 +153,25 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
         return true;
     }
 
-
-
+    @Override
+    public boolean honestyRatingInExchange(int exchangeID,int creditRating) {
+        ExchangeHistory eh = this.exchangeHistoryDao.getExchangeHistoryByID(exchangeID);
+        int user1ID = eh.getUserID1();    // 交换的申请者
+        int user2ID = eh.getUserID2();    // 交换的被申请者
+        User user = getLoginedUserInfo();
+        int currentID = user.getUserID();
+        int ratingID = 0;
+        if(currentID == user1ID){
+            ratingID = user2ID; //申请者评论被申请者
+            eh.setComment1(creditRating);
+        }else{
+            ratingID = user1ID;
+            eh.setComment2(creditRating);
+        }
+        User ratingUser = this.userDao.getUserById(ratingID);
+        ratingUser.setHonesty(ratingUser.getHonesty()+creditRating);
+        this.userDao.update(ratingUser);
+        this.exchangeHistoryDao.update(eh);
+        return true;
+    }
 }
