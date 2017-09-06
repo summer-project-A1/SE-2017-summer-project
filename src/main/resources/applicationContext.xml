@@ -152,6 +152,7 @@
         <property name="userDao" ref="userDao"/>
         <property name="borrowHistoryDao" ref="borrowHistoryDao"/>
         <property name="orderDao" ref="orderDao"/>
+        <property name="exchangeHistoryDao" ref="exchangeHistoryDao"/>
     </bean>
     <bean id="historyService" class="service.impl.HistoryServiceImpl">
         <property name="borrowDao" ref="borrowDao" />
