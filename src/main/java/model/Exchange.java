@@ -25,6 +25,10 @@ public class Exchange {             // 准备交换但尚未被发布者确认�
     private Integer comment2;     //被申请人对申请人的信用评价
     
     /* =================================================== */
+    public Exchange(){
+
+	}
+
     public Exchange(int userID1, int userID2, int wantedID, int hadID, ExchangeStatus status, Date date, String address1) {
 		super();
 		this.userID1 = userID1;

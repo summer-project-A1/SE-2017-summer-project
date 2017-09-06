@@ -5,7 +5,7 @@
 <hibernate-mapping>
     <class name="model.ExchangeHistory" table="exchangehistory">
         <id name="ehID" column="eh_id">
-            <generator class="native"/>
+            <generator class="assigned"/>
         </id>
         <property name="userID1" column="user1_id" />
         <property name="userID2" column="user2_id" />
