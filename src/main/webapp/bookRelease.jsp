@@ -217,13 +217,13 @@
     });
     $("input[name='bookProfile.coverPicture']").fileinput({
         showUpload : false,
-        allowedFileExtensions: ['jpg','jpeg','png','gif'],
+        allowedFileExtensions: ['jpg','jpeg','png','gif','bmp'],
         browseLabel : "浏览",
         language : 'zh'
     });
     $("input[name='bookProfile.otherPicture']").fileinput({
         showUpload : false,
-        allowedFileExtensions: ['jpg','jpeg','png','gif'],
+        allowedFileExtensions: ['jpg','jpeg','png','gif','bmp'],
         browseLabel : "浏览",
         language : 'zh'
     });
