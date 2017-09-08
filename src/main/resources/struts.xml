@@ -254,6 +254,22 @@
     </package>
 
     <package name="adminAction" extends="struts-default,json-default" namespace="/adminAction">
+
+        <interceptors>
+            <interceptor name="isAdmin" class="action.interceptor.IsAdminInterceptor"/>
+            <interceptor-stack name="adminAuthCheck">
+                <interceptor-ref name="isAdmin"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="adminAuthCheck"/>
+
+        <global-results>
+            <result name="403" type="redirect">/signin.jsp</result>
+            <result name="login" type="redirect">/signin.jsp</result>
+        </global-results>
+
         <action name="*" class="action.AdminAction" method="{1}">
             <result name="showAllUserList">/adminUser.jsp</result>
             <result name="deleteUser" type="redirectAction">

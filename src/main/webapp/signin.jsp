@@ -25,6 +25,36 @@
             }
         });
     });
+
+
+
+    function signin() {
+        var params = $("#registerForm").serialize();
+        $.ajax({
+            url: "<%=path%>/authAction/login",
+            type: "post",
+            data: params,
+            dataType: "text",
+            success: function (data) {
+                var response = eval("("+data+")");
+                if(response.result == false){
+                    showTip("登陆失败！","danger");
+                    //alert(msg);
+                }
+                if(response.result == true){
+                    if(response.role == 1) {
+                        window.setTimeout("window.location='<%=path%>/index'",1000);
+                    }
+                    if(response.role == 0){
+                        showTip('欢迎管理员','success');
+                        window.setTimeout("window.location='<%=path%>/adminAction/showAllUserList'",1000);
+                    }
+                }
+            }
+        });
+    }
+
+
 </script>
 
 
@@ -32,7 +62,7 @@
     <div class="container">
         <div id="tip"> </div>
         <div class="register" id="registerBox">
-            <form id="registerForm" action="<%=path%>/authAction/signin" class="form-horizontal" method="post">
+            <form id="registerForm"  class="form-horizontal">
                 <div class="register-top-grid">
                     <h3>请重新登录</h3>
                     <div class="form-group form-group-auto">
@@ -47,7 +77,7 @@
 
                     <div class="clearfix"> </div>
                     <div class="register-but">
-                        <input type="submit" value="登陆" id="login">
+                        <input type="button" value="登录" id="loginButton" onclick="signin()">
                         <div class="clearfix"> </div>
                     </div>
                 </div>
