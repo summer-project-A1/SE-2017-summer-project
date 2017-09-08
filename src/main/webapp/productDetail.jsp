@@ -235,10 +235,51 @@
                         出版时间：<s:property value="#bookProfile.publishYear"/>年<s:property value="#bookProfile.publishMonth"/>月<br>
                         版次：<s:property value="#bookProfile.editionYear"/>年<s:property value="#bookProfile.editionMonth"/>月第<s:property value="#bookProfile.editionVersion"/>版<br>
                         页数：<s:property value="#bookProfile.page"/>页<br>
-                        装帧：<s:property value="#bookProfile.bookBinding"/><br>
-                        开本：<s:property value="#bookProfile.bookFormat"/><br>
-                        成色：<s:property value="#bookProfile.bookQuality"/><br>
-                        损毁情况：<s:property value="#bookProfile.bookDamage"/>
+                        <s:if test="#bookProfile.bookBinding==0">
+                            装帧：线装<br>
+                        </s:if>
+                        <s:elseif test="#bookProfile.bookBinding==1">
+                            装帧：平装<br>
+                        </s:elseif>
+                        <s:elseif test="#bookProfile.bookBinding==2">
+                            装帧：精装<br>
+                        </s:elseif>
+                        <s:if test="#bookProfile.bookFormat==0">
+                            开本：正度<br>
+                        </s:if>
+                        <s:elseif test="#bookProfile.bookFormat==1">
+                            开本：对开<br>
+                        </s:elseif>
+                        <s:elseif test="#bookProfile.bookFormat==2">
+                            开本：4开<br>
+                        </s:elseif>
+                        <s:elseif test="#bookProfile.bookFormat==3">
+                            开本：8开<br>
+                        </s:elseif>
+                        <s:elseif test="#bookProfile.bookFormat==4">
+                            开本：16开<br>
+                        </s:elseif>
+                        <s:elseif test="#bookProfile.bookFormat==5">
+                            开本：32开<br>
+                        </s:elseif>
+                        <s:if test="#bookProfile.bookQuality==1">
+                            成色：1成新
+                        </s:if>
+                        <s:elseif test="#bookProfile.bookQuality==3">
+                            成色：3成新
+                        </s:elseif>
+                        <s:elseif test="#bookProfile.bookQuality==5">
+                            成色：5成新
+                        </s:elseif>
+                        <s:elseif test="#bookProfile.bookQuality==7">
+                            成色：7成新
+                        </s:elseif>
+                        <s:elseif test="#bookProfile.bookQuality==9">
+                            成色：9成新
+                        </s:elseif>
+                        <s:elseif test="#bookProfile.bookQuality==10">
+                            成色：全新
+                        </s:elseif>
                     </div>
                 </div>
             </div>

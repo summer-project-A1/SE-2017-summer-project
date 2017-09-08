@@ -20,7 +20,7 @@
         <p>把你的闲置图书分享给别的书友吧！</p>
         <a href="<%=path%>/bookAction/showBookRelease">马上发布</a>
         <div class="banner-text">
-            <img src="images/2.png" alt=""/>
+            <img src="images/index.jpeg" alt=""/>
         </div>
     </div>
 </div>

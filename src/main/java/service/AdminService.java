@@ -1,5 +1,12 @@
 package service;
 
+import model.User;
+
+import java.util.List;
+
 public interface AdminService extends BaseService {
-    public Boolean deleteComment(int commentID);
+    public List<User> showAllUserList();
+    public boolean deleteUser(int userID);
+    public boolean addUser(String email,String password,int credit);
+    public boolean resetPassword(int userID);
 }

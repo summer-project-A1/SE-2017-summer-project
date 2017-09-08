@@ -35,7 +35,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
     
     @Override
     public List<Book> getAllBooks() {
-        String hql = "from Book";
+        String hql = "from Book order by status";
         Query query = getSession().createQuery(hql);
         List<Book> result = query.list();
         return result;
@@ -51,7 +51,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
     
     @Override
     public List<Book> getAllBooksByPage(int part,int pageSize) {
-        String hql = "from Book";
+        String hql = "from Book order by status";
         Query query = getSession().createQuery(hql);
         query.setFirstResult((part-1)*pageSize); 
         query.setMaxResults(pageSize); 
@@ -61,7 +61,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 
     @Override
     public List<Book> getBooksByUserID(int userID) {
-        String hql = "select b from Book as b,BookRelease as br where b.bookID=br.bookID and br.userID=:userID";
+        String hql = "select b from Book as b,BookRelease as br where b.bookID=br.bookID and br.userID=:userID order by b.bookID desc";
         Query query = getSession().createQuery(hql);
         query.setParameter("userID", userID);
         List<Book> result = query.list();
@@ -70,7 +70,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 
     @Override
     public List<Book> getBooksByCategory1NameByPage(String category1Name, int part, int pageSize) {
-        String hql = "from Book where category1=:category1Name";
+        String hql = "from Book where category1=:category1Name order by status";
         Query query = getSession().createQuery(hql);
         query.setParameter("category1Name", category1Name);
         query.setFirstResult((part-1)*pageSize); 
@@ -81,7 +81,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
     
     @Override
     public List<Book> getBooksByCategory2NameByPage(String category2Name, int part, int pageSize) {
-        String hql = "from Book where category2=:category2Name";
+        String hql = "from Book where category2=:category2Name order by status";
         Query query = getSession().createQuery(hql);
         query.setParameter("category2Name", category2Name);
         query.setFirstResult((part-1)*pageSize); 
@@ -93,7 +93,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
     @Override
     public List<Book> searchByTextByPage(String searchText,int part,int pageSize) {
         // 全局搜索，搜索字符串在书名、作者、出版社等多个字段同时尝试匹配
-        String hql = " select b from Book as b where 1=1 ";
+        String hql = " select b from Book as b where 1=1 order by status";
         hql += " or b.bookName like :bookName ";
         hql += " or b.author like :author ";
         hql += " or b.press like :press ";
@@ -109,7 +109,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
     
     @Override
     public List<Book> searchByCondition(Map condition, Integer part, Integer pageSize) {
-        String hqlTables = " from Book as b ";
+        String hqlTables = " from Book as b";
         String hqlConditions = " where 1=1 ";
         String hql = " select b ";
         String countHql = " select count(*) ";
@@ -140,6 +140,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
             args.add(condition.get("publishYear"));
             types.add(new IntegerType());
         }
+        hqlConditions += "order by status";
         hql = hql + hqlTables + hqlConditions;
         System.out.println(hql);
         Query query = getSession().createQuery(hql);

@@ -23,4 +23,8 @@ public interface UserService extends BaseService {
     public boolean deleteDeliveryAddress(String fullAddressID);
 
     public boolean activateUser(String email,String activeCode);
+    
+    // 以下为定时任务
+    public void deleteAllTimeoutUnactiveUser();
+    public void deleteTimeoutUnactiveUser(Integer userID);
 }

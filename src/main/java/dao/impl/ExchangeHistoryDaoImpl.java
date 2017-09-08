@@ -11,7 +11,7 @@ public class ExchangeHistoryDaoImpl extends BaseDaoImpl implements ExchangeHisto
 
     @Override
     public ExchangeHistory getExchangeHistoryByID(int ehID) {
-        String hql = "from ExchangeHistory eh where eh.ehID = :ehID";
+        String hql = "from ExchangeHistory eh where eh.ehID = :ehID order by applyDate desc";
         Query query = getSession().createQuery(hql).setParameter("ehID", ehID);
         List<ExchangeHistory> exchangeHistorys = query.list();
         ExchangeHistory exchangeHistory = exchangeHistorys.size() == 1 ? exchangeHistorys.get(0) : null;
@@ -20,7 +20,7 @@ public class ExchangeHistoryDaoImpl extends BaseDaoImpl implements ExchangeHisto
 
     @Override
     public List<ExchangeHistory> getExchangeHistoryByUserID1(int userID1) {
-        String hql = "from ExchangeHistory eh where eh.userID1 = :userID1";
+        String hql = "from ExchangeHistory eh where eh.userID1 = :userID1 order by applyDate desc";
         Query query = getSession().createQuery(hql);
         query.setParameter("userID1", userID1);
         List<ExchangeHistory> result = query.list();
@@ -29,7 +29,7 @@ public class ExchangeHistoryDaoImpl extends BaseDaoImpl implements ExchangeHisto
 
     @Override
     public List<ExchangeHistory> getExchangeHistoryByUserID2(int userID2) {
-        String hql = "from ExchangeHistory eh where eh.userID2 = :userID2";
+        String hql = "from ExchangeHistory eh where eh.userID2 = :userID2 order by applyDate desc";
         Query query = getSession().createQuery(hql);
         query.setParameter("userID2", userID2);
         List<ExchangeHistory> result = query.list();

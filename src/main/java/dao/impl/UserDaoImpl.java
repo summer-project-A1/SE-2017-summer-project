@@ -1,6 +1,7 @@
 package dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +10,13 @@ import org.bson.types.ObjectId;
 import org.hibernate.query.Query;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import com.mongodb.gridfs.GridFS;
+import com.mongodb.gridfs.GridFSDBFile;
 
+import common.constants.UserStatus;
 import model.FullAddress;
 import model.User;
 import model.UserProfile;
@@ -59,9 +64,16 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         userProfile.setCity(user.getCity());
         userProfile.setDistrict(user.getDistrict());
         userProfile.setAddress(user.getAddress());
-        userProfile.setName((String)userProfileInMongo.get("name"));
-        userProfile.setGender((String)userProfileInMongo.get("gender"));
-        userProfile.setMobile((String)userProfileInMongo.get("mobile"));
+        if(userProfileInMongo != null) {
+            userProfile.setName((String)userProfileInMongo.get("name"));
+            userProfile.setGender((String)userProfileInMongo.get("gender"));
+            userProfile.setMobile((String)userProfileInMongo.get("mobile"));
+        }
+        else {
+            userProfile.setName("");
+            userProfile.setGender("");
+            userProfile.setMobile("");
+        }
         List<FullAddress> deliveryAddress = new ArrayList<FullAddress>();
         List<Map> deliveryAddressListMap = (List<Map>)userProfileInMongo.get("deliveryAddress");
         if(deliveryAddressListMap != null) {
@@ -132,7 +144,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             
         DBObject query=new BasicDBObject("_id", new ObjectId(oldUser.getProfileID()));
         DBObject obj = collection.findOne(query);
-        userProfileInMongo = (obj!=null) ? (Map)obj : null;
+        userProfileInMongo = (obj!=null) ? (Map)obj : new HashMap();
             
         // 用户在mongodb中的属性
         userProfileInMongo.put("name", newUserProfile.getName());
@@ -163,6 +175,47 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
     
     @Override
+    public boolean deleteUserProfileInMongo(String profileID) {
+        DBCollection collection = getMongoDb().getCollection("user_profile");
+        DBObject query=new BasicDBObject("_id", new ObjectId(profileID));
+        collection.remove(query);
+        return true;
+    }
+    
+    @Override
+    public boolean deleteUser(User user) {
+        // 需要删除mongodb中的user_profile、delivery_address、image，再删除mysql中的信息
+        if(user == null) {
+            return false;
+        }
+        
+        DBCollection profileCollection = getMongoDb().getCollection("user_profile");
+        if(user.getProfileID() != null && !user.getProfileID().equals("")) {
+            DBObject profileQuery=new BasicDBObject("_id", new ObjectId(user.getProfileID()));
+            profileCollection.remove(profileQuery);
+        }
+        
+        DBCollection addressCollection = getMongoDb().getCollection("delivery_address");
+        DBObject addressQuery=new BasicDBObject("userID", user.getUserID());
+        addressCollection.remove(addressQuery);
+        
+        DB db = this.getMongoDb();
+        GridFS gridFS = new GridFS(db);
+        if(user.getImageID() != null && !user.getImageID().equals("")) {
+            DBObject query=new BasicDBObject("_id", new ObjectId(user.getImageID()));
+            GridFSDBFile gridFSDBFile = gridFS.findOne(query);
+            if(gridFSDBFile != null) {
+                gridFS.remove(gridFSDBFile);
+                return true;
+            }
+        }
+        
+        this.delete(user);
+        
+        return true;
+    }
+
+    @Override
 	public List<User> getAllUsers() {
 		String hql = "from User";
 		Query query = getSession().createQuery(hql);
@@ -170,6 +223,16 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		return users;
 	}
 
+    @Override
+    public List<User> getAllTimeoutUnactiveUser() {
+        String hql = "from User where status = :status and due < :now";
+        Query query = this.getSession().createQuery(hql);
+        query.setParameter("status", UserStatus.UNACTIVATED.ordinal());
+        query.setParameter("now", new Date());
+        List<User> users = query.list();
+        return users;
+    }
+    
     @Override
     public Map getUserProfileMapInMongo(int userID) {
         DBCollection collection = getMongoDb().getCollection("user_profile");

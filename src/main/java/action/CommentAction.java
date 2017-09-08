@@ -13,6 +13,8 @@ import java.util.Map;
 public class CommentAction extends ActionSupport {
     private CommentService commentService;
     private int borrowID;
+    private int exchangeID;
+    private int ehID;
     private int orderID;
     private int bookID;
     private int commentID;
@@ -33,6 +35,18 @@ public class CommentAction extends ActionSupport {
     }
     public void setBorrowID(int borrowID) {
         this.borrowID = borrowID;
+    }
+    public int getExchangeID() {
+        return exchangeID;
+    }
+    public void setExchangeID(int exchangeID) {
+        this.exchangeID = exchangeID;
+    }
+    public int getEhID() {
+        return ehID;
+    }
+    public void setEhID(int ehID) {
+        this.ehID = ehID;
     }
     public int getOrderID(){return orderID;}
     public void setOrderID(int orderID){this.orderID = orderID;}
@@ -105,4 +119,18 @@ public class CommentAction extends ActionSupport {
         //return "honestyRatingWhenBuy";
     }
 
+    public String honestyRatingWhenExchange(){
+        params = new HashMap();
+        this.commentService.honestyRatingInExchange(this.exchangeID,this.creditRating);
+        params.put("success",true);
+        return "ajax";
+        //return "honestyRatingWhenExchange";
+    }
+    public String honestyRatingWhenExchangeHistory(){
+        params = new HashMap();
+        this.commentService.honestyRatingInExchangeHistory(this.ehID,this.creditRating);
+        params.put("success",true);
+        return "ajax";
+        //return "honestyRatingWhenExchangeHistory";
+    }
 }

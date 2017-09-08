@@ -1,7 +1,9 @@
 package dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import common.constants.BookStatus;
 import org.hibernate.query.Query;
 
 import dao.BookReleaseDao;
@@ -22,8 +24,27 @@ public class BookReleaseDaoImpl extends BaseDaoImpl implements BookReleaseDao {
     
     @Override
     public List<Book> getReleaseBookByUserID(int userID) {
-        // TODO 自动生成的方法存根
-        return null;
+        String hql = "from BookRelease br where br.userID = :userID";
+        Query query = getSession().createQuery(hql).setParameter("userID",userID);
+        List<BookRelease> bookReleases = query.list();
+        List<Book> bookList = new ArrayList<>();
+        if(bookReleases.size() != 0){
+            for(int i = 0;i < bookReleases.size();i++){
+                Query qry = getSession().createQuery("from Book b where b.bookID = :bookID");
+                qry.setParameter("bookID",bookReleases.get(i).getBookID());
+                //qry.setParameter("status", BookStatus.IDLE);
+                List tmp_book = qry.list();
+                System.out.println(tmp_book.size());
+                if(tmp_book.size() == 0 ) return null;
+                Book book = (Book)tmp_book.get(0);
+                book.setBookStatus(book.getStatus().toString());
+                if(book.getCanExchange()==1 && book.getStatus()==BookStatus.IDLE){
+                    bookList.add(book);
+                }
+            }
+        }
+
+        return bookList;
     }
 
     @Override

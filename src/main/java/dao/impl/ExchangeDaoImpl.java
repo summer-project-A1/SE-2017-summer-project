@@ -11,7 +11,7 @@ public class ExchangeDaoImpl extends BaseDaoImpl implements ExchangeDao
 {
 	@Override
 	public Exchange getExchangeByID(int id) {
-	    String hql = "from Exchange e where e.exchangeID = :exchangeID";
+	    String hql = "from Exchange e where e.exchangeID = :exchangeID order by applyDate desc";
         Query query = getSession().createQuery(hql).setParameter("exchangeID", id);
         List<Exchange> exchanges = query.list();
         Exchange exchange = exchanges.size() == 1 ? exchanges.get(0) : null;
@@ -20,7 +20,7 @@ public class ExchangeDaoImpl extends BaseDaoImpl implements ExchangeDao
 
 	@Override
 	public List<Exchange> getExchangeByUserID1(int userID1) {  // 申请人
-	    String hql = "from Exchange e where e.userID1 = :userID1";
+	    String hql = "from Exchange e where e.userID1 = :userID1 order by applyDate desc";
         Query query = getSession().createQuery(hql);
         query.setParameter("userID1", userID1);
         List<Exchange> result = query.list();
@@ -29,7 +29,7 @@ public class ExchangeDaoImpl extends BaseDaoImpl implements ExchangeDao
 	
 	@Override
     public List<Exchange> getExchangeByUserID2(int userID2) {  // 被申请人
-	    String hql = "from Exchange e where e.userID2 = :userID2";
+	    String hql = "from Exchange e where e.userID2 = :userID2 order by applyDate desc";
         Query query = getSession().createQuery(hql);
         query.setParameter("userID2", userID2);
         List<Exchange> result = query.list();

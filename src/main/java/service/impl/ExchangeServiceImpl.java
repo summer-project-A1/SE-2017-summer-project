@@ -81,6 +81,7 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		Book wantedBook = bookDao.getBookByID(wantedBookID);
 		map.put("wantedBook", wantedBook);
 		List<Book> userReleasedBookList = bookReleaseDao.getReleaseBookByUserID(user.getUserID());
+		//System.out.println(userReleasedBookList.size()+"???");
 		map.put("userReleasedBookList", userReleasedBookList);
 		return map;
 	}
@@ -127,6 +128,7 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		bookDao.update(had);
 		ExchangeHistory exchangeHistory = new ExchangeHistory(exchange);
 		exchangeHistory.setStatus(ExchangeStatus.CANCELED);
+		exchangeHistory.setResponseDate(new Date());
 		exchangeHistoryDao.save(exchangeHistory);
 		exchangeDao.delete(exchange);
 		return true;
@@ -139,6 +141,7 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		if(exchange.getStatus() != ExchangeStatus.WAITING)
 			return false;
 		exchange.setStatus(ExchangeStatus.AGREED);
+		exchange.setResponseDate(new Date());
 		exchange.setAddress2(address);
 		exchangeDao.update(exchange);
 		return true;
@@ -201,7 +204,15 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 			return false;
 		Date date = new Date();
 		exchange.setShDate1(date);
-		exchangeDao.update(exchange);
+		if (exchange.getShDate2() == null)
+            exchangeDao.update(exchange);
+        else
+        {
+            ExchangeHistory exchangeHistory = new ExchangeHistory(exchange);
+            exchangeHistory.setStatus(ExchangeStatus.COMPLETED);
+            exchangeHistoryDao.save(exchangeHistory);
+            exchangeDao.delete(exchange);
+        }
 		return true;
 	}
 
@@ -213,10 +224,19 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 			return false;
 		Date date = new Date();
 		exchange.setShDate2(date);
-		exchangeDao.update(exchange);
+		if (exchange.getShDate1() == null)
+            exchangeDao.update(exchange);
+        else
+        {
+            ExchangeHistory exchangeHistory = new ExchangeHistory(exchange);
+            exchangeHistory.setStatus(ExchangeStatus.COMPLETED);
+            exchangeHistoryDao.save(exchangeHistory);
+            exchangeDao.delete(exchange);
+        }
 		return true;
 	}
 
+	/*
 	@Override
 	public Boolean comment1(int exchangeID, int comment)
 	{
@@ -260,37 +280,38 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		}
 		return true;
 	}
+	*/
 
 	@Override
 	public Map showMyExchange() {
 	    User user = this.getLoginedUserInfo();
 	    Integer userID = user.getUserID();
 	    
-	    List<Exchange> initiativeExchange = this.exchangeDao.getExchangeByUserID1(userID);  // 主动发起的交换申请
-	    List<ExchangeHistory> initiativeExchangeHistory = this.exchangeHistoryDao.getExchangeHistoryByUserID1(userID); 
+	    List<Exchange> activeExchange = this.exchangeDao.getExchangeByUserID1(userID);  // 主动发起的交换申请
+	    List<ExchangeHistory> activeExchangeHistory = this.exchangeHistoryDao.getExchangeHistoryByUserID1(userID); 
 	    List<Exchange> passiveExchange = this.exchangeDao.getExchangeByUserID2(userID);  // 收到的交换申请
         List<ExchangeHistory> passiveExchangeHistory = this.exchangeHistoryDao.getExchangeHistoryByUserID2(userID);
         
-        List<ExchangeProfile> initiativeExchangeProfile = new ArrayList<ExchangeProfile>();
-        List<ExchangeProfile> initiativeExchangeHistoryProfile = new ArrayList<ExchangeProfile>();
+        List<ExchangeProfile> activeExchangeProfile = new ArrayList<ExchangeProfile>();
+        List<ExchangeProfile> activeExchangeHistoryProfile = new ArrayList<ExchangeProfile>();
         List<ExchangeProfile> passiveExchangeProfile = new ArrayList<ExchangeProfile>();
         List<ExchangeProfile> passiveExchangeHistoryProfile = new ArrayList<ExchangeProfile>();
         
-        for(Exchange exchange : initiativeExchange) {
+        for(Exchange exchange : activeExchange) {
             Integer wantedBookID = exchange.getWantedBookID();
             Integer hadBookID = exchange.getHadBookID();
             Book wantedBook = this.bookDao.getBookByID(wantedBookID);
             Book hadBook = this.bookDao.getBookByID(hadBookID);
             ExchangeProfile exchangeProfile = new ExchangeProfile(exchange,wantedBook,hadBook);
-            initiativeExchangeProfile.add(exchangeProfile);
+            activeExchangeProfile.add(exchangeProfile);
         }
-        for(ExchangeHistory exchangeHistory : initiativeExchangeHistory) {
+        for(ExchangeHistory exchangeHistory : activeExchangeHistory) {
             Integer wantedBookID = exchangeHistory.getWantedBookID();
             Integer hadBookID = exchangeHistory.getHadBookID();
             Book wantedBook = this.bookDao.getBookByID(wantedBookID);
             Book hadBook = this.bookDao.getBookByID(hadBookID);
             ExchangeProfile exchangeProfile = new ExchangeProfile(exchangeHistory,wantedBook,hadBook);
-            initiativeExchangeHistoryProfile.add(exchangeProfile);
+            activeExchangeHistoryProfile.add(exchangeProfile);
         }
         for(Exchange exchange : passiveExchange) {
             Integer wantedBookID = exchange.getWantedBookID();
@@ -310,8 +331,8 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
         }
         
 	    Map<String, List<ExchangeProfile>> returnMap = new HashMap<String, List<ExchangeProfile>>();
-	    returnMap.put("initiativeExchange", initiativeExchangeProfile);
-	    returnMap.put("initiativeExchangeHistory", initiativeExchangeHistoryProfile);
+	    returnMap.put("activeExchange", activeExchangeProfile);
+	    returnMap.put("activeExchangeHistory", activeExchangeHistoryProfile);
 	    returnMap.put("passiveExchange", passiveExchangeProfile);
 	    returnMap.put("passiveExchangeHistory", passiveExchangeHistoryProfile);
 	    return returnMap;

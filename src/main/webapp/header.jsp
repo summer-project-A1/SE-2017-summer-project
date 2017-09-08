@@ -37,9 +37,9 @@
                                     <div class="col-sm-3">
                                         <h4><s:property value="category1Name"/></h4>
                                         <ul class="multi-column-dropdown">
-                                            <li><a class="list" href="<%=path%>/bookAction/showAllBooks?category1Name=<s:property value="category1Name"/>&"><s:property value="category1Name"/></a></li>
+                                            <li><a class="list" href="javascript:window.location.href=encodeURI('<%=path%>/bookAction/showAllBooks?category1Name=<s:property value="category1Name"/>&')"><s:property value="category1Name"/></a></li>
                                             <s:iterator value="category2List">
-                                                <li><a class="list" href="<%=path%>/bookAction/showAllBooks?category2Name=<s:property value="category2Name"/>&"><s:property value="category2Name"/></a></li>
+                                                <li><a class="list" href="javascript:window.location.href=encodeURI('<%=path%>/bookAction/showAllBooks?category2Name=<s:property value="category2Name"/>&')"><s:property value="category2Name"/></a></li>
                                             </s:iterator>
                                         </ul>
                                     </div>
@@ -88,12 +88,17 @@
                             </fieldset>
                             <p>新用户 ? <a class="sign" href="<%=basePath%>signup.jsp">点击注册</a> <span><a href="#">忘记密码?</a></span></p>
                 </s:if>
+                        <s:elseif test="#session.userInfo.role==@common.constants.UserRole@ADMIN">
+                            <label>欢迎管理员！</label><br>
+                            <label><a href="<%=path%>/authAction/logout">退出登录</a></label><br>
+
+                        </s:elseif>
                 <s:else>
                             <label>欢迎您！<s:property value="#session.userInfo.email"/></label><br>
                             <label><a href="<%=path%>/userAction/showSellerCenter">卖家中心</a></label><br>
-                            <label><a href="myrelease.jsp">我的发布</a></label><br>
+                            <label><a href="<%=path%>/bookAction/showUserReleasedBooks">我的发布</a></label><br>
                             <label><a href="<%=path%>/borrowAction/showMyBorrow">我的借阅</a></label><br>
-                            <label><a href="myexchange.jsp">我的交换</a></label><br>
+                            <label><a href="<%=path%>/exchangeAction/showMyExchange">我的交换</a></label><br>
                             <label><a href="<%=path%>/orderAction/showMyOrder">我的购买</a></label><br>
                             <label><a href="<%=path%>/reserveAction/showMyReservation">我的预约</a></label><br>
                             <label><a href="<%=path%>/authAction/logout">退出登录</a></label><br>

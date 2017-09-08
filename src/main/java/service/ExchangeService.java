@@ -13,8 +13,10 @@ public interface ExchangeService extends BaseService
     public Boolean fh2(int exchangeID,String trackingNo);
     public Boolean sh1(int exchangeID);
     public Boolean sh2(int exchangeID);
+    /*
     public Boolean comment1(int exchangeID, int comment);
     public Boolean comment2(int exchangeID, int comment);
+    */
     
     public Map showMyExchange();
 }

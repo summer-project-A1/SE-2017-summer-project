@@ -136,6 +136,7 @@
         <action name="*" class="action.BookAction" method="{1}">
             <result name="showBooks">/products.jsp</result>
             <result name="showBookProfile">/productDetail.jsp</result>
+            <result name="showMyRelease">/myRelease.jsp</result>
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
@@ -247,7 +248,84 @@
                <param name="root">params</param>
             </result>
             <allowed-methods>
-                commentBook,deleteComment,honestyRatingWhenBorrow,honestyRatingWhenBuy
+                commentBook,deleteComment,honestyRatingWhenBorrow,honestyRatingWhenBuy,honestyRatingWhenExchange,honestyRatingWhenExchangeHistory
+            </allowed-methods>
+        </action>
+    </package>
+
+    <package name="adminAction" extends="struts-default,json-default" namespace="/adminAction">
+        <action name="*" class="action.AdminAction" method="{1}">
+            <result name="showAllUserList">/adminUser.jsp</result>
+            <result name="deleteUser" type="redirectAction">
+                <param name="namespace">/adminAction</param>
+                <param name="actionName">showAllUserList</param>
+            </result>
+            <result name="resetPassword" type="redirectAction">
+                <param name="namespace">/adminAction</param>
+                <param name="actionName">showAllUserList</param>
+            </result>
+            <result name="addUser" type="redirectAction">
+                <param name="namespace">/adminAction</param>
+                <param name="actionName">showAllUserList</param>
+            </result>
+            <result name="ajax" type="json">
+                <param name="root">params</param>
+            </result>
+            <allowed-methods>
+                showAllUserList,deleteUser,resetPassword,addUser
+            </allowed-methods>
+        </action>
+    </package>
+
+    <package name="exchangeAction" extends="struts-default,json-default" namespace="/exchangeAction">
+        <interceptors>
+            <interceptor name="isLogin" class="action.interceptor.IsLoginInterceptor"/>
+            <interceptor-stack name="loginAuthCheck">
+                <interceptor-ref name="isLogin"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="loginAuthCheck"/>
+
+        <global-results>
+            <result name="login" type="redirect">/signin.jsp</result>
+        </global-results>
+        <action name="*" class="action.ExchangeAction" method="{1}">
+            <result name="showExchangeApply">/exchangeApply.jsp</result>
+            <result name="showMyExchange">/myExchange.jsp</result>
+            <result name="rejectExchange" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
+            <result name="agreeExchange" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
+            <result name="cancelExchange" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
+            <result name="fh2" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
+            <result name="sh2" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
+            <result name="fh1" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
+            <result name="sh1" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
+            <result name="comment1" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
+            <result name="comment2" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
+            <result name="ajax" type="json">
+                <param name="root">params</param>
+            </result>
+            <allowed-methods>
+                prepareExchange,showMyExchange,createExchangeOrder,rejectExchange,agreeExchange,cancelExchange,fh2,sh2,fh1,sh1
             </allowed-methods>
         </action>
     </package>
