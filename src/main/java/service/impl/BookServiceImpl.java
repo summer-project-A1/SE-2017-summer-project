@@ -14,10 +14,7 @@ import dao.BookDao;
 import dao.BookReleaseDao;
 import dao.CategoryDao;
 import dao.ImageDao;
-import model.Book;
-import model.BookProfile;
-import model.BookRelease;
-import model.Category1;
+import model.*;
 import net.sf.json.JSONObject;
 import org.apache.http.*;
 import org.apache.http.client.methods.HttpGet;
@@ -147,7 +144,9 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> showUserBooks(int userID) {
+    public List<Book> showUserBooks() {
+        User user = this.getLoginedUserInfo();
+        int userID = user.getUserID();
         List<Book> bookList = this.bookDao.getBooksByUserID(userID);
         for(Book book : bookList) {
             book.setBookStatus(book.getStatus().toString());

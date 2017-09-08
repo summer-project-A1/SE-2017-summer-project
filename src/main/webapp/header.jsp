@@ -96,7 +96,7 @@
                 <s:else>
                             <label>欢迎您！<s:property value="#session.userInfo.email"/></label><br>
                             <label><a href="<%=path%>/userAction/showSellerCenter">卖家中心</a></label><br>
-                            <label><a href="myrelease.jsp">我的发布</a></label><br>
+                            <label><a href="<%=path%>/bookAction/showUserReleasedBooks">我的发布</a></label><br>
                             <label><a href="<%=path%>/borrowAction/showMyBorrow">我的借阅</a></label><br>
                             <label><a href="<%=path%>/exchangeAction/showMyExchange">我的交换</a></label><br>
                             <label><a href="<%=path%>/orderAction/showMyOrder">我的购买</a></label><br>

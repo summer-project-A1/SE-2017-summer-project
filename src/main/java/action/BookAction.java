@@ -210,13 +210,13 @@ public class BookAction extends ActionSupport {
     }
 
     public String showUserReleasedBooks() {
-        List<Book> userReleasedBooks = this.bookService.showUserBooks(this.userID);
+        List<Book> userReleasedBooks = this.bookService.showUserBooks();
         ActionContext.getContext().put("allBooks",userReleasedBooks);
-        return "showBooks";
+        return "showMyRelease";
     }
     public String uploadBook() {
         this.bookService.uploadBook(bookProfile);
-        return "showBooks";
+        return "showMyRelease";
     }
     public String showBookProfile() {
         this.bookProfile = this.bookService.showBookProfile(this.bookID);

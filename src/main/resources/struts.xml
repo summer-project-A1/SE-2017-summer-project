@@ -136,6 +136,7 @@
         <action name="*" class="action.BookAction" method="{1}">
             <result name="showBooks">/products.jsp</result>
             <result name="showBookProfile">/productDetail.jsp</result>
+            <result name="showMyRelease">/myRelease.jsp</result>
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
@@ -312,6 +313,12 @@
                 <param name="actionName">showMyExchange</param>
             </result>
             <result name="sh1" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
+            <result name="comment1" type="redirectAction">
+                <param name="actionName">showMyExchange</param>
+            </result>
+            <result name="comment2" type="redirectAction">
                 <param name="actionName">showMyExchange</param>
             </result>
             <result name="ajax" type="json">
