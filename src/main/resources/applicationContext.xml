@@ -236,12 +236,11 @@
         <property name="cronExpression" value="0/5 * * * * ?"></property>  
     </bean>
     <!-- ======================== 调度工厂 ======================== -->
-<!--   
     <bean id="springJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="schedulerContextAsMap">      
             <map>  
                 <description>schedulerContextAsMap</description>      
-                <entry key="userService" value-ref="userService"/>     
+                <entry key="userService" value-ref="userService"/>    
             </map>      
         </property>
         <property name="jobDetails">  
@@ -253,8 +252,16 @@
             <list>  
                 <ref bean="cronTrigger"/>  
             </list>  
-        </property>  
+        </property>
+        <property name="autoStartup" value="false"/> <!-- true表示自动启动，false表示不启动 -->
     </bean>
--->
+    <bean id="quartzManager" class="job.QuartzManager">
+        <property name="scheduler" ref="springJobSchedulerFactoryBean" />
+    </bean>
+    <bean id="oneTimeJobManager" class="job.OneTimeJobManager">
+        <property name="quartzManager" ref="quartzManager" />
+    </bean>
+    
+    <!-- ========================================================== -->
     
 </beans>

@@ -16,6 +16,7 @@ public class MaintenanceJob extends QuartzJobBean {
     /* ============================================================ */
     
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+        /*
         System.out.println();  
         long ms = System.currentTimeMillis();  
         System.out.println("\t\t" + new Date(ms));  
@@ -27,7 +28,8 @@ public class MaintenanceJob extends QuartzJobBean {
             e.printStackTrace();
         }
         //userService.deleteAllTimeoutUnactiveUser();
-        userService.checkEmailAvailable("email");  
-        System.out.println();
+        userService.checkEmailAvailable("email");
+        */  
+        System.out.println("MaintenanceJob");
     }
 }
