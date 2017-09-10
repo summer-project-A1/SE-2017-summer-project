@@ -303,16 +303,19 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
                     Reserve firstReserve = this.reserveDao.getFirstReserveByBookID(book.getBookID());
                     Integer firstReserveUserID = firstReserve.getUserID();
                     if(user.getUserID()==firstReserveUserID) {  // 如果当前预约排队首位的人是自己（一定满足，因为预约排队不是首位的人不能添加订单），则删除预约记录，修改书的预约人数记录
-                        book.setReserved(book.getReserved()-1);
-                        this.reserveDao.delete(firstReserve);
+                        book.setReserved(0);
+                        List<Reserve> reserveList = this.reserveDao.getReservationByBookID(book.getBookID());
+                        for(Reserve reserve : reserveList) {
+                            int userID = reserve.getUserID();
+                            User reserver = this.userDao.getUserById(userID);
+                                   
+                            SendEmail sendEmail = new SendEmail();
+                            String emailContent = "您预约的图书:"+book.getBookName()+"已被交换或购买。预约已自动取消。";
+                            String emailSubject = "预约取消";
+                            sendEmail.send(emailContent,emailSubject,reserver.getEmail());
+                            this.reserveDao.delete(reserve);
+                        }
                     }
-                    // 为下一个预约者设定预约过期时间（当前时间向后加this.reserveDay天）
-                    Reserve newFirstReserve = this.reserveDao.getFirstReserveByBookID(book.getBookID());
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.add(Calendar.DATE, this.reserveDay);
-                    Date due = calendar.getTime();
-                    newFirstReserve.setDue(due);
-                    this.reserveDao.update(newFirstReserve);
                 }
                 seller.setCredit(seller.getCredit() + order.getBuyCredit());
                 this.userDao.update(seller);

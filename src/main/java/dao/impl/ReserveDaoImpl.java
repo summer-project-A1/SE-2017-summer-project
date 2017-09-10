@@ -41,6 +41,15 @@ public class ReserveDaoImpl extends BaseDaoImpl implements ReserveDao {
     }
     
     @Override
+    public List<Reserve> getReservationByBookID(int bookID) {
+        String hql = "from Reserve as r where r.bookID = :bookID";
+        Query query = getSession().createQuery(hql);
+        query.setParameter("bookID", bookID);
+        List<Reserve> reserveList = query.list();
+        return reserveList;
+    }
+    
+    @Override
     public Reserve getFirstReserveByBookID(int bookID) {
         String hql = "from Reserve as r where r.bookID = :bookID order by r.due asc";
         Query query = getSession().createQuery(hql);

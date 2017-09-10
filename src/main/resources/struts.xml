@@ -77,8 +77,11 @@
             <result name="ajax" type="json">
                 <param name="root">params</param>
             </result>
-            <result name="emptyCart" type="redirectAction">
-                <param name="actionName">showCart</param>
+            <result name="emptyBuyCart" type="redirectAction">
+                <param name="actionName">showBuyCart</param>
+            </result>
+            <result name="emptyBorrowCart" type="redirectAction">
+                <param name="actionName">showBorrowCart</param>
             </result>
             <allowed-methods>
                 showBuyCart,addToBuyCart,removeFromBuyCart,emptyBuyCart,showBorrowCart,addToBorrowCart,removeFromBorrowCart,emptyBorrowCart

@@ -95,7 +95,7 @@ public class CartAction extends ActionSupport{
     }
     public String emptyBuyCart() {
         this.cartService.emptyBuyCart();
-        return "emptyCart";
+        return "emptyBuyCart";
     }
     
     /* =========================== */
@@ -131,7 +131,7 @@ public class CartAction extends ActionSupport{
     }
     public String emptyBorrowCart() {
         this.cartService.emptyBorrowCart();
-        return "emptyCart";
+        return "emptyBorrowCart";
     }
     
     /* ======================= */
