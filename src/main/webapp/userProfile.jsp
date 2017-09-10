@@ -7,6 +7,7 @@
     <script src="<%=path%>/js/jquery.cityselect.js"></script>
     <script src="<%=path%>/js/fileinput.js"></script>
     <script src="<%=path%>/js/fileinput.min.js"></script>
+    <script src="<%=path%>/js/zh.min.js"></script>
     <title>User Profile</title>
     <script>
         $(document).ready(function(){
@@ -66,7 +67,7 @@
             }else{
                 $("#available_status1").html("<span style='color:green'>密码格式正确</span>");
             }
-        });
+            });
 
 
             $("#update_oldPassword").blur(function(){
@@ -76,9 +77,14 @@
             }else{
                 $("#available_status1").html("<span style='color:green'>密码格式正确</span>");
             }
-        });
+            });
 
-
+            $("#userPicture").fileinput({
+                showUpload : false,
+                allowedFileExtensions: ['jpg','jpeg','png','gif','bmp'],
+                browseLabel : "浏览",
+                language : 'zh'
+            });
 
         <!--新密码验证-->
             $("#update_newPassword").focus();
@@ -89,7 +95,7 @@
             }else{
                 $("#available_status2").html("<span style='color:green'>密码格式正确</span>");
             }
-        });
+            });
 
 
 
@@ -100,7 +106,7 @@
             }else{
                 $("#available_status2").html("<span style='color:green'>密码格式正确</span>");
             }
-        });
+            });
 
         <!--新密码确认-->
             $("#update_confirmNewPassword").focus();
@@ -112,7 +118,7 @@
             }else{
                 $("#available_status3").html("<span></span>");
             }
-        });
+            });
 
             $("#update_confirmNewPassword").blur(function(){
             var confirmpassword = $("#update_confirmNewPassword").val();
@@ -122,7 +128,7 @@
             }else{
                 $("#available_status3").html("<span></span>");
             }
-        });
+            });
 
 
 

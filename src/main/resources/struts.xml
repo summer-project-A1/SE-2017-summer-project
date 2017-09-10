@@ -127,8 +127,8 @@
             <interceptor-ref name="defaultStack"/>
         </action>
         <action name="uploadBook" class="action.BookAction" method="uploadBook">
-            <result name="showBooks" type="redirectAction">
-                <param name="actionName">showAllBooks</param>
+            <result name="uploadBook" type="redirectAction">
+                <param name="actionName">showUserReleasedBooks</param>
             </result>
             <interceptor-ref name="isLogin"/>
             <interceptor-ref name="defaultStack"/>

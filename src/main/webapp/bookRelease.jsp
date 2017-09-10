@@ -133,7 +133,7 @@
             <label>简介</label><font color="#FF0000">*</font><textarea id="intro" name="bookProfile.intro" class="form-control" rows="3"></textarea>
         </div>
         <div class="form-group form-group-auto">
-            <label>图书封面</label><font color="#FF0000">*</font><input name="bookProfile.coverPicture" type="file" accept=image>
+            <label>图书封面</label><font color="#FF0000">*</font><input name="bookProfile.coverPicture" type="file" accept="image">
         </div>
         <div class="form-group form-group-auto">
             <label>其他图片（一）</label><font color="#FF0000">*</font><input name="bookProfile.otherPicture"  type="file" accept="image" class="file">
@@ -229,38 +229,38 @@
     });
     $("#commit").click(function(){
         var obj=$('#bookinfo').find('#warning');
-        if($("input[name='bookProflie.coverPicture']").val()=="")
-            {obj.innerText="图书封面必须上传";return;}
-        if($("input[name='bookProflie.otherPicture']").val()=="")
-            {obj.innerText="必须上传";return;}
-        if($("input[name='bookProflie.bookName']").val()=="")
-            {obj.innerText="图书名称必须填写";return;}
-        if($("input[name='bookProflie.author']").val()=="")
-            {obj.innerText="图书作者必须填写";return;}
-        if($("input[name='bookProflie.isbn']").val()=="")
-            {obj.innerText="图书ISBN必须填写";return;}
-        if($("input[name='bookProflie.press']").val()=="")
-            {obj.innerText="图书出版社必须填写";return;}
-        if($("input[name='bookProflie.publishYear']").val()=="")
-            {obj.innerText="图书出版年份必须填写";return;}
-        if($("input[name='bookProflie.publishMonth']").val()=="")
-            {obj.innerText="图书出版月份必须填写";return;}
-        if($("input[name='bookProflie.editionMonth']").val()==""||$("input[name='bookProflie.editionYear']").val()==""
-                ||$("input[name='bookProflie.editionVersion']").val()=="")
-            {obj.innerText="图书版次信息不全";return;}
-        if($("input[name='bookProflie.spage']").val()=="")
-            {obj.innerText="图书页数必须填写";return;}
-        if($("input[name='bookProflie.canExchange']:checked").val()=='')
-            {obj.innerText="请确认是否可交换";return;}
-        if($("input[name='bookProflie.canExchange']:checked").val()=='1'&&$("input[name='bookProfile.buyCredit']").val()=='')
-            {obj.innerText="请输入购买所需积分";return;}
-        if($("input[name='bookProflie.canBorrow']:checked").val()=="")
-            {obj.innerText="请确认是否可借阅";return;}
-        if($("input[name='bookProflie.canBorrow']:checked").val()=='1'&&$("input[name='bookProflie.borrowCredit']").val()=='')
-            {obj.innerText="请输入借阅所需积分";return;}
+        if($("input[name='bookProfile.coverPicture']").val()=="")
+            {obj.html("图书封面必须上传");return;}
+        if($("input[name='bookProfile.otherPicture']").val()=="")
+            {obj.html("必须上传");return;}
+        if($("input[name='bookProfile.bookName']").val()=="")
+            {obj.html("图书名称必须填写");return;}
+        if($("input[name='bookProfile.author']").val()=="")
+            {obj.html("图书作者必须填写");return;}
+        if($("input[name='bookProfile.isbn']").val()=="")
+            {obj.html("图书ISBN必须填写");return;}
+        if($("input[name='bookProfile.press']").val()=="")
+            {obj.html("图书出版社必须填写");return;}
+        if($("input[name='bookProfile.publishYear']").val()=="")
+            {obj.html("图书出版年份必须填写");return;}
+        if($("input[name='bookProfile.publishMonth']").val()=="")
+            {obj.html("图书出版月份必须填写");return;}
+        if($("input[name='bookProfile.editionMonth']").val()==""||$("input[name='bookProflie.editionYear']").val()==""
+                ||$("input[name='bookProfile.editionVersion']").val()=="")
+            {obj.html("图书版次信息不全");return;}
+        if($("input[name='bookProfile.spage']").val()=="")
+            {obj.html("图书页数必须填写");return;}
+        if($("input[name='bookProfile.canExchange']:checked").val()=='')
+            {obj.html("请确认是否可交换");return;}
+        if($("input[name='bookProfile.canExchange']:checked").val()=='1'&&$("input[name='bookProfile.buyCredit']").val()=='')
+            {obj.html("请输入购买所需积分");return;}
+        if($("input[name='bookProfile.canBorrow']:checked").val()=="")
+            {obj.html("请确认是否可借阅");return;}
+        if($("input[name='bookProfile.canBorrow']:checked").val()=='1'&&$("input[name='bookProflie.borrowCredit']").val()=='')
+            {obj.html("请输入借阅所需积分");return;}
         if($("#introduction").val()=='')
-            {obj.innerText="请输入简介";return;}
-        obj.innerText="提交中...";
+            {obj.html("请输入简介");return;}
+        obj.html("提交中...");
         $("#form").submit();
     });
     </script>

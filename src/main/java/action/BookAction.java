@@ -216,7 +216,7 @@ public class BookAction extends ActionSupport {
     }
     public String uploadBook() {
         this.bookService.uploadBook(bookProfile);
-        return "showMyRelease";
+        return "uploadBook";
     }
     public String showBookProfile() {
         this.bookProfile = this.bookService.showBookProfile(this.bookID);
