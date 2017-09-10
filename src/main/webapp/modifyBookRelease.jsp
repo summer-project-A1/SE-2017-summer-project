@@ -41,30 +41,30 @@
 <!-- header -->
 <s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 <div id=bookinfo>
-    <form id="form" action="<%=path%>/bookAction/uploadBook" method=post enctype="multipart/form-data" role="form" class="form-horizontal" accept-charset="UTF-8">
+    <form id="form" action="<%=path%>/bookAction/" method=post enctype="multipart/form-data" role="form" class="form-horizontal" accept-charset="UTF-8">
         <h3 style="text-align: center;">发布图书</h3>
         <div class="form-group form-group-auto">
-            <label>书名</label><font color="#FF0000">*</font><input id="bookName" name="bookProfile.bookName" type="text" class="form-control">
+            <label>书名</label><font color="#FF0000">*</font><input id="bookName" name="bookProfile.bookName" type="text" class="form-control" value="<s:property value="#bookProfile.bookName"/>">
         </div>
         <div class="form-group form-group-auto">
-            <label>作者</label><font color="#FF0000">*</font><input id="author" name="bookProfile.author" type="text" class="form-control">
+            <label>作者</label><font color="#FF0000">*</font><input id="author" name="bookProfile.author" type="text" class="form-control" value="<s:property value="#bookProfile.author"/>">
         </div>
         <div class="form-group form-group-auto">
-            <label>ISBN</label><font color="#FF0000">*</font>(输入isbn号可自动获取部分图书信息)<input id="isbn" name="bookProfile.isbn" type="text" class="form-control">
+            <label>ISBN</label><font color="#FF0000">*</font><input id="isbn" name="bookProfile.isbn" type="text" class="form-control" value="<s:property value="#bookProfile.isbn"/>">
         </div>
         <div class="form-group form-group-auto">
-            <label>出版社</label><font color="#FF0000">*</font><input id="press" name=bookProfile.press type="text" class="form-control">
+            <label>出版社</label><font color="#FF0000">*</font><input id="press" name=bookProfile.press type="text" class="form-control" value="<s:property value="#bookProfile.press"/>">
         </div>
         <div class="form-group form-group-auto">
             <label>出版时间</label><font color="#FF0000">*</font>&nbsp;
-            <input name="bookProfile.publishYear" type="text" class="form-control form-control-noNewline">&nbsp;<label>年</label>&nbsp;
-            <input name="bookProfile.publishMonth" type="text" class="form-control form-control-noNewline">&nbsp;<label>月</label>
+            <input name="bookProfile.publishYear" type="text" class="form-control form-control-noNewline" value="<s:property value="#bookProfile.publishYear"/>">&nbsp;<label>年</label>&nbsp;
+            <input name="bookProfile.publishMonth" type="text" class="form-control form-control-noNewline" value="<s:property value="#bookProfile.publishMonth"/>">&nbsp;<label>月</label>
         </div>
         <div class="form-group form-group-auto">
             <label>版次</label><font color="#FF0000">*</font>&nbsp;
-            <input name="bookProfile.editionYear" type="text" class="form-control form-control-noNewline">&nbsp;<label>年</label>&nbsp;
-            <input name="bookProfile.editionMonth" type="text" class="form-control form-control-noNewline">&nbsp;<label>月</label>&nbsp;
-            <label>第</label>&nbsp;<input name="bookProfile.editionVersion" type="text" class="form-control form-control-noNewline">&nbsp;<label>版</label>
+            <input name="bookProfile.editionYear" type="text" class="form-control form-control-noNewline" value="<s:property value="#bookProfile.editionYear"/>">&nbsp;<label>年</label>&nbsp;
+            <input name="bookProfile.editionMonth" type="text" class="form-control form-control-noNewline" value="<s:property value="#bookProfile.editionMonth"/>">&nbsp;<label>月</label>&nbsp;
+            <label>第</label>&nbsp;<input name="bookProfile.editionVersion" type="text" class="form-control form-control-noNewline" value="<s:property value="#bookProfile.editionVersion"/>">&nbsp;<label>版</label>
         </div>
         <div class="form-group form-group-auto">
             <label>类别</label><font color="#FF0000">*</font>&nbsp;
@@ -85,7 +85,7 @@
         </div>
         <div class="form-group form-group-auto">
             <label>页数</label><font color="#FF0000">*</font>&nbsp;
-            <input id="pages" name="bookProfile.page" type="number" step="50" min="0" class="form-control form-control-noNewline">&nbsp;&nbsp;&nbsp;
+            <input id="pages" name="bookProfile.page" type="number" step="50" min="0" class="form-control form-control-noNewline" value="<s:property value="#bookProfile.page"/>">&nbsp;&nbsp;&nbsp;
             <label>装帧</label><font color="#FF0000">*</font>&nbsp;
             <select name="bookProfile.bookBinding" class="form-control form-control-noNewline">
                 <option value="0">线装</option>
@@ -130,7 +130,7 @@
             </div>
         </div>
         <div class="form-group form-group-auto">
-            <label>简介</label><font color="#FF0000">*</font><textarea id="intro" name="bookProfile.intro" class="form-control" rows="3"></textarea>
+            <label>简介</label><font color="#FF0000">*</font><textarea id="intro" name="bookProfile.intro" class="form-control" rows="3"><s:property value="#bookProfile.intro"/></textarea>
         </div>
         <div class="form-group form-group-auto">
             <label>图书封面</label><font color="#FF0000">*</font><input name="bookProfile.coverPicture" type="file" accept="image">
@@ -147,7 +147,7 @@
         </div>
         <div class="clearfix"> </div>
         <div id=confirm class="register-but">
-            <input type="button" id=commit value="确认发布">
+            <input type="button" id=commit value="修改并重新上架">
         </div>
         <div class="clearfix"> </div>
     </form>

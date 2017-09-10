@@ -101,14 +101,14 @@
                                             <p>当前状态：正被借阅</p>
                                         </s:elseif>
                                         <s:else>
-                                            <p>当前状态：空闲</p>
+                                            <p>当前状态：空闲</p><br>
+                                            <s:if test="canBorrow==1||canExchange==1">
+                                                <a href="<%=path%>/bookAction/" class="add-cart item_add">下架</a>
+                                            </s:if>
+                                            <s:elseif test="canBorrow==0&&canExchange==0">
+                                                <a href="<%=path%>/bookAction/" class="add-cart item_add">修改图书信息并重新上架</a>
+                                            </s:elseif>
                                         </s:else>
-                                        <s:if test="canBorrow==1||canExchange==1">
-                                            <a href="<%=path%>/bookAction/" class="add-cart item_add">下架</a>
-                                        </s:if>
-                                        <s:elseif test="canBorrow==0&&canExchange==0">
-                                            <a href="<%=path%>/bookAction/" class="add-cart item_add">修改图书信息并重新上架</a>
-                                        </s:elseif>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
