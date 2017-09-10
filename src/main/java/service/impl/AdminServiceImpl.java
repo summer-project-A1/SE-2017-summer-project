@@ -1,9 +1,12 @@
 package service.impl;
 
+import common.constants.BookStatus;
 import common.constants.UserRole;
 import common.constants.UserStatus;
 import common.utils.PasswordUtil;
+import dao.BookDao;
 import dao.UserDao;
+import model.Book;
 import model.User;
 import service.AdminService;
 
@@ -14,6 +17,7 @@ import java.util.Map;
 
 public class AdminServiceImpl extends BaseServiceImpl implements AdminService {
     private UserDao userDao;
+    private BookDao bookDao;
     private String defaultPassword;
 
     public UserDao getUserDao() {
@@ -22,7 +26,13 @@ public class AdminServiceImpl extends BaseServiceImpl implements AdminService {
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
-    public String getDefaultPassword() {
+    public BookDao getBookDao() {
+		return bookDao;
+	}
+	public void setBookDao(BookDao bookDao) {
+		this.bookDao = bookDao;
+	}
+	public String getDefaultPassword() {
         return defaultPassword;
     }
     public void setDefaultPassword(String defaultPassword) {
@@ -77,5 +87,15 @@ public class AdminServiceImpl extends BaseServiceImpl implements AdminService {
 
         return this.userDao.save(user);
     }
+	@Override
+	public boolean deleteBook(int bookID)
+	{
+		Book book = bookDao.getBookByID(bookID);
+		if(book.getStatus()!=BookStatus.IDLE && book.getStatus()!=BookStatus.BORROWED)
+			return false;
+		book.setStatus(BookStatus.DELETED);
+		bookDao.update(book);
+		return true;
+	}
 
 }

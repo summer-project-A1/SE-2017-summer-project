@@ -18,6 +18,7 @@ public class AdminAction {
     private String password;
     private int credit;
     private Map params;
+    private int bookID;
 
     public AdminService getAdminService(){return adminService;}
     public void setAdminService(AdminService adminService){this.adminService = adminService;}
@@ -52,7 +53,14 @@ public class AdminAction {
         this.credit = credit;
     }
 
-    public String showAllUserList(){
+    public int getBookID() {
+		return bookID;
+	}
+	public void setBookID(int bookID) {
+		this.bookID = bookID;
+	}
+	
+	public String showAllUserList(){
         List<User> list = this.adminService.showAllUserList();
         ActionContext.getContext().put("userList",list);
         return "showAllUserList";
@@ -78,7 +86,11 @@ public class AdminAction {
         }
         return null;
     }
-
-
-
+    
+    public String deleteBook()
+    {
+    	if(adminService.deleteBook(bookID))
+    		return "deleteBook";
+    	return null;
+    }
 }

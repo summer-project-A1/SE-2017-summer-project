@@ -9,4 +9,5 @@ public interface AdminService extends BaseService {
     public boolean deleteUser(int userID);
     public boolean addUser(String email,String password,int credit);
     public boolean resetPassword(int userID);
+    public boolean deleteBook(int bookID);
 }

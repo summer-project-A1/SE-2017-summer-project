@@ -13,6 +13,7 @@ import dao.BookDao;
 import dao.BookReleaseDao;
 import dao.ExchangeDao;
 import dao.ExchangeHistoryDao;
+import dao.ReserveDao;
 import dao.UserDao;
 
 import model.Book;
@@ -20,6 +21,7 @@ import model.BookRelease;
 import model.Exchange;
 import model.ExchangeHistory;
 import model.ExchangeProfile;
+import model.Reserve;
 import model.User;
 
 import service.ExchangeService;
@@ -31,6 +33,7 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 	private BookReleaseDao bookReleaseDao;
 	private ExchangeDao exchangeDao;
 	private ExchangeHistoryDao exchangeHistoryDao;
+	private ReserveDao reserveDao;
 	/*=========================================================*/
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
@@ -72,6 +75,12 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		return this.exchangeHistoryDao;
 	}
 
+	public ReserveDao getReserveDao() {
+		return reserveDao;
+	}
+	public void setReserveDao(ReserveDao reserveDao) {
+		this.reserveDao = reserveDao;
+	}
 	/*==================================================================*/
 	@Override
 	public Map prepareExchange(int wantedBookID)
@@ -96,6 +105,13 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 			return false;
 		if (had.getStatus() != BookStatus.IDLE)
 			return false;
+		if(wanted.getReserved()>0)
+		{
+			Reserve reserve = reserveDao.getFirstReserveByBookID(wanted.getBookID());
+			if(reserve.getUserID() != user1.getUserID())
+				return false;
+			reserveDao.delete(reserve);
+		}
 		BookRelease bookRelease = bookReleaseDao.getReleaseBookByBookID(wanted.getBookID());
 		User user2 = userDao.getUserById(bookRelease.getUserID());
 		int userID1 = user1.getUserID();
@@ -131,6 +147,10 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		exchangeHistory.setResponseDate(new Date());
 		exchangeHistoryDao.save(exchangeHistory);
 		exchangeDao.delete(exchange);
+		if(wanted.getReserved()>0)
+		{
+			//开启下一个预约者的定时任务
+		}
 		return true;
 	}
 
@@ -144,6 +164,7 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		exchange.setResponseDate(new Date());
 		exchange.setAddress2(address);
 		exchangeDao.update(exchange);
+		//删除后面所有的预约并邮件通知
 		return true;
 	}
 
@@ -167,6 +188,10 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		exchangeHistory.setStatus(ExchangeStatus.REJECTED);
 		exchangeHistoryDao.save(exchangeHistory);
 		exchangeDao.delete(exchange);
+		if(wanted.getReserved()>0)
+		{
+			//开启下一个人的定时任务
+		}
 		return true;
 	}
 

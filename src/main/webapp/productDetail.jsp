@@ -161,6 +161,9 @@
                 <s:elseif test="#bookProfile.bookStatus=='BORROWED' && #bookProfile.reserved==true">
                     <p>此书正被借阅，已被预约</p>
                 </s:elseif> -->
+                <s:elseif test="#bookProfile.bookStatus=='DELETED'">
+                	<p>此书已被管理员删除</p>
+                </s:elseif>
                 <s:elseif test="#bookProfile.bookStatus=='EXCHANGED'">
                     <p>此书已被交换或购买</p>
                 </s:elseif>
@@ -174,7 +177,7 @@
                     <p>此书可以交换，可以购买</p>
                 </s:elseif>
                 <s:elseif test="#bookProfile.canBorrow==false && #bookProfile.canExchange==false">
-                    <p>此书是摆设</p>
+                    <p>此书已被发布者下架</p>
                 </s:elseif>
                 <div class="btn_form">
                     <s:if test="#bookProfile.bookStatus=='BORROWED'">
