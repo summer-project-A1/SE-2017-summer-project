@@ -345,4 +345,13 @@
             </allowed-methods>
         </action>
     </package>
+    
+    <package name="testAction" extends="struts-default,json-default" namespace="/testAction">
+        <action name="*" class="action.TestAction" method="{1}">
+            <result name="success">/footer.jsp</result>
+            <allowed-methods>
+                regex:.*
+            </allowed-methods>
+        </action>
+    </package>
 </struts>
