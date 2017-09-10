@@ -229,27 +229,10 @@
     });
     $("#commit").click(function(){
         var obj=$('#bookinfo').find('#warning');
-        if($("input[name='bookProfile.coverPicture']").val()=="")
-        {obj.html("图书封面必须上传");return;}
+
         if($("input[name='bookProfile.otherPicture']").val()=="")
-        {obj.html("必须上传");return;}
-        if($("input[name='bookProfile.bookName']").val()=="")
-        {obj.html("图书名称必须填写");return;}
-        if($("input[name='bookProfile.author']").val()=="")
-        {obj.html("图书作者必须填写");return;}
-        if($("input[name='bookProfile.isbn']").val()=="")
-        {obj.html("图书ISBN必须填写");return;}
-        if($("input[name='bookProfile.press']").val()=="")
-        {obj.html("图书出版社必须填写");return;}
-        if($("input[name='bookProfile.publishYear']").val()=="")
-        {obj.html("图书出版年份必须填写");return;}
-        if($("input[name='bookProfile.publishMonth']").val()=="")
-        {obj.html("图书出版月份必须填写");return;}
-        if($("input[name='bookProfile.editionMonth']").val()==""||$("input[name='bookProflie.editionYear']").val()==""
-            ||$("input[name='bookProfile.editionVersion']").val()=="")
-        {obj.html("图书版次信息不全");return;}
-        if($("input[name='bookProfile.spage']").val()=="")
-        {obj.html("图书页数必须填写");return;}
+        {obj.html("必须同时上传两张其他图片");return;}
+
         if($("input[name='bookProfile.canExchange']:checked").val()=='')
         {obj.html("请确认是否可交换");return;}
         if($("input[name='bookProfile.canExchange']:checked").val()=='1'&&$("input[name='bookProfile.buyCredit']").val()=='')
@@ -258,8 +241,7 @@
         {obj.html("请确认是否可借阅");return;}
         if($("input[name='bookProfile.canBorrow']:checked").val()=='1'&&$("input[name='bookProflie.borrowCredit']").val()=='')
         {obj.html("请输入借阅所需积分");return;}
-        if($("#introduction").val()=='')
-        {obj.html("请输入简介");return;}
+       
         obj.html("提交中...");
         $("#form").submit();
     });
