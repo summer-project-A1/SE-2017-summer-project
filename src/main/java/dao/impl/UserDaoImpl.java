@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import common.constants.UserRole;
 import org.bson.types.ObjectId;
 import org.hibernate.query.Query;
 
@@ -217,8 +218,10 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
     @Override
 	public List<User> getAllUsers() {
-		String hql = "from User";
+		String hql = "from User where role = :role and status = :status";
 		Query query = getSession().createQuery(hql);
+		query.setParameter("role", UserRole.COMMON);
+		query.setParameter("status",UserStatus.ACTIVATED);
 		List<User> users = query.list();
 		return users;
 	}
@@ -227,7 +230,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     public List<User> getAllTimeoutUnactiveUser() {
         String hql = "from User where status = :status and due < :now";
         Query query = this.getSession().createQuery(hql);
-        query.setParameter("status", UserStatus.UNACTIVATED.ordinal());
+        query.setParameter("status", UserStatus.UNACTIVATED);
         query.setParameter("now", new Date());
         List<User> users = query.list();
         return users;

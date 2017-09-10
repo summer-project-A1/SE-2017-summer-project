@@ -45,7 +45,7 @@
                             <th>Email</th>
                             <th>密码</th>
                             <th>积分</th>
-                            <th><a href="#">添加账户</a></th>
+                            <th></th>
                             <th></th>
                         </tr>
                         </thead>
