@@ -126,10 +126,34 @@
             <interceptor-ref name="isLogin"/>
             <interceptor-ref name="defaultStack"/>
         </action>
+        <action name="showUserReleasedBooks" class="action.BookAction" method="showUserReleasedBooks">
+            <result name="showMyRelease">/myRelease.jsp</result>
+            <interceptor-ref name="isLogin"/>
+            <interceptor-ref name="defaultStack"/>
+        </action>
         <action name="uploadBook" class="action.BookAction" method="uploadBook">
             <result name="uploadBook" type="redirectAction">
                 <param name="actionName">showUserReleasedBooks</param>
             </result>
+            <interceptor-ref name="isLogin"/>
+            <interceptor-ref name="defaultStack"/>
+        </action>
+        <action name="offlineBook" class="action.BookAction" method="offlineBook">
+            <result name="showModifyBookRelease" type="redirectAction">
+                <param name="actionName">showUserReleasedBooks</param>
+            </result>
+            <interceptor-ref name="isLogin"/>
+            <interceptor-ref name="defaultStack"/>
+        </action>
+        <action name="updateBook" class="action.BookAction" method="updateBook">
+            <result name="showMyRelease" type="redirectAction">
+                <param name="actionName">showUserReleasedBooks</param>
+            </result>
+            <interceptor-ref name="isLogin"/>
+            <interceptor-ref name="defaultStack"/>
+        </action>
+        <action name="showModifyBookRelease" class="action.BookAction" method="showModifyBookRelease">
+            <result name="showModifyBookRelease">/modifyBookRelease.jsp</result>
             <interceptor-ref name="isLogin"/>
             <interceptor-ref name="defaultStack"/>
         </action>
@@ -141,7 +165,7 @@
                 <param name="root">params</param>
             </result>
             <allowed-methods>
-                showAllBooks,showBooksByCategory1Name,showBooksByCategory2Name,showUserReleasedBooks,showBookProfile,getInfoByIsbn
+                showAllBooks,showBooksByCategory1Name,showBooksByCategory2Name,showBookProfile,getInfoByIsbn
             </allowed-methods>
         </action>
     </package>

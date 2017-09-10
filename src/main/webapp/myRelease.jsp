@@ -103,10 +103,10 @@
                                         <s:else>
                                             <p>当前状态：空闲</p><br>
                                             <s:if test="canBorrow==1||canExchange==1">
-                                                <a href="<%=path%>/bookAction/" class="add-cart item_add">下架</a>
+                                                <a href="<%=path%>/bookAction/offlineBook?bookID=<s:property value="bookID"/>" class="add-cart item_add">下架</a>
                                             </s:if>
                                             <s:elseif test="canBorrow==0&&canExchange==0">
-                                                <a href="<%=path%>/bookAction/" class="add-cart item_add">修改图书信息并重新上架</a>
+                                                <a href="<%=path%>/bookAction/showModifyBookRelease?bookID=<s:property value="bookID"/>" class="add-cart item_add">修改图书信息并重新上架</a>
                                             </s:elseif>
                                         </s:else>
                                     </div>

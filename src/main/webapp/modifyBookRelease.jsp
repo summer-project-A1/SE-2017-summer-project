@@ -41,8 +41,9 @@
 <!-- header -->
 <s:action name="header" executeResult="true" namespace="/"/><!-- home page -->
 <div id=bookinfo>
-    <form id="form" action="<%=path%>/bookAction/" method=post enctype="multipart/form-data" role="form" class="form-horizontal" accept-charset="UTF-8">
+    <form id="form" action="<%=path%>/bookAction/updateBook" method=post enctype="multipart/form-data" role="form" class="form-horizontal" accept-charset="UTF-8">
         <h3 style="text-align: center;">发布图书</h3>
+        <input type="hidden" name="bookProfile.bookID" value="<s:property value="#bookProfile.bookID"/>"></input>
         <div class="form-group form-group-auto">
             <label>书名</label><font color="#FF0000">*</font><input id="bookName" name="bookProfile.bookName" type="text" class="form-control" value="<s:property value="#bookProfile.bookName"/>">
         </div>
@@ -136,10 +137,10 @@
             <label>图书封面</label><font color="#FF0000">*</font><input name="bookProfile.coverPicture" type="file" accept="image">
         </div>
         <div class="form-group form-group-auto">
-            <label>其他图片（一）</label><font color="#FF0000">*</font><input name="bookProfile.otherPicture"  type="file" accept="image" class="file">
+            <label>其他图片（一）</label><font color="#FF0000">*</font><input id="otherPicture1" name="bookProfile.otherPicture"  type="file" accept="image" class="file">
         </div>
         <div class="form-group form-group-auto">
-            <label>其他图片（二）</label><font color="#FF0000">*</font><input name="bookProfile.otherPicture"  type="file" accept=image class="file">
+            <label>其他图片（二）</label><font color="#FF0000">*</font><input id="otherPicture2" name="bookProfile.otherPicture"  type="file" accept=image class="file">
         </div>
 
         <div class="form-group form-group-auto">
@@ -229,8 +230,10 @@
     });
     $("#commit").click(function(){
         var obj=$('#bookinfo').find('#warning');
-
-        if($("input[name='bookProfile.otherPicture']").val()=="")
+        
+        var otherPicture1 = $("#otherPicture1").val();
+        var otherPicture2 = $("#otherPicture2").val();
+        if(otherPicture1==""&&otherPicture2!="" || otherPicture1!=""&&otherPicture2=="")
         {obj.html("必须同时上传两张其他图片");return;}
 
         if($("input[name='bookProfile.canExchange']:checked").val()=='')

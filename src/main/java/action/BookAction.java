@@ -225,7 +225,12 @@ public class BookAction extends ActionSupport {
         ActionContext.getContext().put("commentProfileList",commentProfileList);
         return "showBookProfile";
     }
-
+    public String showModifyBookRelease() {
+        this.bookProfile = this.bookService.showBookProfile(this.bookID);
+        ActionContext.getContext().put("category1List",this.bookService.showAllCategory1s());
+        ActionContext.getContext().put("bookProfile",bookProfile);
+        return "showModifyBookRelease";
+    }
     public String showBooksByCategory1Name(){
         if(this.part == null) {
             this.part = 1;
@@ -287,6 +292,15 @@ public class BookAction extends ActionSupport {
         return "ajax";
     }
 
+    public String offlineBook() {
+        this.bookService.offlineBook(this.bookID);
+        return "showModifyBookRelease";
+    }
+    
+    public String updateBook() {
+        this.bookService.updateBook(bookProfile);
+        return "showMyRelease";
+    }
 
 }
 

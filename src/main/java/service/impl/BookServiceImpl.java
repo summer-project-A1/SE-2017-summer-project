@@ -250,7 +250,15 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     @Override
     public Boolean updateBook(BookProfile bookProfile) {
         Integer bookID = bookProfile.getBookID();
+        System.out.println(bookID);
+        BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
         Book oldBook = this.bookDao.getBookByID(bookID);
+        if(bookRelease.getUserID() != this.getLoginedUserInfo().getUserID()
+                || oldBook.getStatus() != BookStatus.IDLE
+                || oldBook.getCanBorrow() != 0 || oldBook.getCanExchange() != 0
+                ) {
+            return false;    // 只能修改自己发布的书
+        }
         Map bookProfileInMongo = this.bookDao.getBookProfileMapInMongo(oldBook);
 //      bookProfileInMongo.put("category2", bookProfile.getCategory2());
         // bookProfileInMongo.put("publish", new HashMap(){{put("year",publishYear);put("month",publishMonth);}});
@@ -269,7 +277,6 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
             for(String tmp : oldOtherPictureID) {
                 this.imageDao.deleteImageById(tmp);
             }
-            bookProfileInMongo.clear();
             List otherPictureID = new ArrayList();
             for(File tmp : bookProfile.getOtherPicture()) {
                 // save otherPicture
@@ -304,7 +311,22 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     }
     
     @Override
+    public Boolean offlineBook(int bookID) {
+        // 下架书（把可借阅和可交换都设为0）
+        BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
+        if(bookRelease.getUserID() != this.getLoginedUserInfo().getUserID()) {
+            return false;    // 只能修改自己发布的书
+        }
+        Book oldBook = this.bookDao.getBookByID(bookID);
+        oldBook.setCanBorrow(0);
+        oldBook.setCanExchange(0);
+        this.bookDao.update(oldBook);
+        return true;
+    }
+    
+    @Override
     public Boolean deleteBook(int bookID) {
+        // 从数据库中删除书，禁止调用此函数！！！
         return null;
     }
     
