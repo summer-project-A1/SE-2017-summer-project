@@ -18,7 +18,8 @@
         $("#register_email").focus();
         $("#register_email").keyup(function(){
             var email = $("#register_email").val();
-            if(email.indexOf("@") < 0){
+            var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+            if(!reg.test(email)){
                 $("#available_status").html("<span style='color:red'>请输入正确的邮件地址</span>");
             }else{
                 $("#available_status").html("<span></span>");
@@ -27,7 +28,8 @@
 
         $("#register_email").blur(function(){
             var email = $("#register_email").val();
-            if(email.indexOf("@") < 0){
+            var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+            if(!reg.test(email)){
                 $("#available_status").html("<span style='color:red'>请输入正确的邮件地址</span>");
             }else{
                 var param = $("#register_email").serialize();
@@ -109,7 +111,8 @@
             var password = $("#register_password").val();
             var confirmpassword = $("#register_confirmpassword").val();
             var mobile = $("#mobile").val();
-            if(email.indexOf("@")>0 && password.length>0 && confirmpassword == password && mobile.length == 11){
+            var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+            if(reg.test(email) && password.length>0 && confirmpassword == password && mobile.length == 11){
                 var params = $("#registerForm").serialize();
                 $.ajax({
                     url: "<%=path%>/authAction/register",

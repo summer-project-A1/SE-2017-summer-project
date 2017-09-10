@@ -241,7 +241,7 @@
         {obj.html("请确认是否可借阅");return;}
         if($("input[name='bookProfile.canBorrow']:checked").val()=='1'&&$("input[name='bookProflie.borrowCredit']").val()=='')
         {obj.html("请输入借阅所需积分");return;}
-       
+
         obj.html("提交中...");
         $("#form").submit();
     });
