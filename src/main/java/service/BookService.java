@@ -18,6 +18,8 @@ public interface BookService extends BaseService {
     public Book showBook(int bookID);
     public List<Book> getRecommendBookList();
     public BookProfile showBookProfile(int bookID);
+    public Boolean updateBook(BookProfile bookProfile);
+    public Boolean deleteBook(int bookID);
     public List<Book> showBooksByCategory1NameByPage(String category1Name, int part, int pageSize);
     public List<Book> showBooksByCategory2NameByPage(String category2Name, int part, int pageSize);
     public List<Category1> showAllCategory1s();

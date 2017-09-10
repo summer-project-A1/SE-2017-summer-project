@@ -67,9 +67,6 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
 
     @Override
     public Boolean uploadBook(BookProfile bookProfile) {
-        if(!isLogined()) {
-            return false;
-        }
         Map bookProfileInMongo = new HashMap();
 //        bookProfileInMongo.put("category2", bookProfile.getCategory2());
         // bookProfileInMongo.put("publish", new HashMap(){{put("year",publishYear);put("month",publishMonth);}});
@@ -248,6 +245,67 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         bookProfile.setOtherPictureIDList((List<String>)bookProfileInMongo.get("otherPictureID"));
 
         return bookProfile;
+    }
+    
+    @Override
+    public Boolean updateBook(BookProfile bookProfile) {
+        Integer bookID = bookProfile.getBookID();
+        Book oldBook = this.bookDao.getBookByID(bookID);
+        Map bookProfileInMongo = this.bookDao.getBookProfileMapInMongo(oldBook);
+//      bookProfileInMongo.put("category2", bookProfile.getCategory2());
+        // bookProfileInMongo.put("publish", new HashMap(){{put("year",publishYear);put("month",publishMonth);}});
+        // bookProfileInMongo.put("edtion", new HashMap(){{put("year",edtionYear);put("month",edtionMonth);put("version",edtionVersion);}});
+        bookProfileInMongo.put("editionYear", bookProfile.getEditionYear());
+        bookProfileInMongo.put("editionMonth", bookProfile.getEditionMonth());
+        bookProfileInMongo.put("editionVersion", bookProfile.getEditionVersion());
+        bookProfileInMongo.put("page", bookProfile.getPage());
+        bookProfileInMongo.put("bookBinding", bookProfile.getBookBinding());
+        bookProfileInMongo.put("bookFormat", bookProfile.getBookFormat());
+        bookProfileInMongo.put("bookQuality", bookProfile.getBookQuality());
+        bookProfileInMongo.put("bookDamage", bookProfile.getBookDamage());
+        bookProfileInMongo.put("intro", bookProfile.getIntro());
+        if(bookProfile.getOtherPicture() != null) {
+            List<String> oldOtherPictureID = (List<String>)bookProfileInMongo.get("otherPictureID");
+            for(String tmp : oldOtherPictureID) {
+                this.imageDao.deleteImageById(tmp);
+            }
+            bookProfileInMongo.clear();
+            List otherPictureID = new ArrayList();
+            for(File tmp : bookProfile.getOtherPicture()) {
+                // save otherPicture
+                otherPictureID.add(this.imageDao.saveImage(tmp));
+            }
+            bookProfileInMongo.put("otherPictureID", otherPictureID);
+        }
+        
+        oldBook.setBookName(bookProfile.getBookName());
+        oldBook.setIsbn(bookProfile.getIsbn());
+        oldBook.setAuthor(bookProfile.getAuthor());
+        oldBook.setPress(bookProfile.getPress());
+        oldBook.setCategory1(bookProfile.getCategory1());
+        oldBook.setCategory2(bookProfile.getCategory2());
+        oldBook.setPublishYear(bookProfile.getPublishYear());
+        oldBook.setPublishMonth(bookProfile.getPublishMonth());;
+        oldBook.setCanBorrow(bookProfile.getCanBorrow());
+        oldBook.setCanExchange(bookProfile.getCanExchange());
+        oldBook.setBorrowCredit(bookProfile.getBorrowCredit());
+        oldBook.setBuyCredit(bookProfile.getBuyCredit());
+      
+        // updateBookProfile
+        this.bookDao.updateBookProfileInMongo(oldBook, bookProfileInMongo);
+        if(bookProfile.getCoverPicture() != null) {
+            // save coverPicture
+            this.imageDao.deleteImageById(oldBook.getImageID());
+            oldBook.setImageID(this.imageDao.saveImage(bookProfile.getCoverPicture()));
+        }
+        this.bookDao.update(oldBook);
+
+        return true;
+    }
+    
+    @Override
+    public Boolean deleteBook(int bookID) {
+        return null;
     }
     
     @Override
