@@ -303,9 +303,10 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
                     Reserve firstReserve = this.reserveDao.getFirstReserveByBookID(book.getBookID());
                     Integer firstReserveUserID = firstReserve.getUserID();
                     if(user.getUserID()==firstReserveUserID) {  // 如果当前预约排队首位的人是自己（一定满足，因为预约排队不是首位的人不能添加订单），则删除预约记录，修改书的预约人数记录
+                        this.reserveDao.delete(firstReserve);    //删除 当前用户的预约
                         book.setReserved(0);
                         List<Reserve> reserveList = this.reserveDao.getReservationByBookID(book.getBookID());
-                        for(Reserve reserve : reserveList) {
+                        for(Reserve reserve : reserveList) {    // 书已被买走，其他用户的预约作废，删除之并邮件通知
                             int userID = reserve.getUserID();
                             User reserver = this.userDao.getUserById(userID);
                                    
