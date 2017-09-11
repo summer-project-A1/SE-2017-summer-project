@@ -1,5 +1,8 @@
 package action;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -49,6 +52,10 @@ public class TestAction extends ActionSupport {
     }
     public String standbyJobs() {
         quartzManager.standbyJobs();
+        return SUCCESS;
+    }
+    public String getBasePath() {
+        System.out.println(userService.getBasePath());
         return SUCCESS;
     }
 }

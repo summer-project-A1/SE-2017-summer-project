@@ -11,4 +11,5 @@ public interface BaseService {
     public void setLoginedUserInfo(User userInfo);
     public void clearLoginedUserInfo();
     
+    public String getBasePath();
 }

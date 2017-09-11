@@ -1,6 +1,8 @@
 package service.impl;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.*;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -111,13 +113,26 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         this.userDao.save(newUser);
 
         //发送验证邮件
+        String encodedEmail = new String(email);
+        try {
+            encodedEmail = URLEncoder.encode(email, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
         StringBuffer sb=new StringBuffer("点击下面链接激活账号，24小时生效，否则重新注册账号，链接只能使用一次，请尽快激活！</br>");
-        sb.append("<a href=\"http://localhost:8080/bookshare/authAction/activate.action?email=");
-        sb.append(email);
+        //sb.append("<a href=\"http://localhost:8080/bookshare/authAction/activate.action?email=");
+        sb.append("<a href=\"");
+        sb.append(this.getBasePath());
+        sb.append("/authAction/activate.action?email=");
+        sb.append(encodedEmail);
         sb.append("&activeCode=");
         sb.append(newUser.getActiveCode());
-        sb.append("\">http://localhost:8080/bookshare/authAction/activate.action?email=");
-        sb.append(email);
+        //sb.append("\">http://localhost:8080/bookshare/authAction/activate.action?email=");
+        sb.append("\">");
+        sb.append(this.getBasePath());
+        sb.append("/authAction/activate.action?email=");
+        sb.append(encodedEmail);
         sb.append("&activeCode=");
         sb.append(newUser.getActiveCode());
         sb.append("</a>");
