@@ -180,7 +180,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         userProfile.setCity(newUserProfile.getCity()!=null?newUserProfile.getCity():"请选择");
         userProfile.setDistrict(newUserProfile.getDistrict()!=null?newUserProfile.getDistrict():"请选择");
         userProfile.setAddress(newUserProfile.getAddress());
-        return this.userDao.updateUserProfile(userProfile);
+        boolean result = this.userDao.updateUserProfile(userProfile);
+        if(result) {
+            setLoginedUserInfo(this.userDao.getUserById(userID));
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     
     @Override
