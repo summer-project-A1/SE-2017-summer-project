@@ -11,6 +11,15 @@ import dao.UserDao;
 import model.*;
 import service.ReserveService;
 
+/*
+ * 预约
+ * 
+ * 规则：对于借阅（borrow），用户点击借阅时验证预约状态，但直到用户支付积分完成订单（或者因超时未操作）时才删除自己的预约记录，并把预约交给下一个人（设定其预约过期时间）
+ *       对于交换（exchange），用户点击交换时验证预约状态并删除自己的预约记录。交换申请如果被同意，删除后面所有的预约记录并邮件通知；如果被拒绝或主动取消（包括超时未操作），删除自己的预约记录，并把预约交给下一个人
+ *       对于购买（order），用户点击购买时验证预约状态，但直到用户支付积分完成订单,删除后面所有的预约记录并邮件通知（如果超时未操作，则仅删除自己的预约记录，并把预约交给下一个人）
+ *       
+ * 删除自己的预约记录应与改变书的状态同时进行
+ */
 public class ReserveServiceImpl extends BaseServiceImpl implements ReserveService {
 
     private ReserveDao reserveDao;
@@ -69,6 +78,7 @@ public class ReserveServiceImpl extends BaseServiceImpl implements ReserveServic
         Reserve newReserve = new Reserve();
         newReserve.setBookID(bookID);
         newReserve.setUserID(userID);
+        newReserve.setDue(null);    // due为null的预约不会过期，在书恢复为空闲状态时才开始计算预约有效期
         this.reserveDao.save(newReserve);
         return "success";
     }
