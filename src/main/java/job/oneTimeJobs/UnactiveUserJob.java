@@ -14,18 +14,19 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
 
 import job.QuartzManager;
+import service.JobService;
 import service.UserService;
 
 public class UnactiveUserJob extends QuartzJobBean {
 
-    private UserService userService;
+    private JobService jobService;
     
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         JobDataMap dataMap = context.getJobDetail().getJobDataMap();
         try {
             SchedulerContext schedulerContext = context.getScheduler().getContext();
-            userService = (UserService) schedulerContext.get("userService");
+            jobService = (JobService) schedulerContext.get("jobService");
         } catch (SchedulerException e) {     
             e.printStackTrace();
         }
@@ -33,7 +34,6 @@ public class UnactiveUserJob extends QuartzJobBean {
         //userService.deleteTimeoutUnactiveUser(userID);
         System.out.println("start");      ///////////////////////////////////////////////////////////////////////////////
         System.out.println(userID);      ///////////////////////////////////////////////////////////////////////////////
-        userService.checkEmailAvailable("email");  //////////////////////////////////////////////////////////////////////
         System.out.println("end");        ///////////////////////////////////////////////////////////////////////////////
     }
     

@@ -7,10 +7,11 @@ import org.quartz.JobExecutionException;
 import org.quartz.SchedulerException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
+import service.JobService;
 import service.UserService;  
 
 public class MaintenanceJob extends QuartzJobBean {
-    private UserService userService;
+    private JobService jobService;
     private static int counter = 0;
     
     /* ============================================================ */
@@ -23,12 +24,12 @@ public class MaintenanceJob extends QuartzJobBean {
         System.out.println(ms);  
         System.out.println("(" + counter++ + ")");
         try {
-            userService = (UserService) context.getScheduler().getContext().get("userService");
+            jobService = (JobService) context.getScheduler().getContext().get("jobService");
         } catch (SchedulerException e) {     
             e.printStackTrace();
         }
-        //userService.deleteAllTimeoutUnactiveUser();
-        userService.checkEmailAvailable("email");
+        //jobService.deleteAllTimeoutUnactiveUser();
+        jobService.checkEmailAvailable("email");
         */  
         System.out.println("MaintenanceJob");
     }

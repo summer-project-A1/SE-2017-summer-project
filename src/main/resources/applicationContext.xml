@@ -173,6 +173,9 @@
         <property name="userDao" ref="userDao"/>
         <property name="defaultPassword" value="000000"/>
     </bean>
+    <bean id="jobService" class="service.impl.JobServiceImpl">
+        <property name="userDao" ref="userDao"/>
+    </bean>
     
     <!-- ============================================================= -->
     
@@ -240,7 +243,7 @@
         <property name="schedulerContextAsMap">      
             <map>  
                 <description>schedulerContextAsMap</description>      
-                <entry key="userService" value-ref="userService"/>    
+                <entry key="jobService" value-ref="jobService"/>    
             </map>      
         </property>
         <property name="jobDetails">  
