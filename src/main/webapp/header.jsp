@@ -107,7 +107,6 @@
                 </s:else>
                     </form>
                 </div>
-            </div>   
             <div class="header-right cart">
                 <a href="<%=path%>/cartAction/showBuyCart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                 <div class="cart-box">
@@ -158,8 +157,10 @@
                     <div class="clearfix"> </div>
                 </div>
                 </div>
-            </div>
-            <div class="clearfix"> </div>
+        </div>
+    </div>
+
+    <div class="clearfix"> </div>
         </div>
         <div class="clearfix"> </div>
 </div>
