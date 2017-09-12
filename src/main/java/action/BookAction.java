@@ -29,7 +29,7 @@ public class BookAction extends ActionSupport {
     /*
         筛选使用的变量
      */
-
+    private String searchName;
     private String year;
     private String status;
     private String category1Name;
@@ -160,6 +160,14 @@ public class BookAction extends ActionSupport {
         this.params = params;
     }
 
+
+    public String getSearchName() {
+        return this.searchName;
+    }
+
+    public void setSearchName(String searchName){
+        this.searchName=searchName;
+    }
     public String getIsbn(){return isbn;}
     public void setIsbn(String isbn){this.isbn = isbn;}
     /* ============================================================== */
@@ -184,8 +192,12 @@ public class BookAction extends ActionSupport {
         if(this.category2Name==null){
             this.category2Name="";
         }
+        if(this.searchName==null){
+            this.searchName="";
+        }
 
 
+        //应该接受serachName作为参数
         List<Book> allBooks = this.bookService.searchBook(part,bookNumPerPage,category1Name,category2Name,year,status);
         List<Book> nextPage = this.bookService.searchBook(part+1,bookNumPerPage,category1Name,category2Name,year,status);
         ActionContext.getContext().put("isLastPart",(nextPage.size()==0));
@@ -194,6 +206,7 @@ public class BookAction extends ActionSupport {
         ActionContext.getContext().put("category2Name", this.category2Name);
         ActionContext.getContext().put("status", this.status);
         ActionContext.getContext().put("year", this.year);
+        ActionContext.getContext().put("searchName",this.searchName);
         ActionContext.getContext().put("allBooks",allBooks);
         System.out.println("all books Num:"+allBooks.size());
         System.out.println("cate1: "+category1Name );

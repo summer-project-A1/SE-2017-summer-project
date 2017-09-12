@@ -27,12 +27,7 @@
         $(".tab1 .single-bottom").hide();
     });
 
-    //筛选js脚本
-    var url;
     $(document).ready(function(){
-        url=decodeURI(this.location.href.toString());
-        console.log("url: "+url);
-
         $('#select-status :checkbox[type="checkbox"]').each(function(){
             $(this).click(function(){
                 if($(this).attr('checked')){
@@ -42,60 +37,7 @@
             });
         });
 
-        $.sendSelectInfo=function(url){
-            window.location.href=url;
-        }
-
-
     });
-
-    $.urlParam = function(name){
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-        if (r != null)
-            return unescape(r[2]);
-        return null; //返回参数值
-    }
-    /*
-    //替换指定传入参数的值,paramName为参数,replaceWith为新值
-    $.replaceParamVal = function(oUrl,paramName,replaceWith) {
-        var re=eval('/('+ paramName+'=)([^&]*)/gi');
-        var nUrl = oUrl.replace(re,paramName+'='+replaceWith);
-        //this.location = nUrl;
-        return nUrl;
-    }
-    */
-    /*
-     * url 目标url
-     * arg 需要替换的参数名称
-     * arg_val 替换后的参数的值
-     * return url 参数替换后的url
-     */
-    $.changeURLArg=function (url,arg,arg_val){
-        var pattern=arg+'=([^&]*)';
-        var replaceText=arg+'='+arg_val;
-        if(url.match(pattern)){
-            var tmp='/('+ arg+'=)([^&]*)/gi';
-            tmp=url.replace(eval(tmp),replaceText);
-            return tmp;
-        }else{
-            if(url.match('[\?]')){
-                return url+replaceText+'&';
-            }else{
-                return url+'?'+replaceText+'&';
-            }
-        }
-    }
-
-    $.deleteUrlArg=function(url,arg){
-        var pattern=arg+'=([^&]*)';
-        var replaceText="";
-        if(url.match(pattern)){
-            var tmp='/('+ arg+'=)([^&]*&)/gi';
-            url=url.replace(eval(tmp),replaceText);
-        }
-        return url;
-    }
 
     var amountPerPage;
     var totalBookAmount;
@@ -312,6 +254,9 @@
 
         <h2>图书浏览</h2>
         <h3 align="center" id="selete-info">
+            <s:if test="#searchName!=''">
+                关键字：<s:property value="#searchName"/>
+            </s:if>
             <s:if test="#category1Name!=''">
                 分类：<s:property value="#category1Name"/>
             </s:if>

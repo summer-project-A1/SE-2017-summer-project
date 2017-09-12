@@ -185,7 +185,7 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
                 conditions.put("canExchange", 1);
             }
         }
-        
+
         List<Book> bookList = this.bookDao.searchByCondition(conditions, part, pageSize);
         for(Book book : bookList) {
             book.setBookStatus(book.getStatus().toString());
