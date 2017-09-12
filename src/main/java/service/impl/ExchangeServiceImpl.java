@@ -129,6 +129,8 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		ExchangeHistory exchangeHistory = new ExchangeHistory(exchange);
 		exchangeHistory.setStatus(ExchangeStatus.CANCELED);
 		exchangeHistory.setResponseDate(new Date());
+		exchangeHistory.setComment1(0);
+		exchangeHistory.setComment2(0);
 		exchangeHistoryDao.save(exchangeHistory);
 		exchangeDao.delete(exchange);
 		return true;
@@ -163,8 +165,11 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
 		had.setStatus(BookStatus.IDLE);
 		bookDao.update(wanted);
 		bookDao.update(had);
+		exchange.setResponseDate(new Date());
 		ExchangeHistory exchangeHistory = new ExchangeHistory(exchange);
 		exchangeHistory.setStatus(ExchangeStatus.REJECTED);
+		exchangeHistory.setComment1(0);
+		exchangeHistory.setComment2(0);
 		exchangeHistoryDao.save(exchangeHistory);
 		exchangeDao.delete(exchange);
 		return true;

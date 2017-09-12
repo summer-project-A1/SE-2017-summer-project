@@ -337,31 +337,7 @@
         <action name="*" class="action.ExchangeAction" method="{1}">
             <result name="showExchangeApply">/exchangeApply.jsp</result>
             <result name="showMyExchange">/myExchange.jsp</result>
-            <result name="rejectExchange" type="redirectAction">
-                <param name="actionName">showMyExchange</param>
-            </result>
-            <result name="agreeExchange" type="redirectAction">
-                <param name="actionName">showMyExchange</param>
-            </result>
-            <result name="cancelExchange" type="redirectAction">
-                <param name="actionName">showMyExchange</param>
-            </result>
-            <result name="fh2" type="redirectAction">
-                <param name="actionName">showMyExchange</param>
-            </result>
-            <result name="sh2" type="redirectAction">
-                <param name="actionName">showMyExchange</param>
-            </result>
-            <result name="fh1" type="redirectAction">
-                <param name="actionName">showMyExchange</param>
-            </result>
-            <result name="sh1" type="redirectAction">
-                <param name="actionName">showMyExchange</param>
-            </result>
-            <result name="comment1" type="redirectAction">
-                <param name="actionName">showMyExchange</param>
-            </result>
-            <result name="comment2" type="redirectAction">
+            <result name="redirectToShowMyExchange" type="redirectAction">
                 <param name="actionName">showMyExchange</param>
             </result>
             <result name="ajax" type="json">
