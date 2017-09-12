@@ -171,9 +171,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     @Override
     public boolean updatePassword(String oldPlainPassword, String newPlainPassword) {
-        User user = this.getLoginedUserInfo();
-        System.out.println(oldPlainPassword);
-        System.out.println(user.getPassword());
+        //int userID = this.getLoginedUserInfo().getUserID();
+        //User user = this.userDao.getUserById(userID);
+        User user = this.getLoginedUserInfo();    // updateUserProfile已修复，现能确保session中的userInfo的信息与数据库保持一致
+        //System.out.println(oldPlainPassword);
+        //System.out.println(user.getPassword());
         if(PasswordUtil.checkPassword(oldPlainPassword, user.getPassword())) {
             user.setPassword(PasswordUtil.getEncryptedPassword(newPlainPassword));
             this.userDao.update(user);

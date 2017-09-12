@@ -48,6 +48,7 @@
         var statusID = "status"+borrowID;
         var payDateID = 'payDate'+borrowID;
         var payBtnID = 'payBtn'+borrowID;
+        var cancenBtnID = 'cancelBorrowBtn'+borrowID;
         $.ajax({
             url:'<%=path%>/borrowAction/confirmBorrowOrder',
             type:'POST',
@@ -58,6 +59,7 @@
                     showTip('支付成功！','success');
                     $("#"+statusID).html("当前状态：卖家未发货");
                     $("#"+payBtnID).remove();
+                    $("#"+cancenBtnID).remove();
                     $("#"+payDateID).html("付款日期："+payDate+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                     $("#"+payDateID).show();
                 }else{

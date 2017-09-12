@@ -157,6 +157,8 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
         ExchangeHistory exchangeHistory = new ExchangeHistory(exchange);
         exchangeHistory.setStatus(ExchangeStatus.CANCELED);
         exchangeHistory.setResponseDate(new Date());
+        exchangeHistory.setComment1(0);
+		exchangeHistory.setComment2(0);
         exchangeHistoryDao.save(exchangeHistory);
         exchangeDao.delete(exchange);
         
@@ -224,8 +226,11 @@ public class ExchangeServiceImpl extends BaseServiceImpl implements ExchangeServ
         had.setStatus(BookStatus.IDLE);
         bookDao.update(wanted);
         bookDao.update(had);
+        exchange.setResponseDate(new Date());
         ExchangeHistory exchangeHistory = new ExchangeHistory(exchange);
         exchangeHistory.setStatus(ExchangeStatus.REJECTED);
+        exchangeHistory.setComment1(0);
+		exchangeHistory.setComment2(0);
         exchangeHistoryDao.save(exchangeHistory);
         exchangeDao.delete(exchange);
         if(wanted.getReserved()>0)    // 如果仍有其他人预约（注意当前用户的的预约已在applyExchange中处理）

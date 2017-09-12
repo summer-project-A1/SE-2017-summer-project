@@ -268,18 +268,6 @@
                                             <a href="#" class="add-cart item_add" onclick="fh2(<s:property value="exchangeID"/>)">提交</a>
                                         </form>
                                     </s:elseif>
-                                    <s:if test="comment2==null">
-                                        <a id="creditRatingBtn-comment2-Exchange<s:property value="exchangeID"/>" href="#" class="add-cart item_add" onclick="$('#creditRatingForm-comment2-Exchange<s:property value="exchangeID"/>').show()">信用评价</a>
-                                        <form id="creditRatingForm-comment2-Exchange<s:property value="exchangeID"/>" style="display: none" action="<%=path%>/commentAction/honestyRatingWhenExchange" method="post">
-                                            <input type="hidden" name="exchangeID" value="<s:property value="exchangeID"/>"/>
-                                            <select name="creditRating" class="form-control form-control-noNewline">
-                                                <option value="-1">差评</option>
-                                                <option value="0">中评</option>
-                                                <option value="1">好评</option>
-                                            </select>
-                                            <a href="#" class="add-cart item_add" onclick="submitRating('comment2','Exchange',<s:property value="exchangeID"/>)">提交</a>
-                                        </form>
-                                    </s:if>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -442,18 +430,6 @@
                                                 <a href="#" class="add-cart item_add" onclick="fh1(<s:property value="exchangeID"/>)">提交</a>
                                             </form>
                                         </s:elseif>
-                                        <s:if test="comment1==null">
-                                            <a id="creditRatingBtn-comment1-Exchange<s:property value="exchangeID"/>" href="#" class="add-cart item_add" onclick="$('#creditRatingForm-comment1-Exchange<s:property value="exchangeID"/>').show()">信用评价</a>
-                                            <form id="creditRatingForm-comment1-Exchange<s:property value="exchangeID"/>" style="display: none" action="<%=path%>/commentAction/honestyRatingWhenExchange" method="post">
-                                                <input type="hidden" name="exchangeID" value="<s:property value="exchangeID"/>"/>
-                                                <select name="creditRating" class="form-control form-control-noNewline">
-                                                    <option value="-1">差评</option>
-                                                    <option value="0">中评</option>
-                                                    <option value="1">好评</option>
-                                                </select>
-                                                <a href="#" class="add-cart item_add" onclick="submitRating('comment1','Exchange',<s:property value="exchangeID"/>)">提交</a>
-                                            </form>
-                                        </s:if>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>

@@ -13,6 +13,93 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="" />
 
+
+<script>
+
+    //筛选js脚本
+    var url;
+    $(document).ready(function(){
+        url=decodeURI(this.location.href.toString());
+        console.log("url: "+url);
+
+
+        $.sendSelectInfo=function(url){
+            window.location.href=url;
+        }
+
+
+    });
+
+    $.urlParam = function(name){
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null)
+            return unescape(r[2]);
+        return null; //返回参数值
+    }
+    /*
+     //替换指定传入参数的值,paramName为参数,replaceWith为新值
+     $.replaceParamVal = function(oUrl,paramName,replaceWith) {
+     var re=eval('/('+ paramName+'=)([^&]*)/gi');
+     var nUrl = oUrl.replace(re,paramName+'='+replaceWith);
+     //this.location = nUrl;
+     return nUrl;
+     }
+     */
+    /*
+     * url 目标url
+     * arg 需要替换的参数名称
+     * arg_val 替换后的参数的值
+     * return url 参数替换后的url
+     */
+    $.changeURLArg=function (url,arg,arg_val){
+        var pattern=arg+'=([^&]*)';
+        var replaceText=arg+'='+arg_val;
+        if(url.match(pattern)){
+            var tmp='/('+ arg+'=)([^&]*)/gi';
+            tmp=url.replace(eval(tmp),replaceText);
+            return tmp;
+        }else{
+            if(url.match('[\?]')){
+                return url+replaceText+'&';
+            }else{
+                return url+'?'+replaceText+'&';
+            }
+        }
+    }
+
+    $.deleteUrlArg=function(url,arg){
+        var pattern=arg+'=([^&]*)';
+        var replaceText="";
+        if(url.match(pattern)){
+            var tmp='/('+ arg+'=)([^&]*&)/gi';
+            url=url.replace(eval(tmp),replaceText);
+        }
+        return url;
+    }
+
+
+    function selectSearchName(){
+        var searchName=$('#searchName').val();
+        if(url.indexOf("showAllBooks")==-1){
+            url= base_url+"/bookAction/showAllBooks";
+        }
+        if(searchName==""){
+            url=$.deleteUrlArg(url,"searchName");
+            console.log("url(with searchName): "+url);
+            url=encodeURI(url);
+            $.sendSelectInfo(url);
+            return;
+        }
+        url=$.changeURLArg(url,'searchName',searchName);
+        console.log("url(with searchName): "+url);
+        url=encodeURI(url);
+        $.sendSelectInfo(url);
+        return;
+    }
+
+</script>
+
 <div class="header">
     <div class="container">
         <nav class="navbar navbar-default" role="navigation">
@@ -63,10 +150,13 @@
                 <a href="#"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
                 <div class="search">
                     <form class="navbar-form">
-                        <input type="text" class="form-control">
-                        <button type="submit" class="btn btn-default" aria-label="Left Align">
+                        <input type="text" id="searchName" class="form-control">
+                        <!--
+                        <button class="btn btn-default" aria-label="Left Align" onclick="selectSearchName()">
                             搜索
                         </button>
+                        -->
+                            <input class="btn btn-default" type="button" value="搜索" aria-label="Left Align" onclick="selectSearchName()">
                     </form>
                 </div>
             </div>
@@ -107,59 +197,62 @@
                 </s:else>
                     </form>
                 </div>
-            </div>   
-            <div class="header-right cart">
-                <a href="<%=path%>/cartAction/showBuyCart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
-                <div class="cart-box">
-                   <s:if test="#session.buyCart==null||#session.buyCart.size()==0">
-                       <h4><span>购买购物车为空（刷新以更新）</span></h4>
-                       <h4><a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a></h4>
-                   </s:if>
-                    <s:else>
-                        <table class="table table-bordered">
-                            <tr>
+
+        </div>
+        <div class="header-right cart">
+            <a href="<%=path%>/cartAction/showBuyCart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+            <div class="cart-box">
+                <s:if test="#session.buyCart==null||#session.buyCart.size()==0">
+                    <h4><span>购买购物车为空（刷新以更新）</span></h4>
+                    <h4><a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a></h4>
+                </s:if>
+                <s:else>
+                    <table class="table table-bordered">
+                        <tr>
                             <th field="bookName" width="20%">书名</th>
                             <th field="buyCredit" width="20%">购买积分</th>
-                            </tr>
-                            <s:iterator value="#session.buyCart" var="cartItem" status="st">
-                                <tr>
-                                    <td><s:property value="#cartItem.bookName"/></td>
-                                    <td ><s:property value="#cartItem.buyCredit"/></td>
-                                </tr>
-                        </s:iterator>
-                        </table>
-                        <p><a href="<%=path%>/cartAction/emptyBuyCart" class="simpleCart_empty">清空购物车</a></p>
-                    </s:else>
-                    <div class="clearfix"> </div>
-                </div>
-            </div>
-                <div class="header-right borrow">
-                <a href="<%=path%>/cartAction/showBorrowCart"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></a>
-                <div class="borrow-box">
-                    <s:if test="#session.borrowCart==null||#session.borrowCart.size()==0">
-                        <h4><span>借阅购物车为空（刷新以更新）</span></h4>
-                        <h4><a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a></h4>
-                    </s:if>
-                    <s:else>
-                        <table class="table table-bordered">
+                        </tr>
+                        <s:iterator value="#session.buyCart" var="cartItem" status="st">
                             <tr>
-                                <th field="bookName" width="20%">书名</th>
-                                <th field="borrowCredit" width="20%">借阅积分</th>
+                                <td><s:property value="#cartItem.bookName"/></td>
+                                <td ><s:property value="#cartItem.buyCredit"/></td>
                             </tr>
-                            <s:iterator value="#session.borrowCart" var="cartItem" status="st">
-                                <tr>
-                                    <td><s:property value="#cartItem.bookName"/></td>
-                                    <td><s:property value="#cartItem.borrowCredit"/></td>
-                                </tr>
-                            </s:iterator>
-                        </table>
-                        <p><a href="<%=path%>/cartAction/emptyBorrowCart" class="simpleCart_empty">清空购物车</a></p>
-                    </s:else>
-                    <div class="clearfix"> </div>
-                </div>
-                </div>
+                        </s:iterator>
+                    </table>
+                    <p><a href="<%=path%>/cartAction/emptyBuyCart" class="simpleCart_empty">清空购物车</a></p>
+                </s:else>
+                <div class="clearfix"> </div>
             </div>
-            <div class="clearfix"> </div>
+        </div>
+        <div class="header-right borrow">
+            <a href="<%=path%>/cartAction/showBorrowCart"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></a>
+            <div class="borrow-box">
+                <s:if test="#session.borrowCart==null||#session.borrowCart.size()==0">
+                    <h4><span>借阅购物车为空（刷新以更新）</span></h4>
+                    <h4><a href="<%=path%>/bookAction/showAllBooks">前去浏览图书</a></h4>
+                </s:if>
+                <s:else>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th field="bookName" width="20%">书名</th>
+                            <th field="borrowCredit" width="20%">借阅积分</th>
+                        </tr>
+                        <s:iterator value="#session.borrowCart" var="cartItem" status="st">
+                            <tr>
+                                <td><s:property value="#cartItem.bookName"/></td>
+                                <td><s:property value="#cartItem.borrowCredit"/></td>
+                            </tr>
+                        </s:iterator>
+                    </table>
+                    <p><a href="<%=path%>/cartAction/emptyBorrowCart" class="simpleCart_empty">清空购物车</a></p>
+                </s:else>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="clearfix"> </div>
         </div>
         <div class="clearfix"> </div>
 </div>
