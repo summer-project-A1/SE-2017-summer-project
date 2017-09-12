@@ -396,7 +396,6 @@
                             <script>
                                 $(document).ready(function () {
                                     $("#cate-<s:property value='#st1.index'/> ul").click(function(){
-                                        $(".tab1 .single-bottom").hide();
                                         $("#cate-<s:property value='#st1.index'/> .single-bottom").slideToggle(300);
 
                                     });
