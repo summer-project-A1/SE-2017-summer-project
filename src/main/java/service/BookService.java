@@ -14,7 +14,7 @@ public interface BookService extends BaseService {
     public List<Book> showAllBooksByPage(int part,int pageSize);
     public List<Book> showUserBooks();
     public List<Book> searchByTextByPage(String searchText,int part,int pageSize);
-    public List<Book> searchBook(Integer part, Integer pageSize, String category1NameString, String category2NameString, String yearString, String statusString);
+    public List<Book> searchBook(Integer part, Integer pageSize, String category1NameString, String category2NameString, String yearString, String statusString, String searchName);
     public Book showBook(int bookID);
     public List<Book> getRecommendBookList();
     public BookProfile showBookProfile(int bookID);

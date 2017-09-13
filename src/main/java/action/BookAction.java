@@ -198,8 +198,8 @@ public class BookAction extends ActionSupport {
 
 
         //应该接受serachName作为参数
-        List<Book> allBooks = this.bookService.searchBook(part,bookNumPerPage,category1Name,category2Name,year,status);
-        List<Book> nextPage = this.bookService.searchBook(part+1,bookNumPerPage,category1Name,category2Name,year,status);
+        List<Book> allBooks = this.bookService.searchBook(part,bookNumPerPage,category1Name,category2Name,year,status,searchName);
+        List<Book> nextPage = this.bookService.searchBook(part+1,bookNumPerPage,category1Name,category2Name,year,status,searchName);
         ActionContext.getContext().put("isLastPart",(nextPage.size()==0));
         ActionContext.getContext().put("part", this.part);
         ActionContext.getContext().put("category1Name", this.category1Name);

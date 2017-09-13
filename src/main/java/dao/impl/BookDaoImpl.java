@@ -93,14 +93,15 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
     @Override
     public List<Book> searchByTextByPage(String searchText,int part,int pageSize) {
         // 全局搜索，搜索字符串在书名、作者、出版社等多个字段同时尝试匹配
-        String hql = " select b from Book as b where 1=1 order by status";
+        String hql = " select b from Book as b where 1=1 ";
         hql += " or b.bookName like :bookName ";
         hql += " or b.author like :author ";
         hql += " or b.press like :press ";
+        hql += " order by status ";
         Query query = getSession().createQuery(hql);
-        query.setParameter("bookName", searchText);
-        query.setParameter("author", searchText);
-        query.setParameter("press", searchText);
+        query.setParameter("bookName", "%"+searchText+"%");
+        query.setParameter("author", "%"+searchText+"%");
+        query.setParameter("press", "%"+searchText+"%");
         query.setFirstResult((part-1)*pageSize); 
         query.setMaxResults(pageSize); 
         List<Book> result = query.list();
@@ -140,7 +141,15 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
             args.add(condition.get("publishYear"));
             types.add(new IntegerType());
         }
-        hqlConditions += "order by status";
+        if(condition.containsKey("searchName")) {
+            hqlConditions += " and (b.bookName like ? or b.author like ?) ";
+            args.add("%"+condition.get("searchName")+"%");
+            types.add(new StringType());
+            
+            args.add("%"+condition.get("searchName")+"%");
+            types.add(new StringType());
+        }
+        hqlConditions += " order by status ";
         hql = hql + hqlTables + hqlConditions;
         System.out.println(hql);
         Query query = getSession().createQuery(hql);

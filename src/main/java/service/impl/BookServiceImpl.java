@@ -161,7 +161,7 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     }
     
     @Override
-    public List<Book> searchBook(Integer part, Integer pageSize, String category1NameString, String category2NameString, String yearString, String statusString) {
+    public List<Book> searchBook(Integer part, Integer pageSize, String category1NameString, String category2NameString, String yearString, String statusString, String searchName) {
         Map conditions = new HashMap();
         conditions.put("part", part);
         conditions.put("pageSize", pageSize);
@@ -184,6 +184,9 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
                 conditions.put("canBorrow", 0);
                 conditions.put("canExchange", 1);
             }
+        }
+        if(searchName != null && !searchName.equals("")) {
+            conditions.put("searchName", searchName);
         }
 
         List<Book> bookList = this.bookDao.searchByCondition(conditions, part, pageSize);
