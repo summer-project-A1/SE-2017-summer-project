@@ -295,6 +295,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         }
         if(activeCode.equals(user.getActiveCode())){
             user.setStatus(UserStatus.ACTIVATED);
+            user.setCredit(100);    // 用户首次激活，赠送100积分
             this.userDao.update(user);
             setLoginedUserInfo(user);
             return true;

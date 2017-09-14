@@ -114,6 +114,7 @@
     </bean>
     <bean id="bookService" class="service.impl.BookServiceImpl">
         <property name="bookDao" ref="bookDao" />
+        <property name="userDao" ref="userDao" />
         <property name="bookReleaseDao" ref="bookReleaseDao" />
         <property name="categoryDao" ref="categoryDao"/>
         <property name="imageDao" ref="imageDao" />

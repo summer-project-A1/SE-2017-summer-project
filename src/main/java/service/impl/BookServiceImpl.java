@@ -14,6 +14,7 @@ import dao.BookDao;
 import dao.BookReleaseDao;
 import dao.CategoryDao;
 import dao.ImageDao;
+import dao.UserDao;
 import model.*;
 import net.sf.json.JSONObject;
 import org.apache.http.*;
@@ -24,6 +25,7 @@ import service.BookService;
 
 public class BookServiceImpl extends BaseServiceImpl implements BookService {
     private BookDao bookDao;
+    private UserDao userDao;
     private CategoryDao categoryDao;
     private BookReleaseDao bookReleaseDao;
     private ImageDao imageDao;
@@ -38,7 +40,14 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         this.bookDao = bookDao;
     }   
     
-    
+    public UserDao getUserDao() {
+        return userDao;
+    }
+
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
     public CategoryDao getCategoryDao() {
         return categoryDao;
     }
@@ -116,11 +125,16 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         }
         this.bookDao.save(newBook);
         
+        User user = getLoginedUserInfo();
+        
         BookRelease newBookRelease = new BookRelease();
         newBookRelease.setBookID(newBook.getBookID());
         newBookRelease.setReleaseTime(new Date());
-        newBookRelease.setUserID(getLoginedUserInfo().getUserID());
+        newBookRelease.setUserID(user.getUserID());
         this.bookReleaseDao.save(newBookRelease);
+        
+        user.setCredit(user.getCredit()+20);    //用户每发布一本书，获得20积分
+        this.userDao.update(user);
         
         return true;
     }
