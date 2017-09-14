@@ -229,6 +229,8 @@
     });
     $("#commit").click(function(){
         var obj=$('#bookinfo').find('#warning');
+        var type="^[0-9]*[1-9][0-9]*$";
+        var r=new RegExp(type);
         if($("input[name='bookProfile.coverPicture']").val()=="")
             {obj.html("图书封面必须上传");return;}
         if($("input[name='bookProfile.otherPicture']").val()=="")
@@ -244,12 +246,12 @@
         var publishYear=$("input[name='bookProfile.publishYear']").val(); 
         if(publishYear=="")
             {obj.html("图书出版年份必须填写");return;}
-        if(!(publishYear>=0))
+        if(!(r.test(publishYear)))
             {obj.html("出版年份不合法");return;}
         var publishMonth=$("input[name='bookProfile.publishMonth']").val();
         if(publishMonth=="")
             {obj.html("图书出版月份必须填写");return;}
-        if(!(publishMonth>=1 && publishMonth<=12))
+        if(!(publishMonth>=1 && publishMonth<=12) || !(r.test(publishMonth)))
             {obj.html("出版月份不合法");return;}
         var editionYear=$("input[name='bookProfile.editionYear']").val();
         var editionMonth=$("input[name='bookProfile.editionMonth']").val();
@@ -257,24 +259,24 @@
         if($("input[name='bookProfile.editionMonth']").val()==""||$("input[name='bookProfile.editionYear']").val()==""
                 ||$("input[name='bookProfile.editionVersion']").val()=="")
             {obj.html("图书版次信息不全");return;}
-        if(!(editionYear>=0))
+        if(!(r.test(editionYear)))
             {obj.html("版次年份不合法");return;}
-        if(!(editionMonth>=1 && editionMonth<=12))
+        if(!(editionMonth>=1 && editionMonth<=12) || !(r.test(editionMonth)))
             {obj.html("版次月份不合法");return;}
-        if(!(editionVersion>=0))
+        if(!(r.test(editionVersion)))
             {obj.html("版次不合法");return;}
         var page=$("input[name='bookProfile.page']").val();
         if(page=="")
             {obj.html("图书页数必须填写");return;}
-        if(!(page>=0))
+        if(!(r.test(page)))
             {obj.html("图书页数不合法");return;}
         if($("input[name='bookProfile.canExchange']:checked").val()=='')
             {obj.html("请确认是否可交换");return;}
-        if($("input[name='bookProfile.canExchange']:checked").val()=='1'&&$("input[name='bookProfile.buyCredit']").val()=='')
+        if($("input[name='bookProfile.canExchange']:checked").val()=='1'&&$("input[name='bookProfile.buyCredit']").val()==''&&!(r.test($("input[name='bookProfile.buyCredit']").val())))
             {obj.html("请输入购买所需积分");return;}
         if($("input[name='bookProfile.canBorrow']:checked").val()=="")
             {obj.html("请确认是否可借阅");return;}
-        if($("input[name='bookProfile.canBorrow']:checked").val()=='1'&&$("input[name='bookProflie.borrowCredit']").val()=='')
+        if($("input[name='bookProfile.canBorrow']:checked").val()=='1'&&$("input[name='bookProflie.borrowCredit']").val()==''&&!(r.test($("input[name='bookProflie.borrowCredit']").val())))
             {obj.html("请输入借阅所需积分");return;}
         if($("#introduction").val()=='')
             {obj.html("请输入简介");return;}

@@ -91,7 +91,9 @@
         $("#mobile").focus();
         $("#mobile").keyup(function(){
            var mobile = $("#mobile").val();
-           if(mobile.length != 11){
+            var type="^[0-9]*[1-9][0-9]*$";
+            var r = new RegExp(type);
+           if(mobile.length != 11 || !(r.test(mobile))){
                $("#available_status4").html("<span style='color: red'>请输入11位手机号</span>");
            }else{
                $("#available_status4").html("<span></span>");
@@ -99,7 +101,9 @@
         });
         $("#mobile").blur(function(){
             var mobile = $("#mobile").val();
-            if(mobile.length != 11){
+            var type="^[0-9]*[1-9][0-9]*$";
+            var r = new RegExp(type);
+            if(mobile.length != 11 || !(r.test(mobile))){
                 $("#available_status4").html("<span style='color: red'>请输入11位手机号</span>");
             }else{
                 $("#available_status4").html("<span></span>");
@@ -112,7 +116,9 @@
             var confirmpassword = $("#register_confirmpassword").val();
             var mobile = $("#mobile").val();
             var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
-            if(reg.test(email) && password.length>0 && confirmpassword == password && mobile.length == 11){
+            var type="^[0-9]*[1-9][0-9]*$";
+            var r = new RegExp(type);
+            if(reg.test(email) && password.length>0 && confirmpassword == password && mobile.length == 11 &&r.test(mobile)){
                 var params = $("#registerForm").serialize();
                 $.ajax({
                     url: "<%=path%>/authAction/register",
