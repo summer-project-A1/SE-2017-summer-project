@@ -57,14 +57,14 @@
         </div>
         <div class="form-group form-group-auto">
             <label>出版时间</label><font color="#FF0000">*</font>&nbsp;
-            <input name="bookProfile.publishYear" type="text" class="form-control form-control-noNewline">&nbsp;<label>年</label>&nbsp;
-            <input name="bookProfile.publishMonth" type="text" class="form-control form-control-noNewline">&nbsp;<label>月</label>
+            <input name="bookProfile.publishYear" type="number" min="0" step="1" class="form-control form-control-noNewline">&nbsp;<label>年</label>&nbsp;
+            <input name="bookProfile.publishMonth" type="number" min="1" max="12" step="1" class="form-control form-control-noNewline">&nbsp;<label>月</label>
         </div>
         <div class="form-group form-group-auto">
             <label>版次</label><font color="#FF0000">*</font>&nbsp;
-            <input name="bookProfile.editionYear" type="text" class="form-control form-control-noNewline">&nbsp;<label>年</label>&nbsp;
-            <input name="bookProfile.editionMonth" type="text" class="form-control form-control-noNewline">&nbsp;<label>月</label>&nbsp;
-            <label>第</label>&nbsp;<input name="bookProfile.editionVersion" type="text" class="form-control form-control-noNewline">&nbsp;<label>版</label>
+            <input name="bookProfile.editionYear" type="number" min="0" step="1" class="form-control form-control-noNewline">&nbsp;<label>年</label>&nbsp;
+            <input name="bookProfile.editionMonth" type="number" min="1" max="12" step="1" class="form-control form-control-noNewline">&nbsp;<label>月</label>&nbsp;
+            <label>第</label>&nbsp;<input name="bookProfile.editionVersion" type="number" min="1" step="1" class="form-control form-control-noNewline">&nbsp;<label>版</label>
         </div>
         <div class="form-group form-group-auto">
             <label>类别</label><font color="#FF0000">*</font>&nbsp;
@@ -241,15 +241,33 @@
             {obj.html("图书ISBN必须填写");return;}
         if($("input[name='bookProfile.press']").val()=="")
             {obj.html("图书出版社必须填写");return;}
-        if($("input[name='bookProfile.publishYear']").val()=="")
+        var publishYear=$("input[name='bookProfile.publishYear']").val(); 
+        if(publishYear=="")
             {obj.html("图书出版年份必须填写");return;}
-        if($("input[name='bookProfile.publishMonth']").val()=="")
+        if(!(publishYear>=0))
+            {obj.html("出版年份不合法");return;}
+        var publishMonth=$("input[name='bookProfile.publishMonth']").val();
+        if(publishMonth=="")
             {obj.html("图书出版月份必须填写");return;}
-        if($("input[name='bookProfile.editionMonth']").val()==""||$("input[name='bookProflie.editionYear']").val()==""
+        if(!(publishMonth>=1 && publishMonth<=12))
+            {obj.html("出版月份不合法");return;}
+        var editionYear=$("input[name='bookProfile.editionYear']").val();
+        var editionMonth=$("input[name='bookProfile.editionMonth']").val();
+        var editionVersion=$("input[name='bookProfile.editionVersion']").val();
+        if($("input[name='bookProfile.editionMonth']").val()==""||$("input[name='bookProfile.editionYear']").val()==""
                 ||$("input[name='bookProfile.editionVersion']").val()=="")
             {obj.html("图书版次信息不全");return;}
-        if($("input[name='bookProfile.spage']").val()=="")
+        if(!(editionYear>=0))
+            {obj.html("版次年份不合法");return;}
+        if(!(editionMonth>=1 && editionMonth<=12))
+            {obj.html("版次月份不合法");return;}
+        if(!(editionVersion>=0))
+            {obj.html("版次不合法");return;}
+        var page=$("input[name='bookProfile.page']").val();
+        if(page=="")
             {obj.html("图书页数必须填写");return;}
+        if(!(page>=0))
+            {obj.html("图书页数不合法");return;}
         if($("input[name='bookProfile.canExchange']:checked").val()=='')
             {obj.html("请确认是否可交换");return;}
         if($("input[name='bookProfile.canExchange']:checked").val()=='1'&&$("input[name='bookProfile.buyCredit']").val()=='')
