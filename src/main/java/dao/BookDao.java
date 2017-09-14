@@ -16,7 +16,8 @@ public interface BookDao extends BaseDao {
     public List<Book> searchByTextByPage(String searchText,int part,int pageSize);
     public List<Book> searchByCondition(Map condition, Integer part, Integer pageSize);
     public List<Book> getRecommendBook();
-    public Map getBookProfileMapInMongo(Book book);
+    public Map getBookProfileMapInMongo(String profileID);
     public String saveBookProfileInMongo(Map bookProfileInMongo);
+    public boolean deleteBookProfileInMongo(String profileID);
     public boolean updateBookProfileInMongo(Book book, Map bookProfileInMong);
 }

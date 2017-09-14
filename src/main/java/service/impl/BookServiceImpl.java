@@ -227,7 +227,7 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
         // 这里的返回值不仅包括mongodb中的内容，也包括mysql中的内容
         Book book = this.bookDao.getBookByID(bookID);
         BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(bookID);
-        Map bookProfileInMongo = this.bookDao.getBookProfileMapInMongo(book);
+        Map bookProfileInMongo = this.bookDao.getBookProfileMapInMongo(book.getProfileID());
         BookProfile bookProfile = new BookProfile();
         
         bookProfile.setBookID(book.getBookID());
@@ -276,7 +276,7 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
                 ) {
             return false;    // 只能修改自己发布的书
         }
-        Map bookProfileInMongo = this.bookDao.getBookProfileMapInMongo(oldBook);
+        Map bookProfileInMongo = this.bookDao.getBookProfileMapInMongo(oldBook.getProfileID());
 //      bookProfileInMongo.put("category2", bookProfile.getCategory2());
         // bookProfileInMongo.put("publish", new HashMap(){{put("year",publishYear);put("month",publishMonth);}});
         // bookProfileInMongo.put("edtion", new HashMap(){{put("year",edtionYear);put("month",edtionMonth);put("version",edtionVersion);}});
@@ -344,6 +344,30 @@ public class BookServiceImpl extends BaseServiceImpl implements BookService {
     @Override
     public Boolean deleteBook(int bookID) {
         // 从数据库中删除书，禁止调用此函数！！！
+        Book book = this.bookDao.getBookByID(bookID);
+        
+        String profileID = book.getProfileID();
+        if(profileID != null) {
+            Map bookProfileInMongo = this.bookDao.getBookProfileMapInMongo(profileID);
+            List<String> oldOtherPictureID = (List<String>)bookProfileInMongo.get("otherPictureID");
+            for(String tmp : oldOtherPictureID) {
+                if(tmp != null) {
+                    this.imageDao.deleteImageById(tmp);    // 删除书的后两张图片
+                }
+            }
+            this.bookDao.deleteBookProfileInMongo(profileID);    // 删除书在mongodb中的信息
+        }
+        
+        String imageID = book.getImageID();
+        if(imageID != null) {
+            this.imageDao.deleteImageById(imageID);    // 删除书的封面图片
+        }
+        
+        BookRelease bookRelease = this.bookReleaseDao.getReleaseBookByBookID(book.getBookID());
+        this.bookReleaseDao.delete(bookRelease);    // 删除书的发布信息
+        
+        this.bookDao.delete(book);    // 删除书在mysql中的信息
+        
         return null;
     }
     

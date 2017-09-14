@@ -10,12 +10,16 @@ import com.opensymphony.xwork2.ActionSupport;
 import job.OneTimeJobManager;
 import job.QuartzManager;
 import job.oneTimeJobs.UnactiveUserJob;
+import service.BookService;
 import service.UserService;
 
 public class TestAction extends ActionSupport {
     private OneTimeJobManager oneTimeJobManager;
     private UserService userService;
     private QuartzManager quartzManager;
+    private BookService bookService;
+    
+    private int bookID;
     
     public OneTimeJobManager getOneTimeJobManager() {
         return oneTimeJobManager;
@@ -34,10 +38,23 @@ public class TestAction extends ActionSupport {
     }
     public void setQuartzManager(QuartzManager quartzManager) {
         this.quartzManager = quartzManager;
+    }    
+    public BookService getBookService() {
+        return bookService;
+    }
+    public void setBookService(BookService bookService) {
+        this.bookService = bookService;
+    }
+
+    public int getBookID() {
+        return bookID;
+    }
+    public void setBookID(int bookID) {
+        this.bookID = bookID;
     }
 
     /* ============================================================== */
-    
+
     public String addUnactiveUserJob() {
         oneTimeJobManager.addUnactiveUserJob(123789, 10*1000);
         return SUCCESS;
@@ -56,6 +73,10 @@ public class TestAction extends ActionSupport {
     }
     public String getBasePath() {
         System.out.println(userService.getBasePath());
+        return SUCCESS;
+    }
+    public String deleteBook() {
+        this.bookService.deleteBook(this.bookID);
         return SUCCESS;
     }
 }
